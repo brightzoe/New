@@ -4,7 +4,7 @@
 
 [![Gitter](https://badges.gitter.im/jquery/jquery.svg)](https://gitter.im/jquery/jquery?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 ## Contribution Guides
---------------------------
+
 In the spririt of open sourse software development,jQuery always encourages community code cintribution. To help you get started and before you jump into writing code ,be sure to read these important contribution guidelines thoroughly:<br>
 1. [Getting Involved](https://contribute.jquery.org/)
 2. [Core Style Guide](https://contribute.jquery.org/style-guide/js/)
