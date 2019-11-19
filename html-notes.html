@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+
+<body>
+  <form action="http://www.baidu.com/s" target="_blank">
+    请输入:<input type="text" name="name" value=""> <br>
+    请输入:<input type="password" name="password" value=""> <br>
+    <!-- name:文本框的名字 -->
+    <input type="submit" value="百度一下">
+  </form>
+
+  <form action="http://www.www.google.com/search" target="_blank">
+    请输入:<input type="text" name="q" value=""> <br>
+    <input type="submit" value="google一下">
+  </form>
+  <br>
+  <table border="1" cellspacing=0>
+    <!-- 不考虑打印可以省略thead,tfoot,tbody -->
+    <!-- 可以有多个tbody -->
+    <caption> 成绩单 </caption>
+    <col bgcolor="magenta" width="120px">
+    <col bgcolor='green'>
+    <col>
+    <!--第几个col就是第几列,还有colgroup-->
+    <!--回想:group:hgroup,optgroup,colgroup,fieldgroup,ul,ol-->
+    <thead>
+      <tr>
+        <!--行,table row-->
+        <th>name</th>
+        <th>number</th>
+        <th>number</th>
+        <th id="score">score</th>
+        <!--id,后面的headers与其形成对应关系-->
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>皮蛋</th>
+        <td>2</td>
+        <!--支持跨行及跨列,但不能跨过thead,tbody,tfoot-->
+        <td>20</td>
+        <td headers="score stu1">100</td>
+      </tr>
+      <tr>
+        <th>小米</th>
+        <td>222</td>
+        <td>333</td>
+        <td>333</td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <th>豆豆</th>
+        <th>222</th>
+        <th>333</th>
+        <th>555</th>
+      </tr>
+    </tfoot>
+  </table>
+  <br>
+  <table border="1">
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td rowspan="3">2</td>
+      <td colspan="2">3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td rowspan="3">3</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td colspan="3">1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+  </table>
+  <br>
+  <input type="checkbox" id=a1>
+  <label for="a1">aaa</label>
+  <img src="https://6bb2.png" usemap="#imgmap" alt="">
+  <!--可以用于演唱会选座位,没有提示,不太好用-->
+  <map name="img1map">
+    <area shape="cirlce" coords="cx,cy,r" href="" target="_blank" alt="" title="111">
+    <area shape="rect" coords="x1,y1,x2,y2" href="" alt="">
+    <area shape="poly" coords="" href="" alt="">
+  </map>
+  <br>
+
+  <a href="https://www.baidu.com/" target="foo">baidu</a>
+  <a href="https://www.mi.com/" target="foo">mi</a>
+  <!-- 安全原因,有些网页拒绝被嵌入其他页面 -->
+  <iframe src="https://www.baidu.com/" name="foo" frameborder="1"></iframe>
+  <!--name:框架的名字-->
+  <!--iframe可以套iframe-->
+
+  <a href="https://www.baidu.com/" target="_parent">111</a>
+  <iframe src="https://www.baidu.com/" name="百度" frameborder="0">
+    <p>您的浏览器不支持iframe,请升级浏览器</p>
+    <!--fallback/退化方案:不支持此标签的退化内容-->
+  </iframe>
+  <!-- 它内部的跳转记录也会存在于浏览器的前进后退的记录里面 -->
+
+  <frameset rows="30,*">
+    <frame src="" />
+    <frame src="" />
+    <frameset>
+      <frame src="" />
+    </frameset>
+
+  </frameset>
+  <noframes>
+    您的浏览器不支持frameset
+  </noframes>
+</body>
+
+</html>
