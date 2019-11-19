@@ -1,143 +1,356 @@
 <!DOCTYPE html>
+<!-- 让浏览器以最新的标准来解析这个页面,写在最前面 -->
 <html>
+<!--
+  输入空白间隔:&nbsp;
+ -->
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
+  <title>html-notes</title>
+  <link rel="icon" href="https://pbihub.cn/assets/images/logo.png">
+  <!--页面图标-->
+  <meta name="viewport" content="width=500" />
+  <base href="ttps://www.baidu.com/abc/" target="页面中所有链接的打开位置">
+  <!-- 页面以多宽尺寸渲染 -->
 </head>
 
 <body>
-  <form action="http://www.baidu.com/s" target="_blank">
-    请输入:<input type="text" name="name" value=""> <br>
-    请输入:<input type="password" name="password" value=""> <br>
-    <!-- name:文本框的名字 -->
-    <input type="submit" value="百度一下">
-  </form>
+  <hgroup>
+    <h1>一级标题</h1>
+    <h2>二级标题</h2>
+  </hgroup>
 
-  <form action="http://www.www.google.com/search" target="_blank">
-    请输入:<input type="text" name="q" value=""> <br>
-    <input type="submit" value="google一下">
-  </form>
-  <br>
-  <table border="1" cellspacing=0>
-    <!-- 不考虑打印可以省略thead,tfoot,tbody -->
-    <!-- 可以有多个tbody -->
-    <caption> 成绩单 </caption>
-    <col bgcolor="magenta" width="120px">
-    <col bgcolor='green'>
-    <col>
-    <!--第几个col就是第几列,还有colgroup-->
-    <!--回想:group:hgroup,optgroup,colgroup,fieldgroup,ul,ol-->
-    <thead>
+  <a href="https://jd.com/">京东</a>
+  <a href="#pos1"></a>
+  <a href="http://jd.com/#footer"></a>
+  <a href="mailto:aaa@bbb.com?title=1&subject=2&content=3">mail me</a>
+  <a href="xxx/jianai.pdf" download="简爱.pdf">点我下截《简爱》完整版</a>
+
+  <img src="http://www.baidu.com/logo.png" alt="" title="tooltip">
+  <img srcset="a.jpg 1x, b.jpg 2x, c.jpg 3x">
+  <!-- 不同大小屏幕分辨率不同,考虑适配问题 -->
+  <!-- 可以使用width和height属性定义图片的宽和高 -->
+
+  <marquee> foo </marquee>
+  <font size="25px" face="幼圆" color="red"></font>
+  <!-- deprecated 不推荐使用 obsolete 已废弃 -->
+
+  <strong>12</strong>
+  <em>12</em>
+  <b>12</b>
+  <i>12</i>
+  <u>12</u>
+  <del>12</del>
+
+  <pre>
+      <code class="">
+
+      </code>
+    </pre>
+
+  <ul>
+    <li>
+      <span>水果</span>
+      <span>西瓜</span>
+    </li>
+  </ul>
+  <ol>
+    <li>
+
+    </li>
+  </ol>
+
+  <dl>
+    <dt>老师</dt>
+    <dd>谢然</dd>
+
+    <dt>学生</dt>
+    <dd>张三</dd>
+    <dd>李四</dd>
+    <dd>王五</dd>
+  </dl>
+
+  <form action="" target="" method=""></form>
+  <input type="text">
+  <input type="password">
+  <input type="checkbox">
+  <input type="radio">
+  <input type="file" name="" id="" accept="image/*,text/*" multiple hidden>
+  <input type="button" value="按钮">
+  <input type="submit" value="提交">
+  <input type="reset" value="重置">
+  <!-- 为按钮时,value设置显示的文字,为输入框时,value为里面的默认内容 -->
+  <input type="range" min=1 max=500 step=20>
+  <!-- 默认0-100,但可以通过下面设置范围,范围随意设置,和跨度 -->
+  <input type="text" disabled required maxlength minlength placeholder autofocus tabindex name="">
+  <!-- name很重要,表单提交时为这个域formcontrol的名字 -->
+  <!-- 在radio和checkbox阵列里，name相同的元素被分在一组里 -->
+
+  <button type="reset/button/submit"></button>
+  <!--
+    与'<input type="button" name="b" value="lksjdf">`的区别
+        * input的button只能在按钮上显示纯文字
+        * 而button标签可以在按钮上显示其它内容比如图片（即嵌套其它标签），文字也可以设置不同颜色等
+   -->
+
+  <input type="radio" id="id1">
+  <label for="id1">苹果</label>
+
+  <label>
+    <input type="file">选择一个文件
+  </label>
+  <!-- 扩大选择区域,提升用户体验 -->
+
+  <select name='city'>
+    <option selected hidden disabled>请选择</option>
+    <option value="0571">一个三</option>
+    <option value="0571">四个六</option>
+    <optgroup label='一线'>
+      <option value="0571">杭州</option>
+      <option value="0571">湖州</option>
+    </optgroup>
+    <optgroup label='十八线'>
+      <option value="0571">马家沟</option>
+      <option value="0571">曼哈屯</option>
+    </optgroup>
+
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+
+    <fieldset>
+      <legend>Title</legend>
+      <input type="radio" id="radio"> <label for="radio">Click me</label>
+    </fieldset>
+
+    <form action="http://www.baidu.com/s" target="_blank">
+      请输入:<input type="text" name="name" value=""> <br>
+      请输入:<input type="password" name="password" value=""> <br>
+      <!-- name:文本框的名字 -->
+      <input type="submit" value="百度一下">
+    </form>
+
+    <form action="http://www.www.google.com/search" target="_blank">
+      请输入:<input type="text" name="q" value=""> <br>
+      <input type="submit" value="google一下">
+    </form>
+    <br>
+    <table border="1" cellspacing=0>
+      <!-- 不考虑打印可以省略thead,tfoot,tbody -->
+      <!-- 可以有多个tbody -->
+      <caption> 成绩单 </caption>
+      <col bgcolor="magenta" width="120px">
+
+      <colgroup bgcolor='green'>
+        <col bgcolor="red">
+        <col>
+      </colgroup>>
+      <!--第几个col就是第几列,还有colgroup-->
+      <!--回想:group:hgroup,optgroup,colgroup,fieldgroup,ul,ol-->
+      <thead>
+        <tr>
+          <!--行,table row-->
+          <th>name</th>
+          <th>number</th>
+          <th>number</th>
+          <th id="score">score</th>
+          <!--id,后面的headers与其形成对应关系-->
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>皮蛋</th>
+          <td>2</td>
+          <!--支持跨行及跨列,但不能跨过thead,tbody,tfoot-->
+          <td>20</td>
+          <td headers="score stu1">100</td>
+        </tr>
+        <tr>
+          <th>小米</th>
+          <td>222</td>
+          <td>333</td>
+          <td>333</td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <th>豆豆</th>
+          <th>222</th>
+          <th>333</th>
+          <th>555</th>
+        </tr>
+      </tfoot>
+    </table>
+    <br>
+    <table border="1">
       <tr>
-        <!--行,table row-->
-        <th>name</th>
-        <th>number</th>
-        <th>number</th>
-        <th id="score">score</th>
-        <!--id,后面的headers与其形成对应关系-->
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th>皮蛋</th>
+        <td>1</td>
         <td>2</td>
-        <!--支持跨行及跨列,但不能跨过thead,tbody,tfoot-->
-        <td>20</td>
-        <td headers="score stu1">100</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
       </tr>
       <tr>
-        <th>小米</th>
-        <td>222</td>
-        <td>333</td>
-        <td>333</td>
+        <td>1</td>
+        <td rowspan="3">2</td>
+        <td colspan="2">3</td>
+        <td>4</td>
       </tr>
-    </tbody>
-
-    <tfoot>
       <tr>
-        <th>豆豆</th>
-        <th>222</th>
-        <th>333</th>
-        <th>555</th>
+        <td>1</td>
+        <td>2</td>
+        <td rowspan="3">3</td>
       </tr>
-    </tfoot>
-  </table>
-  <br>
-  <table border="1">
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td rowspan="3">2</td>
-      <td colspan="2">3</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td rowspan="3">3</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td colspan="3">1</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>5</td>
-    </tr>
-  </table>
-  <br>
-  <input type="checkbox" id=a1>
-  <label for="a1">aaa</label>
-  <img src="https://6bb2.png" usemap="#imgmap" alt="">
-  <!--可以用于演唱会选座位,没有提示,不太好用-->
-  <map name="img1map">
-    <area shape="cirlce" coords="cx,cy,r" href="" target="_blank" alt="" title="111">
-    <area shape="rect" coords="x1,y1,x2,y2" href="" alt="">
-    <area shape="poly" coords="" href="" alt="">
-  </map>
-  <br>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td colspan="3">1</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+      </tr>
+    </table>
+    <br>
 
-  <a href="https://www.baidu.com/" target="foo">baidu</a>
-  <a href="https://www.mi.com/" target="foo">mi</a>
-  <!-- 安全原因,有些网页拒绝被嵌入其他页面 -->
-  <iframe src="https://www.baidu.com/" name="foo" frameborder="1"></iframe>
-  <!--name:框架的名字-->
-  <!--iframe可以套iframe-->
+    <img title="一个标题" src="https://drscdn.500px.org/photo/174778125/m%3D1170_k%3D1/2841ccf2a3720e8e794a6a6930f6ff2c"
+      width=400 usemap="#imgmap" alt="">
+    <!--可以用于演唱会选座位,没有提示,不太好用-->
+    <map name="img1map">
+      <area shape="cirlce" coords="cx,cy,r" href="https://www.mi.com/" target="_blank" alt="" title="111">
+      <area shape="rect" coords="x1,y1,x2,y2" href="" alt="">
+      <area shape="poly" coords="" href="" alt="">
+    </map>
+    <br>
 
-  <a href="https://www.baidu.com/" target="_parent">111</a>
-  <iframe src="https://www.baidu.com/" name="百度" frameborder="0">
-    <p>您的浏览器不支持iframe,请升级浏览器</p>
-    <!--fallback/退化方案:不支持此标签的退化内容-->
-  </iframe>
-  <!-- 它内部的跳转记录也会存在于浏览器的前进后退的记录里面 -->
+    <a href="https://www.baidu.com/" target="abc">baidu</a>
+    <a href="https://www.mi.com/" target="abc">mi</a>
+    <!-- 安全原因,有些网页拒绝被嵌入其他页面 -->
+    <iframe src="https://www.baidu.com/" name="abc" frameborder="1"></iframe>
+    <!--name:框架的名字-->
+    <!--iframe可以套iframe-->
 
-  <frameset rows="30,*">
-    <frame src="" />
-    <frame src="" />
-    <frameset>
+    <a href="https://www.baidu.com/" target="_parent">111</a>
+    <iframe src="https://www.baidu.com/" name="百度" frameborder="0">
+      <p>您的浏览器不支持iframe,请升级浏览器</p>
+      <!--fallback/退化方案:不支持此标签的退化内容-->
+    </iframe>
+    <!-- 它内部的跳转记录也会存在于浏览器的前进后退的记录里面 -->
+
+    <frameset rows="30,*">
       <frame src="" />
-    </frameset>
+      <frame src="" />
+      <frameset>
+        <frame src="" />
+      </frameset>
 
-  </frameset>
-  <noframes>
-    您的浏览器不支持frameset
-  </noframes>
+    </frameset>
+    <noframes>
+      您的浏览器不支持frameset
+    </noframes>
+
+    <canvas>
+      <p>no supported</p>
+    </canvas>
+
+    <script>
+      var a = 8
+    </script>
+    <noscript>your browser dont support javascript!</noscript>
+
+    <iframe src="" frameborder="0">
+      <p>no supported</p>
+    </iframe>
+
+    <div class="artivle/header/sidebar/main">
+      <!--以前这么用,现在html5新增了一些语义标签-->
+      <p></p>
+    </div>
+    <div class="content"></div>
+    <div class="main"></div>
+
+    <!-- HTML5 新增的一些语义标签 -->
+    <div>
+      <article>
+        <p></p>
+      </article>
+    </div>
+
+    <header>
+      <nav>
+        <ul>
+          <li></li>
+        </ul>
+      </nav>
+    </header>
+
+    <template></template>
+    <table></table>
+
+    <article>
+      <section></section>
+      <aside></aside>
+      <textarea></textarea>
+
+      <!-- 其他常见标签 -->
+      A <sub>2</sub>
+      A <sup>2</sup>
+
+      <code></code>
+
+      <pre>
+      <code>
+      var c = 1;
+      </code>
+    </pre>
+
+      <script src="" type="">
+        js not allowed
+    </script>
+
+      <script>
+        js goes here
+      </script>
+
+      <!--一般在head里面-->
+      <!--
+    <style>
+      css goes here
+    </style>
+    -->
+
+      <link rel="stylesheet" href="a.css">
+
+      <!-- 多媒体标签  -->
+      <video src="a.mp4" controls></video>
+
+      <video autoplay loop preload controls>
+        <source src="a.mp4">
+        <source src="a.m3u8">
+        <source src="a.webm">
+        您的浏览器不支持video
+      </video>
+
+      <audio src=""></audio>
+
+      <object data="" type=""></object>
+      <!-- 东西,对象,是一个容器 -->
+
+      <canvas width="500" height="800">
+        <p>您的浏览器不支持canvas(默认是透明的)</p>
+      </canvas>
+      <br>
+      <progress value="36" min="" max=""></progress>
+
+
 </body>
 
 </html>
