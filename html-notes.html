@@ -14,10 +14,30 @@
   <meta name="viewport" content="width=500" />
   <base href="ttps://www.baidu.com/abc/" target="页面中所有链接的打开位置">
   <!-- 页面以多宽尺寸渲染 -->
+  <link rel="stylesheet" href="xx.css" media="print">
+  <style>
+    @import "a.css"
+
+    h1,
+    h2 {
+      /* rule block */
+      color: red;
+      /*rule*/
+      font-size: 80px;
+      font-weight: bold;
+    }
+
+    p,
+    a {
+      border: 3px dotted greenyellow;
+    }
+  </style>
 </head>
 
-<body>
-  <hgroup>
+<body link="aqua" alink="grey" vlink="red" bgcolor="yellow" background="http://www.baidu.com/logo.png" leftmargin="10%">
+  <!-- 设置一些简单的格式 -->
+
+  <hgroup style="border: 5px solod: red">
     <h1>一级标题</h1>
     <h2>二级标题</h2>
   </hgroup>
