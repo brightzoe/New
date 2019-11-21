@@ -1,0 +1,271 @@
+/* 颜色属性会继承 */
+/*元素选择器*/
+div {
+  color: red;
+}
+
+/* 选择器分组 */
+p,
+h1,
+div {
+  color: red;
+}
+
+* {
+  color: red;
+}
+
+
+
+/*类选择器*/
+/* <p class="foo abc ddd"></p> */
+.foo {
+  color: red;
+}
+
+
+/*id选择器,一个元素只有一个id*/
+/* <h1 class="" id="abc"></h1> */
+#abc {
+  color: red;
+}
+
+/* 选择器名大小写敏感 */
+
+/*属性选择器*/
+[title] {
+  color: red;
+}
+
+[title="hello"] {
+  color: red;
+}
+
+/* 属性以指定内容开头 */
+[title^='woo'] {
+  color: red;
+}
+
+/* 属性以指定内容结束 */
+[title$='ooo'] {
+  color: red;
+}
+
+/* 属性包含指定元素 */
+[title*='ooq'] {
+  color: red;
+}
+
+/* 包含一个完整单词 */
+[title~="our"] {
+  color: red;
+}
+
+/* 以下相同 */
+[class~='bar'] {}
+
+.bar {}
+
+
+/* 类名以特定内容开头 */
+[class^="fa-"],
+[class*=" fa-"] {
+  text-decoration: underline;
+}
+
+/* 类目以特定内容结尾 */
+[class$="-ui"],
+[class*="-ui "] {
+  text-decoration: line-through;
+}
+
+/* 属性前缀选择器(选择lang为zh 或以zh开头的元素) */
+[lang|="zh"] {}
+
+
+/* 忽略大小写,后面加个i, ignore */
+[href$=".pdf"i] {}
+
+/* 复合选择器 */
+/* <p class="class1 class2 lsdkfj lksdfj" id="abc"></p> */
+p.class1.class2 {}
+
+.class1 .class2 #abc {}
+
+
+/* 子元素选择器:选择子元素,但里面的元素会继承 */
+a>span {
+  border: 2px solid;
+}
+
+/* 选择a里面的所有span元素 */
+a span {
+  border: 1px solid;
+}
+
+/* a里面的span的里面的span */
+a span span {
+  border: 1px solid;
+}
+
+/* 邻接选择器;只能向后选*/
+/* 同级,相邻的一个p */
+h1+p {}
+
+/* 后面的所有p */
+h1~p {}
+
+div ul>li~li {}
+
+.a.b.c {
+  同时有a,
+  b,
+  c类名的元素
+}
+
+.a .b .c {
+  类名为a的元素里面的类名为b的元素里面的类名为c的元素
+}
+
+.a,
+.b,
+.c {
+  类名为a或b或c的元素
+}
+
+/* 伪类选择器 */
+/* 状态伪类 */
+:link {
+  未被访问过的有href属性的a标签
+}
+
+:visited {
+  访问过的标签;
+  只能设置颜色,
+  隐私安全原因
+}
+
+:active {
+  被激活的元素,
+  鼠标按下的
+}
+
+:hover {
+  鼠标放上去的元素
+}
+
+:focus {
+  光标放上去,
+  被聚焦的元素
+}
+
+:first-child {
+  匹配所有某父元素的第一个子元素
+}
+
+p:first-child {
+  选择的不是p的第一个子结点,
+  而是做为第一个子结点的p元素
+}
+
+:last-child {}
+
+:nth-child(2n+1) {
+  选中第奇数个元素,
+  可以设置一些规则
+}
+
+ul li:nth-child(n+3):nth-last-child(n+2) {
+  ul里面的li且正数第三个到倒数第二个
+}
+
+:nth-child(odd/even) {
+  选择奇偶数
+}
+
+/* 选择器取反 */
+ul :not(p) {
+  ul里面不是p的元素
+}
+
+ul :not(.foo) {
+  里面只能用单个选择器,
+  不能用层级
+}
+
+ul :not(p):not(.foo) {
+  可以用多个: not()
+}
+
+:root {}
+
+:empty {
+  选择空元素,
+  包括自闭合标签
+}
+
+:target {
+  选中当前id值为#后面的元素的内容;
+  也就是目标元素的内容
+}
+
+:required {}
+
+:optional {}
+
+:valid {}
+
+:invalid {}
+
+<input>:enabled {}
+
+:disabled {}
+
+:checked {}
+
+/* 选择器的优先级 */
+/* 0,1,1,1 */
+/* (0,id选择器,类选择器,元素选择器) */
+/* 连接符如 > + ~ 等不参与优先级的计算 */
+
+/* 内联样式/行内样式/行间样式/inline style  */
+/* 1，0，0，0  */
+<p style="color: green;">
+
+/* 最优先: !important  */
+p {
+  color: red !important;
+}
+
+/* 0.0.0.0 */
+* * * {}
+
+/* 继承  没有优先级，比【*】的有限级还要小 */
+
+/* 不来自CSS的样式: 如font标签
+<font size color face></font>
+可以想象它的优先级为0000,并且出现在作者样式的开头 */
+
+
+/* * 层叠样式(优先级从高到低:)
+* 用户自定义important样式
+* 网站作者important样式 authored style
+* 网站作者作者普通样式
+* 用户自定义普通样式 Custom.css
+* 默认样式，浏览器内置样式，User Agent Style
+* 优先级一样的话，按出现的顺序排列，后出现的优先级更高
+  * 所以是 link visited focus hover active
+  * :link:hover /0 0 2 0/
+  * 不过在这几个伪类上分别写完全不同的属性时，顺序就不重要了
+  * 重要的是写相同的属性，这时就要考虑优先级的问题了
+  * LV HA VL HA 没有太大区别，因为很明显，V和L不会同时匹配
+  * 不来自CSS的样式
+    * 如font标签 <font size color face></font>
+    * 可以想象它的优先级为0000并且出现在作者样式的开头
+    * 会被作者样式和读者样式覆盖，但不会被默认样式覆盖
+    * p75页
+  * <font color="red">aa</font>
+  * <style>* {
+    color: green;
+  }
+  </style> */
