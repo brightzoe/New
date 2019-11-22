@@ -269,3 +269,156 @@ p {
     color: green;
   }
   </style> */
+
+
+:nth-of-type(2) {}
+
+/* 给类型分类,匹配所有类型的第二个 */
+
+
+/*值与单位
+  数字:
+  line-height:2    200%,倍数
+  column-count: 2;
+  zoom: 2.5;
+
+  百分比:
+  width/height: 60%;    基准是其父元素的宽度或高度
+  top/left/right/bottom: 50%;
+  line-height: 150%;    基准是文字的大小
+  vertical-align: 40%;
+  color: rgb(40%, 50%, 70%)
+
+  颜色: R G B
+  color:red/silver/grey;
+
+  #(0-255)(0-255)(0-255) ->16700000    hex color
+  #abc ->#aabbcc
+  #abcd - #aabbccdd
+  #456 ->#445566
+  #XYZ ->#XXYYZZ
+  #XYZA ->#XXYYZZAA
+
+  rgb(0-255,0-255,0-255);
+  rgb(30%,30%,30%)相对于255来说
+  rgba(r,g,b,0-1);
+
+  色域
+
+  色彩空间
+  RGB
+  CMYK (Cany Manganta Yellow BlacK)
+  hsla（色相，饱和度，明度,0-1）
+
+  长度
+  绝对长度: in(ch) cm mm
+  相对长度:
+    px,CSS像素,在设计中大多数被认为是绝对长度
+
+    em,基准是当前元素字号的大小,当前没有的话就继承父元素
+    rem,基准是html元素字号,做到灵活缩放整个网页
+    vw/vh,视觉窗口的宽度/长度
+      1vw 视口宽度1/100
+      vmax=max(vw, vh)视口宽或者高较大的那一个的100之一
+      vmin=min(vw, vh)视口宽或者高较小的那一个的100之一
+
+    width: calc(2 * 30em - 40%)
+
+  角度
+    degree 45deg 90deg
+    radian 弧度  3.14rad=180deg
+
+  时间 s ms
+
+  URL background-image: url(a.png);指定背景图片/字体
+  相对路径 绝对路径
+
+  字体
+  * 字体族
+    * serif 衬线字体,不等宽
+    * sans-serif 非衬线字体,成比例
+    * monospace 字体，等宽字体
+
+字体名中间有空格、尾部有# $等符号，建议使用引号
+* 另外，通用字体族必须不能加引号，它们算是关键字而不是字体值（字符串）
+
+* 但是，有时候用户的浏览器并不一定安装了这个字体
+* 这时可以指定退化（fallback）方案
+  h1 {
+  font-family: "Helvetica", "微软雅黑", sans-serif;
+  }
+* 一般来说，最好提供一个字体族名称做为最后的退化方案
+
+字重 font-weight  100-900
+  normal=400
+  bold=700
+  bolder lighter
+
+字号 font-size
+  绝对尺寸：
+  xx-small,
+  x-small,
+  small,
+  medium,
+  large,
+  x-large,
+  and xx-large
+
+  百分比大小:
+  相对于父元素的大小，也即继承过来的值
+
+  font-size继承是继承父级的计算值
+
+font-style
+  normal italic oblique
+
+font-variant
+  normal  small-caps:小写字母显示成小号的大写字母
+
+  text-transform：uppercase/captialize
+    +把小写字母显示成小号的大写字母
+    +有些字体专门为小写字母设计了这种样式，而不是单纯的把大写字母显示的小一点。
+
+    - font:
+    [font-style || font-variant || font-weight] font-size[ / line-height] font-family
+    - font: small-caps bold 20px / 1.2em 宋体,serif;
+    - 前三个的顺序不重要
+    font属性值的覆盖，整个是一个属性，值会一起背新值覆盖
+
+text-indent 文字缩进[用于块级元素],用负值可以隐藏文字
+
+text-align 文字水平对齐
+  left,right,center,justify
+line-height
+
+vertical-align
+
+word-spacing:其值是添加到本身空格间的值，而不是设置了多少，单词间就间隔多少
+
+Text Decoration
+  none | [ underline ‖ overline ‖ line-through ‖ blink]
+  可联合使用: h2 {
+  text-decoration: underline overline;
+  }
+  元素非继承，但子元素无法使用 none 清除父元素的 underline 等，决定于用户代理
+
+Text Shadows
+  none | [<length>‖ <length><length><length>?]#
+  两个 length，表示水平和垂直偏移，第三个可省略:模糊半径：从阴影外边缘到模糊范围边缘，具体的模糊方法由用户代理决定
+    每组中间,分隔
+  text-shadow:
+  1px 1px #2d343a,
+  2px 2px #2d343a,
+  3px 3px #2d343a;
+  特大范围阴影可能造成性能问题
+
+  box-shadow 与上类似
+    - 水平偏移 垂直偏移 模糊半径 扩散半径 颜色,
+    下一组;
+    - 两个半径都可以不写，默认都为0 - 颜色同上
+
+white-space 指定如何处理空格与换行，以及自动换行
+word-break  指定单词如何折行
+overflow-wrap
+
+direction: ltr | rtl    文字阅读方式
