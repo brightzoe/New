@@ -1,3 +1,7 @@
+/* CSS Cascading Style Sheet 层叠样式表 */
+/* 选择器:
+声明与关键词
+声明中的属性和属性中的值必须是css及对应属性所支持的,否则无效 */
 /* 颜色属性会继承 */
 /*元素选择器*/
 div {
@@ -73,7 +77,7 @@ div {
   text-decoration: underline;
 }
 
-/* 类目以特定内容结尾 */
+/* 类名以特定内容结尾 */
 [class$="-ui"],
 [class*="-ui "] {
   text-decoration: line-through;
@@ -154,6 +158,8 @@ div ul>li~li {}
   鼠标放上去的元素
 }
 
+/* 书写顺序:LV HA */
+
 :focus {
   光标放上去,
   被聚焦的元素
@@ -164,8 +170,8 @@ div ul>li~li {}
 }
 
 p:first-child {
-  选择的不是p的第一个子结点,
-  而是做为第一个子结点的p元素
+  选择作为第一个子节点的p元素,
+  而不是p的第一个子节点
 }
 
 :last-child {}
@@ -176,7 +182,8 @@ p:first-child {
 }
 
 ul li:nth-child(n+3):nth-last-child(n+2) {
-  ul里面的li且正数第三个到倒数第二个
+  ul里面的li且正数第三个到倒数第二个 加了空格就是里面的,
+  注意空格
 }
 
 :nth-child(odd/even) {
@@ -194,10 +201,12 @@ ul :not(.foo) {
 }
 
 ul :not(p):not(.foo) {
-  可以用多个: not()
+  可以用多个: not()组成复合选择器
 }
 
-:root {}
+:root {
+  选择文件的根元素
+}
 
 :empty {
   选择空元素,
@@ -225,7 +234,7 @@ ul :not(p):not(.foo) {
 
 /* 选择器的优先级 */
 /* 0,1,1,1 */
-/* (0,id选择器,类选择器,元素选择器) */
+/* (0,id选择器,类选择器/属性选择器/伪类选择器,元素选择器) */
 /* 连接符如 > + ~ 等不参与优先级的计算 */
 
 /* 内联样式/行内样式/行间样式/inline style  */
@@ -238,7 +247,9 @@ p {
 }
 
 /* 0.0.0.0 */
-* * * {}
+* * * {
+  通配符
+}
 
 /* 继承  没有优先级，比【*】的有限级还要小 */
 
@@ -316,6 +327,7 @@ p {
     px,CSS像素,在设计中大多数被认为是绝对长度
 
     em,基准是当前元素字号的大小,当前没有的话就继承父元素
+    1 em=100%
     rem,基准是html元素字号,做到灵活缩放整个网页
     vw/vh,视觉窗口的宽度/长度
       1vw 视口宽度1/100
@@ -365,25 +377,33 @@ p {
   and xx-large
 
   百分比大小:
-  相对于父元素的大小，也即继承过来的值
+  一般是相对于父元素的大小，也即继承过来的值;旦line-height相对于元素的font-size
 
-  font-size继承是继承父级的计算值
+  font-size继承是继承父级的计算值,而不是百分比
 
 font-style
   normal italic oblique
 
 font-variant
-  normal  small-caps:小写字母显示成小号的大写字母
-
-  text-transform：uppercase/captialize
-    +把小写字母显示成小号的大写字母
-    +有些字体专门为小写字母设计了这种样式，而不是单纯的把大写字母显示的小一点。
+  normal  small-caps:小型的大写字母
+      text-transform：uppercase/captialize
+  +把小写字母显示成小号的大写字母
+  +有些字体专门为小写字母设计了这种样式，而不是单纯的把大写字母显示的小一点。
 
     - font:
     [font-style || font-variant || font-weight] font-size[ / line-height] font-family
     - font: small-caps bold 20px / 1.2em 宋体,serif;
     - 前三个的顺序不重要
     font属性值的覆盖，整个是一个属性，值会一起背新值覆盖
+
+使用系统字体:
+caption:用于有标题的控件,如按钮.
+icon:用于对图标加标签.
+menu:用于菜单,及下拉菜单和菜单列表.
+message-box:用于对话框.
+small-caption:用于小空间加标签.
+status-bar:用于窗口状态条.
+例:button {font:caption;}
 
 text-indent 文字缩进[用于块级元素],用负值可以隐藏文字
 
