@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "E:\\miao"
+		},
+		{
+			"path": "C:\\Users\\brigh\\Desktop\\notes"
+		}
+	],
+	"settings":{
+		"liveServer.settings.multiRootWorkspaceName": "notes"
+	}
+
+}

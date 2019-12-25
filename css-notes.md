@@ -12,35 +12,6 @@ HTML可以控制的样式太少
 
 ```css
 /*元素选择器*/
-div {
-  color: red;
-}
-
-/* 选择器分组 */
-p,
-h1,
-div {
-  color: red;
-}
-
-* {
-  color: red;
-}
-
-
-
-/*类选择器*/
-/* <p class="foo abc ddd"></p> */
-.foo {
-  color: red;
-}
-
-
-/*id选择器,一个元素只有一个id*/
-/* <h1 class="" id="abc"></h1> */
-#abc {
-  color: red;
-}
 
 /* 选择器名大小写敏感 */
 
@@ -353,6 +324,62 @@ p {
   URL background-image: url(a.png);指定背景图片/字体
   相对路径 绝对路径
 
+ ## 视口
+  **设备像素与CSS像素**
+  现代浏览器上实现的缩放，仅仅是拉伸像素。元素的宽度并没有变化，而是实际像素在尺寸上增加。
+  **窗口尺寸**
+  浏览器窗口内部尺寸：还有多少可用空间用于CSS布局,用css像素度量。
+
+  window.innerWidth/Height
+  表示浏览器窗口的总尺寸，包括滚动条。
+  代表视觉视口的尺寸，以 CSS 像素来度量。
+
+  window.pageX/YOffset
+  表示页面的滚动偏移，以 CSS 像素度量。
+
+  document. documentElement.clientWidth/Height
+  代表布局视口的尺寸，以 CSS 像素度量。
+  
+移动端浏览器的视口太窄，导致不能满足 CSS 布局。最显而易见的解决方案就是，让视口更宽一些，因此，这就要求将视口一分为二: 视觉视口（visual viewport）和布局视口（layout viewport）。
+  + 视觉视口是页面当前显示在屏幕上的一部分，用户可以通过滚动来改变他所看到的页面部分，或通过缩放来改变视觉视口的大小。
+  + html元素初始时的宽度是布局视口的宽度，且 CSS 是按照在明显比手机屏幕要宽的屏幕上的设定来诠释的。
+
+**媒体查询**
+<meta name="viewport" content="width=320">，为了调整布局视口。
+
+**移动端视口效果**
++ 无viewport标签：手机用1000左右的视口来渲染页面，即当成传统网站
++ 有viewport标签：
+  + android4.4.4以及下浏览器仅支持width=device-width，该值随手机屏幕大小变化。一般来讲，手机屏幕越大，device-width值越大。
+  + android5.0及以上浏览器支持width=number，手机浏览器以特定视口宽度渲染页面
++ 期望的效果：
+  + 视觉稿的宽度(X)总是占满任意大小手机的屏幕宽度,即始觉稿显示在不同手机上总是等比缩放的。
+    + 在5.0以上的系统上，直接将width=视觉稿宽度，直接使用视觉稿量出来的值并用px单位开发。
+    + 由于5.0以下的系统不支持此功能，只能利用rem单位灵活缩放，实现页面正好缩放到屏幕宽度。
+      + Xrem=屏幕宽度=100vw=JS测量出的视口宽度，即1rem=100vw/x=JS测量出的视口宽度/X
+       ```css
+       html{
+        font-size:calc(100vw/X);
+        or
+        font-size:视口宽度/X;(需要JS测量)
+       }
+       ```
+      + 但是浏览器限制最小字号为12px，而上述公式计算的字号通常小于12px，会被重置为12px。为了防止字号被重置，一般将公式再乘100计算字号。导致从视觉稿测量的值除以100再加上rem单位才能应用在代码。考虑到兼容性，更多采用这种方式。参考 https://m.mi.com
+  + 屏幕越大文字越多。
+    + 采用流式布局，即不为块元素设置宽度，而让它自动占满窗口或父元素宽度，参考github移动端。
+    + width=device-width
+  + 布局保持比例，但物理面积越大显示的字越多。
+    + width=device-width
+    + 布局采用rem方案，排版使用正常的字号大小如px。
+
+
+
+
+
+
+
+
+
 **字体**
   * 字体族
     * serif 衬线字体,不等宽
@@ -453,6 +480,7 @@ word-break  指定单词如何折行
 overflow-wrap
 
 direction: ltr | rtl    文字阅读方式
+
 
 元素（即html标签）的层级关系
 
@@ -564,4 +592,122 @@ z-index:元素上下位置设置
 
 伪元素:相当于所属元素的第一个和最后一个子元素;通过xxx::before/xxx::after选中,通过content激活;为元素选择器与普通选择器不需要对比优先级,选中的一定是不同的元素;伪元素无法交互,只能在父元素发生交互时,切换对应伪元素的样式.
 
-###表布局
+### 浮动
+
+常规流块级元素会当浮动元素不存在,行内元素会围绕浮动元素渲染
+**清除浮动:**
+闭合浮动:某个块框通过增加自己的高度使其能够包含其浮动的后代元素(通过自己变大,包住所有后代浮动元素)
+BFC(会创建一个独立的布局单元)
+**具体行为:**
+1.从高度上包裹住自己内部的浮动元素
+2.margin不会与子元素重叠
+3.内外布局不相关:内部元素内容改变不影响元素自己的位置,行内块元素加overflow:hidden后以margin-box底边作为其基线
+4在宽度上,如果BFC元素与浮动元素有重叠,他会变窄以避开浮动元素
+**触发条件:**
+overflow不为visible
+inline-block
+定位
+浮动
+HTML元素永远BFC
+display:flow/flow-root
+
+### 分列布局                                                                                                                                                               
+------------
+
+### flex布局
+
+**主轴方向上：**
+  + flex-shrink:收缩系数，需要与宽度/高度相乘
+
+  + flex-grow:扩展系数，直接使用，按比例分剩余的部分
+  
+**一些属性：**
+  + justify-content: space-between;主轴方向额外空间的分配，不能跟flex-grow一起用。
+    + flex-start | flex-end | center | space-between | space-around | space-evenly
+  + align-content: space-around;侧轴方向的空间如何分给每一个flex行，只适用于多行的flex-box。
+    + flex-start | flex-end | center | space-between | space-around | space-evenly | stretch
+  + align-items: 侧轴方向元素在行中的摆放，stretch仅子元素高度为auto时生效。
+    + flex-start | flex-end | center | baseline（每一行文本基线对齐） | stretch 
+  + align-self: flex子元素自身在行的垂直方向的摆放
+    + auto | flex-start | flex-end | center | baseline | stretch
+  + flex-basis:指定主轴方向上初始大小。相当于宽度或者高度：主轴水平，相当于宽度，主轴垂直，相当于高度。只要它不为auto，就是它生效而不是宽高属性生效。
+  + flex-wrap:是否折行。nowarp/warp/warp-reverse(控制折行的方向，或者说交叉轴的方向)
+  + flex-flow:column wrap;按什么方向；是否折行，是flex-direction和flex-wrap的简写
+  + margin比较强势。
+
+------------
++ flex中匿名文本不能直接被css选中，只能继承flex-container的样式。
++ 浮动对于flex-items无效，但绝对定位对于flex-items有效，也会形成BFC。
++ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+回流与重绘
+relayout  repaint
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+通过后面的元素改变前面元素的样式:
++ input+label label会将自己的hover/active转发给input
++ focus-within伪类
++ 后面的元素通过定位来模拟实现改变前面的元素的样式
++ 比如微信朋元圈图片排布方式:
+  1. li:first-child:last-child{}
+  2. li:first-child:nth-last-child(2),li:first-child:nth-last-child(2)~li
+  3. li:first-child:nth-last-child(3),li:first-child:nth-last-child(3)~li
+  4. https://jsbin.com/celaqeb/1/edit?html,css,output
+
+
+
+
+
+
+pointer-events:auto/none;
+
+### @font-face
++ @font-face 本质上可以看作是一个声明字体的变量
++ 可以用来简写字体
+  ```css
+  @font-face {
+    font-family: YH;
+    src: local("Microsoft Yahei"),url("xxx.ttf");
+  }
+  ```
