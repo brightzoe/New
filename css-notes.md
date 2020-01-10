@@ -628,7 +628,7 @@ display:flow/flow-root
     + flex-start | flex-end | center | space-between | space-around | space-evenly | stretch
   + align-items: 侧轴方向元素在行中的摆放，stretch仅子元素高度为auto时生效。
     + flex-start | flex-end | center | baseline（每一行文本基线对齐） | stretch 
-  + align-self: flex子元素自身在行的垂直方向的摆放
+  + align-self: flex子元素自身在行的垂直方向的摆放;用于覆盖align-items
     + auto | flex-start | flex-end | center | baseline | stretch
   + flex-basis:指定主轴方向上初始大小。相当于宽度或者高度：主轴水平，相当于宽度，主轴垂直，相当于高度。只要它不为auto，就是它生效而不是宽高属性生效。
   + flex-wrap:是否折行。nowarp/warp/warp-reverse(控制折行的方向，或者说交叉轴的方向)
