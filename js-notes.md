@@ -1,6 +1,6 @@
 ## 学习资料：
 《JavaScript DOM 编程艺术》
-《eloquent JavaScript》
+《Eloquent JavaScript》
 
 待学:
 <深入了解计算机系统> 大名鼎鼎的CSAPP
@@ -80,6 +80,9 @@ FuzzyLittleTurtle capital case 构造函数
 fuzzyLittleTurtle camel case 驼峰式
 
 
+## 布尔代数与命题逻辑
+
+
 ## 值与运算符
 数字number
 + 整数精确，小数是近似值，不完全准确，要小心。
@@ -96,15 +99,6 @@ fuzzyLittleTurtle camel case 驼峰式
 + 反引号后可出现明文回车
 + 对字符串的操作 `.length` 
 
-数组array
-+ ary = [] 创建一个空数组  ary = Array(4) //创建一个长度为4的空数组
-+ 数组属于内建对象
-+ `var ourArray = [["the universe", 42], ["everything", 101010]];`数组也可以包含数组
-+  `ourArray[0]`  `ourArray[0][0]` 
-+  `ary.length`随时可以被赋值,改变数组长度
-+  `ourArray.push(4)`在后面追加；`ourArray.pop()`弹出最后一个字符并储存；只从尾部进出,是一个栈
-+  `.shift()`弹出第一个字符；`.unshift()`在前面添加；
-
 
 
 
@@ -115,6 +109,7 @@ typeof:  一元运算符，返回类型
 
 比较comparisons
 + == 相等，会进行类型转换再比较（隐含强制转换）
++ **针对原始类型，a == 2是比较值；针对函数，ary == [0],右边会创建新的变量，判断这两个数组是不是同一个。所以不能这样判断数组，可以拆开用ary.length与ary[0]比较**
 + === 严格相等，不进行类型转换直接比较
 + !== 不严格相等
 + == 一边为字符串，则全转换为字符串比较
@@ -220,6 +215,11 @@ x--:
 + 函数表达式/匿名函数 var a = function ()
 + 函数声明会进行声明提升（declaration hoisting），而函数表达式不会。**函数声明可以在函数使用后面** 
 
+箭头函数 -为了以简短的方式编写小函数表达式
++ `=>`出现在参数后面，函数主体前面。
++ 只有一个参数，参数的括号可以省略
+
+
 调用栈 call stack
 + 计算机存储上下文的地方（每个函数返回位置）,占内存. /函数调用时的等待关系
 + 每次调用函数时，当前上下文都存储在此栈的顶部。当函数返回时，它会从栈中删除顶部上下文，并使用该上下文继续执行。
@@ -230,6 +230,30 @@ x--:
 
 >不要过早优化,先写一些正确且容易理解的东西.
 
+### 数组array
++ ary = [] 创建一个空数组  ary = Array(4) //创建一个长度为4的空数组
++ 数组属于内建对象
++ `var ourArray = [["the universe", 42], ["everything", 101010]];`数组也可以包含数组
++  `ourArray[0]`  `ourArray[0][0]` 
++  `ary.length`随时可以被赋值,改变数组长度
++  `ourArray.push(4)`在后面追加；`ourArray.pop()`弹出最后一个字符并储存；只从尾部进出,是一个栈
++  `.shift()`弹出第一个字符；`.unshift()`在前面添加；
++  `array.copyWithin`
++  `ary(10).fill(0)`//全部填满XX
++  `ary.splice()` //删除/替换，返回删除的数组
++  `ary.slice` //两个参数，切一个片段出来，包含开头，不包含结束
++  `ary .join()` //不传参默认为， `ary.toString()`
++  `ary.indexOf(x)` `ary.lastIndexOf(x)` //寻找值为x的索引
++  `String.fromCharCode()`
++  `a.charCodeAt(2)`
++  `ary.contact(ary2)` //将数组拼接在一起，创建一个新数组
++  `a.endWith()`
++  `Array.of()` `Array.from()`
++  //数组操作，字符串操作
++  `arguments`所有的参数；可以用`.length` `arguments[i]`
++  `Math.max(...c)` //展开运算符，只能在参数列表使用
+
+
 ### 对象 object
 + 一些属性和方法组合在一起构成的一个数据实体，用.访问
 + 给对象创建实例 var zoe = new Person;
@@ -238,13 +262,23 @@ x--:
 + 宿主对象：浏览器提供的预定义对象 Form/Image/Element/Document对象
   + window对象，对应浏览器窗口本身，通常统称为BOM
   + document对象，处理网页内容
++ 对象的内容是可以修改的
++ 原始类型的数据不可更改-(number,string,bool)
++ 循环： for (var prop in obj) 
++ slice 出来的数组是浅拷贝（shadllow copy),对应的有深拷贝
++ isEqual是深对比，对比的是具体的内容是否一致；浅对比对比的是否是同一对象
+
+#### 属性 //key/property/attribute/field
++ value.x //x要是合法变量名
++ value[0] / value['joe']
++ .后面的直接使用作为属性，[]里面的会被求值。
++ 包含函数的属性称为某个值的方法 method
 
 
-
-
-DOM  document object model
+## DOM  document object model
 + 文档交互类型，给文档增加交互能力，对文档内容进行抽象和概念化，类似CSS增加样式。代表着加载到浏览器窗口的当前网页。是一种API(应用编程接口，是一个标准)
-+ 文档：节点树
++ **适用于多种环境和多种程序设计语言的通用型API**
++ 文档：节点树 node tree **文档中每个元素节点都是一个对象**
   + 元素节点 DOM的原子是元素节点  `<p class="abc"> this is a pargraph.</p>`
   + 文本节点 只包含文本的元素
   + 属性节点 总是被包含在元素节点中
@@ -252,6 +286,18 @@ DOM  document object model
 BOM 浏览器对象模型，设置浏览器的属性
 
 获取元素节点(文档中的每个元素都是一个对象)
-+ document.getElementById(id)
-+ document.getElementByTagName(tag)
-+ document.getElementByClassName(class)
++ document.getElementById('id') 返回一个对象
++ document.getElementByTagName('tag') 标签名,返回数组
++ document.getElementByClassName('class') 返回数组
+>可以组合使用,i.e.`var shopping = document.getElementById('purchases'); var sales = shopping.getElementsByClassName('sale')`
+
+获取和设置属性
++ object.getAttribute('attribute')
++ object.setAttribute('attr','xxxx') 设置或修改属性
+>非DOM解决方案:`element.value = "the new value"`
+
+事件处理函数  特定事件发生时调用 i.e. onclick
+
+`element.childNotes` 获取任何一个元素的所有子元素,返回数组
+nodeType 
+`window.onload = function` 在页面加载时调用函数
