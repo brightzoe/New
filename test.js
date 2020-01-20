@@ -367,18 +367,36 @@ function argsToArray(args) {
   return result;
 }
 
-function max() {
-  var maxx = -Infinity;
-  for (var i = 0; i < arguments.length; i++) {
-    if (args[i] > maxx) {
-      maxx = args[i];
-    }
+function range(start, end, step) {
+  if (arguments.lenth < 3) {
+    step = 1;
+  } else if (arguments.length == 1) {
+    end = start;
+    start = 1;
   }
-  return maxx;
+  var result = [];
+  for (var i = start; i <= end; i += step) {
+    result.push(i);
+  }
 }
 
-function countF(a, b, c) {
-  if (a == 1) {
-    return 1
-  }else if
+function arraytoList() {
+  var ary = [];
+  for (var i = 0; i < 10; i++) {
+    ary[i] = i + 1;
+  }
+  var list = [];
+  for (var i = 0; i < 10; i++) {
+    list[i] = { val: ary[i] };
+    ary[i].next = ary[i + 1];
+  }
+  return list;
+}
+
+function append(val, head) {
+  var node = {
+    val: val,
+    next: head
+  };
+  return node;
 }

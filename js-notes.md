@@ -267,6 +267,7 @@ x--:
 + 循环： for (var prop in obj) 
 + slice 出来的数组是浅拷贝（shadllow copy),对应的有深拷贝
 + isEqual是深对比，对比的是具体的内容是否一致；浅对比对比的是否是同一对象
++ **深对比如何考虑，自己实现**
 
 #### 属性 //key/property/attribute/field
 + value.x //x要是合法变量名
