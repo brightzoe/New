@@ -2,7 +2,7 @@
 《JavaScript DOM 编程艺术》
 《Eloquent JavaScript》
 
-待学:
++ 待学:
 <深入了解计算机系统> 大名鼎鼎的CSAPP
 
 WebPack 编译&打包&同步  
@@ -23,19 +23,9 @@ WebPack 编译&打包&同步
   + 有效位数53位,可以表达的最大精确数2**53-1 为Number.MAX_SAFE_INTEGER. 大于这个范围的数是可以表示的,但不能保证精确,溢出的位会被截断
   + 整数部分使用的越多,小数部分有效位数越少.即数值越大,小数部分的精度越低.
 
-IEEE754标准 二进制浮点顺运算标准
+IEEE754标准:二进制浮点顺运算标准
   + 双精度浮点数使用8字节表示,指数部分11bit,底数62bit
   + 单精度浮点数使用4字节表示,指数部分8bit,底数23bit
-
-
-
-
-
-
-+ 任何标签都可以加id属性
-+ `<a href="javascript:alert('a');">link</a>`一般不在a里面加code
-+ html用啥，js就用啥//class除外，为关键字
-
 
 
 
@@ -73,15 +63,16 @@ IEEE754标准 二进制浮点顺运算标准
 
 
 
-js的引入最好放在html里body的最后，这样会加快页面加载速度。
-控制台调试：debugger；/右键行号临时断点
-命名：
++ js的引入最好放在html里body的最后，这样会加快页面加载速度。
++ 控制台调试：debugger；/右键行号临时断点
++ 命名：
 fuzzy_little_turtle snakecase
 FuzzyLittleTurtle capital case 构造函数
 fuzzyLittleTurtle camel case 驼峰式
 
-
-## 布尔代数与命题逻辑
++ 任何标签都可以加id属性,他的身份识别
++ `<a href="javascript:alert('a');">link</a>`一般不在a里面加code
++ html用啥，js就用啥 //class除外，为关键字
 
 
 ## 值与运算符
@@ -98,7 +89,6 @@ fuzzyLittleTurtle camel case 驼峰式
 + \转义符
 + \n 回车  \t Tab
 + 反引号后可出现明文回车
-+ 对字符串的操作 `.length` 
 
 
 
@@ -108,22 +98,40 @@ typeof:  一元运算符，返回类型
 自动类型转换：弱类型语言js 强类型语言（python）
 变量指向的类型在程序运行时是否允许发生变化：动态类型（js）静态类型（c）
 
+### 类型转换：
++ `parseInt()`//强制转换为数字 
++ `Number()`或`+ "3" `
++ `String()`
++ `Boolean()`
++ `x.toFixed(n)` 确定精度
++ `Math.pow(x,3)` 乘方; floor/ceil/trunc/round
++ `Math.PI` **大小写要准确，js大小写敏感**
+
+
+
 比较comparisons
-+ == 相等，会进行类型转换再比较（隐含强制转换）
-+ **针对原始类型，a == 2是比较值；针对函数，ary == [0],右边会创建新的变量，判断这两个数组是不是同一个。所以不能这样判断数组，可以拆开用ary.length与ary[0]比较**
-+ === 严格相等，不进行类型转换直接比较
-+ !== 不严格相等
-+ == 一边为字符串，则全转换为字符串比较
-+ 字符串也可以进行比较，比较的是ASCII
-+ NaN跟自己也不相等
-+ null/undefined 空值
++ `==` 相等，会进行类型转换再比较（隐含强制转换）
++ 比较方式：
+  + 针对原始类型，`a == 2`是比较值；
+  + 针对函数，`ary == [0]`,右边会创建新的变量,判断这两个数组是不是同一个。所以不能这样判断数组，可以拆开用ary.length与ary[0]比较
+  + 字符串也可以进行比较，比较的是ASCII
+  + `==` 一边为字符串，则全转换为字符串比较
+
++ `===` 严格相等，不进行类型转换直接比较
++ `!==` 不严格相等
++ `NaN`跟自己也不相等
++ `isNaN`是否“不是一个数值”
++ `Number.isNaN`是否是NaN这个值
++ `undefined`与`null`：==可以，===不可以
+  + `undefined`：已定义，未赋值，类型为undefined
+  + `null`:未定义，类型为object
 + `!name` !运算符会将值转换为布尔类型再取反
 
 
 复合赋值
 + +=，-=，+=，/=
 
-逻辑运算 logical operators
+### 逻辑运算 logical operators
 + && 和
 + || 或
 + _ ? _ : _  三元运算符（条件运算符），根据前面是T/F确定选择后面哪个值
@@ -134,10 +142,12 @@ typeof:  一元运算符，返回类型
     console.log(false ? 1 : 2);
     // → 2
     ```
-+ 逻辑运算的短路特性short-circuiting 
++ **逻辑运算的短路特性**short-circuiting 
   + 右边的值只在必要时进行计算
   - __ && __ && __   从左到右返回第一个为false的值
   - __ || __ || __   从左到右返回第一个为true的值
+`true && "hello,xiaoai" //实际开发可以用于：满足前面条件，然后执行后面的。从前向后执行`
+`false || "default" //判断是使用传过来的值，还是默认值`
 
 **原码与补码**
 正数的补码与原码相同，负数的补码等于原码取反，末位加1（符号位不变）
@@ -151,6 +161,7 @@ typeof:  一元运算符，返回类型
 + `<<` 左移，加倍
 + `>>>`按位右移，不保留符号位
 + <<<
++ `~`   取反操作, 先加1 然后加上负号
 
 位运算/逻辑运算技巧
 + 可以用if ((a & 1) == 0)代替if (a % 2 == 0)来判断a是不是偶数。
@@ -169,23 +180,17 @@ typeof:  一元运算符，返回类型
 + 变量不含空格，不以数字开头，符号只能用$和_，不能用关键字
 + 定义变量不赋值 返回undefined
 + let 绑定，类似var
-+ const 常量，定义一个不变的绑定
-  + 常量一般在程序顶部声明，一般为大写，_ 连接
 + 全局变量
 + 局部变量
 
-转换类型 
-+ `Number()`
-+ `String()`
-+ `Boolean()`
-+ `x.toFixed(n)` 确定精度
-+ `Math.pow(x,3)` 乘方; floor/ceil/trunc/round
-+ `Math.PI` **大小写要准确，js大小写敏感**
-
-isNaN  是否“不是一个数值”
-Number.isNaN是否是NaN这个值
+常量：一般在程序顶部声明，一般为大写，_ 连接
+命名方式`const Five_Secends = 5000`
 
 
+
+`console.log(a++)`  //3,先返回a,然后a++
+`console.log(a)`   //4,a已经加过了
+`console.log(++a)` //5,先a++，然后返回
 
 控制流 control flow 
 
@@ -198,10 +203,6 @@ Number.isNaN是否是NaN这个值
   + switch 每个case都要加break;只能判断严格相等；
 
 
-x++:先返回x，然后+1
-x--:
-++x:先+1，再返回x
---x:
 
 
 ### 函数 functions
@@ -218,33 +219,81 @@ x--:
 
 箭头函数 -为了以简短的方式编写小函数表达式
 + `=>`出现在参数后面，函数主体前面。
-+ 只有一个参数，参数的括号可以省略
+```js
+var greeting = (name) => { //只有一个参数，参数的小括号可以省略；只有一行语句，后面大括号也可以省略
+  console.log("hello" + name)
+}
+```
 
-
++ argements
+```js
+function (){//不指定参数的话，参数数量不固定，arguments算是不固定长度的数组
+  console.log(arguments[0])
+}
+```
 调用栈 call stack
 + 计算机存储上下文的地方（每个函数返回位置）,占内存. /函数调用时的等待关系
 + 每次调用函数时，当前上下文都存储在此栈的顶部。当函数返回时，它会从栈中删除顶部上下文，并使用该上下文继续执行。
 
-**闭包**
+#### **闭包**
+```js
+function squareSum(a,b){//求平方和
+  function square(a){
+    return a * a
+  }
+  return square(a) + square(b)
+}
+
+squareSum(3,5)
+```
++ 内部函数可以作为返回值返回出去，形成高阶函数（返回函数的函数）。
+  
+
+**函数柯里化**：柯里化是将函数分解为一系列函数的过程，每个函数都只接收一个参数。
+作用：1. 参数复用；2. 提前返回；3. 延迟计算/运行。
 
 **递归**
 
+**自执行函数**
+调用自己执行，防止命名冲突。
+```js
+let num1 = 10;
+
+(function(){
+  let num1 = 20
+  return num1
+})()
+// => 20
+num1
+// => 10
+```
+**回调函数** callback
+参数是一个函数
+
 >不要过早优化,先写一些正确且容易理解的东西.
 
-### 数组array
-+ ary = [] 创建一个空数组  ary = Array(4) //创建一个长度为4的空数组
-+ 数组属于内建对象
-+ `var ourArray = [["the universe", 42], ["everything", 101010]];`数组也可以包含数组
-+  `ourArray[0]`  `ourArray[0][0]` 
-+  `ary.length`随时可以被赋值,改变数组长度
-+  `ourArray.push(4)`在后面追加；`ourArray.pop()`弹出最后一个字符并储存；只从尾部进出,是一个栈
-+  `.shift()`弹出第一个字符；`.unshift()`在前面添加；
-+  `array.copyWithin`
-+  `ary(10).fill(0)`//全部填满XX
-+  `ary.splice()` //删除/替换，返回删除的数组
-+  `ary.slice` //两个参数，切一个片段出来，包含开头，不包含结束
-+  `ary .join()` //不传参默认为， `ary.toString()`
-+  `ary.indexOf(x)` `ary.lastIndexOf(x)` //寻找值为x的索引
+### 数组array，数组属于内建对象
+```js
+//创建数组
+  let ary = [1,2,3]  //可以创建只有一个元素的数组
+  let ary = Array(4) //创建一个长度为 4 的空数组
+  let ary = new Array(3,4,5)
+  let ary = Array(3,4,5)
+  let ary = Array.of(3,4,5)//可以创建只有一个元素的数组
+  let ourArray = [["universe", 42], ["everything", 101010]];//数组也可以包含数组
+//改变数组
+  ary.length = 2     //随时可以被赋值,改变数组长度
+  ourArray.push(4)  //在后面追加元素
+  ourArray.pop()   //弹出最后一个字符并储存；只从尾部进出,形成栈
+  ary.shift()     //弹出第一个元素
+  ary.unshift()  //在前面添加元素
+  ary.splice(index,length) //删除元素，原地操作,改变原数组
+  ary.splice(index,length,new_elements)//替换，删除一些元素，并在此插入新的元素
+  ary.splice(index,0,new_elements)//插入元素，删除元素的length = 0，就是在在此直接插入新元素
+  ary.slice()   //两个参数，切一个片段出来，包含开头，不包含结束
+  ary(10).fill(0)//全部填满XX
+  ary .join()   //不传参默认为， `ary.toString()`
+  ary.indexOf(x);ary.lastIndexOf(x)//寻找值为x的索引
 +  `String.fromCharCode()`
 +  `a.charCodeAt(2)`
 +  `ary.contact(ary2)` //将数组拼接在一起，创建一个新数组
@@ -254,7 +303,7 @@ x--:
 +  `arguments`所有的参数；可以用`.length` `arguments[i]`
 +  `Math.max(...c)` //展开运算符，只能在参数列表使用
 
-
+```
 ### 对象 object
 + 一些属性和方法组合在一起构成的一个数据实体，用.访问
 + 给对象创建实例 var zoe = new Person;
@@ -272,9 +321,22 @@ x--:
 
 #### 属性 //key/property/attribute/field
 + value.x //x要是合法变量名
-+ value[0] / value['joe']
++ value[0] / value['joe']s
 + .后面的直接使用作为属性，[]里面的会被求值。
 + 包含函数的属性称为某个值的方法 method
+
+### 作用域
++ 作用域：变量在某个范围内起作用，为了提高程序的可靠性，减少命名冲突
++ 全局作用域：在整个js文件起作用
++ 函数作用域：旨在函数内部起作用
+  
+
+## lodash     `_`下划线
++ 一个函数库，前身underscore
+
+
+
+
 
 
 ## DOM  document object model
@@ -303,3 +365,12 @@ BOM 浏览器对象模型，设置浏览器的属性
 `element.childNotes` 获取任何一个元素的所有子元素,返回数组
 nodeType 
 `window.onload = function` 在页面加载时调用函数
+
+
+
+
+
+
+
+
+
