@@ -355,3 +355,78 @@
   </tr>
 </table>
 ```
+
+`<iframe>`框架嵌套
+
+- 安全原因，有些网页拒绝被嵌入其他页面
+- iframe 可以套 iframe
+- 它内部的跳转记录也会存在于浏览器的前进后退的记录里面
+
+```html
+<iframe src="https://www.baidu.com/" name="百度" frameborder="1">
+  <p>您的浏览器不支持 iframe, 请升级浏览器</p>
+  <!--fallback: 不支持此标签的退化内容-->
+</iframe>
+```
+
+#### feedback
+
+- 有的 feedback 放里面，有的 feedback 放外面，取决于正常使用里面是否有元素。
+
+```html
+<canvas>
+  <p>no supported</p>
+</canvas>
+
+<script>
+  var a = 8
+</script>
+<noscript>your browser dont support javascript!</noscript>
+
+<iframe src="" frameborder="0">
+  <p>no supported</p>
+</iframe>
+```
+
+#### html5 语义标签
+
+```html
+<header>
+  <nav></nav>
+</header>
+
+<template></template>
+<table></table>
+
+<article>
+  <section></section>
+  <aside></aside>
+  <textarea></textarea>
+</article>
+```
+
+#### 一些常见标签
+
+- 上标：`A <sub>2</sub>` 下标：`A <sup>2</sup>`
+- 多媒体标签：
+
+````html
+<video src="a.mp4" controls></video>
+
+<video autoplay loop preload controls>
+  <source src="a.mp4" />
+  <source src="a.m3u8" />
+  <source src="a.webm" />
+  您的浏览器不支持 video
+</video>
+
+<audio src=""></audio>
+
+<object data="" type=""></object>
+<!-- 东西，对象，是一个容器 -->
+
+<progress value="36" min="" max=""></progress>
+
+<i class="fa fa-angle-right" aria-hidden="true"></i>
+```
+````
