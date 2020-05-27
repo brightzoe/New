@@ -71,7 +71,7 @@ div.jp-interface {
 }
 
 div.jp-audio div.jp-type-single div.jp-interface {
-  height: 50px;
+  height: 60px;
 }
 div.jp-audio div.jp-type-playlist div.jp-interface {
   height: 80px;
@@ -158,6 +158,22 @@ a.jp-pause:hover {
     no-repeat;
 }
 
+a.jp-fast-forward {
+  background: url('http://ieslpod.com/style/css/img/jplayer.blue.monday.jpg') 0 -142px
+    no-repeat;
+}
+a.jp-fast-forward:hover {
+  background: url('http://ieslpod.com/style/css/img/jplayer.blue.monday.jpg') -29px -142px
+    no-repeat;
+}
+a.jp-rewind {
+  background: url('http://ieslpod.com/style/css/img/jplayer.blue.monday.jpg') 0 -112px
+    no-repeat;
+}
+a.jp-rewind:hover {
+  background: url('http://ieslpod.com/style/css/img/jplayer.blue.monday.jpg') -29px -112px
+    no-repeat;
+}
 a.jp-stop,
 a.jp-previous,
 a.jp-next {
@@ -349,7 +365,7 @@ div.jp-volume-bar-value {
 
 div.jp-audio div.jp-time-holder {
   position: absolute;
-  top: 28px;
+  top: 32px;
 }
 div.jp-audio div.jp-type-single div.jp-time-holder {
   left: 110px;
@@ -538,7 +554,7 @@ ul.jp-toggles {
 }
 
 div.jp-audio .jp-type-single ul.jp-toggles {
-  width: 25px;
+  width: 150px;
 }
 div.jp-audio .jp-type-playlist ul.jp-toggles {
   width: 55px;
@@ -554,18 +570,21 @@ div.jp-video ul.jp-toggles {
 }
 
 ul.jp-toggles li {
-  display: block;
-  float: right;
+  display: inline-block;
+  float: left;
 }
 
 ul.jp-toggles li a {
   display: block;
-  width: 25px;
-  height: 18px;
+  width: 28px;
+  height: 28px;
   text-indent: -9999px;
   line-height: 100%; /* need this for IE6 */
 }
-
+li.span {
+  width: 5px;
+  height: 18px;
+}
 a.jp-full-screen {
   background: url('http://ieslpod.com/style/css/img/jplayer.blue.monday.jpg') 0 -310px
     no-repeat;
@@ -591,21 +610,29 @@ a.jp-restore-screen:hover {
 a.jp-repeat {
   background: url('http://ieslpod.com/style/css/img/jplayer.blue.monday.jpg') 0 -290px
     no-repeat;
+  height: 18px !important;
+  margin: 5px;
 }
 
 a.jp-repeat:hover {
   background: url('http://ieslpod.com/style/css/img/jplayer.blue.monday.jpg') -30px -290px
     no-repeat;
+  height: 18px !important;
+  margin: 5px;
 }
 
 a.jp-repeat-off {
   background: url('http://ieslpod.com/style/css/img/jplayer.blue.monday.jpg') -60px -290px
     no-repeat;
+  height: 18px !important;
+  margin: 5px;
 }
 
 a.jp-repeat-off:hover {
   background: url('http://ieslpod.com/style/css/img/jplayer.blue.monday.jpg') -90px -290px
     no-repeat;
+  height: 18px !important;
+  margin: 5px;
 }
 
 a.jp-shuffle {

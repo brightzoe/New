@@ -66,30 +66,28 @@
     ></script>
     <script>
       //<![CDATA[
-      $(document).ready(function() {
+      $(document).ready(function () {
         $('#jquery_jplayer_1').jPlayer({
-          ready: function(event) {
+          ready: function (event) {
             $(this).jPlayer('setMedia', {
               mp3: 'http://ieslpod.com/m_DE/0001_0100/0010_iESLPod.com.mp3', //mp3的播放地址
             })
           },
-          timeupdate: function(event) {
+          timeupdate: function (event) {
             if (event.jPlayer.status.currentTime == 0) {
               time = ''
             } else {
               time = event.jPlayer.status.currentTime
             }
           },
-          play: function(event) {
+          play: function (event) {
             //点击开始方法调用lrc。start歌词方法 返回时间time
-            $.lrc.start($('#lrc_content').val(), function() {
+            $.lrc.start($('#lrc_content').val(), function () {
               return time
             })
           },
-          ended: function(event) {
-            $('#lrc_list')
-              .removeAttr('style')
-              .html('<li>播放完毕！</li>')
+          ended: function (event) {
+            $('#lrc_list').removeAttr('style').html('<li>播放完毕！</li>')
           },
           swfPath: '/mjs', //存放jplayer.swf的决定路径
           solution: 'html, flash', //支持的页面
@@ -107,7 +105,7 @@
     />
   </head>
 
-  <body style="">
+  <body >
     <div id="logo">
       <a href="http://ieslpod.com/"
         ><img
@@ -422,15 +420,15 @@
           <a
             href="https://www.ximalaya.com/waiyu/11138317/"
             target="_blank"
-            style="padding-left:0;"
+            style="padding-left: 0;"
             >Coach Shane E3 Podcast</a
           >
         </div>
-        <div class="left_nav_title" style="padding-top:10px; ">
+        <div class="left_nav_title" style="padding-top: 10px;">
           <a
             href="https://www.ximalaya.com/waiyu/19450373/"
             target="_blank"
-            style="padding-left:0; "
+            style="padding-left: 0;"
             >Happy English Podcast</a
           >
         </div>
@@ -516,9 +514,21 @@
                   <div class="jp-volume-bar-value" style="width: 80%;"></div>
                 </div>
                 <div class="jp-time-holder">
-                  <div class="jp-current-time">00:00</div>
+                  <div class="jp-current-time" id ="jp-current-time">00:00</div>
                   <div class="jp-duration">17:49</div>
                   <ul class="jp-toggles">
+                    <li>
+                      <a
+                        href="javascript:;"
+                        class="jp-rewind"
+                        tabindex="1"
+                        title="rewind"
+                        id ="btn1""
+                        >rewind</a
+                      >
+                    </li>                    
+                    <li class="span"></li>
+                                        
                     <li>
                       <a
                         href="javascript:;"
@@ -527,7 +537,7 @@
                         title="repeat"
                         >repeat</a
                       >
-                    </li>
+                    </li></li>
                     <li>
                       <a
                         href="javascript:;"
@@ -538,6 +548,19 @@
                         >repeat off</a
                       >
                     </li>
+                    <li class="span"></li>
+                    <li>
+                      <a
+                        href="javascript:;"
+                        class="jp-fast-forward"
+                        tabindex="1"
+                        title="fast forword"
+                        id ="btn2" 
+                        >fast forword</a
+                      >
+                    </li>
+
+
                   </ul>
                 </div>
               </div>
@@ -954,8 +977,8 @@
           ]
       </script>
       <script type="text/javascript">
-        document.body.oncopy = function() {
-          setTimeout(function() {
+        document.body.oncopy = function () {
+          setTimeout(function () {
             var text = clipboardData.getData('text')
             if (text) {
               text = text + '\r\n本文来自：详细网址：' + location.href

@@ -1,46 +1,184 @@
-<html lang="en">
-
+<!-- <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <style>
-
-
-    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>test</title>
   </head>
-
   <body>
+    <div class="audio-wapper">
+      <audio id="audio" xcontrols="controls" xautoplay="autoplay">
+        <source
+          id="ss"
+          src="http://ieslpod.com/m_DE/0001_0100/0010_iESLPod.com.mp3"
+          type="audio/mpeg"
+        />
+      </audio>
+    </div>
+    <script>
+      //在谷歌浏览器输入  chrome://flags/#autoplay-policy
+      // 第一个选项 Autoplay policy  设置为 no user gesture is required  ：谷歌浏览器要调 才可以自动播放
+      var i = 0
 
-    <div id="main" style="width: 600px;height:400px;"></div>
+      //控制播放 currentTime
+      window.onkeydown = function (event) {
+        var audio = document.getElementById('audio')
+        if (event.keyCode == 32) {
+          //空格控制播放
+          if (audio.paused) {
+            //判断音频是否暂停
+            audio.play()
+          } else {
+            audio.pause()
+          }
+        }
+        if (event.keyCode == 13) {
+          //回车控制是否禁音
+          if (audio.muted) {
+            audio.muted = false
+          } else {
+            audio.muted = true
+          }
+        }
 
+        if (event.keyCode == 27) {
+          //Esc键关闭
+          window.close()
+        }
+
+        if (event.keyCode == 39) {
+          //右方向键快进
+          audio.pause()
+          if (audio.currentTime < audio.duration - 5) {
+            //duration:音频总长度   currentTime：音频当前进度（当前长度）
+            audio.currentTime += 5
+          }
+        }
+
+        if (event.keyCode == 37) {
+          //左方向键快退
+          audio.pause()
+          if (audio.currentTime > 1) {
+            audio.currentTime -= 5
+          }
+        }
+
+        if (event.keyCode == 38) {
+          //上方向键：上一曲（第一曲没作用）
+          audio.pause()
+          if (i > 0) {
+            i--
+          } else {
+            i = 0
+          }
+          audio.load()
+          document.getElementById('ss').src = '' + shu[i] + ''
+        }
+
+        if (event.keyCode == 40) {
+          //下方向键：下一曲
+          audio.pause()
+          if (i + 1 == shu.length) {
+            i = 0
+          } else {
+            i++
+          }
+          audio.load()
+          document.getElementById('ss').src = '' + shu[i] + ''
+        }
+      }
+      //按键松开时播放
+      window.onkeyup = function (event) {
+        var audio = document.getElementById('audio')
+        if (event.keyCode == 39) {
+          audio.play()
+        }
+        if (event.keyCode == 37) {
+          audio.play()
+        }
+        if (event.keyCode == 38) {
+          audio.play()
+        }
+        if (event.keyCode == 40) {
+          audio.play()
+        }
+      }
+
+      //鼠标滚轮改变音量大小
+      window.onwheel = function (event) {
+        var audio = document.getElementById('audio')
+        var pan = 0
+        if (event.wheelDelta) {
+          pan = ((event.wheelDelta / 150) * 0.01).toFixed(2)
+        }
+        if (event.detail) {
+          pan = ((-event.detail / 3) * 0.01).toFixed(2)
+        }
+        var volume = Number(audio.volume.toFixed(2))
+        if (volume + Number(pan) > 1 || volume + Number(pan) < 0) {
+        } else {
+          audio.volume = volume + Number(pan)
+        }
+      }
+
+      // function gename() {
+      //   //歌名
+      //   var name = document.getElementById('name')
+      //   var s = decodeURI(shu[i]) //解码
+      //   var pp = /([^\\/]+)\.([^\\/]+)/i //正则匹配歌名
+      //   pp.test(s)
+      //   name.innerHTML = RegExp.$1
+      // }
+
+      var audio = document.getElementById('audio')
+      // audio.onplay = gename //播放时显示歌名
+      audio.onended = function () {
+        //结束时自动下一曲
+        if (i + 1 == shu.length) {
+          i = 0
+        } else {
+          i++
+        }
+        // audio.load() //重新加载
+        // document.getElementById('ss').src = '' + shu[i] + '' //更换音频路径
+      }
+    </script>
   </body>
-  <script src="echarts.min.js"></script>
-  <script>
-    var myChart = echarts.init(document.getElementById("main"))
-    // 指定图表的配置项和数据
-    var option = {
-      title: {
-        text: 'ECharts 入门示例'
-      },
-      tooltip: {},
-      legend: {
-        data: ['销量']
-      },
-      xAxis: {
-        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-      },
-      yAxis: {},
-      series: [{
-        name: '销量',
-        type: 'bar',
-        data: [5, 20, 36, 10, 10, 20]
-      }]
-    };
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="music">
+      <div class="musicL">
+        <i class="iconfont icon-shangyishou" id="top"></i>
+        <span class="play" id="play">
+          <i class="iconfont icon-bofang"></i>
+        </span>
+        <i class="iconfont icon-xiayishou" id="down"></i>
+      </div>
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+      <div class="progress">
+        <span class="start_time" id="start_time">00:00</span>
+        <div class="load" id="load">
+          <div class="circle" id="circle">
+            <div class="round" id="round"></div>
+          </div>
+        </div>
+        <span class="total_time" id="total_time">00:00</span>
+      </div>
+    </div>
+    <audio id="audio"></audio>
 
-  </script>
-
+    <div class="music_list">
+      <ul id="ul">
+        <li>1.mp3</li>
+        <li>2.mp3</li>
+        <li>3.mp3</li>
+        <li>4.mp3</li>
+      </ul>
+    </div>
+  </body>
 </html>
