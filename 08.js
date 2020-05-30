@@ -13,9 +13,10 @@ const ap = new APlayer({
   lrcType: 1,
   audio: [
     {
-      name: 'name1',
+      name: 'name',
       artist: 'artist',
-      url: 'http://ieslpod.com/Daily_English/0001_0100/mp227/1.mp3',
+      url:
+        'https://zhangchen2397.github.io/audioPlayer/example/asset/music/once.mp3',
       cover: 'https://cdn.jsdelivr.net/gh/brightzoe/img/ieslpod',
       lrc: '[00:00.00]APlayer\n[00:04.01]is\n[00:08.02]amazing',
 
