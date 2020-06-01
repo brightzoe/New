@@ -36,15 +36,15 @@ IEEE754 标准：二进制浮点顺运算标准
 
 - 格式： 协议：//主机地址+目录路径+参数
 - 常用协议
-  ![常用协议](https://cdn.jsdelivr.net/gh/brightzoe/img/常用协议.png)
+  ![常用协议](https://cdn.jsdelivr.net/gh/brightzoe/img/xieyi.png)
 
 ### 浏览器及其内核
 
-![](https://cdn.jsdelivr.net/gh/brightzoe/img/浏览器内核.png)
+![](https://cdn.jsdelivr.net/gh/brightzoe/img/browser.png)
 
 ## 万维网是如何工作的
 
-![客户端和服务器](https://cdn.jsdelivr.net/gh/brightzoe/img/img/20200105191449.png)
+![客户端和服务器](https://cdn.jsdelivr.net/gh/brightzoe/img/20200105191449.png)
 
 - 网络连接：允许你在互联网上发送和接受数据。基本上和你家到商店的街道差不多
 - TCP/IP: 传输控制协议和因特网互连协议是定义数据如何传输的通信协议。这就像你去商店购物所使用的交通方式，比如汽车或自行车。
