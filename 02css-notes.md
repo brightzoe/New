@@ -259,7 +259,7 @@ ul :not(p):not(.foo) {
     - 可以想象它的优先级为 0000 并且出现在作者样式的开头
     - 会被作者样式和读者样式覆盖，但不会被默认样式覆盖
     - p75 页
-    ```
+    ```css
     <font color="red">aa</font>
     <style> {
     color: green;
@@ -267,20 +267,21 @@ ul :not(p):not(.foo) {
     </style>
     ```
 
-**值与单位**
-数字：
+### 值与单位
+
+**数字**：
 line-height:2 200%, 倍数
 column-count: 2;
 zoom: 2.5;
 
-百分比：
+**百分比**：
 width/height: 60%; 基准是其父元素的宽度或高度
 top/left/right/bottom: 50%;
 line-height: 150%; 基准是文字的大小
 vertical-align: 40%;
 color: rgb(40%, 50%, 70%)
 
-颜色：R G B
+**颜色**：R G B
 color:red/silver/grey;
 
 #(0-255)(0-255)(0-255) ->16700000 hex color
@@ -301,31 +302,30 @@ RGB
 CMYK (Cany Manganta Yellow BlacK)
 hsla（色相，饱和度，明度，0-1）
 
-长度
+**长度**
 绝对长度：in(ch) cm mm
 相对长度：
-px,CSS 像素，在设计中大多数被认为是绝对长度
 
-    em: 基准是当前元素字号的大小，当前没有的话就继承父元素
-    1 em=100%
-    rem, 基准是 html 元素字号，做到灵活缩放整个网页
-    vw/vh, 视觉窗口的宽度/长度
-      1vw 视口宽度 1/100
-      vmax=max(vw, vh) 视口宽或者高较大的那一个的 100 之一
-      vmin=min(vw, vh) 视口宽或者高较小的那一个的 100 之一
+- px,CSS 像素，在设计中大多数被认为是绝对长度
+- em: 基准是当前元素字号的大小，当前没有的话就继承父元素 1 em=100%
+- rem, 基准是 html 元素字号，做到灵活缩放整个网页
+- vw/vh, 视觉窗口的宽度/长度
+  1vw 视口宽度 1/100
+  vmax=max(vw, vh) 视口宽或者高较大的那一个的 100 之一
+  vmin=min(vw, vh) 视口宽或者高较小的那一个的 100 之一
 
-    width: calc(2 * 30em - 40%)
+  width: calc(2 \* 30em - 40%)
 
-角度
+**角度**
 degree 45deg 90deg
 radian 弧度 3.14rad=180deg
 
-时间 s ms
+**时间** s ms
 
-URL background-image: url(a.png); 指定背景图片/字体
+**URL** background-image: url(a.png); 指定背景图片/字体
 相对路径 绝对路径
 
-## 视口
+### 视口
 
 **设备像素与 CSS 像素**
 现代浏览器上实现的缩放，仅仅是拉伸像素。元素的宽度并没有变化，而是实际像素在尺寸上增加。
@@ -377,7 +377,7 @@ document. documentElement.clientWidth/Height
     - width=device-width
     - 布局采用 rem 方案，排版使用正常的字号大小如 px。
 
-**字体**
+### 字体
 
 - 字体族
   - serif 衬线字体，不等宽
@@ -432,11 +432,12 @@ font-variant
 normal small-caps: 小型的大写字母
 text-transform：uppercase/captialize +把小写字母显示成小号的大写字母 +有些字体专门为小写字母设计了这种样式，而不是单纯的把大写字母显示的小一点。
 
-    - font:
-    [font-style || font-variant || font-weight] font-size[ / line-height] font-family
-    - font: small-caps bold 20px / 1.2em 宋体，serif;
-    - 前三个的顺序不重要
-    font 属性值的覆盖，整个是一个属性，值会一起背新值覆盖
+**font**:
+[font-style || font-variant || font-weight] font-size[ / line-height] font-family
+
+- font: small-caps bold 20px / 1.2em 宋体，serif;
+- 前三个的顺序不重要
+- font 属性值的覆盖，整个是一个属性，值会一起被新值覆盖
 
 使用系统字体：（只能整体设置）
 caption: 用于有标题的控件，如按钮。
@@ -447,18 +448,15 @@ small-caption: 用于小空间加标签。
 status-bar: 用于窗口状态条。
 例：button {font:caption;}
 
-text-indent 文字缩进 [用于块级元素], 用负值可以隐藏文字
+text-indent:文字缩进 (用于块级元素), 用负值可以隐藏文字
 
-text-align 文字水平对齐
-left,right,center,justify
+text-align:文字水平对齐 left,right,center,justify
 
 line-height
 
-vertical-align:（行内元素/替换元素垂直对齐）
-sub/supper 上标元素/下标元素
-baseline/bottom/top
+vertical-align:行内元素/替换元素垂直对齐 sub/supper baseline/bottom/top
 
-word-spacing: 其值是添加到本身空格间的值，而不是设置了多少，单词间就间隔多少
+word-spacing: 其值是添加到本身空格间的值
 
 Text Decoration
 none | [ underline ‖ overline ‖ line-through ‖ blink]
@@ -477,77 +475,87 @@ text-shadow:
 3px 3px #2d343a;
 特大范围阴影可能造成性能问题
 
-box-shadow 与上类似 - 水平偏移 垂直偏移 模糊半径 扩散半径 颜色，
-下一组； - 两个半径都可以不写，默认都为 0 - 颜色同上
+box-shadow 与 text-shadow 类似:水平偏移 垂直偏移 模糊半径 扩散半径 颜色，下一组；
+
+- 两个半径都可以不写，默认都为 0
+  e.g. `box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);`
 
 white-space 指定如何处理空格与换行，以及自动换行
 word-break 指定单词如何折行
 overflow-wrap
-
 direction: ltr | rtl 文字阅读方式
 
-元素（即 html 标签）的层级关系
+### 元素（即 html 标签）的层级关系
 
-- 嵌套/层叠/树形/递归/自相似/分形结构
+嵌套/层叠/树形/递归/自相似/分形结构
 
-* 子元素 child
-* 父元素 parent
-* 兄弟 siblings
-* 后代 descendants
-* 祖先 ancestor
+- 子元素 child
+- 父元素 parent
+- 兄弟 siblings
+- 后代 descendants
+- 祖先 ancestor
 
-- 替换元素与非替换元素
+* 替换元素与非替换元素
   替换元素是没有后代元素/标签/结点的
-- 替换元素是指其内容被其它不在文档里的内容替换了的元素，如：
-- img
-- radio
-- checkbox
-- input
-- iframe
-- canvas
-- object
+* 替换元素是指其内容被其它不在文档里的内容替换了的元素，如：
+* img
+* radio
+* checkbox
+* input
+* iframe
+* canvas
+* object
   其它大部分元素都是非替换元素
 
 元素的显示角色
-块级元素：占满父元素的宽度，不会让其它元素在它的旁边。如：p，h1-6，div,
-nav,header
+**块级元素**：占满父元素的宽度，不会让其它元素在它的旁边。如：p,h1-6,div,nav,header
 display 属性可以改变元素的显示角色
-行内/内联/行间：在一行文字内产生的元素框。如 a，em，strong,i,b,u,span. 它们不会打断所在行的文字
-html5 中元素并不只区分为块级与内联，而是分为如下几个大类
-+flow
-+pharsing
-+transparent
-+meta content
-+section+heading content
-+embed
-+intereactive
+**行内/内联/行间**：在一行文字内产生的元素框。如 a，em，strong,i,b,u,span. 它们不会打断所在行的文字
 
-**盒模型**
+html5 中元素并不只区分为块级与内联，而是分为如下几个大类:
+
+- flow
+- pharsing
+- transparent
+- meta content
+- section+heading content
+- embed
+- intereactive
+
+### **盒模型**
+
 margin 可以为负值，padding 不能为负值。
 background-color 会充满 content,padding,border.
+
 从外到内：margin-box,border-box,padding-box,content-box
 默认情况：width,height 设置为 content-box, 可以用 box-sizing 可改变为 border-box/content-box
 
-包含块：一个元素的布局上下文。由最近的块级祖先框/表单元格/行内块元素框的内容边界构成
+包含块：一个元素的布局上下文。由最近的块级祖先框/表单元格/行内块元素框的内容边界构成。
 
 正常流：从上到下/从左到右显示。没有定位，没有浮动，不是 flex 元素，这个元素就在正常流里面。
-一个盒模型的水平格式化有七个属性，其中只有三个属性可以设置为 auto: 左右 margin 和 width
-两个 auto:
-两个 margin 为 auto: 两边 auto 计算成一样的正值；如无法都为正，则左为 0, 右为负值
-一个 margin 为 auto,width 为 auto: 相当于为 auto 的 margin 为 0
-三个 auto: 相当于左右 margin 为 auto
-零个 auto: 过分受限，重置右 margin
 
-块元素垂直格式化：(date:11-26)
+一个盒模型的**水平格式化**有七个属性，其中只有三个属性可以设置为 auto: 左右 margin 和 width
+
+- 两个 auto:
+  两个 margin 为 auto: 两边 auto 计算成一样的正值；如无法都为正，则左为 0, 右为负值
+  一个 margin 为 auto,width 为 auto: 相当于为 auto 的 margin 为 0
+
+- 三个 auto: 相当于左右 margin 为 auto
+
+- 零个 auto: 过分受限，重置右 margin
+
+**块元素垂直格式化**：(date:11-26)
 如果一个块级元素的高度是百分数，这个值是包含块高度的百分数。
 如果没有显式声明包含块的高度，子元素的百分比高度无效；如果用百分数表示 margin 或 padding, 值是包含块宽度的百分数。
-边框合并：如果一个包含块高度为 auto, 没有 border,padding, 且只有块级子元素，其默认高度为最高会计子元素的外边框边界到最低块级子元素外边框，也就是说不包含子元素上下的 margin, 子元素 margin 会成为包含块 margin
 
-边框不合并：但是如果包含块有 padding 或 border, 则包含子元素上下的 margin, 是从最高子元素的上外边距边界到最低子元素下外边距边界的距离。如果子元素 margin 为负，包含块高度越来越小，但最低为 0, 不会为负值。
-如果包含块有 margin, 产生 margin 合并。
-垂直外边距合并：相邻的 margin 合并，保留最大的 margin; 如果都为负 margin, 保留绝对值最大者；一正一负做抵消。（兄弟元素/父子元素都有可能发生）
+- 边框合并：如果一个包含块高度为 auto, 没有 border,padding, 且只有块级子元素，其默认高度为最高会计子元素的外边框边界到最低块级子元素外边框，也就是说不包含子元素上下的 margin, 子元素 margin 会成为包含块 margin
 
-**行内布局**
+- 边框不合并：但是如果包含块有 padding 或 border, 则包含子元素上下的 margin, 是从最高子元素的上外边距边界到最低子元素下外边距边界的距离。如果子元素 margin 为负，包含块高度越来越小，但最低为 0, 不会为负值。
+  如果包含块有 margin, 产生 margin 合并。
+  垂直外边距合并：相邻的 margin 合并，保留最大的 margin; 如果都为负 margin, 保留绝对值最大者；一正一负做抵消。（兄弟元素/父子元素都有可能发生）
+
+### **行内布局**
+
 匿名文本：未包含在行内元素的字符串，在块内，不在行内。
 em 框：字符框，字号确定了 em 框高度。
 内容区：在非替换元素中，就是 em 框串起来的框。替换元素中，是元素固有高度加上外边距，边框，内边距。
@@ -555,7 +563,8 @@ em 框：字符框，字号确定了 em 框高度。
 行内框：对于非替换元素，就是行高。替换元素，看 margin-box.
 行框：包裹住该行出现的行内框的最高点和最低点的最小框。
 行高默认继承，行高有可能小于 font-size, 导致文本超出行框，两行字重叠。行高确定了行框的最小值。
-行内格式化：
+
+**行内格式化**：
 vertical-align:
 top/bottom: 元素行内框顶端对着行框顶端。
 text-top/text-bottom
@@ -564,46 +573,61 @@ super/sub: 上标/下标，不精确。
 <percentage>: 上移或下移 line-height 的百分数。
 行内元素的边框边界由字体和字号决定，与 line-height 无关。
 为行内元素设置外边距，在非替换元素顶端和底端没有任何效果。只应用于开始和末尾。
+
 display:（改变元素显示）
 inline-block: 看他自身位置认为是行内元素；看里面的布局，内容认为自己在块元素里。里面有内容时，基线是内容最后一行的基线；无内容时，将 margin-box 底部作为基线。
 inline-block 元素触发 BFC
 
-BFC //Block Format Context 块级格式化上下文
+**BFC** //Block Format Context 块级格式化上下文
 不会与子元素 margin 重叠
 自身形成一个布局单元：布局此元素内部时不用考虑其外部，可以理解为完全隔离的，可以理解为一个 iframe
 
-**定位布局**
+### 定位布局
+
 position:
+
 static: 不定位
-fixed: 固定定位，相对于视口定位；元素脱离常规流。（脱离常规流：他后续的元素及其包含块完全当他不存在。当不指定位置时，定位元素以原来的起点开始绘制）
-relative: 相对定位，相对自身原来位置，不脱离常规流，本来的位置也会保留。宽高是否生效取决于 display.
-absolute: 绝对定位，相对于最近定了位的祖先的 padding-box 定位。如果找不到定位祖先，则相对于页面的首屏定位，会随着第一屏的滚动而滚动。完全脱离常规流。
-sticky: 粘连定位
+
+fixed: 固定定位，相对于视口定位；元素脱离常规流。当不指定位置时，定位元素以原来的起点开始绘制。
+
+- 脱离常规流：他后续的元素及其包含块完全当他不存在。
+
+relative: 相对定位，相对自身原来位置，不脱离常规流，本来的位置也会保留。宽高是否生效取决于 display。
+
+absolute: 绝对定位，相对于最近定了位的祖先的 padding-box 定位。
+
+- 如果找不到定位祖先，则相对于页面的首屏定位，会随着第一屏的滚动而滚动。完全脱离常规流。
+
+sticky: 粘连定位。
 
 非常规流块元素（定位，浮动）的宽度，首先是尽量窄到正好包裹内容，当内容足够多的时候，会把它撑大到不溢出包含块为止。但如果强行让文本不折行，则可以被撑到更宽。
+
 z-index: 元素上下位置设置
 
-伪元素：相当于所属元素的第一个和最后一个子元素；通过 xxx::before/xxx::after 选中，通过 content 激活；为元素选择器与普通选择器不需要对比优先级，选中的一定是不同的元素；伪元素无法交互，只能在父元素发生交互时，切换对应伪元素的样式。
+伪元素：相当于所属元素的第一个和最后一个子元素；通过 xxx::before/xxx::after 选中，通过 content 激活；伪元素选择器与普通选择器不需要对比优先级，选中的一定是不同的元素；伪元素无法交互，只能在父元素发生交互时，切换对应伪元素的样式。
 
 ### 浮动
 
-常规流块级元素会当浮动元素不存在，行内元素会围绕浮动元素渲染
+常规流块级元素会当浮动元素不存在，行内元素会围绕浮动元素渲染。
+
 **清除浮动：**
 闭合浮动：某个块框通过增加自己的高度使其能够包含其浮动的后代元素（通过自己变大，包住所有后代浮动元素）
 BFC（会创建一个独立的布局单元）
+
 **具体行为：**
 
 1. 从高度上包裹住自己内部的浮动元素
-   2.margin 不会与子元素重叠
-2. 内外布局不相关：内部元素内容改变不影响元素自己的位置，行内块元素加 overflow:hidden 后以 margin-box 底边作为其基线
-   4 在宽度上，如果 BFC 元素与浮动元素有重叠，他会变窄以避开浮动元素
-   **触发条件：**
-   overflow 不为 visible
-   inline-block
-   定位
-   浮动
-   HTML 元素永远 BFC
-   display:flow/flow-root
+2. margin 不会与子元素重叠
+3. 内外布局不相关：内部元素内容改变不影响元素自己的位置，行内块元素加 overflow:hidden 后以 margin-box 底边作为其基线
+4. 在宽度上，如果 BFC 元素与浮动元素有重叠，他会变窄以避开浮动元素
+
+**触发条件：**
+overflow 不为 visible;
+inline-block;
+定位;
+浮动;
+HTML 元素永远 BFC;
+display:flow/flow-root;
 
 ### 分列布局
 
@@ -636,7 +660,6 @@ BFC（会创建一个独立的布局单元）
 
 - flex 中匿名文本不能直接被 css 选中，只能继承 flex-container 的样式。
 - 浮动对于 flex-items 无效，但绝对定位对于 flex-items 有效，也会形成 BFC。
--
 
 **bootstrap 中 grid 很重要**
 
@@ -658,17 +681,30 @@ relayout repaint
 
 pointer-events:auto/none;
 
+background: var(--penguin-skin, black);
+//可以设置一个变量给 css 属性，后面的值若找不到变量，可以使用颜色
+
+background: black;
+background: var(--penguin-skin);
+//设置 fallback 可以提高兼容性
+
+background: linear-gradient(35deg, #CCFFFF,#FFCCCC);
+//渐变色，粉蓝色，好看
+
+```css
+div:hover {
+  transform: scale(1.1) skewX(24deg);
+}
+```
+
 ### @font-face
 
 - @font-face 本质上可以看作是一个声明字体的变量
 - 可以用来简写字体
+
   ```css
   @font-face {
     font-family: YH;
     src: local('Microsoft Yahei'), url('xxx.ttf');
   }
   ```
-
-```
-
-```
