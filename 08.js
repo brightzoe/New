@@ -22,9 +22,23 @@ function noisy(f) {
 
 // noisy(Math.min)(1, 2, 3)
 
-function transparentWarpping(f)
+function transparentWarpping(f) {
+  return function () {
+    return f.apply(null, arguments) //模拟调用，访问f()的所有参数
+  }
+}
 
-function filter(array, test) {}
+function filter(array, test) {
+  //test函数作为参数，实现过滤
+  //纯函数：并未修改给定的数组。
+  var passed = []
+  for (let i = 0; i < array.length; i++) {
+    if (test(array[i])) {
+      passed.push(array[i])
+    }
+  }
+  return passed
+}
 
 var ANCESTRY_FILE = JSON.stringify([
   {
@@ -342,7 +356,248 @@ var ANCESTRY_FILE = JSON.stringify([
 ])
 var ancestry = JSON.parse(ANCESTRY_FILE)
 
-ancestry.map(p => p.name)
-for (let i = 0; i < array.length; i++){
-  
+// console.log(filter(ancestry, function (person) {
+//   return person.born > 1900 && person.born < 1925
+// }));
+
+// console.log(ancestry.filter(function (p) {//内置的方法
+//   return p.father == "Carel Haverbeke"
+// }));
+
+//console.log(ancestry.map((p) => p.name))
+
+// console.log(ancestry.reduce(function (min, cur) {
+//   if (cur.born < min.born) {
+//     return cur
+//   } else {
+//     return min
+//   }
+// }));
+function reducer(a, b) {
+  return a.concat(b)
 }
+let flattened = [
+  [0, 1],
+  [2, 3],
+  [4, 5],
+].reduce(reducer, [])
+
+// console.log(flattened);
+
+function keyBy(array, key) {
+  var result = {}
+  array.forEach((ary) => (result[ary[key]] = key))
+  return result
+}
+
+function groupBy(array, prop) {
+  var result = {}
+  array.forEach((ary) => {
+    var key = ary[prop]
+    if (!(key in result)) {
+      result[key] = []
+    }
+
+    result[key].push(ary)
+  })
+  return result
+}
+// console.log(grouped);
+function groupBy3(ary, by) {
+  var f = by
+  if (typeof by == 'string') {
+    f = (item) => item[by]
+  }
+  var result = {}
+  ary.forEach((item) => {
+    var key = f(item)
+
+    if (!(key in result)) {
+      result[key] = []
+    }
+    result[key].push(item)
+  })
+  return result
+}
+
+//男性和女性的平均年龄
+function average(array) {
+  var mapped = array.map((item) => item.died - item.born)
+  return mapped.reduce((acc, cur) => acc + cur) / array.length
+}
+
+// console.log(average(ancestry.filter(ary => ary.sex == "m")));
+// console.log(average(ancestry.filter((ary) => ary.sex == 'f')))
+var byName = {}
+ancestry.forEach((p) => (byName[p.name] = p))
+
+//byName ['lily'].born =>1903
+
+var byName2 = ancestry.reduce((obj, cur) => {
+  obj[cur.name] = cur
+  return obj
+}, {})
+
+var keyBy = (array, key) =>
+  ancestry.reduce((obj, cur) => ((obj[cur[key]] = cur), obj), {})
+
+function keyBy(array, key) {
+  var result = {}
+  array.forEach((ary) => (result[ary[key]] = ary))
+  return result
+}
+var byName = keyBy(ancestry, 'name')
+
+function sharedDNA(name) {
+  var person = byName[name]
+  if (!person) {
+    return 0
+  }
+  if (person.name == 'Pauwels van Haverbeke') {
+    return 1
+  }
+  var father = byName[person.father]
+  var mother = byName[person.mother]
+  return (sharedDNA(mother) + sharedDNA(father)) / 2
+}
+
+sharedDNA('Philibert Haverbeke')
+
+function bigage(name) {
+  //祖先中大于70岁的人
+  var person = byName[name]
+  if (!person) {
+    return 0
+  }
+  var count = 0
+  if (person.died - person.born >= 70) {
+    count++
+  }
+
+  //var result = person.reduce((person) => person.died - person.born >= 70, {})
+  return count + bigage(person.mother) + bigage(person.father)
+}
+
+function count(name) {
+  var person = byName[name]
+  if (!person) {
+    return 0
+  }
+  return 1 + count(person.mother) + count(person.father)
+}
+// console.log(bigage('Philibert Haverbeke') / count('Philibert Haverbeke'))
+
+var a = function () {
+  var array = []
+  for (var i = 1; i < 10; i++) {
+    array.push(
+      (function () {
+        return i * i
+      })()
+    )
+  }
+  return array
+}
+
+function bind(f, ...fixedArgs) {
+  return function (...args) {
+    return f(...fixedArgs, ...args)
+  }
+}
+
+function bind(f) {
+  var fixedArgs = Array.from(arguments).slice(1)
+  return function () {
+    var args = Array.from(arguments)
+    return f.apply(null, fixedArgs.concat(args))
+  }
+}
+function add(a, b, c) {
+  return a + b + c
+}
+f2 = bind(add, 1)
+
+function map(ary, mapper) {
+  //reduce实现map
+  return ary.reduce((acc, cur) => {
+    acc.push(mapper(cur))
+    return acc
+  }, [])
+}
+
+function filter(ary, test) {
+  return ary.reduce((acc, cur, idx, ary) => {
+    if (test(cur, idx, ary)) {
+      acc.push(cur)
+    }
+    return acc
+  }, [])
+}
+
+function forEach(ary, action) {
+  ary.reduce((_, cur, idx, ary) => action(cur, idx, ary))
+}
+
+//数组降维
+function flatten(ary) {
+  return ary.reduce((acc, cur) => acc.concat(cur), [])
+}
+
+//母亲平均生育年龄
+
+var array = [
+  { died: 34, born: 11 },
+  { died: 46, born: 11 },
+]
+function average(array) {
+  var mapped = array.map((item) => item.died - item.born)
+  return mapped.reduce((acc, cur) => acc + cur) / array.length
+}
+
+//reduce实现avg
+function avg(ary) {
+  var sum = ary.reduce((acc, cur) => acc + cur)
+  return sum / ary.length
+}
+
+ary.reduce(avg)
+
+function groupby(ary) {
+  var result = {}
+  ary.forEach((item) => {
+    var key = Math.ceil(item.born / 100)
+    if (!(key in result)) {
+      result[key] = []
+    }
+    var age = item.died - item.born
+    result[key].push(age)
+  })
+  return result
+}
+
+//计算每个世纪人平均寿命
+function centuryAge(obj) {
+  for (ary in obj) {
+    obj[ary] = avg(obj[ary])
+  }
+  return obj
+}
+centuryAge(groupby(ancestry))
+
+//every,测试是否每一项都满足条件,像&&；
+//一旦一个为假，返回false，提前结束，不一定需要处理所有元素
+function every(array, test) {
+  for (let i = 0; i < array.length; i++){
+    if (!test(array(i))) {
+      return false
+    }
+  }
+  return true
+}
+
+//some,测试是否至少有一项满足条件
+//一旦一个为真，返回true，提前结束，不需要处理所有元素
+
+function some(array, test) {}
+//every与some互相实现
+a && b

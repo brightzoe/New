@@ -297,9 +297,55 @@ num1
 参数是一个函数
 
 > 不要过早优化，先写一些正确且容易理解的东西。
+
 ### 高阶函数
+
 将其他函数作为参数或返回值
-  -  函数就是一个普通的值
+
+- 函数就是一个普通的值
+- 纯函数：并未修改给定的数组
+- ...args ：es6 语法,接收多个参数
+
+```js
+function transparentWarpping(f) {
+  return function () {
+    return f.apply(null, arguments) //模拟调用，访问f()的所有参数
+  }
+}
+```
+
+- `ary.filter(test)` //过滤，test 是条件函数
+- `ary.forEach(action)` //重复，类似循环，对里面的每个进行相同操作;可以模拟 break&&continue
+
+```js
+function forEach(ary, action) {
+  for (var i = 0; i < ary.length; i++) {
+    var x = action(ary[i], i)
+    if (x === false) {
+      break
+    }
+  }
+  return ary
+}
+
+var target = 3
+var targetIndex = -1
+debugger
+forEach([1, 2, 3, 4], function (aryItem, idx) {
+  if (xx) {
+    return //相当于continue
+  }
+  if (aryItem == target) {
+    targetIndex = idx
+    return false //相当于break
+  }
+})
+```
+
+- `ary.map(mapper)` //mapper
+- `ary.reduce(reducer,[initialValue])` //归纳函数，折叠数组，根据整个数组计算一个值(提供初始值比较安全)
+  - `function reducer(acc,cur){}`
+
 
 ### 数组 array，数组属于内建对象
 
@@ -394,14 +440,16 @@ num1
 - 包含函数的属性称为某个值的方法 method
 
 ### JSON
+
 - 序列化数据(e.g. yaml)
-- 看起来很像JS的数组和对象的表示方式，但有一些限制。
+- 看起来很像 JS 的数组和对象的表示方式，但有一些限制。
   所有属性名都要有双引号
   只允许使用简单的数据格式，不能有函数调用/绑定或涉及实际计算
+  只支持数组、对象、字符串、数值、bool、null
+  支持转义，不支持明文空格
 - `JSON.stringify()`//序列化
   - 接受 JavaScript 值并返回 JSON 编码的字符串
 - `JSON.parse()`//反序列化
-
 
 ### 作用域
 
