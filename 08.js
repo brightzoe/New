@@ -1,3 +1,5 @@
+import { SourceMap } from "module"
+
 function repeat(n, action) {
   for (let i = 0; i < n; i++) {
     action(i)
@@ -575,6 +577,22 @@ function groupby(ary) {
   return result
 }
 
+//reduce 实现groupby
+FIXME:
+function groupbyr(ary, prec) {
+  var result = {}
+  arguments.reduce((acc, cur, idx, ary) => {
+    if (prec(acc) in result) {
+      result[key].push(prec(acc))
+    } else {
+      result[key] =[]
+    }
+  }
+    return result
+}
+
+
+
 //计算每个世纪人平均寿命
 function centuryAge(obj) {
   for (ary in obj) {
@@ -595,9 +613,16 @@ function every(array, test) {
   return true
 }
 
+function every(array, con) {
+  array.reduce((acc, cur, idx, array) => {
+    return acc && con(cur,idx,ary)//也是短路特性
+  },true)
+}
 //some,测试是否至少有一项满足条件
 //一旦一个为真，返回true，提前结束，不需要处理所有元素
 
-function some(array, test) {}
+function every(array, test) {
+  return some(array,test)
+}
 //every与some互相实现
 a && b
