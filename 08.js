@@ -141,18 +141,8 @@ function every(array, test) {
 }
 //every与some互相实现
 
-function flip(func) {
-  return function (...args) {
-    return func(...args.reverse())
-  }
-}
 
-function spread(func) {
-  return function (ary) {
-    return func(...ary)
-    //return func.apply(null,ary)
-  }
-}
+
 function bind(f, ...fixedArgs) {
   //null表示跳过,[1,null,2,null,3]
   return function (...args) {
@@ -171,35 +161,30 @@ function bind(f, ...fixedArgs) {
   }
 }
 
-//prec:function/string/object/array
-function filter(array, prec) {
-  let test = prec
-  if (typeof prec === 'string') {
-    test = (it) => it[prec]
-  } else if (typeof prec === 'object') {
-    //{ 'age': 36, 'active': true }
-    if (Array.isArray(prec)) {
-      prec = fromPairs(prec)
+
+
+
+
+
+
+
+
+
+function curry(func, n) {
+  return function (...args) {
+    if (args.length < n) {
+      return curry(func,n-args.length)
     }
-    //数组转成对象
-    test = (it) => {
-      for (var key in prec) {
-        if (prec[key] !== it[key]) {
-          return false
-        }
-      }
-      return true
-    }
+    return func.bind(null, args)
   }
-  var result = []
-  for (let i = 0; i < array.length; i++) {
-    if (test(array[i], i, array)) {
-      result.push(array[i])
-    }
-  }
-  return result
 }
 
-function fromPairs(array) { };
 
-console.log(chunk(['a', 'b', 'c', 'd'], 2))
+
+
+
+
+function identity(...args) {
+  return args[0]
+}
+console.log(identity(12,3))
