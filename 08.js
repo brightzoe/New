@@ -141,8 +141,6 @@ function every(array, test) {
 }
 //every与some互相实现
 
-
-
 function bind(f, ...fixedArgs) {
   //null表示跳过,[1,null,2,null,3]
   return function (...args) {
@@ -161,30 +159,264 @@ function bind(f, ...fixedArgs) {
   }
 }
 
-
-
-
-
-
-
-
-
-
 function curry(func, n) {
   return function (...args) {
     if (args.length < n) {
-      return curry(func,n-args.length)
+      return curry(func, n - args.length)
     }
     return func.bind(null, args)
   }
 }
 
-
-
-
-
-
 function identity(...args) {
   return args[0]
 }
-console.log(identity(12,3))
+
+function createTreeNode(val) {
+  //创建一个值为val的节点
+  return {
+    val: val,
+    left: null,
+    right: null,
+  }
+}
+
+function array2Tree(ary, i = 0) {
+  //将用数组表示的二叉树转换为链式表达的二叉树
+  //将数组中根节点为 i 位置的树转换为链式表达
+  // if(i >= ary.length){
+  //   return null
+  // }
+  if (ary[i] == null) {
+    return null
+  }
+  var root = createTreeNode(ary[i])
+  root.left = array2Tree(ary, (2 * i + 1))
+  root.right = array2Tree(ary, (2 * i + 2))
+  return root
+}
+
+
+
+
+function tree2Array(root, array = [], idx = 0) {
+  //链式表达二叉树转换为数组表达
+  if (root == null) {
+    return array
+  }
+  array.push(root.val)
+  var left = root.left
+  var right = root.right
+  left = tree2Array(left)
+  right = tree2Array(right)
+  array.push(left)
+  array.push(right)
+  return array
+}
+
+var a = {
+  val: 0,
+  left: { val: 1, left: null, right: null },
+  right: { val: 2, left: null, right: null },
+}
+
+console.log(array2Tree([]));
+
+function realtree2Array(root) {
+  var ary = []
+  return tree2Array(root)
+}
+function tree2Array(root, idx = 0) {
+  if (root == null) {
+    return
+  }
+  ary[idx] = root.val
+  tree2Array(root.left, idx * 2 + 1)
+  tree2Array(root.right, idx * 2 + 2)
+  return ary
+}
+
+function tree2CondArray(root) {
+  //将二叉树转换为紧凑型表示的数组
+  if (!root) {
+    return []
+  }
+  var res = []
+  var nodes = [root]
+  var nextRow = []
+  while (nodes.length) {
+    for (let i = 0; i < nodes.length; i++) {
+      var node = nodes[i]
+      if (node == null) {
+        res.push(null)
+      } else {
+        res.push(node.val)
+        nextRow.push(node.left)
+        nextRow.push(node.right)
+      }
+    }
+    nodes = nextRow
+    nextRow = []
+  }
+
+  return res
+}
+
+function tree2CondArray1(root) {
+  //将二叉树转换为紧凑型表示的数组
+  if (!root) {
+    return []
+  }
+  var res = []
+  var nodes = [root]
+  var i = 0
+  while (i < nodes.length) {
+    var node = nodes[i++]
+    if (node == null) {
+      res.push(null)
+    } else {
+      res.push(node.val)
+      nodes.push(node.left)
+      nodes.push(node.right)
+    }
+  }
+
+  return res
+}
+
+function tree2CondArray2(root) {
+  //将二叉树转换为紧凑型表示的数组
+  if (!root) {
+    return []
+  }
+  var res = []
+  var nodes = [root]
+
+  while (nodes.length) {
+    var node = nodes.shift()
+    if (node == null) {
+      res.push(null)
+    } else {
+      res.push(node.val)
+      nodes.push(node.left)
+      nodes.push(node.right)
+    }
+  }
+
+  return res
+}
+
+function tree2CondArray3(root) {
+  //层次遍历
+  FIXME: if (!root) {
+    return []
+  }
+  var res = [root.val]
+  var nodes = [root]
+
+  while (nodes.length) {
+    var node = nodes.shift()
+    if (node == null) {
+      res.push(null)
+    } else {
+      res.push(node.val)
+      nodes.push(node.left)
+      nodes.push(node.right)
+    }
+  }
+
+  return res
+}
+
+function conArray2Tree(array) {
+  //紧凑型数组二叉树转化为链式结构
+  if (array.length == 0) {
+    return null
+  }
+  var root = createTreeNode(ary[0])
+  var queue = [root]
+  for (let i = 0; i < array.length; i++) {
+    var node = queue.shift()
+    if (array[i] !== null) {
+      node.left = createTreeNode(array[i])
+      queue.push(node.left)
+    }
+    i++
+    if (i > array.length) {
+      break
+    }
+    if (array[i] !== null) {
+      node.right = createTreeNode(array[i])
+      queue.push(node.right)
+    }
+  }
+
+  return root
+}
+
+function preorderTraversal(root) {
+  //递归前序遍历
+  var array = []
+  if (root) {
+    array = [root.val]
+    let array1 = preorderTraversal(root.left)
+    let array2 = preorderTraversal(root.right)
+    array = array.concat(array1).concat(array2)
+  }
+  return array
+  
+}
+
+function preorderTraverseLoop(root, action = console.log) {
+  //循环实现前序遍历
+  //空间复杂度：树的深度
+  var stack = []
+  while (true) {
+    if (root) {
+      action(root.val)
+      stack.push(root)
+      root = root.left
+    } else if (stack.length) {
+      root = stack.pop()
+      root = root.right
+    } else {
+      break
+    }
+  }
+}
+function preorderTraverseLoop2(root, action = console.log) {
+  //循环实现前序遍历
+  var stack = []
+  while (true) {
+    if (root) {
+      action(root.val)
+      stack.push(root)
+      root = root.left
+    } else if (stack.length) {
+      root = stack.pop()
+      root = root.right
+    } else {
+      break
+    }
+  }
+}
+
+//TODO:不使用栈，如何实现一个前序遍历，通过一个指针
+function inorderTraversal(root) {
+  var stack = []
+  while (true) {
+    if (root) {
+      stack.push(root)
+      root = root.left
+    } else if (stack.length) {
+      root = stack.pop()
+      console.log(root.val)
+      root = root.right
+    } else {
+      break
+    }
+  }
+}
+function postorderTraversal(root) {}
+
+

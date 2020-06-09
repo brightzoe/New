@@ -42,6 +42,7 @@ IEEE754 标准：二进制浮点顺运算标准
 
 ![](https://cdn.jsdelivr.net/gh/brightzoe/img/browser.png)
 
+
 ## 万维网是如何工作的
 
 ![客户端和服务器](https://cdn.jsdelivr.net/gh/brightzoe/img/20200105191449.png)
