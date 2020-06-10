@@ -191,16 +191,14 @@ function array2Tree(ary, i = 0) {
     return null
   }
   var root = createTreeNode(ary[i])
-  root.left = array2Tree(ary, (2 * i + 1))
-  root.right = array2Tree(ary, (2 * i + 2))
+  root.left = array2Tree(ary, 2 * i + 1)
+  root.right = array2Tree(ary, 2 * i + 2)
   return root
 }
 
-
-
-
-function tree2Array(root, array = [], idx = 0) {
+function tree2Arraytest(root, array = [], idx = 0) {
   //链式表达二叉树转换为数组表达
+  //FIXME:
   if (root == null) {
     return array
   }
@@ -214,30 +212,19 @@ function tree2Array(root, array = [], idx = 0) {
   return array
 }
 
-var a = {
-  val: 0,
-  left: { val: 1, left: null, right: null },
-  right: { val: 2, left: null, right: null },
-}
-
-console.log(array2Tree([]));
-
-function realtree2Array(root) {
-  var ary = []
-  return tree2Array(root)
-}
-function tree2Array(root, idx = 0) {
+function tree2Array(root, ary = [], idx = 0) {
   if (root == null) {
     return
   }
   ary[idx] = root.val
-  tree2Array(root.left, idx * 2 + 1)
-  tree2Array(root.right, idx * 2 + 2)
+  tree2Array(root.left, ary, idx * 2 + 1)
+  tree2Array(root.right, ary, idx * 2 + 2)
   return ary
 }
 
 function tree2CondArray(root) {
   //将二叉树转换为紧凑型表示的数组
+  //不理解哇
   if (!root) {
     return []
   }
@@ -353,39 +340,27 @@ function conArray2Tree(array) {
 
   return root
 }
-
-function preorderTraversal(root) {
-  //递归前序遍历
-  var array = []
-  if (root) {
-    array = [root.val]
-    let array1 = preorderTraversal(root.left)
-    let array2 = preorderTraversal(root.right)
-    array = array.concat(array1).concat(array2)
-  }
-  return array
-  
+var a = array2Tree([0, 1, 2, 3, 4, 5, 6, undefined, 9, 8, undefined])
+var b = {
+  val: 0,
+  left: {
+    val: 1,
+    left: { val: 3, left: null, right: { val: 9, left: null, right: null } },
+    right: { val: 4, left: { val: 8, left: null, right: null }, right: null },
+  },
+  right: {
+    val: 2,
+    left: { val: 5, left: 7, right: null },
+    right: { val: 6, left: null, right: null },
+  },
 }
 
+
+
+//断点
 function preorderTraverseLoop(root, action = console.log) {
   //循环实现前序遍历
   //空间复杂度：树的深度
-  var stack = []
-  while (true) {
-    if (root) {
-      action(root.val)
-      stack.push(root)
-      root = root.left
-    } else if (stack.length) {
-      root = stack.pop()
-      root = root.right
-    } else {
-      break
-    }
-  }
-}
-function preorderTraverseLoop2(root, action = console.log) {
-  //循环实现前序遍历
   var stack = []
   while (true) {
     if (root) {
@@ -417,6 +392,113 @@ function inorderTraversal(root) {
     }
   }
 }
+
+function inorder(tree) {
+  //①：先沿左侧全部入栈；root定位到最左侧的小树，pop->res,
+  //②：root变为栈里面pop的右子树(左边第一颗小树的right)，right存在，right进栈；重复①
+  //③：重复②
+  var res = []
+  var stack = []
+  var node = tree
+  while (node) {
+    stack.push(node)
+    node = node.left
+  }
+  while (stack.length > 0) {
+    var spop = stack.pop()
+    res.push(spop.val)
+
+    node = spop.right //向右移一个node
+
+    while (node) {
+      stack.push(node)
+      node = node.left
+    }
+  }
+  return res
+}
+
 function postorderTraversal(root) {}
 
+function insertIntoBST(bst, val) {
+  //向BST插入值val,并返回bst
+  if (bst == null) {
+    return createTreeNode(val)
+  }
+  if (val > bst.val) {
+    bst.right = insertIntoBST(bst.right, val)
+  } else {
+    bst.left = insertIntoBST(bst.left, val)
+  }
+  return bst
+}
+function insertIntoBST2(bst, val) {
+  //不使用递归
+  if (bst == null) {
+    return createTreeNode(val)
+  }
+  var p = bst
+  while (true) {
+    if (val < p.val) {
+      if (p.left) {
+        p = p.left
+      } else {
+        p.left = createTreeNode(val)
+        break
+      }
+    }
 
+    if (val > p.val) {
+      if (p.right) {
+        p = p.right
+      } else {
+        p.right = createTreeNode(val)
+        break
+      }
+    }
+  }
+  return bst
+}
+function bstSort(ary) {
+  //乱序数组，用BST排序
+  //时间复杂度：n*log(n)
+  //空间复杂度：n(构造出来的BST占用的空间)
+  var tree = null
+  for (let i = 0; i < ary.length; i++) {
+    tree = insertIntoBST(tree, ary[i])
+  }
+
+  return inorderTraverse(tree)
+}
+
+function bstSort2(ary) {
+  //乱序数组，构建BST
+  //简化 reduce
+  var tree = ary.reduce((tree, val) => {
+    return insertIntoBST(tree, val)
+  }, null)
+  return inorderTraverse(tree)
+}
+
+function swap(ary, i, j) {
+  if (i !== j) {
+    var temp = ary[i]
+    ary[i] = ary[j]
+    ary[j] = temp
+  }
+}
+function qsort(ary, start = 0, end = ary.length - 1) {
+  var pivotindex = Math.floor((end - start + 1) * Math.random()) + start
+  var pivot = ary[pivotindex]
+  swap(ary, pivotindex, end)
+  var i = start - 1
+
+  for (var j = start; j < end; j++) {
+    if (ary[j] < pivot) {
+      i++
+      swap(ary, i, j)
+    }
+  }
+}
+
+//bst改成接函数排序
