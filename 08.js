@@ -502,3 +502,46 @@ function qsort(ary, start = 0, end = ary.length - 1) {
 }
 
 //bst改成接函数排序
+
+
+var aryLike = {
+  0: 1,
+  1: 2,
+  length:2
+}
+
+aryLike.push = function (val) {
+  this[ this.length ] = val
+  this.length++
+  return this.length
+}
+var ary = [ 1, 2, 3 ]
+
+ary.push2 = function (val) {
+  this[ this.length ] = val
+  return this.length
+}
+
+
+function TreeNode(val) {
+  this.val = val
+  this, left = this.right = null
+  
+}
+a = new TreeNode(1)
+b = new TreeNode(2)
+TreeNode.prototype.getValue = function (val) {
+  return this.val = val
+}
+
+function forOwn(obj, action) {
+  //遍历obj的自有属性
+  var hasOwn = Object.prototype.hasOwnProperty
+
+  for (let key in obj) {
+    if (hasOwn.call(map, key)) {
+      action(obj[key],key,obj)
+    }
+  }
+  return obj
+}

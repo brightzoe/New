@@ -348,7 +348,7 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
   - `function reducer(acc,cur){}`
 
 
-### 数组 array，数组属于内建对象
+## 数组 array，数组属于内建对象
 
 ```js
 //创建数组
@@ -382,26 +382,39 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
 
 ```
 
-### 对象 object
+## 对象 object
 
-- 一些属性和方法组合在一起构成的一个数据实体，用。访问
-- 给对象创建实例 `var zoe = new Person`;
-- 用户定义对象
-- 内建对象：数组/Math 对象/Date 对象
-- 宿主对象：浏览器提供的预定义对象 Form/Image/Element/Document 对象
-  - `window` 对象，对应浏览器窗口本身，通常统称为 BOM
-  - `document` 对象，处理网页内容
-- 对象的内容是可以修改的
-- 原始类型的数据不可更改-(number,string,bool)
-- 循环： `for (var prop in obj)`
-- `slice` 出来的数组是浅拷贝（shadllow copy), 对应的有深拷贝
-- `isEqual` 是深对比，对比的是具体的内容是否一致；浅对比对比的是否是同一对象
-  TODO: **深对比如何考虑，自己实现**
 
-#### this 的指向
+#### 属性 //key/property/attribute/field
 
-调用函数时，解析器向函数内部传递的一个参数，指向函数执行的上下文对象。
+- `value.x`
+  x 要是合法变量名
+- `value[0]`
+  value['joe'] //[]用于有空格的字符串或者变量
+- . 后面的直接使用作为属性，[] 里面的会被求值。
+- delete obj.attr
+- 包含函数的属性称为某个值的方法 method
 
+### 方法
+方法调用:`obj.func` this是调用它的函数
+
+**this**可以看作是以不同方式传递的arguments参数,每个函数都有它的this,值依赖它的调用方式
+call方法:`func.call(this,...arguments)`//传入一个特定的this,然后再传正常的参数
+apply方法:`func.apply(this,[arguments])`//传入一个特定的this,然后再传正常的参数的数组
+
+对象里写函数,f属性指向这个函数,函数并不属于这个对象,相对独立.
+这个函数是全局的,对象不是语句块,不会产生作用域.
+
+```js
+var obj = {
+  val: 3,
+  f:function(){return this.val}
+}
+```
+### this 的指向
+
+调用函数时，解析器向函数内部传递的一个参数，指向函数执行的上下文对象。<u>**this取决于函数的调用形式,**</u>与在哪调用,在哪定义没有关系
+>注意:与作用域不同,函数内部访问到的非形参变量,作用域取决于函数在哪定义,作用域在哪
 - 以方法的形式调用时，函数的 `this` 就是调用它的对象。如 `array.length`
 - 以纯函数形式调用时，`this` 是 `window f()`
 - 用 `new` 来调用 `this` 时，`this` 就是那个新建的对象。如构造函数；
@@ -418,7 +431,52 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
   `this` 指向调用的对象与函数声明的位置无关，只与调用位置有关，如果在调用位置还使用声明位置的 `this`，`this` 会丢失；
   解决方法通过 `bind` 绑定 `this` 或者通过箭头函数。箭头函数的 `this` ，总是继承外层函数的对象，在定义时就确定，与调用无关。
 
-#### 类数组 arguments
+
+### dom对象
+- 一些属性和方法组合在一起构成的一个数据实体，用.访问
+- 给对象创建实例 `var zoe = new Person`;
+- 用户定义对象
+- 内建对象：数组/Math 对象/Date 对象
+- 宿主对象：浏览器提供的预定义对象 Form/Image/Element/Document 对象
+  - `window` 对象，对应浏览器窗口本身，通常统称为 BOM
+  - `document` 对象，处理网页内容
+- 对象的内容是可以修改的
+- 原始类型的数据不可更改-(number,string,bool)
+- 循环： `for (var prop in obj)`
+- `slice` 出来的数组是浅拷贝（shadllow copy), 对应的有深拷贝
+- `isEqual` 是深对比，对比的是具体的内容是否一致；浅对比对比的是否是同一对象
+  TODO: **深对比如何考虑，自己实现**
+
+
+### 原型 prototype
+- 在访问对象不包含的属性时,会从对象原型中搜索属性.
+每个对象除了拥有自己的属性外,都包含一个原型.原型是另一个对象,是对象的属性来源.
+获取一个对象的原型:`Object.getPrototypeof(obj)` or `obj.__proto__`
+所有对象中原型的父原型,是Object.prototype
+可以设置一个对象的原型为null:`obj.__proto__ = null`
+创建一个具有特定原型的对象: `let obj = Object.create(ptobj,{xxxx})`
+
+JavaScript 对象原型的关系是一种树形结构，整个树形结构的根部就是`Object.prototype`。`Object.prototype`提供了一些可以在所有对象中使用的方法。
+
+许多对象并不直接将`Object.prototype`作为其原型，而会使用另一个原型对象，用于提供一系列不同的默认属性。函数继承自`Function.prototype`，而数组继承自`Array.prototype`。
+
+### 构造函数
+- 调用一个函数的构造函数:`new Func(xx)`
+- 包含指向新对象的变量this,返回新创建的对象.除非构造函数显示返回另一个对象的值.
+-  函数都有`prototype`属性;构造函数的prototype属性       指向一个对象
+-  构造函数他自己的原型是Function
+-  `"foo".__proto__ === String.prototype` 一个字符串的原型,是String 的prototype属性;一个函数的原型,是Function 的prototype属性.(只有`Function.__proto__ === Function.prototype`)
+-  一个东西的原型(__proto__)是他的构造函数的原型属性(prototype)
+-  构造一个函数:`g = new Function("a,b,c,d","return a+b+c+d")`
+-  可以用来进行类型判断
+   -  Object.prototype.toString.call(val) ==='[object Array]'
+   -  Object.prototype.toString.call(val) ==='[object String]'
+- 定义一个属性:Object.defineProperty(obj,{val:xx,writable:true,enumerable:false,configurable:false})//属性描述符 property description
+  - `prop in obj `
+  - `obj.hasOwnProperty(prop) `判断是否是自有属性,可以连接in设置遍历范围
+  -  
+
+### 类数组 arguments
 
 调用函数时，浏览器每次都会传递两个参数：
 
@@ -429,16 +487,6 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
 - `arguments.callee` 对应当前指向的函数对象。在使用函数递归，如果是匿名函数需要用到。ES5 严格模式不支持。
 - 可以像数组一样修改 `arguments` 的值，但不能更改长度。
 -
-
-#### 属性 //key/property/attribute/field
-
-- `value.x`
-  x 要是合法变量名
-- `value[0]`
-  value['joe'] //[]用于有空格的字符串或者变量
-- . 后面的直接使用作为属性，[] 里面的会被求值。
-- delete obj.attr
-- 包含函数的属性称为某个值的方法 method
 
 ### JSON
 
