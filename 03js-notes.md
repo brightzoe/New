@@ -221,7 +221,7 @@ typeof: 一元运算符，返回类型
   - for
   - switch 每个 case 都要加 break; 只能判断严格相等；
 
-### 函数 functions
+## 函数 functions
 
 - `alert("Good moring!");` 弹出一个含有信息的对话框
 - `console.log()` 输出值
@@ -258,7 +258,7 @@ function (){//不指定参数的话，参数数量不固定，arguments 算是�
 - 计算机存储上下文的地方（每个函数返回位置）, 占内存。/函数调用时的等待关系
 - 每次调用函数时，当前上下文都存储在此栈的顶部。当函数返回时，它会从栈中删除顶部上下文，并使用该上下文继续执行。
 
-#### **闭包**
+### **闭包**
 
 ```js
 function squareSum(a, b) {
@@ -346,6 +346,17 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
 - `ary.map(mapper)` //mapper
 - `ary.reduce(reducer,[initialValue])` //归纳函数，折叠数组，根据整个数组计算一个值(提供初始值比较安全)
   - `function reducer(acc,cur){}`
+
+### 函数对象
+函数也是对象,可以拥有方法.
+函数的与众不同之处在于可以被调用,可以理解为被设置了一个调用属性
+函数对象的原型是Function.prototype:`func.__proto__ == Func.prototype`
+函数在创建时附加两个隐藏属性:
+1. 函数的上下文
+2. 实现函数行为的代码
+3. prototype属性,值为 {constructor:f}
+
+
 
 
 ## 数组 array，数组属于内建对象
@@ -474,7 +485,13 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
 - 定义一个属性:Object.defineProperty(obj,{val:xx,writable:true,enumerable:false,configurable:false})//属性描述符 property description
   - `prop in obj `
   - `obj.hasOwnProperty(prop) `判断是否是自有属性,可以连接in设置遍历范围
-  -  
+  ```js
+  for(let prop in obj){
+    if(obj.hasOwnProperty(prop)){
+      ...
+    }
+  }
+  ```
 
 ### 类数组 arguments
 

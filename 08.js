@@ -545,3 +545,20 @@ function forOwn(obj, action) {
   }
   return obj
 }
+
+function Cell(str) {
+  this.str = str
+}
+
+Cell.prototype.minWidth = function () {
+  return this.str
+    .split('\n')
+    .map((it) => it.length)
+    .reduce((a, b) => Math.max(a, b))
+}
+Cell.prototype.minHeight = function () {
+  return this.str.split('\n').length
+}
+Cell.prototype.draw = function (width, height) { }
+
+
