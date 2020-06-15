@@ -42,7 +42,6 @@ IEEE754 标准：二进制浮点顺运算标准
 
 ![](https://cdn.jsdelivr.net/gh/brightzoe/img/browser.png)
 
-
 ## 万维网是如何工作的
 
 ![客户端和服务器](https://cdn.jsdelivr.net/gh/brightzoe/img/20200105191449.png)
@@ -221,6 +220,13 @@ typeof: 一元运算符，返回类型
   - for
   - switch 每个 case 都要加 break; 只能判断严格相等；
 
+### 作用域
+
+- 作用域：变量在某个范围内起作用，为了提高程序的可靠性，减少命名冲突
+- 全局作用域：在整个 js 文件起作用
+- 函数作用域：旨在函数内部起作用
+
+
 ## 函数 functions
 
 - `alert("Good moring!");` 弹出一个含有信息的对话框
@@ -348,17 +354,34 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
   - `function reducer(acc,cur){}`
 
 ### 函数对象
+
 函数也是对象,可以拥有方法.
 函数的与众不同之处在于可以被调用,可以理解为被设置了一个调用属性
-函数对象的原型是Function.prototype:`func.__proto__ == Func.prototype`
+函数对象的原型是 Function.prototype:`func.__proto__ == Func.prototype`
 函数在创建时附加两个隐藏属性:
+
 1. 函数的上下文
 2. 实现函数行为的代码
-3. prototype属性,值为 {constructor:f}
+3. prototype 属性,值为 {constructor:f}
+   
+### 函数的四种调用模式
+1. **方法调用**
+   方法可以使this访问自己所属的对象,所以它能够从对象中取值或对对象进行修改.this的绑定发生在调用的时候,使得函数可以对this高度复用.
+   公共方法:this可以取得他们所属对象的上下文
+2. **纯函数调用**
+   纯函数调用,this被绑定为全局对象,可以看作是设计错误. 
+3. **构造器调用**
+   new func()
+   会创建一个链接到该函数的prototype成员的新对象,this会被绑定到新对象.
+4. **Apply调用**
+   显式设置this
 
+### 异常处理
+throw:中断函数执行,抛出exception对象,exception被传递到try语句的catch从句.
 
-
-
+### 扩充类型的功能
+利用原型继承的动态性,给Function.prototFype添加方法,给Number.prototype添加方法...
+要确定没有该方法时才添加.
 ## 数组 array，数组属于内建对象
 
 ```js
@@ -395,7 +418,6 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
 
 ## 对象 object
 
-
 #### 属性 //key/property/attribute/field
 
 - `value.x`
@@ -407,25 +429,31 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
 - 包含函数的属性称为某个值的方法 method
 
 ### 方法
-方法调用:`obj.func` this是调用它的函数
 
-**this**可以看作是以不同方式传递的arguments参数,每个函数都有它的this,值依赖它的调用方式
-call方法:`func.call(this,...arguments)`//传入一个特定的this,然后再传正常的参数
-apply方法:`func.apply(this,[arguments])`//传入一个特定的this,然后再传正常的参数的数组
+方法调用:`obj.func` this 是调用它的函数
 
-对象里写函数,f属性指向这个函数,函数并不属于这个对象,相对独立.
+**this**可以看作是以不同方式传递的 arguments 参数,每个函数都有它的 this,值依赖它的调用方式
+call 方法:`func.call(this,...arguments)`//传入一个特定的 this,然后再传正常的参数
+apply 方法:`func.apply(this,[arguments])`//传入一个特定的 this,然后再传正常的参数的数组
+
+对象里写函数,f 属性指向这个函数,函数并不属于这个对象,相对独立.
 这个函数是全局的,对象不是语句块,不会产生作用域.
 
 ```js
 var obj = {
   val: 3,
-  f:function(){return this.val}
+  f: function () {
+    return this.val
+  },
 }
 ```
+
 ### this 的指向
 
-调用函数时，解析器向函数内部传递的一个参数，指向函数执行的上下文对象。<u>**this取决于函数的调用形式,**</u>与在哪调用,在哪定义没有关系
->注意:与作用域不同,函数内部访问到的非形参变量,作用域取决于函数在哪定义,作用域在哪
+调用函数时，解析器向函数内部传递的一个参数，指向函数执行的上下文对象。<u>**this 取决于函数的调用形式,**</u>与在哪调用,在哪定义没有关系
+
+> 注意:与作用域不同,函数内部访问到的非形参变量,作用域取决于函数在哪定义,作用域在哪
+
 - 以方法的形式调用时，函数的 `this` 就是调用它的对象。如 `array.length`
 - 以纯函数形式调用时，`this` 是 `window f()`
 - 用 `new` 来调用 `this` 时，`this` 就是那个新建的对象。如构造函数；
@@ -442,8 +470,8 @@ var obj = {
   `this` 指向调用的对象与函数声明的位置无关，只与调用位置有关，如果在调用位置还使用声明位置的 `this`，`this` 会丢失；
   解决方法通过 `bind` 绑定 `this` 或者通过箭头函数。箭头函数的 `this` ，总是继承外层函数的对象，在定义时就确定，与调用无关。
 
+### dom 对象
 
-### dom对象
 - 一些属性和方法组合在一起构成的一个数据实体，用.访问
 - 给对象创建实例 `var zoe = new Person`;
 - 用户定义对象
@@ -456,35 +484,36 @@ var obj = {
 - 循环： `for (var prop in obj)`
 - `slice` 出来的数组是浅拷贝（shadllow copy), 对应的有深拷贝
 - `isEqual` 是深对比，对比的是具体的内容是否一致；浅对比对比的是否是同一对象
-  TODO: **深对比如何考虑，自己实现**
 
 
 ### 原型 prototype
+
 - 在访问对象不包含的属性时,会从对象原型中搜索属性.
-每个对象除了拥有自己的属性外,都包含一个原型.原型是另一个对象,是对象的属性来源.
-获取一个对象的原型:`Object.getPrototypeof(obj)` or `obj.__proto__`
-所有对象中原型的父原型,是Object.prototype
-可以设置一个对象的原型为null:`obj.__proto__ = null`
-创建一个具有特定原型的对象: `let obj = Object.create(ptobj,{xxxx})`
+  每个对象除了拥有自己的属性外,都包含一个原型.原型是另一个对象,是对象的属性来源.
+  获取一个对象的原型:`Object.getPrototypeOf(obj)` or `obj.__proto__`
+  所有对象中原型的父原型,是 Object.prototype
+  可以设置一个对象的原型为 null:`obj.__proto__ = null`
+  创建一个具有特定原型的对象: `let obj = Object.create(ptobj,{xxxx})`
 
 JavaScript 对象原型的关系是一种树形结构，整个树形结构的根部就是`Object.prototype`。`Object.prototype`提供了一些可以在所有对象中使用的方法。
 
 许多对象并不直接将`Object.prototype`作为其原型，而会使用另一个原型对象，用于提供一系列不同的默认属性。函数继承自`Function.prototype`，而数组继承自`Array.prototype`。
 
 ### 构造函数
+
 - 调用一个函数的构造函数:`new Func(xx)`
-- 包含指向新对象的变量this,返回新创建的对象.除非构造函数显示返回另一个对象的值.
--  函数都有`prototype`属性;构造函数的prototype属性       指向一个对象
--  构造函数他自己的原型是Function
--  `"foo".__proto__ === String.prototype` 一个字符串的原型,是String 的prototype属性;一个函数的原型,是Function 的prototype属性.(只有`Function.__proto__ === Function.prototype`)
--  一个东西的原型(__proto__)是他的构造函数的原型属性(prototype)
--  构造一个函数:`g = new Function("a,b,c,d","return a+b+c+d")`
--  可以用来进行类型判断
-   -  Object.prototype.toString.call(val) ==='[object Array]'
-   -  Object.prototype.toString.call(val) ==='[object String]'
-- 定义一个属性:Object.defineProperty(obj,{val:xx,writable:true,enumerable:false,configurable:false})//属性描述符 property description
-  - `prop in obj `
-  - `obj.hasOwnProperty(prop) `判断是否是自有属性,可以连接in设置遍历范围
+- 包含指向新对象的变量 this,返回新创建的对象(构造函数的实例).除非构造函数显式返回另一个对象的值.
+- 函数都有`prototype`属性;构造函数的 prototype 属性 默认指向一个空对象
+- 构造函数创建的对象的原型指向构造函数的prototype属性
+- `"foo".__proto__ === String.prototype` 一个字符串的原型,是 String 的 prototype 属性;一个函数的原型,是 Function 的 prototype 属性.(只有`Function.__proto__ === Function.prototype`)
+- 构造一个函数:`g = new Function("a,b,c,d","return a+b+c+d")`
+- 可以用来进行类型判断
+  - Object.prototype.toString.call([1,2,3]) ==='[object Array]'
+  - Object.prototype.toString.call("fdsf") ==='[object String]'
+- Object.prototype的标准属性都不可枚举
+- 定义一个属性:Object.defineProperty(obj,{val:xx,writable:true,enumerable:false,configurable:false})//属性描述符,控制属性类型:可以设置属性是否可枚举,是否可更改
+  - `prop in obj`
+  - `obj.hasOwnProperty(prop)`判断是否是自有属性,可以连接 in 设置遍历范围
   ```js
   for(let prop in obj){
     if(obj.hasOwnProperty(prop)){
@@ -517,11 +546,20 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
   - 接受 JavaScript 值并返回 JSON 编码的字符串
 - `JSON.parse()`//反序列化
 
-### 作用域
 
-- 作用域：变量在某个范围内起作用，为了提高程序的可靠性，减少命名冲突
-- 全局作用域：在整个 js 文件起作用
-- 函数作用域：旨在函数内部起作用
+## 面向对象
+
+### 封装
+封装:把数据,和操作数据的函数放在对象里,这个打包的过程.
+封装(另一个意思):将复杂的操作或计算写成函数,调用时只需要考虑高层概念,而无需关注运作细节.
+
+###　多态
+多个不同类型的对象拥有相同的一组接口（方法及方法的签名及属性）
+多态的代码:某段代码只期望对象们拥有这组接口即可正常工作,不期待对象的具体类型(什么构造函数构造出来的)
+>函数的签名：函数的名称，参数类型与顺序，返回值类型的集合．
+
+### 继承
+当一个类型拥有另一个类型的所有或大部分特性时,可以让这一个类型通过某种方式直接获得该类型的所有属性和方法,即称为继承.被继承者被称为父类,继承者被称为子类.
 
 ## lodash `_`下划线
 
