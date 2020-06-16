@@ -501,10 +501,11 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
 
 ### 构造函数
 
-- 调用一个函数的构造函数:`new Func(xx)`
-- 包含指向新对象的变量 this,返回新创建的对象(构造函数的实例).除非构造函数显式返回另一个对象的值.
-- 函数都有`prototype`属性;构造函数的 prototype 属性 默认指向一个空对象
-- 构造函数创建的对象的原型指向构造函数的prototype属性
+- 调用一个函数的构造函数,用来创建新对象:`new Func(xx)` 
+  - 大写开头,创建的对象的原型指向构造函数的prototype属性;
+  - 包含指向新对象的变量 this,返回新创建的对象(构造函数的实例).除非构造函数显式返回另一个对象的值.
+  - 函数都有`prototype`属性;构造函数的 prototype 属性 默认指向一个空对象
+
 - `"foo".__proto__ === String.prototype` 一个字符串的原型,是 String 的 prototype 属性;一个函数的原型,是 Function 的 prototype 属性.(只有`Function.__proto__ === Function.prototype`)
 - 构造一个函数:`g = new Function("a,b,c,d","return a+b+c+d")`
 - 可以用来进行类型判断
@@ -521,7 +522,25 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
     }
   }
   ```
+### getter && setter
+在对象中,用于指定属性的读取函数和修改函数.
+由于一些原因,把一些值的属性在get后面写成函数获取.
+```js
+var pile = {
+  elements: ['eggshell', 'orange peel', 'worm'],
+  get height() {
+    return this.elements.length
+  },
+  set height(value) {
+    console.log('Ignoring set height to', value)
+  },
+}
 
+var o = { a:0 }
+//现有对象上添加getter
+Object.defineProperty(o, "b", { get: function () { return this.a + 1; } });
+
+```
 ### 类数组 arguments
 
 调用函数时，浏览器每次都会传递两个参数：
@@ -560,6 +579,10 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
 
 ### 继承
 当一个类型拥有另一个类型的所有或大部分特性时,可以让这一个类型通过某种方式直接获得该类型的所有属性和方法,即称为继承.被继承者被称为父类,继承者被称为子类.
+
+### instanceof 
+二元运算符,某个对象是否继承自某个特定的构造函数
+`[1] instanceof Array` //true
 
 ## lodash `_`下划线
 
