@@ -399,22 +399,46 @@ function insertIntoBST(bst, val) {
 
 function Bst(val = null) {
   if (val == null) {
-    return null
+    this.root = null
+    return this.root
   }
-  this.val = val
-  this.left = null
-  this.right = null
+  this.root = {}
+  this.root.val = val
+  this.root.left = null
+  this.root.right = null
 }
 
 Bst.prototype.insert = function (val) {
-  if (this.val == null) {
+  if (this.root == null) {
     return new Bst(val)
-  } else if (val > this.val) {
-    this.right.insert(val)
+  }
+  var node = this.root
+
+  if (val > node.val) {
+    node.right ? node.right.insert(val) : (node.right = new Bst(val))
   } else {
-    this.left.insert(val)
+    node.left ? node.left.insert(val) : (node.left = new Bst(val))
   }
   return this
+  // while (true) {
+  //   if (val < node.val) {
+  //     if (node.left) {
+  //       node = node.left
+  //     } else {
+  //       node.left = new Bst(val)
+  //       break
+  //     }
+  //   }
+
+  //   if (val > node.val) {
+  //     if (node.right) {
+  //       node = node.right
+  //     } else {
+  //       node.right = new Bst(val)
+  //       break
+  //     }
+  //   }
+  // }
 }
 
 Bst.prototype.remove = function (target) {
@@ -428,3 +452,5 @@ Bst.prototype.remove = function (target) {
 var b = new Bst()
 b.insert(2)
 b.remove(3) //
+
+
