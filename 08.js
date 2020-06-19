@@ -382,8 +382,6 @@ function inorder(tree) {
 
 function postorderTraversal(root) {}
 
-
-
 function bstSort(ary) {
   //乱序数组，用BST排序
   //时间复杂度：n*log(n)
@@ -422,6 +420,103 @@ function qsort(ary, start = 0, end = ary.length - 1) {
     if (ary[j] < pivot) {
       i++
       swap(ary, i, j)
+    }
+  }
+}
+
+给前序, 中序遍历, 还原二叉树
+function restore(preorder, inorder) {
+  if (preorder.length == 0) {
+    return 0
+  }
+  var rootVal = preorder[0]
+  var root = new createTreeNode(rootVal)
+  var idx = inorder.findIndex((it) => it == rootVal)
+  var leftInorder = inorder.slice(0, idx)
+  var rightInorder = inorder.slice(idx + 1)
+  var leftPreorder = preorder.slice(1, 1 + leftInorder.length)
+  var rightPreorder = preorder.slice(1 + leftInorder.length)
+  root.left = restore(leftPreorder, leftInorder)
+  root.right = restore(rightPreorder, rightInorder)
+}
+
+Array.prototype.findIndex = function (f) {
+  for (let i = 0; i < this.length; i++) {
+    if (f(this[i], i, this)) {
+      return i
+    }
+  }
+  return -1
+}
+
+
+
+
+
+
+
+
+
+
+class PriorityQueue {
+  constructor(init = []) {
+    //给你一颗二叉树,把它堆化
+    this.eles = init.slice()
+    this._heapify()
+  }
+  _heapify() {
+    
+  }
+  peak() {
+    //取最值
+    return this.eles[0]
+  }
+  push(val) {
+    //添加一个值
+    this.eles.push(val)
+    var idx = this.eles.legnth - 1
+    while (idx > 0) {
+      pidx = Math.floor((idx - 1) / 2)
+      if (this.eles[idx] > this.eles[pidx]) {
+        this._swap(idx, pidx)
+        idx = pidx
+      } else {
+        break
+      }
+    }
+    return this
+  }
+  _bubbleUp(idx) {
+    if (idx > 0) {
+      var pidx = Math.floor((idx - 1) / 2)
+      this._swap(idx, pidx)
+      this._bubbleUp(pidx)
+    }
+  }
+  pop() {
+    //取出一个值
+    var result = this.eles[0]
+  }
+  _bubbleDown(idx) {
+    var leftIdx = 2 * idx + 1
+    var rightIdx = 2 * idx + 2
+    if (leftIdx < this.eles.length) {
+      var maxIdx = Math.max(
+        this.eles[leftIdx],
+        this.eles[rightIdx],
+        this.eles[idx]
+      )
+      if (idx !== maxIdx) {
+        this._swap(idx, maxIdx)
+      }
+      this._bubbleDown(maxIdx)
+    }
+  }
+  _swap(i, j) {
+    if (i !== j) {
+      var t = this.eles[i]
+      this.eles[i] = this.eles[j]
+      this.eles[j] = t
     }
   }
 }
