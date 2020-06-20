@@ -220,6 +220,14 @@ typeof: 一元运算符，返回类型
   - for
   - switch 每个 case 都要加 break; 只能判断严格相等；
 
+
+- 异常
+
+ 捕获异常
+ try{
+   //
+ }
+
 ### 作用域
 
 - 作用域：变量在某个范围内起作用，为了提高程序的可靠性，减少命名冲突
@@ -448,6 +456,24 @@ var obj = {
 }
 ```
 
+### 内置对象
+
+**Set**
+不重复的集合,可以包含数字,字符,对象等.
+内置方法:
+var set = new Set
+- set.has(val)
+- set.delete(val)
+- set.clear()
+
+**Map**
+键值对的数组类型,键和值都可以是任意的数据类型.
+内置方法:
+var map = new Map
+- map.set(key,val)
+- map.get(key)
+- map.has(key)
+- map.delete(key)
 ### this 的指向
 
 调用函数时，解析器向函数内部传递的一个参数，指向函数执行的上下文对象。<u>**this 取决于函数的调用形式,**</u>与在哪调用,在哪定义没有关系
@@ -546,7 +572,7 @@ Object.defineProperty(o, "b", { get: function () { return this.a + 1; } });
 调用函数时，浏览器每次都会传递两个参数：
 
 1. `this` 函数的上下文对象
-2. `arguments` 封装实参的对象
+2. `arguments` 封装实参的对象 
 
 - `arguments` 代表实参，只在函数中使用。
 - `arguments.callee` 对应当前指向的函数对象。在使用函数递归，如果是匿名函数需要用到。ES5 严格模式不支持。
@@ -557,7 +583,7 @@ Object.defineProperty(o, "b", { get: function () { return this.a + 1; } });
 
 - 序列化数据(e.g. yaml)
 - 看起来很像 JS 的数组和对象的表示方式，但有一些限制。
-  所有属性名都要有双引号
+  所有key都要有双引号
   只允许使用简单的数据格式，不能有函数调用/绑定或涉及实际计算
   只支持数组、对象、字符串、数值、bool、null
   支持转义，不支持明文空格
@@ -593,8 +619,8 @@ Object.defineProperty(o, "b", { get: function () { return this.a + 1; } });
 Domain Specific Language 领域特定语言
 
 - 创建方法：三种方式
-  - `var a = new RegExp('\\\\abc')` //string 里面需要转义
-  - `var a = /\\abc/` //是啥就是啥
+  - `var a = new RegExp('abc')` //string 里面需要转义
+  - `var a = /abc/` //是啥就是啥 +g全局匹配
   - `var a = new RegExp(String.fromCharCode(92,9297,98,99))`
 
 ### 匹配方式
@@ -604,16 +630,23 @@ Domain Specific Language 领域特定语言
 - \s 空白字符 space,tab,newline，etc.
 - \D \W \S 非。.. 的字符
 - . 匹配任意字符（除换行符外、n \r\n)
+- \u4f60 匹配Unicode码,如中文
 - [a-z] 匹配单个字符。
 - [] 里的东西：
   - [^2357] ^在开头：取反，非 2357
   - [^] : 任意符号
+- 可以用 | 分隔表示或:`str.match(/this|cons/g)`
+- ^在开头,表示匹配以什么开头的;$在最后,表示匹配以什么结束的.
+- /b包起来/b,表示匹配单词.
 
-重复
+
+
+
+#### 重复
 
 - 只对前面紧挨着的一个字符或者一个组生效
   - "+" 出现至少一次 {1，}
-  - "\*" 出现任意次数 {0，}
+  - "*" 出现任意次数 {0，}
   - "?" 出现 0 次或 1 次 {0，1}
   - {n} 出现 n 次 {2} {2,4} {4,}4 次及以上
 
@@ -621,10 +654,10 @@ Domain Specific Language 领域特定语言
 
 - test 判断正则表达式和字符串是否匹配
   - `/ab\d/.test("ab5sd")`=> `true`
-- exec 以数组形式返回匹配内容的信息
+- exec 以数组形式返回第一个匹配内容的信息
   - `/\d+/.exec("one two 100")`=> `["100", index: 8,input: "one two 100", groups: undefined]`
   - 无法匹配返回 `null` ，否则返回一个表达字符串信息的对象
--
+- `str.match(regexp)` //数组输出所有符合的项
 
 #### 捕获分组
 
@@ -637,6 +670,12 @@ Domain Specific Language 领域特定语言
 - 为分组取名：`(?<name>)` （在旧的浏览器无法使用）
 
   - `/（张）(?<名字>.+)/.exec('sgdgs 张韶涵')`=> `groups: {名字："韶涵"}`
+
+
+#### 常用的
+- `var mobileRe = /^1[3-9]\d{9}/g`
+- `var emailRe = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g`
+- 
 
 ## DOM document object model
 
