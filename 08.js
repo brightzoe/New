@@ -424,7 +424,7 @@ function qsort(ary, start = 0, end = ary.length - 1) {
   }
 }
 
-给前序, 中序遍历, 还原二叉树
+//给前序, 中序遍历, 还原二叉树
 function restore(preorder, inorder) {
   if (preorder.length == 0) {
     return 0
@@ -449,14 +449,84 @@ Array.prototype.findIndex = function (f) {
   return -1
 }
 
+var a = array2Tree([1, 2, 3, 4, 5, 6, 7])
+console.log(a)
 
+class PriorQueue {
+  constructor(init = []) {
+    this.heap = init.slice()
+  }
+  getLeftIdx(idx) {
+    return 2 * idx + 1
+  }
+  getRightIdx(idx) {
+    return 2 * idx + 2
+  }
+  getParentIdx(idx) {
+    return Math.floor((idx - 1) / 2)
+  }
+  insert(val) {
+    val && this.heap.push(val)
+    this._bubbleUp(this.heap.length - 1)
+  }
+  _bubbleUp(idx) {
+    let parent = this.getParentIdx(idx)
+    while (idx > 0 && this.heap[idx] > this.heap[parent]) {
+      //保证 parentIdx > 0,只需要保证 idx > 0
+      //以最小堆为例,这里用的是大于号
+      this._swap(idx, parent)
+      idx = parent
+      parent = this.getParentIdx(isx)
+    }
+  }
+  extract() {
+    if (this.isEmpty()) {
+      return undefined
+    }
+    if (this.size() === 1) {
+      return this.heap.shift()
+    }
+    var removed = this.heap.shift()
+    this._sinkDown(0)
+    return removed
+  }
+  _sinkDown(idx) {
+    let left = this.getLeftIdx(idx)
+    let right = this.getRightIdx(idx)
+    let size = this.size()
+    while (true) {
+      if (right < size) {
+        let min = this.heap[left] > this.heap[right] ? right :left
+      } else if (left < size) {
+        let min = left
+      }
+      this._swap(idx, min)
+      idx = min
+      
+      left = this.getLeftIdx(idx)
+      right = this.getRightIdx(idx)
+    }
+    
+  }
 
+  _swap(a, b) {
+    if (a !== b) {
+      var temp = this.heap[a]
+      this.heap[a] = this.heap[b]
+      this.heap[b] = temp
+    }
+  }
 
-
-
-
-
-
+  size() {
+    return this.heap.length
+  }
+  isEmpty() {
+    return this.size() === 0
+  }
+  findMin() {
+    return this.isEmpty ? undefined : this.heap[0]
+  }
+}
 
 class PriorityQueue {
   constructor(init = []) {
@@ -464,9 +534,7 @@ class PriorityQueue {
     this.eles = init.slice()
     this._heapify()
   }
-  _heapify() {
-    
-  }
+  _heapify() {}
   peak() {
     //取最值
     return this.eles[0]
@@ -521,3 +589,120 @@ class PriorityQueue {
   }
 }
 
+// var timer1 = setTimeout(() => {
+//   console.log('一秒后执行')
+// }, 1000)
+// //回调函数?
+// var timer2 = setTimeout(() => {
+//   clearTimeout(timer1)
+// }, 500) //中断time1的执行
+
+// var interval = setInterval(() => {
+//   let date = new Date()
+//   console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
+// }, 100)
+
+// var clearInt = setTimeout(() => {
+//   clearInterval(interval)
+// }, 500)
+
+// //promise
+// //创建promise立即执行
+// var promise = new Promise((resolve) => {
+//   setTimeout(() => {
+//     resolve('sucess')
+//   }, 200)
+// })
+// //then接收
+// promise.then((val) => {
+//   console.log(val)
+// })
+
+// console.log('在promise之前执行')
+
+// var promise = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject('promise failed')
+//   }, 200)
+// })
+// promise.catch((error) => {
+//   console.log(error)
+// })
+
+// //链式调用
+// new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve(1)
+//   }, 1000)
+// })
+//   .then((value) => {
+//     console.log(value)
+//     throw 'then1 error'
+//     return value + 10
+//   })
+//   .then((value) => {
+//     console.log(value)
+//     return new Promise((resolve) => resolve(value + 20))
+//   })
+//   .then((value) => console.log(value))
+//   .catch((error) => console.log(error))
+
+// //多个promise同时执行
+// var p1 = new Promise((resolve) => {
+//   setTimeout(() => resolve(1), 1000)
+// })
+
+// var p2 = new Promise((resolve) => {
+//   setTimeout(() => resolve(2), 2000)
+// })
+
+// var p3 = new Promise((resolve) => {
+//   setTimeout(() => resolve(3), 500)
+// })
+
+// Promise.all([p1, p2, p3]).then((values) => console.log(values))
+
+//async & await
+// async function async1() {
+//   setTimeout(()=>console.log("async1 done"),1000)
+// }
+// async1()
+// console.log(async1());
+
+// async function async1() {
+//   let result2 = await async2()
+//   try {
+//     let result3 = await async3()
+//   } catch (error) {
+//     console.log(error)
+//   }
+//   console.log(result2)
+// }
+// async function async2() {
+//   return new Promise((resolve) => {
+//     setTimeout(() => resolve(10), 1000)
+//   })
+// }
+// async function async3() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => reject('error'), 500)
+//   })
+// }
+
+// async1()
+
+//模块化
+//导出 export func(){}
+//可以在js末尾统一导出 export{funcName,funcname...}
+
+//导入的script 的 type:module
+//import{functionName,funcName,var...} from "url"
+
+//默认导出
+//export default func;
+//export default func;
+//import name(随便起),以及非默认func from "xxx"
+
+//一个模块的所有导出,一次性导入
+//as可以取别名
+//import *  as xx from "url"
