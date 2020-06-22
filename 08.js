@@ -466,17 +466,21 @@ class PriorQueue {
     return Math.floor((idx - 1) / 2)
   }
   insert(val) {
-    val && this.heap.push(val)
-    this._bubbleUp(this.heap.length - 1)
+    if (val !== null) {
+      this.heap.push(val)
+      this._bubbleUp(this.heap.length - 1)
+      return true
+    }
+    return false
   }
   _bubbleUp(idx) {
     let parent = this.getParentIdx(idx)
-    while (idx > 0 && this.heap[idx] > this.heap[parent]) {
+    while (idx > 0 && this.heap[idx] < this.heap[parent]) {
       //保证 parentIdx > 0,只需要保证 idx > 0
-      //以最小堆为例,这里用的是大于号
+      //以最小堆为例,这里用的是小于号
       this._swap(idx, parent)
       idx = parent
-      parent = this.getParentIdx(isx)
+      parent = this.getParentIdx(idx)
     }
   }
   extract() {
@@ -487,6 +491,7 @@ class PriorQueue {
       return this.heap.shift()
     }
     var removed = this.heap.shift()
+    this.heap.unshift(this.heap.pop())
     this._sinkDown(0)
     return removed
   }
@@ -494,19 +499,22 @@ class PriorQueue {
     let left = this.getLeftIdx(idx)
     let right = this.getRightIdx(idx)
     let size = this.size()
-    while (true) {
+    while (size > 1) {
       if (right < size) {
-        let min = this.heap[left] > this.heap[right] ? right :left
+        //左右节点都存在
+        var min = this.heap[left] > this.heap[right] ? right : left
       } else if (left < size) {
-        let min = left
+        //只有左节点
+        var min = left
+      } else {
+        //不存在子节点
+        break
       }
       this._swap(idx, min)
       idx = min
-      
       left = this.getLeftIdx(idx)
       right = this.getRightIdx(idx)
     }
-    
   }
 
   _swap(a, b) {
@@ -526,67 +534,29 @@ class PriorQueue {
   findMin() {
     return this.isEmpty ? undefined : this.heap[0]
   }
+
 }
 
-class PriorityQueue {
-  constructor(init = []) {
-    //给你一颗二叉树,把它堆化
-    this.eles = init.slice()
-    this._heapify()
+
+//堆排序:第一个想法,构建一个空堆,数组里元素一个一个insert,再依次shift出来,时间复杂度O(nlogn)
+//第二种:在一个数组里,它的叶子节点数量为Math.ceil(size()/2),每个叶子节点都可以看作是已经构建好的堆.把这个数组堆化,从前面最后的一个非叶子节点(Math.floor(size()/2)sinkdown则维护好了一个三个节点的最小堆,然后向前sink down维护好每个最小堆依次到根,即可堆化.时间复杂度O(n)
+function heapSort(array) {
+  var ary = new PriorQueue(array)
+  for (let i = Math.floor(array.length / 2); i >= 0; i--) {
+    ary._sinkDown(i)
   }
-  _heapify() {}
-  peak() {
-    //取最值
-    return this.eles[0]
+  return ary
+}
+
+
+class HashMap {
+  constructor() {
+    this._keys = []
+    this._values = []
   }
-  push(val) {
-    //添加一个值
-    this.eles.push(val)
-    var idx = this.eles.legnth - 1
-    while (idx > 0) {
-      pidx = Math.floor((idx - 1) / 2)
-      if (this.eles[idx] > this.eles[pidx]) {
-        this._swap(idx, pidx)
-        idx = pidx
-      } else {
-        break
-      }
-    }
-    return this
-  }
-  _bubbleUp(idx) {
-    if (idx > 0) {
-      var pidx = Math.floor((idx - 1) / 2)
-      this._swap(idx, pidx)
-      this._bubbleUp(pidx)
-    }
-  }
-  pop() {
-    //取出一个值
-    var result = this.eles[0]
-  }
-  _bubbleDown(idx) {
-    var leftIdx = 2 * idx + 1
-    var rightIdx = 2 * idx + 2
-    if (leftIdx < this.eles.length) {
-      var maxIdx = Math.max(
-        this.eles[leftIdx],
-        this.eles[rightIdx],
-        this.eles[idx]
-      )
-      if (idx !== maxIdx) {
-        this._swap(idx, maxIdx)
-      }
-      this._bubbleDown(maxIdx)
-    }
-  }
-  _swap(i, j) {
-    if (i !== j) {
-      var t = this.eles[i]
-      this.eles[i] = this.eles[j]
-      this.eles[j] = t
-    }
-  }
+  has(key) {}
+  get(key) {}
+  set(key) {}
 }
 
 // var timer1 = setTimeout(() => {
