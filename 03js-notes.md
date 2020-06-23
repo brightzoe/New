@@ -693,15 +693,22 @@ Domain Specific Language 领域特定语言
 - `var mobileRe = /^1[3-9]\d{9}/g`
 - `var emailRe = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g`
 - 
-
-## DOM document object model
-
-- 文档交互类型，给文档增加交互能力，对文档内容进行抽象和概念化，类似 CSS 增加样式。代表着加载到浏览器窗口的当前网页。是一种 API（应用编程接口，是一个标准）
+## 文档结构
+### DOM document object model 文档对象模型
+- 文档结构:盒子套盒子,每个盒子都是一个对象,我们和这些对象交互,找出其中包含的盒子和文本.给文档增加交互能力，对文档内容进行抽象和概念化，类似 CSS 增加样式。代表着加载到浏览器窗口的当前网页。是一种 API（应用编程接口，是一个标准）
 - **适用于多种环境和多种程序设计语言的通用型 API**
 - 文档：节点树 node tree **文档中每个元素节点都是一个对象**
-  - 元素节点 DOM 的原子是元素节点 `<p class="abc"> this is a pargraph.</p>`
+  - 元素节点 DOM 的原子是元素节点 `document.body`
   - 文本节点 只包含文本的元素
   - 属性节点 总是被包含在元素节点中
+  
+DOM的根节点:document.documentElement => <html>
+文本片段或注释是一定是叶子节点
+
+- Object.preventExtension阻止增加属性
+- Object.seal阻止增删属性
+- Object.freeze阻止增删与修改属性
+
 
 BOM 浏览器对象模型，设置浏览器的属性
 

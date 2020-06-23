@@ -534,9 +534,7 @@ class PriorQueue {
   findMin() {
     return this.isEmpty ? undefined : this.heap[0]
   }
-
 }
-
 
 //堆排序:第一个想法,构建一个空堆,数组里元素一个一个insert,再依次shift出来,时间复杂度O(nlogn)
 //第二种:在一个数组里,它的叶子节点数量为Math.ceil(size()/2),每个叶子节点都可以看作是已经构建好的堆.把这个数组堆化,从前面最后的一个非叶子节点(Math.floor(size()/2)sinkdown则维护好了一个三个节点的最小堆,然后向前sink down维护好每个最小堆依次到根,即可堆化.时间复杂度O(n)
@@ -547,7 +545,6 @@ function heapSort(array) {
   }
   return ary
 }
-
 
 class HashMap {
   constructor() {
@@ -676,3 +673,49 @@ class HashMap {
 //一个模块的所有导出,一次性导入
 //as可以取别名
 //import *  as xx from "url"
+
+function talksAbout(node = Node, text = string) {
+  //node里面有没有出现text
+
+  for (let i = 0; i < nodes.childNodes.length; i++) {
+    let child = node.childNodes[i]
+    if (child.nodeType === document.TEXT_NODE) {
+      if (child.nodeValue.includes(text)) {
+        return true
+      }
+    } else if (child.nodeType === document.ELEMENT_NODE) {
+      return talksAbout(child,text)
+    }
+  }
+
+  while (node.left || node.right) {
+    if ((Node.xxx = '')) {
+    }
+    node = node.left
+  }
+}
+function getElementsByTagName(node, name) {
+  for (let i = 0; i < node.length; i++) {}
+}
+
+Array.prototype.slice = function (start = 0, end = this.length) {
+  let res = []
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index]
+  }
+}
+
+function elt(tagName, ...children) {
+  var node = document.createElement(tagName)
+}
+
+var jsonText =
+  '[111,222,{"a":3},{"b":true,"c":"fooobar","d":[1,false,[null,4,{"x":1,"y":2}]]}]'
+
+function ParseJSON(str) {
+  //TODO: 实现ParseJSON函数使其能够解析一个json字符串到一个js值。
+}
+
+//var data = ParseJSON(jsonText)
+var data = JSON.parse(jsonText)
+console.log(data)
