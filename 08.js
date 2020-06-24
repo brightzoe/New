@@ -450,7 +450,6 @@ Array.prototype.findIndex = function (f) {
 }
 
 var a = array2Tree([1, 2, 3, 4, 5, 6, 7])
-console.log(a)
 
 class PriorQueue {
   constructor(init = []) {
@@ -677,45 +676,161 @@ class HashMap {
 function talksAbout(node = Node, text = string) {
   //node里面有没有出现text
 
-  for (let i = 0; i < nodes.childNodes.length; i++) {
+  for (let i = 0; i < node.childNodes.length; i++) {
     let child = node.childNodes[i]
     if (child.nodeType === document.TEXT_NODE) {
       if (child.nodeValue.includes(text)) {
         return true
       }
     } else if (child.nodeType === document.ELEMENT_NODE) {
-      return talksAbout(child,text)
+      return talksAbout(child, text)
     }
   }
-
-  while (node.left || node.right) {
-    if ((Node.xxx = '')) {
-    }
-    node = node.left
-  }
+  return false
 }
-function getElementsByTagName(node, name) {
-  for (let i = 0; i < node.length; i++) {}
+function getElementsById(id, node = document.documentElement) {
+  if (node.id === 'id') {
+    return node
+  } else {
+    for (let i = 0; i < node.childNodes.length; i++) {
+      var child = node.childNodes[i]
+      var res = getElementsById(id, child)
+      if (res) {
+        return res
+      }
+    }
+  }
+  return null
 }
 
 Array.prototype.slice = function (start = 0, end = this.length) {
   let res = []
-  for (let index = 0; index < array.length; index++) {
-    const element = array[index]
+  for (let i = 0; i < end; i++) {
+    res.push(this[i])
   }
 }
 
-function elt(tagName, ...children) {
+function elt(tagName, attrs, ...children) {
   var node = document.createElement(tagName)
+  for (let key in attrs) {
+    let val = attrs[key]
+    node.setAttribute(key, val)
+  }
+  for (let child of children) {
+    if (typeof child === 'string') {
+      node.appendChild(document.createTextNode(child))
+    } else {
+      node.appendChild(child)
+    }
+  }
+  return node
 }
 
-var jsonText =
+var str =
   '[111,222,{"a":3},{"b":true,"c":"fooobar","d":[1,false,[null,4,{"x":1,"y":2}]]}]'
+//实现parseJSON函数使其能够解析一个json字符串到一个js值。
+//实现以下几个函数：一个位置指针i，parseValue，parseString，parseNumber，parseArray，parseObject, 分别从i位置开始解析出对应的值并返回，同时移动指针i到解析完成后的位置。
 
-function ParseJSON(str) {
-  //TODO: 实现ParseJSON函数使其能够解析一个json字符串到一个js值。
+var ParseJSON = (function () {
+  //递归下降
+  var str
+  var i = 0
+
+  function parseValue() {
+    if (str[i] === '[') {
+      return parseArray()
+    }
+    if (str[i] === '{') {
+      return parseObject()
+    }
+    if (str[i] === '"') {
+      return parseString()
+    }
+    if (str[i] === 't') {
+      return parseTrue()
+    }
+    if (str[i] === 'f') {
+      return parseFalse()
+    }
+    if (str[i] === 'n') {
+      i += 4
+      return null
+    } else {
+      return parseNumber()
+    }
+  }
+
+  function parseArray() {
+    i++
+    var res = []
+    while (str[i] !== ']') {
+      var val = parseValue()
+      res.push(val)
+      if (str[i] === ',') {
+        i++
+      }
+    }
+    i++
+    return res
+  }
+
+  function parseString() {
+    i++
+    var j = i + 1
+    while (str[j] !== '"') {
+      j++
+    }
+    var res = str.slice(i, j)
+    i = j + 1
+    return res
+  }
+  function parseObject() {
+    i++
+    var res = {}
+    while (str[i] != '}') {
+      var key = parseString()
+      i++
+      var value = parseValue()
+      res[key] = value
+      if (str[i] === ',') {
+        i++
+      }
+    }
+    i++
+    return res
+  }
+  function parseTrue() {
+    i += 4
+    return true
+  }
+  function parseFalse() {
+    i += 5
+    return false
+  }
+
+  function parseNumber() {
+    //345
+    var numStr = ''
+    while (str[i].charCodeAt(0) >= 48 && str[i].charCodeAt(0) <= 57) {
+      numStr += str[i++]
+    }
+    return parseInt(numStr)
+  }
+  return function parseJSON(string) {
+    str = string
+    var i = 0
+    //递归下降
+    return parseValue()
+  }
+})()
+
+function replaceImages() {
+  var images = document.getElementsByTagName('img')
+  for (let i = images.length - 1; i >= 0; i--) {
+    let image = images[i]
+    if (image.alt) {
+      var text = document.createTextNode(image.alt)
+      image.parentNode.replaceChild(text, image)
+    }
+  }
 }
-
-//var data = ParseJSON(jsonText)
-var data = JSON.parse(jsonText)
-console.log(data)

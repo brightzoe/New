@@ -701,7 +701,7 @@ Domain Specific Language 领域特定语言
   - 元素节点 DOM 的原子是元素节点 `document.body`
   - 文本节点 只包含文本的元素
   - 属性节点 总是被包含在元素节点中
-  
+  - 每个节点的属性:nodeType/nodeValue/nodeName
 DOM的根节点:document.documentElement => <html>
 文本片段或注释是一定是叶子节点
 
@@ -713,20 +713,36 @@ DOM的根节点:document.documentElement => <html>
 BOM 浏览器对象模型，设置浏览器的属性
 
 获取元素节点（文档中的每个元素都是一个对象）
-
-- `document.getElementById('id')` 返回一个对象
+- `node.firstChild/lastChild/firstElementChild/childNodes/nextSibling/previousSibling/parentElement/parentNode`
+- `document.getElementById('id')` id是唯一的,返回一个对象
 - `document.getElementByTagName('tag')` 标签名，返回数组
 - `document.getElementByClassName('class')` 返回数组
   可以组合使用，i.e.`var shopping = document.getElementById('purchases'); var sales = shopping.getElementsByClassName('sale')`
 
-获取和设置属性
+修改文档
+- `node.removeChild(xxnode)`
+- `node.appendChild(xxnode)`//放在子节点末尾
+- `node.prepend(...nodes)`//在节点前面增加一个节点.//同一个节点在文档中只能出现一次
+- `parentnode.insertBefore(node1,node2)`//把第一个节点放在第二个节点前面
+- `parentnode.replaceChild(newnode,oldnode)`
+- `document.createElement('xx')`//创建元素节点
+- `document.createTextNode('xxxx')`//创建文本节点
 
+
+
+获取和设置属性
 - `object.getAttribute('attribute')`
 - `object.setAttribute('attr','xxxx')` 设置或修改属性
   非 DOM 解决方案：`element.value = "the new value"`
 
+
+- document.write('<span></span>')
+// 往解析流里写入字符串。在解析结束(</html>)以后再写就没有意义了。如果解析完成以后再write就会重新开启一个解析流，相当于把DOM树中的所有内容全部“冲”掉。
+
+- document.createElement('span')
+// 创建出DOM对象。创建之初是不在DOM树里的，需要添加进DOM树里才能显示出来。不会因为创建或添加而影响DOM树的其它部分。
+
 事件处理函数 特定事件发生时调用 i.e. onclick
 
-`element.childNotes` 获取任何一个元素的所有子元素，返回数组
-nodeType
+
 `window.onload = function` 在页面加载时调用函数
