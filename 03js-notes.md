@@ -94,16 +94,22 @@ IEEE754 标准：二进制浮点顺运算标准
 - NaN "not a number", 不产生有意义的结果
 
 运算符 operator
-
 - 运算符优先级<link>https://www.ecma-international.org/ecma-262/5.1/
+- void运算符的作用是执行一个表达式，然后不返回任何值，或者说返回undefined。
+- void(xxx) 优先级超级高.
+- typeof: 一元运算符，返回类型
+- delete 删除属性
+- 逗号运算符用于对两个表达式求值，并返回后一个表达式的值。
+
+大多数运算符是“左结合”.少数运算符是“右结合”，其中最主要的是赋值运算符（=）和三元条件运算符（?:）和指数运算符(**)。
+
 
 字符串 string
-
 - \转义符
 - \n 回车 \t Tab
 - 反引号后可出现明文回车
 
-typeof: 一元运算符，返回类型
+
 
 自动类型转换：弱类型语言 js 强类型语言（python）
 变量指向的类型在程序运行时是否允许发生变化：动态类型（js）静态类型（c）
@@ -168,24 +174,26 @@ typeof: 一元运算符，返回类型
 **原码与补码**
 正数的补码与原码相同，负数的补码等于原码取反，末位加 1（符号位不变）
 
-### 位运算符（优先级低）
-
-- | 按位 或 每位有 1 则 1
+### 位运算符（优先级低）只对整数起作用
+https://wangdoc.com/javascript/operators/bit.html
+- | 按位 或 有 1 则 1
 - & 按位 与 都 1 才 1
 - ~ 按位 取反 0 变 1，1 变 0
 - ^ 异或运算 相同为 0，不同为 1
-- `>>` 移位运算 向右移位，每移一位，/2 向下取整。移位后空缺部分全是 0
+- `>>` 移位运算 向右移位，每移一位，/2 向下取整(整除)。移位后空缺部分全是 0
 - `<<` 左移，加倍
 - `>>>`按位右移，不保留符号位
 - <<<
-- `~` 取反操作，先加 1 然后加上负号
+- `~` 按位取反操作，先加 1 然后加上负号 /一个数与自身的取反值相加，等于-1。
 
 位运算/逻辑运算技巧
 
 - 可以用 if ((a & 1) == 0) 代替 if (a % 2 == 0) 来判断 a 是不是偶数。
 - https://blog.csdn.net/MoreWindows/article/details/7354571
-- x | 0 取整
+- x | 0 / x ^ 0 / x << 0  //取整
+- ~~X //取整最快
 - x || 2 给函数一个默认值
+- a ^= b, b ^= a, a ^= b //互换两个变量的值的最快方法
 
 ## 程序结构
 
@@ -717,12 +725,13 @@ BOM 浏览器对象模型，设置浏览器的属性
 - `document.getElementById('id')` id是唯一的,返回一个对象
 - `document.getElementByTagName('tag')` 标签名，返回数组
 - `document.getElementByClassName('class')` 返回数组
+- `document.all.id`
   可以组合使用，i.e.`var shopping = document.getElementById('purchases'); var sales = shopping.getElementsByClassName('sale')`
 
 修改文档
 - `node.removeChild(xxnode)`
 - `node.appendChild(xxnode)`//放在子节点末尾
-- `node.prepend(...nodes)`//在节点前面增加一个节点.//同一个节点在文档中只能出现一次
+- `node.prepend/append(...nodes)`//在节点前面增加一个节点.//同一个节点在文档中只能出现一次
 - `parentnode.insertBefore(node1,node2)`//把第一个节点放在第二个节点前面
 - `parentnode.replaceChild(newnode,oldnode)`
 - `document.createElement('xx')`//创建元素节点
@@ -734,13 +743,38 @@ BOM 浏览器对象模型，设置浏览器的属性
 - `object.getAttribute('attribute')`
 - `object.setAttribute('attr','xxxx')` 设置或修改属性
   非 DOM 解决方案：`element.value = "the new value"`
+- `node.id/className/htmlFor/title/tabindex` 获取属性
+- `node.dataset.foo = 'xxx'`
+- nodeclassList.add/remove/has`
 
+尺寸和位置
+node.offsetWidth/Height
+node.clientWidth/Height
+node.getBoundingClientRect()//包裹着的最小矩形
+node.getClientRects()//元素布局生成的所有矩形
+window.pageX/YOffset页面滚动位置
+el.scrollTop/Left元素的滚动位置
+el.scrollTop/Left = num设定元素的滚动位置
+el.scrollTo(x, y)
+el.scrollBy(x, y)
+window.scrollTo(x, y)
+window.scrollBy(x, y)
+window.innerWidth/Height窗口内部宽高（css像素）
 
 - document.write('<span></span>')
 // 往解析流里写入字符串。在解析结束(</html>)以后再写就没有意义了。如果解析完成以后再write就会重新开启一个解析流，相当于把DOM树中的所有内容全部“冲”掉。
 
 - document.createElement('span')
 // 创建出DOM对象。创建之初是不在DOM树里的，需要添加进DOM树里才能显示出来。不会因为创建或添加而影响DOM树的其它部分。
+
+查询选择器
+`document.querySelectorAll()`
+`document.querySelector()`
+- 在全局范围匹配
+- 可以选择一部分伪类,不能选择伪元素
+- 返回静态集合,不能动态更新
+
+
 
 事件处理函数 特定事件发生时调用 i.e. onclick
 
