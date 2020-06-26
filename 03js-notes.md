@@ -236,7 +236,7 @@ https://wangdoc.com/javascript/operators/bit.html
  try{
    //要监控的代码
  } catch(err){
-   //处理异常
+   //处理异常throw
    console.error(err);
  } finally{
    //无论如何都会执行

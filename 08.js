@@ -556,87 +556,116 @@ class HashMap {
 }
 
 var cat = document.querySelector('img')
+var me = document.querySelectorAll('img')[1]
 var angle = 0,
-  lastTime = null
+  lastTime = null,
+  intr = 0
 function animate(time) {
   if (lastTime != null) {
-    angle += (time - lastTime) * 0.001
+    angle += (time - lastTime) * 0.002
+    intr += 0.01
   }
-  console.log(time - lastTime)
+
   lastTime = time
 
-  cat.style.top = Math.sin(angle) * 50 + 100 + 'px'
-  cat.style.left = Math.cos(angle) * 200 + 'px'
+  cat.style.top = Math.sin(angle) * 100 + 100 + 'px'
+  cat.style.left = 500 + Math.cos(angle) * 100 + 'px'
+  me.style.top = Math.sin(angle) * 100 + 180 + Math.sin(intr) * 80 + 'px'
+  me.style.left = 560 + Math.cos(angle) * 100 + Math.cos(intr) * 80 + 'px'
   requestAnimationFrame(animate)
 }
 
+//输出数组中去掉一个最大值和最小值后的平均值，【并精确到小数点后两位】
+var array = [3, 5, 2, 7, 8, 1, 4, 9]
+array.reduce(function (memo, value, index, array) {
+  let max = -Infinity
+  let min = +Infinity
+  if (value < min) {
+    min = value
+  }
+  if (value > max) {
+    max = value
+  }
+  let sum = memo + value
+  return (sum - max - min) / (array.length - 2).toFixed(2)
+})
 
-var i = 0
-var expr = ''
-var parseBoolExpr = function (expression) {
-  i = 0
-  expr = expression
-  return parseExpr()
-}
-//递归下降
-//每个函数解析完i移动到下一个位置
-function parseExpr() {
-  if (expr[i] == '|') {
-    return parseOr()
+function isNotPrime(ary) {
+  if (ary <= 3) {
+    return ary <= 1
   }
-  if (expr[i] == '&') {
-    return parseAnd()
-  }
-  if (expr[i] == '!') {
-    return parseNot()
-  }
-  if (expr[i] == 'f') {
-    i++
-    return false
-  }
-  if (expr[i] == 't') {
-    i++
-    return true
-  }
-}
-function parseOr() {
-  i += 2
-  while (expr[i] != ')') {
-    if (expr[i] != ',') {
-      var res = parseExpr(expr[i])
-    }
-    if (expr[i] == ',') {
-      i++
-      res = res || parseExpr(expr[i])
+  let sqrt = Math.floor(Math.sqrt(ary))
+  for (let i = 2; i <= sqrt; i++) {
+    if (ary % i == 0) {
+      return true
     }
   }
-  i++
-  return res
+  return false
 }
 
-function parseAnd() {
-  i += 2
-  while (expr[i] != ')') {
-    if (expr[i] != ',') {
-      var res = parseExpr(expr[i])
-    }
-    if (expr[i] == ',') {
-      i++
-      res = res && parseExpr(expr[i])
+var td = [1, 0, 5, 6, 7, 8]
+var dm = [4, 4, 5, 2, 4, 1, 0, 0, 3, 5, 0]
+//求rent,tel
+var rent = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  .filter((ary) => isNotPrime(ary))
+  .reduce((a, b) => a * b, 1.5)
+var tel = dm
+  .map((i) => td[i])
+  .reverse()
+  .join()
+//console.log(rent);   25920
+// console.log(tel);  1,8,6,1,1,0,7,5,8,7,7
+
+//从 0 开始实现一个 Ary 类，要求能够通过 ary[n]直接访问到编号为 n 的元素，读取 length 属性可以得到数组的实时长度，修改 length 属性会让数组长度发生变化，让其支持 for of 及 for in 循环。同时实现原生数组上的如下方法：slice，splice，reduce，reduceRight，map，filter，join，indexOf，lastIndexOf，concat，pop，push，shift，unshift，reverse，includes，forEach，every，some，filter。
+
+function Ary(...val) {
+  for (let key = 0; key < val.length; key++) {
+    this[key] = val[key]
+  }
+}
+Ary.prototype.length = function () {
+  let length = 0
+  for (let key in this) {
+    if (key > length) {
+      length = key
     }
   }
-  i++
-  return res
+
+  return length++
 }
+var ary = new Ary(1, 2)
+// ary[ n ]
+// ary.length
+// ary.length = 3
+// for (item of ary)
+//   for (item in ary)
+//     ary.slice() / splice() / reduce() /...
 
-function parseNot() {
-  i += 2
-  var res = parseExpr(expr[i])
-  i++
-  return !res
+class Person {
+  constructor(fullname) {
+    this.fullName = fullname
+  }
+  get firstName() {
+    return this.fullName.match(/(\S+)/g)[0]
+  }
+  get lastName() {
+    return this.fullName.match(/(\S+)/g)[1]
+  }
+
+  set firstName(name) {
+    this.firstName = name
+  }
+  set lastName(name) {
+    this.lastName = name
+  }
 }
-
-expression = '|(&(t,f,t),!(t))'
-debugger
-
-parseBoolExpr(expression)
+//传入表示fullName的字符串，包含两个单词
+//var damiao = new Person('Xie Ran')
+//console.log(damiao.firstName) //Xie
+//console.log(damiao.lastName) //Ran
+//damiao.fullName = 'Da Miao'
+//console.log(damiao.firstName) //Da
+//console.log(damiao.lastName) //Miao
+//
+//// damiao.firstName = 'Xiao'
+//console.log(damiao.fullName) // Xiao Miao
