@@ -575,21 +575,6 @@ function animate(time) {
   requestAnimationFrame(animate)
 }
 
-//输出数组中去掉一个最大值和最小值后的平均值，【并精确到小数点后两位】
-var array = [3, 5, 2, 7, 8, 1, 4, 9]
-array.reduce(function (memo, value, index, array) {
-  let max = -Infinity
-  let min = +Infinity
-  if (value < min) {
-    min = value
-  }
-  if (value > max) {
-    max = value
-  }
-  let sum = memo + value
-  return (sum - max - min) / (array.length - 2).toFixed(2)
-})
-
 function isNotPrime(ary) {
   if (ary <= 3) {
     return ary <= 1
@@ -612,9 +597,9 @@ var rent = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 var tel = dm
   .map((i) => td[i])
   .reverse()
-  .join()
+  .join(',')
 //console.log(rent);   25920
-// console.log(tel);  1,8,6,1,1,0,7,5,8,7,7
+//console.log(tel);  1,8,6,1,1,0,7,5,8,7,7
 
 //从 0 开始实现一个 Ary 类，要求能够通过 ary[n]直接访问到编号为 n 的元素，读取 length 属性可以得到数组的实时长度，修改 length 属性会让数组长度发生变化，让其支持 for of 及 for in 循环。同时实现原生数组上的如下方法：slice，splice，reduce，reduceRight，map，filter，join，indexOf，lastIndexOf，concat，pop，push，shift，unshift，reverse，includes，forEach，every，some，filter。
 
