@@ -1,3 +1,6 @@
+
+
+//@ts-nocheck
 function keyBy(array, key) {
   var result = {};
   array.forEach((ary) => (result[ary[key]] = key));
@@ -662,3 +665,26 @@ tree.addEventListener("click", function (e) {
   let ul = e.target.parentNode.querySelector("ul");
   ul.hidden = !ul.hidden;
 });
+
+//选择文件
+let ul2 = document.getElementById("ul");
+ul2.onmousedown = ()=> false//组织返回文本
+ul2.addEventListener("click", function (e) {
+  if (e.target.tagName != "LI") {
+    return;
+  }
+  if (!e.ctrlKey && !e.metaKey) {
+    for (let item of ul2.querySelectorAll("li")) {
+      item.classList.remove("selected");
+      e.target.classList.add("selected");
+    }
+  } else {
+    e.target.classList.toggle("selected");
+  }
+});
+
+
+//mouseover / mouseout 显示最深的有注解的元素
+house.addEventListener("mouseover", function (e) {
+  
+})
