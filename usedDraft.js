@@ -636,7 +636,7 @@ function normalize(node) {
 
 // var timer1 = setTimeout(() => {
 //   console.log('一秒后执行')
-// }, 1000)
+// }, 10000)
 // //回调函数?
 // var timer2 = setTimeout(() => {
 //   clearTimeout(timer1)

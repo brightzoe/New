@@ -94,22 +94,21 @@ IEEE754 标准：二进制浮点顺运算标准
 - NaN "not a number", 不产生有意义的结果
 
 运算符 operator
+
 - 运算符优先级<link>https://www.ecma-international.org/ecma-262/5.1/
-- void运算符的作用是执行一个表达式，然后不返回任何值，或者说返回undefined。
+- void 运算符的作用是执行一个表达式，然后不返回任何值，或者说返回 undefined。
 - void(xxx) 优先级超级高.
 - typeof: 一元运算符，返回类型
 - delete 删除属性
 - 逗号运算符用于对两个表达式求值，并返回后一个表达式的值。
 
-大多数运算符是“左结合”.少数运算符是“右结合”，其中最主要的是赋值运算符（=）和三元条件运算符（?:）和指数运算符(**)。
-
+大多数运算符是“左结合”.少数运算符是“右结合”，其中最主要的是赋值运算符（=）和三元条件运算符（?:）和指数运算符(\*\*)。
 
 字符串 string
+
 - \转义符
 - \n 回车 \t Tab
 - 反引号后可出现明文回车
-
-
 
 自动类型转换：弱类型语言 js 强类型语言（python）
 变量指向的类型在程序运行时是否允许发生变化：动态类型（js）静态类型（c）
@@ -175,7 +174,9 @@ IEEE754 标准：二进制浮点顺运算标准
 正数的补码与原码相同，负数的补码等于原码取反，末位加 1（符号位不变）
 
 ### 位运算符（优先级低）只对整数起作用
+
 https://wangdoc.com/javascript/operators/bit.html
+
 - | 按位 或 有 1 则 1
 - & 按位 与 都 1 才 1
 - ~ 按位 取反 0 变 1，1 变 0
@@ -190,7 +191,7 @@ https://wangdoc.com/javascript/operators/bit.html
 
 - 可以用 if ((a & 1) == 0) 代替 if (a % 2 == 0) 来判断 a 是不是偶数。
 - https://blog.csdn.net/MoreWindows/article/details/7354571
-- x | 0 / x ^ 0 / x << 0  //取整
+- x | 0 / x ^ 0 / x << 0 //取整
 - ~~X //取整最快
 - x || 2 给函数一个默认值
 - a ^= b, b ^= a, a ^= b //互换两个变量的值的最快方法
@@ -228,24 +229,23 @@ https://wangdoc.com/javascript/operators/bit.html
   - for
   - switch 每个 case 都要加 break; 只能判断严格相等；
 
+* 异常
+  js 一行一行地运行,遇到错误会停止运行
 
-- 异常
-  js一行一行地运行,遇到错误会停止运行
+* 捕获异常,捕获后不会影响后面运行.
+  try{
+  //要监控的代码
+  } catch(err){
+  //处理异常 throw
+  console.error(err);
+  } finally{
+  //无论如何都会执行
+  }
 
-- 捕获异常,捕获后不会影响后面运行.
- try{
-   //要监控的代码
- } catch(err){
-   //处理异常throw
-   console.error(err);
- } finally{
-   //无论如何都会执行
- }
-
-- 抛出异常
+* 抛出异常
   - throw new Error("404")
-  - 可以把throw 放在try里面,然后根据throw的类型catch处理
-  - Error对象,可以根据需要继承Error定义函数
+  - 可以把 throw 放在 try 里面,然后根据 throw 的类型 catch 处理
+  - Error 对象,可以根据需要继承 Error 定义函数
 
 ### 作用域
 
@@ -254,11 +254,11 @@ https://wangdoc.com/javascript/operators/bit.html
 - 函数作用域：旨在函数内部起作用
 
 ### 异步
+
 代码一般同步执行,遇到花费时间的代码需要持续等待,异步,把花费时间长的代码放到另一个地方执行,执行完成之后把结果返回到同步执行的代码中来
 
 - setTimeout
-Eventloop控制
-
+  Eventloop 控制
 
 ## 函数 functions
 
@@ -280,8 +280,8 @@ Eventloop控制
 ```js
 var greeting = (name) => {
   //只有一个参数，参数的小括号可以省略；只有一行语句，后面大括号也可以省略
-  console.log('hello' + name)
-}
+  console.log("hello" + name);
+};
 ```
 
 - argements
@@ -303,12 +303,12 @@ function (){//不指定参数的话，参数数量不固定，arguments 算是�
 function squareSum(a, b) {
   //求平方和
   function square(a) {
-    return a * a
+    return a * a;
   }
-  return square(a) + square(b)
+  return square(a) + square(b);
 }
 
-squareSum(3, 5)
+squareSum(3, 5);
 ```
 
 - 内部函数可以作为返回值返回出去，形成高阶函数（返回函数的函数）。
@@ -322,14 +322,14 @@ squareSum(3, 5)
 调用自己执行，防止命名冲突。
 
 ```js
-let num1 = 10
+let num1 = 10;
 
-;(function () {
-  let num1 = 20
-  return num1
-})()
+(function () {
+  let num1 = 20;
+  return num1;
+})();
 // => 20
-num1
+num1;
 // => 10
 ```
 
@@ -349,8 +349,8 @@ num1
 ```js
 function transparentWarpping(f) {
   return function () {
-    return f.apply(null, arguments) //模拟调用，访问f()的所有参数
-  }
+    return f.apply(null, arguments); //模拟调用，访问f()的所有参数
+  };
 }
 ```
 
@@ -360,26 +360,26 @@ function transparentWarpping(f) {
 ```js
 function forEach(ary, action) {
   for (var i = 0; i < ary.length; i++) {
-    var x = action(ary[i], i)
+    var x = action(ary[i], i);
     if (x === false) {
-      break
+      break;
     }
   }
-  return ary
+  return ary;
 }
 
-var target = 3
-var targetIndex = -1
-debugger
+var target = 3;
+var targetIndex = -1;
+debugger;
 forEach([1, 2, 3, 4], function (aryItem, idx) {
   if (xx) {
-    return //相当于continue
+    return; //相当于continue
   }
   if (aryItem == target) {
-    targetIndex = idx
-    return false //相当于break
+    targetIndex = idx;
+    return false; //相当于break
   }
-})
+});
 ```
 
 - `ary.map(mapper)` //mapper
@@ -396,25 +396,29 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
 1. 函数的上下文
 2. 实现函数行为的代码
 3. prototype 属性,值为 {constructor:f}
-   
+
 ### 函数的四种调用模式
+
 1. **方法调用**
-   方法可以使this访问自己所属的对象,所以它能够从对象中取值或对对象进行修改.this的绑定发生在调用的时候,使得函数可以对this高度复用.
-   公共方法:this可以取得他们所属对象的上下文
+   方法可以使 this 访问自己所属的对象,所以它能够从对象中取值或对对象进行修改.this 的绑定发生在调用的时候,使得函数可以对 this 高度复用.
+   公共方法:this 可以取得他们所属对象的上下文
 2. **纯函数调用**
-   纯函数调用,this被绑定为全局对象,可以看作是设计错误. 
+   纯函数调用,this 被绑定为全局对象,可以看作是设计错误.
 3. **构造器调用**
    new func()
-   会创建一个链接到该函数的prototype成员的新对象,this会被绑定到新对象.
-4. **Apply调用**
-   显式设置this
+   会创建一个链接到该函数的 prototype 成员的新对象,this 会被绑定到新对象.
+4. **Apply 调用**
+   显式设置 this
 
 ### 异常处理
-throw:中断函数执行,抛出exception对象,exception被传递到try语句的catch从句.
+
+throw:中断函数执行,抛出 exception 对象,exception 被传递到 try 语句的 catch 从句.
 
 ### 扩充类型的功能
-利用原型继承的动态性,给Function.prototFype添加方法,给Number.prototype添加方法...
+
+利用原型继承的动态性,给 Function.prototFype 添加方法,给 Number.prototype 添加方法...
 要确定没有该方法时才添加.
+
 ## 数组 array，数组属于内建对象
 
 ```js
@@ -476,9 +480,9 @@ apply 方法:`func.apply(this,[arguments])`//传入一个特定的 this,然后�
 var obj = {
   val: 3,
   f: function () {
-    return this.val
+    return this.val;
   },
-}
+};
 ```
 
 ### 内置对象
@@ -487,6 +491,7 @@ var obj = {
 不重复的集合,可以包含数字,字符,对象等.
 内置方法:
 var set = new Set
+
 - set.has(val)
 - set.delete(val)
 - set.clear()
@@ -495,10 +500,12 @@ var set = new Set
 键值对的数组类型,键和值都可以是任意的数据类型.
 内置方法:
 var map = new Map
+
 - map.set(key,val)
 - map.get(key)
 - map.has(key)
 - map.delete(key)
+
 ### this 的指向
 
 调用函数时，解析器向函数内部传递的一个参数，指向函数执行的上下文对象。<u>**this 取决于函数的调用形式,**</u>与在哪调用,在哪定义没有关系
@@ -536,7 +543,6 @@ var map = new Map
 - `slice` 出来的数组是浅拷贝（shadllow copy), 对应的有深拷贝
 - `isEqual` 是深对比，对比的是具体的内容是否一致；浅对比对比的是否是同一对象
 
-
 ### 原型 prototype
 
 - 在访问对象不包含的属性时,会从对象原型中搜索属性.
@@ -552,8 +558,9 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
 
 ### 构造函数
 
-- 调用一个函数的构造函数,用来创建新对象:`new Func(xx)` 
-  - 大写开头,创建的对象的原型指向构造函数的prototype属性;
+- 调用一个函数的构造函数,用来创建新对象:`new Func(xx)`
+
+  - 大写开头,创建的对象的原型指向构造函数的 prototype 属性;
   - 包含指向新对象的变量 this,返回新创建的对象(构造函数的实例).除非构造函数显式返回另一个对象的值.
   - 函数都有`prototype`属性;构造函数的 prototype 属性 默认指向一个空对象
 
@@ -562,7 +569,7 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
 - 可以用来进行类型判断
   - Object.prototype.toString.call([1,2,3]) ==='[object Array]'
   - Object.prototype.toString.call("fdsf") ==='[object String]'
-- Object.prototype的标准属性都不可枚举
+- Object.prototype 的标准属性都不可枚举
 - 定义一个属性:Object.defineProperty(obj,{val:xx,writable:true,enumerable:false,configurable:false})//属性描述符,控制属性类型:可以设置属性是否可枚举,是否可更改
   - `prop in obj`
   - `obj.hasOwnProperty(prop)`判断是否是自有属性,可以连接 in 设置遍历范围
@@ -573,31 +580,38 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
     }
   }
   ```
+
 ### getter && setter
+
 在对象中,用于指定属性的读取函数和修改函数.
-由于一些原因,把一些值的属性在get后面写成函数获取.
+由于一些原因,把一些值的属性在 get 后面写成函数获取.
+
 ```js
 var pile = {
-  elements: ['eggshell', 'orange peel', 'worm'],
+  elements: ["eggshell", "orange peel", "worm"],
   get height() {
-    return this.elements.length
+    return this.elements.length;
   },
   set height(value) {
-    console.log('Ignoring set height to', value)
+    console.log("Ignoring set height to", value);
   },
-}
+};
 
-var o = { a:0 }
+var o = { a: 0 };
 //现有对象上添加getter
-Object.defineProperty(o, "b", { get: function () { return this.a + 1; } });
-
+Object.defineProperty(o, "b", {
+  get: function () {
+    return this.a + 1;
+  },
+});
 ```
+
 ### 类数组 arguments
 
 调用函数时，浏览器每次都会传递两个参数：
 
 1. `this` 函数的上下文对象
-2. `arguments` 封装实参的对象 
+2. `arguments` 封装实参的对象
 
 - `arguments` 代表实参，只在函数中使用。
 - `arguments.callee` 对应当前指向的函数对象。在使用函数递归，如果是匿名函数需要用到。ES5 严格模式不支持。
@@ -608,7 +622,7 @@ Object.defineProperty(o, "b", { get: function () { return this.a + 1; } });
 
 - 序列化数据(e.g. yaml)
 - 看起来很像 JS 的数组和对象的表示方式，但有一些限制。
-  所有key都要有双引号
+  所有 key 都要有双引号
   只允许使用简单的数据格式，不能有函数调用/绑定或涉及实际计算
   只支持数组、对象、字符串、数值、bool、null
   支持转义，不支持明文空格
@@ -616,22 +630,25 @@ Object.defineProperty(o, "b", { get: function () { return this.a + 1; } });
   - 接受 JavaScript 值并返回 JSON 编码的字符串
 - `JSON.parse()`//反序列化
 
-
 ## 面向对象
 
 ### 封装
+
 封装:把数据,和操作数据的函数放在对象里,这个打包的过程.
 封装(另一个意思):将复杂的操作或计算写成函数,调用时只需要考虑高层概念,而无需关注运作细节.
 
 ###　多态
 多个不同类型的对象拥有相同的一组接口（方法及方法的签名及属性）
 多态的代码:某段代码只期望对象们拥有这组接口即可正常工作,不期待对象的具体类型(什么构造函数构造出来的)
->函数的签名：函数的名称，参数类型与顺序，返回值类型的集合．
+
+> 函数的签名：函数的名称，参数类型与顺序，返回值类型的集合．
 
 ### 继承
+
 当一个类型拥有另一个类型的所有或大部分特性时,可以让这一个类型通过某种方式直接获得该类型的所有属性和方法,即称为继承.被继承者被称为父类,继承者被称为子类.
 
-### instanceof 
+### instanceof
+
 二元运算符,某个对象是否继承自某个特定的构造函数
 `[1] instanceof Array` //true
 
@@ -645,7 +662,7 @@ Domain Specific Language 领域特定语言
 
 - 创建方法：三种方式
   - `var a = new RegExp('abc')` //string 里面需要转义
-  - `var a = /abc/` //是啥就是啥 +g全局匹配
+  - `var a = /abc/` //是啥就是啥 +g 全局匹配
   - `var a = new RegExp(String.fromCharCode(92,9297,98,99))`
 
 ### 匹配方式
@@ -655,23 +672,20 @@ Domain Specific Language 领域特定语言
 - \s 空白字符 space,tab,newline，etc.
 - \D \W \S 非。.. 的字符
 - . 匹配任意字符（除换行符外、n \r\n)
-- \u4f60 匹配Unicode码,如中文
+- \u4f60 匹配 Unicode 码,如中文
 - [a-z] 匹配单个字符。
 - [] 里的东西：
   - [^2357] ^在开头：取反，非 2357
   - [^] : 任意符号
 - 可以用 | 分隔表示或:`str.match(/this|cons/g)`
-- ^在开头,表示匹配以什么开头的;$在最后,表示匹配以什么结束的.
-- /b包起来/b,表示匹配单词.
-
-
-
+- ^在开头,表示匹配以什么开头的;\$在最后,表示匹配以什么结束的.
+- /b 包起来/b,表示匹配单词.
 
 #### 重复
 
 - 只对前面紧挨着的一个字符或者一个组生效
   - "+" 出现至少一次 {1，}
-  - "*" 出现任意次数 {0，}
+  - "\*" 出现任意次数 {0，}
   - "?" 出现 0 次或 1 次 {0，1}
   - {n} 出现 n 次 {2} {2,4} {4,}4 次及以上
 
@@ -696,87 +710,213 @@ Domain Specific Language 领域特定语言
 
   - `/（张）(?<名字>.+)/.exec('sgdgs 张韶涵')`=> `groups: {名字："韶涵"}`
 
-
 #### 常用的
+
 - `var mobileRe = /^1[3-9]\d{9}/g`
 - `var emailRe = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g`
-- 
+-
+
 ## 文档结构
+
 ### DOM document object model 文档对象模型
+
 - 文档结构:盒子套盒子,每个盒子都是一个对象,我们和这些对象交互,找出其中包含的盒子和文本.给文档增加交互能力，对文档内容进行抽象和概念化，类似 CSS 增加样式。代表着加载到浏览器窗口的当前网页。是一种 API（应用编程接口，是一个标准）
+- 如果浏览器遇到格式不正确的 HTML，它会在形成 DOM 时自动更正它。
 - **适用于多种环境和多种程序设计语言的通用型 API**
-- 文档：节点树 node tree **文档中每个元素节点都是一个对象**
+- 文档：节点树 node tree **文档中每个元素节点都是一个对象**最外层节点是 document，不是元素节点
+- DOM 节点是常规的 JavaScript 对象。它们使用基于原型的类进行继承。
   - 元素节点 DOM 的原子是元素节点 `document.body`
   - 文本节点 只包含文本的元素
   - 属性节点 总是被包含在元素节点中
-  - 每个节点的属性:nodeType/nodeValue/nodeName
-DOM的根节点:document.documentElement => <html>
-文本片段或注释是一定是叶子节点
+  - 每个节点的属性:nodeType/nodeValue/nodeName/data
+    DOM 的根节点:document.documentElement => <html>
+    文本片段或注释是一定是叶子节点 comment node
+  - 在 HTML 模式下，tagName/nodeName 始终是大写的
 
-- Object.preventExtension阻止增加属性
-- Object.seal阻止增删属性
-- Object.freeze阻止增删与修改属性
+```js
+document.body.style.background = "red"; // 将背景设置为红色
 
+setTimeout(() => (document.body.style.background = ""), 3000); // 恢复回去
+```
 
-BOM 浏览器对象模型，设置浏览器的属性
+- Object.preventExtension 阻止增加属性
+- Object.seal 阻止增删属性
+- Object.freeze 阻止增删与修改属性
 
-获取元素节点（文档中的每个元素都是一个对象）
-- `node.firstChild/lastChild/firstElementChild/childNodes/nextSibling/previousSibling/parentElement/parentNode`
-- `document.getElementById('id')` id是唯一的,返回一个对象
-- `document.getElementByTagName('tag')` 标签名，返回数组
-- `document.getElementByClassName('class')` 返回数组
-- `document.all.id`
-  可以组合使用，i.e.`var shopping = document.getElementById('purchases'); var sales = shopping.getElementsByClassName('sale')`
+BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处理文档之外的所有内容的对象。i.e. navigator location
 
-修改文档
-- `node.removeChild(xxnode)`
-- `node.appendChild(xxnode)`//放在子节点末尾
-- `node.prepend/append(...nodes)`//在节点前面增加一个节点.//同一个节点在文档中只能出现一次
+#### 获取元素节点（文档中的每个元素都是一个对象）
+
+close
+
+- `node.firstChild/lastChild/childNodes/nextSibling/previousSibling/parentNode`
+  - 所有类型的节点
+- `node.firstElementChild/Children/previousElementSibling/parentElement`
+  - 只是元素节点
+- `elem.closest(css)` //查找与 CSS 选择器匹配的最近的祖先。elem 自己也会被搜索。
+- `table.rows/table.caption/tHead/tFoot/table.tBodies` -tbody 是一定会有的
+- `tbody.rows/tr.cells/tr.rowIndex/td.cellIndex` etc.
+- `document.getElementById('id')` id 是唯一的,返回一个对象；`document.all.id`;`document.getElementsByTagName('tag')` `document.getElementsByClassName('class')` 返回数组
+
+* 所有的 "getElementsBy\*" 方法都会返回一个 实时的（live） 集合,会自动更新，而"querySelector"则是静态的。
+  **查询选择器**
+  `document.querySelectorAll()`
+  `document.querySelector()`
+
+- 在全局范围查询,可以使用任何 CSS 选择器
+- 可以选择一部分伪类,不能选择伪元素
+- 返回静态集合,不能动态更新
+
+匹配
+
+- `elem.matches(css)` //返回 true/false
+- `elemA.contains(elemB)` //检查子级与父代，自己也自己也返回 true
+
+#### 修改文档
+
+- `parentnode.removeChild(xxnode)`
+- `parentnode.appendChild(xxnode)`//放在子节点末尾
+- `parentnode.prepend/append(...nodes)`//在所有子节点前面/后面增加一个节点.//同一个节点在文档中只能出现一次
 - `parentnode.insertBefore(node1,node2)`//把第一个节点放在第二个节点前面
 - `parentnode.replaceChild(newnode,oldnode)`
 - `document.createElement('xx')`//创建元素节点
 - `document.createTextNode('xxxx')`//创建文本节点
+- `elem.innerHTML`
+- **`innerHTML+=` 会进行完全重写**页面会重新加载，所有的图片和其他资源都重新加载
+- `elem.outerHTML` 属性包含了元素的完整 HTML。就像 innerHTML 加上元素本身一样。
+- 可以向 elem.outerHTML 写入内容，但是要记住，它不会改变我们所写的元素（‘elem’）。而是将新的 HTML 放在其位置上。我们可以通过查询 DOM 来获取对新元素的引用。
+- `elem.textContent` 只返回里面的所有文本
+- `element.insertAdjacentHTML(position, text);`//将指定的文本解析为 Element 元素,插入指定的位置
+  NOTE: 写入 textContent 要有用得多，因为它允许以“安全方式”写入文本。
+  假设我们有一个用户输入的任意字符串，我们希望将其显示出来。
 
+- 使用 innerHTML，我们将其“作为 HTML”插入，带有所有 HTML 标签。
+- 使用 textContent，我们将其“作为文本”插入，所有符号（symbol）均按字面意义处理。
 
+获取和设置属性(实际是操作的 html 特性)
 
-获取和设置属性
 - `object.getAttribute('attribute')`
 - `object.setAttribute('attr','xxxx')` 设置或修改属性
-  非 DOM 解决方案：`element.value = "the new value"`
-- `node.id/className/htmlFor/title/tabindex` 获取属性
-- `node.dataset.foo = 'xxx'`
-- nodeclassList.add/remove/has`
+  ：`element.value = "the new value"`//这个与上面的一般是同步的，有些例外：value，zIndex
+- `node.attributes/id/className/htmlFor/title/tabindex` 获取属性
+- `node.dataset.foo = 'xxx'` //非标准的特性
+- `elem.add/remove/has`
+- `elem.classList` //实时的 class 的集合,`add()/remove()/toggle()`方法
+
+NOTE: HTML 特性：它们的名字是大小写不敏感的 getAttribute(),它们的值总是字符串类型的。DOM 属性是多类型的。 i.e. div.style,input.checked
 
 尺寸和位置
-node.offsetWidth/Height
+node.offsetWidth/Height //节点宽度（以像素度量）
 node.clientWidth/Height
 node.getBoundingClientRect()//包裹着的最小矩形
 node.getClientRects()//元素布局生成的所有矩形
-window.pageX/YOffset页面滚动位置
-el.scrollTop/Left元素的滚动位置
-el.scrollTop/Left = num设定元素的滚动位置
+window.pageX/YOffset 页面滚动位置
+el.scrollTop/Left 元素的滚动位置
+el.scrollTop/Left = num 设定元素的滚动位置
 el.scrollTo(x, y)
 el.scrollBy(x, y)
 window.scrollTo(x, y)
 window.scrollBy(x, y)
-window.innerWidth/Height窗口内部宽高（css像素）
+window.innerWidth/Height 窗口内部宽高（css 像素）
 
 - document.write('<span></span>')
-// 往解析流里写入字符串。在解析结束(</html>)以后再写就没有意义了。如果解析完成以后再write就会重新开启一个解析流，相当于把DOM树中的所有内容全部“冲”掉。
+  // 往解析流里写入字符串。在解析结束(</html>)以后再写就没有意义了。如果解析完成以后再 write 就会重新开启一个解析流，相当于把 DOM 树中的所有内容全部“冲”掉。
 
 - document.createElement('span')
-// 创建出DOM对象。创建之初是不在DOM树里的，需要添加进DOM树里才能显示出来。不会因为创建或添加而影响DOM树的其它部分。
+  // 创建出 DOM 对象。创建之初是不在 DOM 树里的，需要添加进 DOM 树里才能显示出来。不会因为创建或添加而影响 DOM 树的其它部分。
 
-查询选择器
-`document.querySelectorAll()`
-`document.querySelector()`
-- 在全局范围匹配
-- 可以选择一部分伪类,不能选择伪元素
-- 返回静态集合,不能动态更新
-
-
-
-事件处理函数 特定事件发生时调用 i.e. onclick
-
+### 浏览器事件
 
 `window.onload = function` 在页面加载时调用函数
+
+事件处理函数 特定事件发生时调用.
+
+- 通过 DOM 属性分配，onclick 不能多次调用，新的调用会覆盖旧的 DOM 属性。
+  i.e. button.onclick = sayThanks;
+  在 HTML 里面：<input type="button" id="button" onclick="sayThanks()">，读取 HTML，会创建一个处理函数，注意这个区别。
+
+- 分配事件处理程序，调用 addEventListener 允许多次添加。有些事件无法通过 DOM 属性进行分配，必须使用 addEventListener。
+
+```js
+function handler() {
+  alert("Thanks!");
+}
+input.addEventListener("click", handler);
+input.removeEventListener("click", handler); //移除，需要添加同一个函数
+```
+
+event 对象的属性：
+
+- event.type
+  事件类型，这里是 "click"。
+- event.currentTarget
+  处理事件的元素。这与 this 相同，除非处理程序是一个箭头函数，或者它的 this 被绑定到了其他东西上，之后我们就可以从 event.currentTarget 获取元素了。
+- event.clientX / event.clientY
+  鼠标事件的指针的窗口相对坐标。
+
+不仅可以分配函数，还可以使用 addEventListener 将一个对象分配为事件处理程序。当事件发生时，就会调用该对象的 handleEvent 方法。
+
+### 冒泡和捕获
+
+#### 冒泡
+
+当一个事件发生在一个元素上，它会首先运行在该元素上的处理程序，然后运行其父元素上的处理程序，然后一直向上到其他祖先上的处理程序。几乎所有事件都会冒泡，p.s. focus 事件不会冒泡,是例外。
+
+**event.target 与 this 的区别：**
+
+- event.target 是引发事件的“目标”元素，引发事件的层级最深的元素，它在冒泡过程中不会发生变化。
+- this —— 是“当前”元素，其中有一个当前正在运行的处理程序。与`event.currentTarget`一致
+
+```js
+var form = document.querySelector("form");
+form.addEventListener("click", function (e) {
+  if (e.target.tagName === "INPUT") {
+    //e.target拿到被点击的元素
+    console.log("input in me is clicked");
+  }
+});
+```
+
+`event.stopPropagation()`//停止冒泡
+`event.stopPropagation()` 停止向上移动，但是当前元素上的其他处理程序都会继续运行。
+`event.stopImmediatePropagation()` 方法，可以用于停止冒泡，并阻止当前元素上的处理程序运行。使用该方法之后，其他处理程序就不会被执行。阻止事件向外扩散，但阻止当前元素对当前事件的后续函数的调用。
+
+```js
+var btn = document.querySelector(".btn-in-a");
+var a = document.querySelector("a");
+btn.addEventListener("click", function (e) {
+  console.log("btn click");
+  e.stopPropagation(); //clg事件没有冒泡到a，但a仍然感觉到了被点击,仍然会触发a的行为(click)
+  e.preventDefault(); //阻止外面a的默认行为，跳转地址
+});
+a.addEventListener("click", function (e) {
+  console.log("a click");
+});
+```
+**阻止浏览器行为**
+有两种方式来告诉浏览器我们不希望它执行默认行为：
+主流的方式是使用 event 对象。有一个 `event.preventDefault()` 方法。
+如果处理程序是使用 on<event>（而不是 addEventListener）分配的，那`return false` 也同样有效。
+
+#### 捕获
+
+事件处理的另一个阶段被称为“捕获（capturing）”。它很少被用在实际开发中，但有时是有用的。
+
+DOM 事件标准描述了事件传播的 3 个阶段：
+
+- 捕获阶段（Capturing phase）—— 事件（从 Window）向下走近元素。
+- 目标阶段（Target phase）—— 事件到达目标元素。
+- 冒泡阶段（Bubbling phase）—— 事件从元素上开始冒泡。
+
+### 事件委托
+
+事件委托真的很酷！这是 DOM 事件最有用的模式之一。它通常用于为许多相似的元素添加相同的处理，但不仅限于此。
+
+算法：
+在容器（container）上放一个处理程序。
+在处理程序中 —— 检查源元素 event.target。
+如果事件发生在我们感兴趣的元素内，那么处理该事件。
+好处：
+简化初始化并节省内存：无需添加许多处理程序。
+更少的代码：添加或移除元素时，无需添加/移除处理程序。
+DOM 修改 ：我们可以使用 innerHTML 等，来批量添加/移除元素。

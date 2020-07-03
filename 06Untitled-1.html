@@ -1,31 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>test</title>
     <link rel="stylesheet" href="./07.css" />
-    <!-- <link
-      rel="stylesheet"
-      href="//at.alicdn.com/t/font_1551713_7s54tc1d3z7.css"
-    /> -->
   </head>
+
   <body>
-    <p style="position: relative;">
-      <img
-        src="./video/递归小鲤鱼.jpg"
-        alt=""
-        style="width: 120px; height: 160px;"
-      />
-    </p>
-    <p>
-      <img
-        src="./video/1521006790194.jpg"
-        id="me"
-        style="position: relative; width: 20px;"
-        alt=""
-      />
-    </p>
+    <div id="gym">
+      <p>Click on a field to move the ball there.<br>
+        The ball should never leave the field.</p>
+
+
+      <div id="field">
+        <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        .
+        . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        .
+        . .
+        . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        .
+        . .
+        . . . . . . . . . . . . . . . . . . . . .
+      </div>
+    </div>
+
+    <div class="menu">
+      <span class="title">Sweeties (click me)!</span>
+      <ul>
+        <li>Cake</li>
+        <li>Donut</li>
+        <li>Honey</li>
+      </ul>
+    </div>
+    <ul class="tree" id="tree">
+      <li>Animals
+        <ul>
+          <li>Mammals
+            <ul>
+              <li>Cows</li>
+              <li>Donkeys</li>
+              <li>Dogs</li>
+              <li>Tigers</li>
+            </ul>
+          </li>
+          <li>Other
+            <ul>
+              <li>Snakes</li>
+              <li>Birds</li>
+              <li>Lizards</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Fishes
+        <ul>
+          <li>Aquarium
+            <ul>
+              <li>Guppy</li>
+              <li>Angelfish</li>
+            </ul>
+          </li>
+          <li>Sea
+            <ul>
+              <li>Sea trout</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
     <script src="./08.js"></script>
+
   </body>
+
 </html>

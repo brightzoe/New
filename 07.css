@@ -1,0 +1,46 @@
+#field {
+  width: 200px;
+  height: 150px;
+  border: 10px solid black;
+  background-color: #00ff00;
+  overflow: hidden;
+  position: relative;
+}
+#gym {
+  height: 250px;
+}
+#ball {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: 1s all;
+}
+.menu ul {
+  margin: 0;
+  list-style: none;
+  padding-left: 20px;
+  display: none;
+}
+.menu .title {
+  font-size: 18px;
+  cursor: pointer;
+}
+.menu .title::before {
+  content: "▶ ";
+  color: green;
+}
+
+.menu.open .title::before {
+  content: "▼ ";
+  color: green;
+}
+.menu.open ul {
+  display: block;
+}
+.tree span:hover {
+  font-weight: bold;
+}
+
+.tree span {
+  cursor: pointer;
+}
