@@ -1,3 +1,104 @@
+
+function bind(f, ...fixedArgs) {
+  return function (...args) {
+    return f(...fixedArgs, ...args);
+  };
+}
+
+function bind(f) {
+  var fixedArgs = Array.from(arguments).slice(1);
+  return function () {
+    var args = Array.from(arguments);
+    return f.apply(null, fixedArgs.concat(args));
+  };
+}
+function add(a, b, c) {
+  return a + b + c;
+}
+f2 = bind(add, 1);
+
+function map(ary, mapper) {
+  //reduce实现map
+  return ary.reduce((acc, cur) => {
+    acc.push(mapper(cur));
+    return acc;
+  }, []);
+}
+
+function filter(ary, test) {
+  return ary.reduce((acc, cur, idx, ary) => {
+    if (test(cur, idx, ary)) {
+      acc.push(cur);
+    }
+    return acc;
+  }, []);
+}
+
+function forEach(ary, action) {
+  ary.reduce((_, cur, idx, ary) => action(cur, idx, ary));
+}
+
+//数组降维
+function flatten(ary) {
+  return ary.reduce((acc, cur) => acc.concat(cur), []);
+}
+//TODO: 用reduce实现各种函数，keyby,groupby,every等。
+//every,测试是否每一项都满足条件,像&&；
+//一旦一个为假，返回false，提前结束，不一定需要处理所有元素
+//FIXME:
+function every(array, test) {
+  for (let i = 0; i < array.length; i++) {
+    if (!test(array(i))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function every(array, predicate) {
+  array.reduce((acc, cur, idx, array) => {
+    return acc && predicate(cur, idx, ary); //也是短路特性
+  }, true);
+}
+//some,测试是否至少有一项满足条件
+//一旦一个为真，返回true，提前结束，不需要处理所有元素
+
+function every(array, test) {
+  return some(array, test);
+}
+//every与some互相实现
+
+function bind(f, ...fixedArgs) {
+  //null表示跳过,[1,null,2,null,3]
+  return function (...args) {
+    var temp = fixedArgs.slice();
+    let j = 0;
+    for (let i = 0; i < temp.length; i++) {
+      if (temp[i] === null) {
+        temp[i] = args[j++];
+      }
+    }
+    while (j < args.length) {
+      temp.push(args[j++]);
+    }
+
+    return f(...temp);
+  };
+}
+
+function curry(func, n) {
+  return function (...args) {
+    if (args.length < n) {
+      return curry(func, n - args.length);
+    }
+    return func.bind(null, args);
+  };
+}
+
+function identity(...args) {
+  return args[0];
+}
+
 //Chapter 666666
 var MOUNTAINS = [
   { name: 'Kilimanjaro', height: 5895, country: 'Tanzania' },
@@ -241,7 +342,7 @@ c2.division(c1)
 
 //集合 MySet
 function MySet(ary = []) {
-  this.eles = []
+  this.elements = []
   for (let a of ary) {
     this.add(a)
   }
@@ -251,15 +352,15 @@ function MySet(ary = []) {
 MySet.prototype = {
   add(val) {
     if (!this.has(val)) {
-      this.eles.push(val)
+      this.elements.push(val)
     }
     return this
   },
   delete(val) {
     if (this.has(val)) {
-      for (var i = 0; i < this.eles, length; i++) {
-        if (val === this.eles[i]) {
-          this.eles.splice(i, 1)
+      for (var i = 0; i < this.elements, length; i++) {
+        if (val === this.elements[i]) {
+          this.elements.splice(i, 1)
           break
         }
       }
@@ -270,17 +371,17 @@ MySet.prototype = {
     return this.ele.length
   },
   has(val) {
-    var eles = this.eles
+    var elements = this.elements
     if (val !== val) {
-      for (var i = 0; i < eles.length; i++) {
-        if (eles[i] !== eles[i]) {
+      for (var i = 0; i < elements.length; i++) {
+        if (elements[i] !== elements[i]) {
           return true
         }
       }
       return false
     } else {
-      for (var i = 0; i < eles.length; i++) {
-        if (val === eles[i]) {
+      for (var i = 0; i < elements.length; i++) {
+        if (val === elements[i]) {
           return true
         }
       }
@@ -289,7 +390,7 @@ MySet.prototype = {
   },
 
   clear() {
-    this.eles.length = 0
+    this.elements.length = 0
     return this
   },
 }
@@ -507,7 +608,7 @@ function elt(tagName, attrs, ...children) {
 }
 
 var str =
-  '[111,222,{"a":3},{"b":true,"c":"fooobar","d":[1,false,[null,4,{"x":1,"y":2}]]}]'
+  '[111,222,{"a":3},{"b":true,"c":"foobar","d":[1,false,[null,4,{"x":1,"y":2}]]}]'
 //实现parseJSON函数使其能够解析一个json字符串到一个js值。
 //实现以下几个函数：一个位置指针i，parseValue，parseString，parseNumber，parseArray，parseObject, 分别从i位置开始解析出对应的值并返回，同时移动指针i到解析完成后的位置。
 
@@ -615,15 +716,15 @@ function replaceImages() {
 
 function normalize(node) {
   if (node.nodeType === document.ELEMENT_NODE) {
-    var childs = Array.from(node.childNodes)
+    var children = Array.from(node.childNodes)
     let text = ''
-    for (let i = 0; i < childs.length; i++) {
-      if (childs[i].nodeType === document.TEXT_NODE) {
-        text += childs[i].nodeValue
-        node.removeChild(childs[i])
+    for (let i = 0; i < children.length; i++) {
+      if (children[i].nodeType === document.TEXT_NODE) {
+        text += children[i].nodeValue
+        node.removeChild(children[i])
       } else if (text) {
         var textNode = document.createTextNode(text)
-        node.insertbefore(textNode, childs[i])
+        node.insertbefore(textNode, children[i])
         text = ''
       }
     }
@@ -655,7 +756,7 @@ function normalize(node) {
 // //创建promise立即执行
 // var promise = new Promise((resolve) => {
 //   setTimeout(() => {
-//     resolve('sucess')
+//     resolve('success')
 //   }, 200)
 // })
 // //then接收
@@ -738,7 +839,7 @@ function normalize(node) {
 
 //模块化
 //导出 export func(){}
-//可以在js末尾统一导出 export{funcName,funcname...}
+//可以在js末尾统一导出 export{funcName,funcName...}
 
 //导入的script 的 type:module
 //import{functionName,funcName,var...} from "url"

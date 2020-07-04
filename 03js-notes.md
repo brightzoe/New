@@ -419,26 +419,25 @@ throw:中断函数执行,抛出 exception 对象,exception 被传递到 try 语�
 利用原型继承的动态性,给 Function.prototype 添加方法,给 Number.prototype 添加方法...
 要确定没有该方法时才添加.
 
-## 数组 array，数组属于内建对象
+## 数组 ，属于内建对象
 
 ```js
 //创建数组
   let ary = [1,2,3]  //可以创建只有一个元素的数组
   let ary = Array(4) //创建一个长度为 4 的空数组
   let ary = new Array(3,4,5)
-  let ary = Array(3,4,5)
   let ary = Array.of(3,4,5)//可以创建只有一个元素的数组
-  let ourArray = [["universe", 42], ["everything", 101010]];//数组也可以包含数组
 //改变数组
   ary.length = 2     //随时可以被赋值，改变数组长度
   ourArray.push(4)  //在后面追加元素
   ourArray.pop()   //弹出最后一个字符并储存；只从尾部进出，形成栈
   ary.shift()     //弹出第一个元素
   ary.unshift()  //在前面添加元素
-  ary.splice(index,length) //删除元素，原地操作，改变原数组
-  ary.splice(index,length,new_elements)//替换，删除一些元素，并在此插入新的元素
-  ary.splice(index,0,new_elements)//插入元素，删除元素的 length = 0，就是在在此直接插入新元素
-  ary.slice()   //两个参数，切一个片段出来，包含开头，不包含结束
+  ary.splice(start_index,length,...new_elements)//替换/删除一些元素，并在此插入新的元素
+  ary.slice(start_index,end_index)   //包含开头，不包含结束,浅拷贝
+    `ary.splice(start_index,length,...newValues)` 截取数组,相当于在原数组删除元素
+  splice() 方法通过删除或替换现有元素或者原地添加新的元素来修改数组,并以数组形式返回被修改的内容。此方法会改变原数组。
+ 
   ary(10).fill(0)//全部填满 XX
   ary .join()   //不传参默认为， `ary.toString()`
   ary.indexOf(x);ary.lastIndexOf(x)//寻找值为 x 的索引
@@ -976,7 +975,9 @@ metaKey：对于 Mac 是 Cmd
 相对于文档的坐标：pageX 和 pageY。
 
 #### 鼠标移动
+
 mouseover，mouseout，mousemove，mouseenter 和 mouseleave 事件。
+
 - 快速移动鼠标可能会跳过中间元素。
 - mouseover/out 和 mouseenter/leave 事件还有一个附加属性：relatedTarget。这就是我们来自/到的元素，是对 target 的补充。
 - 即使我们从父元素转到子元素时，也会触发 mouseover/out 事件。浏览器假定鼠标一次只会位于一个元素上 —— 最深的那个。mouseenter/leave 事件在这方面不同：它们仅在鼠标进入和离开元素时才触发。并且它们不会冒泡。

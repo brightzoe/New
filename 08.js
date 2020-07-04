@@ -1,144 +1,4 @@
-
-
 //@ts-nocheck
-function keyBy(array, key) {
-  var result = {};
-  array.forEach((ary) => (result[ary[key]] = key));
-  return result;
-}
-
-function groupBy(array, prop) {
-  var result = {};
-  array.forEach((ary) => {
-    var key = ary[prop];
-    if (!(key in result)) {
-      result[key] = [];
-    }
-
-    result[key].push(ary);
-  });
-  return result;
-}
-// console.log(grouped);
-function groupBy3(ary, by) {
-  var f = by;
-  if (typeof by == "string") {
-    f = (item) => item[by];
-  }
-  var result = {};
-  ary.forEach((item) => {
-    var key = f(item);
-
-    if (!(key in result)) {
-      result[key] = [];
-    }
-    result[key].push(item);
-  });
-  return result;
-}
-
-function bind(f, ...fixedArgs) {
-  return function (...args) {
-    return f(...fixedArgs, ...args);
-  };
-}
-
-function bind(f) {
-  var fixedArgs = Array.from(arguments).slice(1);
-  return function () {
-    var args = Array.from(arguments);
-    return f.apply(null, fixedArgs.concat(args));
-  };
-}
-function add(a, b, c) {
-  return a + b + c;
-}
-f2 = bind(add, 1);
-
-function map(ary, mapper) {
-  //reduce实现map
-  return ary.reduce((acc, cur) => {
-    acc.push(mapper(cur));
-    return acc;
-  }, []);
-}
-
-function filter(ary, test) {
-  return ary.reduce((acc, cur, idx, ary) => {
-    if (test(cur, idx, ary)) {
-      acc.push(cur);
-    }
-    return acc;
-  }, []);
-}
-
-function forEach(ary, action) {
-  ary.reduce((_, cur, idx, ary) => action(cur, idx, ary));
-}
-
-//数组降维
-function flatten(ary) {
-  return ary.reduce((acc, cur) => acc.concat(cur), []);
-}
-
-//reduce 实现groupby
-function groupby(ary, prec) {}
-
-//every,测试是否每一项都满足条件,像&&；
-//一旦一个为假，返回false，提前结束，不一定需要处理所有元素
-FIXME: function every(array, test) {
-  for (let i = 0; i < array.length; i++) {
-    if (!test(array(i))) {
-      return false;
-    }
-  }
-  return true;
-}
-
-function every(array, con) {
-  array.reduce((acc, cur, idx, array) => {
-    return acc && con(cur, idx, ary); //也是短路特性
-  }, true);
-}
-//some,测试是否至少有一项满足条件
-//一旦一个为真，返回true，提前结束，不需要处理所有元素
-
-function every(array, test) {
-  return some(array, test);
-}
-//every与some互相实现
-
-function bind(f, ...fixedArgs) {
-  //null表示跳过,[1,null,2,null,3]
-  return function (...args) {
-    var temp = fixedArgs.slice();
-    let j = 0;
-    for (let i = 0; i < temp.length; i++) {
-      if (temp[i] === null) {
-        temp[i] = args[j++];
-      }
-    }
-    while (j < args.length) {
-      temp.push(args[j++]);
-    }
-
-    return f(...temp);
-  };
-}
-
-function curry(func, n) {
-  return function (...args) {
-    if (args.length < n) {
-      return curry(func, n - args.length);
-    }
-    return func.bind(null, args);
-  };
-}
-
-function identity(...args) {
-  return args[0];
-}
-
 function createTreeNode(val) {
   //创建一个值为val的节点
   return {
@@ -162,23 +22,6 @@ function array2Tree(ary, i = 0) {
   root.right = array2Tree(ary, 2 * i + 2);
   return root;
 }
-
-function tree2Arraytest(root, array = [], idx = 0) {
-  //链式表达二叉树转换为数组表达
-  //FIXME:
-  if (root == null) {
-    return array;
-  }
-  array.push(root.val);
-  var left = root.left;
-  var right = root.right;
-  left = tree2Array(left);
-  right = tree2Array(right);
-  array.push(left);
-  array.push(right);
-  return array;
-}
-
 function tree2Array(root, ary = [], idx = 0) {
   if (root == null) {
     return;
@@ -323,7 +166,7 @@ var b = {
 };
 
 //断点
-function preorderTraverseLoop(root, action = console.log) {
+function preOrderTraverseLoop(root, action = console.log) {
   //循环实现前序遍历
   //空间复杂度：树的深度
   var stack = [];
@@ -342,7 +185,7 @@ function preorderTraverseLoop(root, action = console.log) {
 }
 
 //TODO:不使用栈，如何实现一个前序遍历，通过一个指针
-function inorderTraversal(root) {
+function inOrderTraversal(root) {
   var stack = [];
   while (true) {
     if (root) {
@@ -358,7 +201,7 @@ function inorderTraversal(root) {
   }
 }
 
-function inorder(tree) {
+function inOrder(tree) {
   //①：先沿左侧全部入栈；root定位到最左侧的小树，pop->res,
   //②：root变为栈里面pop的右子树(左边第一颗小树的right)，right存在，right进栈；重复①
   //③：重复②
@@ -370,10 +213,10 @@ function inorder(tree) {
     node = node.left;
   }
   while (stack.length > 0) {
-    var spop = stack.pop();
-    res.push(spop.val);
+    var pop = stack.pop();
+    res.push(pop.val);
 
-    node = spop.right; //向右移一个node
+    node = pop.right; //向右移一个node
 
     while (node) {
       stack.push(node);
@@ -383,7 +226,7 @@ function inorder(tree) {
   return res;
 }
 
-function postorderTraversal(root) {}
+function postOrderTraversal(root) {}
 
 function bstSort(ary) {
   //乱序数组，用BST排序
@@ -394,7 +237,7 @@ function bstSort(ary) {
     tree = insertIntoBST(tree, ary[i]);
   }
 
-  return inorderTraverse(tree);
+  return inOrderTraverse(tree);
 }
 
 function bstSort2(ary) {
@@ -403,7 +246,7 @@ function bstSort2(ary) {
   var tree = ary.reduce((tree, val) => {
     return insertIntoBST(tree, val);
   }, null);
-  return inorderTraverse(tree);
+  return inOrderTraverse(tree);
 }
 
 function swap(ary, i, j) {
@@ -413,10 +256,10 @@ function swap(ary, i, j) {
     ary[j] = temp;
   }
 }
-function qsort(ary, start = 0, end = ary.length - 1) {
-  var pivotindex = Math.floor((end - start + 1) * Math.random()) + start;
-  var pivot = ary[pivotindex];
-  swap(ary, pivotindex, end);
+function qSort(ary, start = 0, end = ary.length - 1) {
+  var pivotIndex = Math.floor((end - start + 1) * Math.random()) + start;
+  var pivot = ary[pivotIndex];
+  swap(ary, pivotIndex, end);
   var i = start - 1;
 
   for (var j = start; j < end; j++) {
@@ -428,19 +271,19 @@ function qsort(ary, start = 0, end = ary.length - 1) {
 }
 
 //给前序, 中序遍历, 还原二叉树
-function restore(preorder, inorder) {
-  if (preorder.length == 0) {
+function restore(preOrder, inOrder) {
+  if (preOrder.length == 0) {
     return 0;
   }
-  var rootVal = preorder[0];
+  var rootVal = preOrder[0];
   var root = new createTreeNode(rootVal);
-  var idx = inorder.findIndex((it) => it == rootVal);
-  var leftInorder = inorder.slice(0, idx);
-  var rightInorder = inorder.slice(idx + 1);
-  var leftPreorder = preorder.slice(1, 1 + leftInorder.length);
-  var rightPreorder = preorder.slice(1 + leftInorder.length);
-  root.left = restore(leftPreorder, leftInorder);
-  root.right = restore(rightPreorder, rightInorder);
+  var idx = inOrder.findIndex((it) => it == rootVal);
+  var leftInorder = inOrder.slice(0, idx);
+  var rightInorder = inOrder.slice(idx + 1);
+  var leftPreOrder = preOrder.slice(1, 1 + leftInorder.length);
+  var rightPreOrder = preOrder.slice(1 + leftInorder.length);
+  root.left = restore(leftPreOrder, leftInorder);
+  root.right = restore(rightPreOrder, rightInorder);
 }
 
 Array.prototype.findIndex = function (f) {
@@ -538,8 +381,8 @@ class PriorQueue {
   }
 }
 
-//堆排序:第一个想法,构建一个空堆,数组里元素一个一个insert,再依次shift出来,时间复杂度O(nlogn)
-//第二种:在一个数组里,它的叶子节点数量为Math.ceil(size()/2),每个叶子节点都可以看作是已经构建好的堆.把这个数组堆化,从前面最后的一个非叶子节点(Math.floor(size()/2)sinkdown则维护好了一个三个节点的最小堆,然后向前sink down维护好每个最小堆依次到根,即可堆化.时间复杂度O(n)
+//堆排序:第一个想法,构建一个空堆,数组里元素一个一个insert,再依次shift出来,时间复杂度O(n*log n)
+//第二种:在一个数组里,它的叶子节点数量为Math.ceil(size()/2),每个叶子节点都可以看作是已经构建好的堆.把这个数组堆化,从前面最后的一个非叶子节点(Math.floor(size()/2)sink down则维护好了一个三个节点的最小堆,然后向前sink down维护好每个最小堆依次到根,即可堆化.时间复杂度O(n)
 function heapSort(array) {
   var ary = new PriorQueue(array);
   for (let i = Math.floor(array.length / 2); i >= 0; i--) {
@@ -584,8 +427,8 @@ var ary = new Ary(1, 2);
 //     ary.slice() / splice() / reduce() /...
 
 class Person {
-  constructor(fullname) {
-    this.fullName = fullname;
+  constructor(fullName) {
+    this.fullName = fullName;
   }
   get firstName() {
     return this.fullName.match(/(\S+)/g)[0];
@@ -593,7 +436,7 @@ class Person {
   get lastName() {
     return this.fullName.match(/(\S+)/g)[1];
   }
-  get fullname() {
+  get fullName() {
     return this.firstName + " " + this.lastName;
   }
   set firstName(name) {
@@ -602,8 +445,8 @@ class Person {
   set lastName(name) {
     this.lastName = name;
   }
-  set fullname(name) {
-    this.fullname = name;
+  set fullName(name) {
+    this.fullName = name;
   }
 }
 //传入表示fullName的字符串，包含两个单词
@@ -668,7 +511,7 @@ tree.addEventListener("click", function (e) {
 
 //选择文件
 let ul2 = document.getElementById("ul");
-ul2.onmousedown = ()=> false//组织返回文本
+ul2.onmousedown = () => false; //取消选中行为
 ul2.addEventListener("click", function (e) {
   if (e.target.tagName != "LI") {
     return;
@@ -683,8 +526,38 @@ ul2.addEventListener("click", function (e) {
   }
 });
 
-
 //mouseover / mouseout 显示最深的有注解的元素
+let tooltip;
 house.addEventListener("mouseover", function (e) {
-  
-})
+  let anchor = e.target.closest("[data-tooltip]"); //用最近的符合条件的祖先，保证每次显示的都是最深度的
+  if (!anchor) {
+    return;
+  }
+  tooltip = showTip(anchor, anchor.dataset.tooltip);//记录出现的这个，以便移除
+});
+house.addEventListener("mouseout", function (e) {
+  if (tooltip) {
+    tooltip.remove(); //删除这个元素本身
+    //tooltip = false
+  }
+});
+
+function showTip(anchor, html) {
+  let tip = document.createElement("div");
+  anchor.prepend(tip);
+  tip.className = "tooltip";
+  tip.innerHTML = html;
+  //设置tip位置
+  let coords = anchor.getBoundingClientRect();
+  let left = coords.left + (anchor.offsetWidth - tip.offsetWidth) / 2
+  if (left < 0) {
+    left = 0
+  }
+  let top = coords.top + (anchor.offsetHeight - tip.offsetHeight) / 2;
+  if (top < 0) {
+    top = 0;
+  }
+  tip.style.left = left+"px"
+  tip.style.top = top+"px"
+  return tip
+}
