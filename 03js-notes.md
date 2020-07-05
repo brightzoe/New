@@ -211,9 +211,13 @@ https://wangdoc.com/javascript/operators/bit.html
 - let 绑定，类似 var
 - 全局变量
 - 局部变量
-
-常量：一般在程序顶部声明，一般为大写，\_ 连接
+### let  var const
+- var 声明的变量处于函数级作用域，声明会被提前
+- let 声明的变量在块级作用域(最近的语句块{})在之前是不能使用的，TDZ 暂时性死区 temper dead zone
+- **作用域/作用域链** let 
+-const 常量：一般在程序顶部声明，一般为大写，\_ 连接
 命名方式`const Five_Seconds = 5000`
+
 
 `console.log(a++)` //3, 先返回 a, 然后 a++
 `console.log(a)` //4,a 已经加过了
@@ -340,11 +344,14 @@ num1;
 
 ### 高阶函数
 
-将其他函数作为参数或返回值
+操作其他函数，将其他函数作为参数或返回值。
+特点：
+可以对某种特定的动作进行抽象。
+可以提高代码可读性/可维护性，容易避免错误。 
+
 
 - 函数就是一个普通的值
-- 纯函数：并未修改给定的数组
-- ...args ：es6 语法,接收多个参数
+- 纯函数：一个函数的返回结果只依赖于它的参数，并且在执行过程里面没有副作用，我们就把这个函数叫做纯函数。 i.e. 靠谱的函数
 
 ```js
 function transparentWrapping(f) {
@@ -355,9 +362,11 @@ function transparentWrapping(f) {
 ```
 
 - `ary.filter(test)` //过滤，test 是条件函数
-- `ary.forEach(action)` //重复，类似循环，对里面的每个进行相同操作;可以模拟 break&&continue
+- `ary.forEach(action)`
+  对数组的每个元素执行一次给定的函数。除了抛出异常以外，没有办法中止或跳出 forEach() 循环。
 
 ```js
+//自己实现一个foreach,可以模拟 break&&continue:
 function forEach(ary, action) {
   for (var i = 0; i < ary.length; i++) {
     var x = action(ary[i], i);
@@ -384,7 +393,29 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
 
 - `ary.map(mapper)` //mapper
 - `ary.reduce(reducer,[initialValue])` //归纳函数，折叠数组，根据整个数组计算一个值(提供初始值比较安全)
-  - `function reducer(acc,cur){}`
+  用 reduce 计算数组中去掉一个最大值和最小值后的平均值。
+
+  ```js
+  [3, 5, 2, 7, 8, 1, 4, 9].reduce(function (memo, value, index, array) {
+    //reduce 的本质,就是一个遍历,每次返回值存储到 memo
+    //根据每次里面的index值来分情况讨论
+    if (index == 1) {
+      return {
+        sum: memo + value,
+        max: Math.max(memo, value),
+        min: Math.min(memo, value),
+      };
+    }
+    memo.sum += value;
+    memo.max = Math.max(memo.max, value);
+    memo.min = Math.min(memo.min, value);
+    if (index == array.length - 1) {
+      //最后一次
+      return (memo.sum - memo.max - memo.min) / (array.length - 2);
+    }
+    return memo;
+  }); //4.83
+  ```
 
 ### 函数对象
 
@@ -433,23 +464,14 @@ throw:中断函数执行,抛出 exception 对象,exception 被传递到 try 语�
   ourArray.pop()   //弹出最后一个字符并储存；只从尾部进出，形成栈
   ary.shift()     //弹出第一个元素
   ary.unshift()  //在前面添加元素
-  ary.splice(start_index,length,...new_elements)//替换/删除一些元素，并在此插入新的元素
-  ary.slice(start_index,end_index)   //包含开头，不包含结束,浅拷贝
-    `ary.splice(start_index,length,...newValues)` 截取数组,相当于在原数组删除元素
-  splice() 方法通过删除或替换现有元素或者原地添加新的元素来修改数组,并以数组形式返回被修改的内容。此方法会改变原数组。
- 
+  ary.splice(start_index,length,...new_elements)//删除或替换现有元素或者原地添加新的元素来修改数组,并以数组形式返回被修改的内容。此方法会改变原数组。
   ary(10).fill(0)//全部填满 XX
-  ary .join()   //不传参默认为， `ary.toString()`
-  ary.indexOf(x);ary.lastIndexOf(x)//寻找值为 x 的索引
-+  `String.fromCharCode()`
-+  `a.charCodeAt(2)`
-+  `ary.contact(ary2)` //将数组拼接在一起，创建一个新数组
-+  `a.endWith()`
-+  `Array.of()` `Array.from()`
-+  //数组操作，字符串操作
-+  `arguments`所有的参数；可以用`.length` `arguments[i]`
-+  `Math.max(...c)` //展开运算符，只能在参数列表使用
-
+  ary.join()/ary.contact()
+  ary.indexOf(x)/ary.lastIndexOf(x)//寻找值为 x 的索引
+  ary.endWith()/ary.sort()/ary.toString()
+  ary.every()/ary.some()
+  ary.filter()/ary.map()/ary.reduce()/ary.forEach()
+  Array.of() Array.from()
 ```
 
 ## 对象 object
@@ -625,6 +647,7 @@ Object.defineProperty(o, "b", {
   只允许使用简单的数据格式，不能有函数调用/绑定或涉及实际计算
   只支持数组、对象、字符串、数值、bool、null
   支持转义，不支持明文空格
+  不能有多余的逗号
 - `JSON.stringify()`//序列化
   - 接受 JavaScript 值并返回 JSON 编码的字符串
 - `JSON.parse()`//反序列化

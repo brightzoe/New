@@ -56,7 +56,7 @@ function every(array, test) {
 }
 
 function every(array, predicate) {
-  array.reduce((acc, cur, idx, array) => {
+  array.reduce((acc, cur, idx) => {
     return acc && predicate(cur, idx, ary); //也是短路特性
   }, true);
 }
