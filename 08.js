@@ -1,12 +1,4 @@
 //@ts-check
-
-
-
-
-
-
-
-
 //TODO 快速排序
 function qSort(ary, start = 0, end = ary.length - 1) {
   var pivotIndex = Math.floor((end - start + 1) * Math.random()) + start;
@@ -28,66 +20,6 @@ function swap(ary, i, j) {
   }
 }
 
-
-
-//从 0 开始实现一个 Ary 类，要求能够通过 ary[n]直接访问到编号为 n 的元素，读取 length 属性可以得到数组的实时长度，修改 length 属性会让数组长度发生变化，让其支持 for of 及 for in 循环。同时实现原生数组上的如下方法：slice，splice，reduce，reduceRight，map，filter，join，indexOf，lastIndexOf，concat，pop，push，shift，unshift，reverse，includes，forEach，every，some，filter。
-
-function Ary(...val) {
-  for (let key = 0; key < val.length; key++) {
-    this[key] = val[key];
-  }
-}
-Ary.prototype.length = function () {
-  let length = 0;
-  for (let key in this) {
-    if (+key > length) {
-      length = +key;
-    }
-  }
-
-  return length++;
-};
-var ary = new Ary(1, 2);
-// ary[ n ]
-// ary.length
-// ary.length = 3
-// for (item of ary)
-//   for (item in ary)
-//     ary.slice() / splice() / reduce() /...
-
-class Person {
-  constructor(fullName) {
-    this.fullName = fullName;
-  }
-  get firstName() {
-    return this.fullName.match(/(\S+)/g)[0];
-  }
-  get lastName() {
-    return this.fullName.match(/(\S+)/g)[1];
-  }
-  get fullName() {
-    return this.firstName + " " + this.lastName;
-  }
-  set firstName(name) {
-    this.firstName = name;
-  }
-  set lastName(name) {
-    this.lastName = name;
-  }
-  set fullName(name) {
-    this.fullName = name;
-  }
-}
-//传入表示fullName的字符串，包含两个单词
-// var damiao = new Person('Xie Ran')
-// console.log(damiao.firstName) //Xie
-// console.log(damiao.lastName) //Ran
-// damiao.fullName = 'Da Miao'
-// console.log(damiao.firstName) //Da
-// console.log(damiao.lastName) //Miao
-
-//damiao.firstName = 'Xiao'
-//console.log(damiao.fullName) // Xiao Miao
 
 let field = document.getElementById("field");
 let ball = document.getElementById("ball"); //40*40px
@@ -157,7 +89,7 @@ ul2.addEventListener("click", function (e) {
 
 //mouseover / mouseout 显示最深的有注解的元素
 let tooltip;
-let house = document.getElementById("house")
+let house = document.getElementById("house");
 house.addEventListener("mouseover", function (e) {
   let anchor = e.target.closest("[data-tooltip]"); //用最近的符合条件的祖先，保证每次显示的都是最深度的
   if (!anchor) {
