@@ -20,9 +20,6 @@ function swap(ary, i, j) {
   }
 }
 
-function ip2int(ip) {
-  
-}
 let field = document.getElementById("field");
 let ball = document.getElementById("ball"); //40*40px
 
@@ -125,3 +122,5 @@ function showTip(anchor, html) {
   tip.style.top = top + "px";
   return tip;
 }
+
+
