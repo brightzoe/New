@@ -1,4 +1,7 @@
 //@ts-check
+
+const { Socket } = require("dgram");
+
 //TODO 快速排序
 function qSort(ary, start = 0, end = ary.length - 1) {
   var pivotIndex = Math.floor((end - start + 1) * Math.random()) + start;
@@ -122,5 +125,8 @@ function showTip(anchor, html) {
   tip.style.top = top + "px";
   return tip;
 }
-
-
+//发送一个udp请求
+sock = dgram.createSocket('udp4')//创建udp套接字
+sock.bind(55555)//绑定一个特定端口
+sock.addMembership('224.3.3.3')//加入频道，添加主播地址(224~239)
+sock.on('message', () => console.log(1)); 0;
