@@ -25,7 +25,7 @@ server.on("connection", (socket) => {
     if (method === "POST") {
       var msg = parseQueryString(body);
       msg.timestamp = Date.now();
-      msgs.push(msg);
+      msgs.push(msg);//存储了这次信息然后结束
       socket.write("HTTP/1.1 302 Moved\r\n"); //用GET跳转到首页
       socket.write("Location:/\r\n");
       socket.write("\r\n");
@@ -36,12 +36,33 @@ server.on("connection", (socket) => {
     socket.write("Content-Type:text/html;charset=UTF-8\r\n"); //charset防止乱码
     socket.write("\r\n");
     socket.write(`
-		<form method="POST" action="">
+		<form method="GET" action="">
 		Name: <input type="text" name="name"><br>
 		Message: <textarea name="content"></textarea><br>
 		<button type = "submit">Submit</button>
 		</form>
-		<hr>
+		
+		<script>
+			var btn = document.querySelector("button")
+			var nameInput = document.querySelector('[name="name"]')
+			var contentInput = document.querySelector('[name="content"]')
+			btn.addEventListener('click',e=>{
+				e.preventDefault()//阻止默认提交
+				var xhr = new XMLHttpRequest()//点击button创建一个新的xhr请求
+				xhr.open('post','/')//代表当前页
+				xhr.send('name='+nameInput.value+'&content='+contentInput.value)//按照这个格式的数据
+
+				xhr.onload = function(e){
+					if(xhr.status == 200){
+						var div =document.createElement('div')
+						div.innerHTML ='<h3>${msg.name.replace(/</g, "&lt;")}<small>${new Date(
+      msg.timestamp
+    ).toString()}</small></h3>
+						<p>${msg.content.replace(/</g, "&lt;")}</p>
+					}
+				}
+			})
+		</script>
 		${Array.from(msgs)
       .reverse()
       .map(

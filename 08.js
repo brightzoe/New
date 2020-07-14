@@ -1,6 +1,5 @@
 //@ts-check
 
-
 //TODO 快速排序
 function qSort(ary, start = 0, end = ary.length - 1) {
   var pivotIndex = Math.floor((end - start + 1) * Math.random()) + start;
@@ -124,7 +123,4 @@ function showTip(anchor, html) {
   tip.style.top = top + "px";
   return tip;
 }
-
-
-
 
