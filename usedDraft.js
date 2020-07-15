@@ -45,7 +45,7 @@ function flatten(ary) {
 //TODO: 用reduce实现各种函数，keyby,groupby,every等。
 //every,测试是否每一项都满足条件,像&&；
 //一旦一个为假，返回false，提前结束，不一定需要处理所有元素
-//FIXME:
+//FIXME:EVERY
 function every(array, test) {
   for (let i = 0; i < array.length; i++) {
     if (!test(array(i))) {
