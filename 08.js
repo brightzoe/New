@@ -124,4 +124,21 @@ function showTip(anchor, html) {
   return tip;
 }
 
+//iterator  从低位到高位log出每一位
+function popDigit(number) {
+  while (number > 0) {
+    console.log(number % 10);
+    number = (number - (number % 10)) / 10;
+  }
+}
 
+function* generator(number) {
+  number = 10089;
+  while (number > 0) {
+    yield number % 10;
+    number = (number - (number % 10)) / 10;
+  }
+}
+
+var iterator = generator();
+iterator.next();

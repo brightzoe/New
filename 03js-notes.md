@@ -31,6 +31,7 @@ IEEE754 标准：二进制浮点顺运算标准
 
 - 双精度浮点数使用 8 字节表示，指数部分 11bit, 底数 62bit
 - 单精度浮点数使用 4 字节表示，指数部分 8bit, 底数 23bit
+
 ### JS 的使用
 
 - js 的引入最好放在 html 里 body 的最后，这样会加快页面加载速度。
@@ -173,7 +174,8 @@ https://wangdoc.com/javascript/operators/bit.html
 
 ### let var const
 
-- var 声明的变量处于函数级作用域，声明会被提前
+- var 声明的变量处于函数级作用域，声明会被提前.
+- var定义的全局变量存在window的属性上，let定义的全局变量不在window的属性上。
 - let 声明的变量在块级作用域(最近的语句块{})变量声明不会提前，出现 TDZ
   - 暂时性死区 temper dead zone->变量作用域内声明完成前不能使用
 - const 声明的变量的指向不能改变。变量指向的对象可以改变。
@@ -697,51 +699,41 @@ Domain Specific Language 领域特定语言
 - `var emailRe = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g`
 -
 
-## 文档结构
+# 文档结构
 
-### DOM document object model 文档对象模型
+## DOM document object model 文档对象模型
 
-- 文档结构:盒子套盒子,每个盒子都是一个对象,我们和这些对象交互,找出其中包含的盒子和文本.给文档增加交互能力，对文档内容进行抽象和概念化，类似 CSS 增加样式。代表着加载到浏览器窗口的当前网页。是一种 API（应用编程接口，是一个标准）
+浏览器解析 HTML 时，会先将其解析为语法树（通过递归下降或者栈解析），该语法树就是 DOM 树，也就是 DOM 模型；我们通过操作 DOM 模型来操作 web 页面，是一种 API（应用编程接口，是一个标准）
+
 - 如果浏览器遇到格式不正确的 HTML，它会在形成 DOM 时自动更正它。
 - **适用于多种环境和多种程序设计语言的通用型 API**
 - 文档：节点树 node tree **文档中每个元素节点都是一个对象**最外层节点是 document，不是元素节点
 - DOM 节点是常规的 JavaScript 对象。它们使用基于原型的类进行继承。
-  - 元素节点 DOM 的原子是元素节点 `document.body`
+  - 元素节点 DOM 的原子是元素节点
   - 文本节点 只包含文本的元素
   - 属性节点 总是被包含在元素节点中
   - 每个节点的属性:nodeType/nodeValue/nodeName/data
     DOM 的根节点:document.documentElement => <html>
-    文本片段或注释是一定是叶子节点 comment node
-  - 在 HTML 模式下，tagName/nodeName 始终是大写的
+  - 节点的 tagName/nodeName 属性，是标签名，始终是大写的
 
-```js
-document.body.style.background = "red"; // 将背景设置为红色
+* Object.preventExtension 阻止增加属性
+* Object.seal 阻止增删属性
+* Object.freeze 阻止增删与修改属性
 
-setTimeout(() => (document.body.style.background = ""), 3000); // 恢复回去
-```
-
-- Object.preventExtension 阻止增加属性
-- Object.seal 阻止增删属性
-- Object.freeze 阻止增删与修改属性
-
-BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处理文档之外的所有内容的对象。i.e. navigator location
-
-#### 获取元素节点（文档中的每个元素都是一个对象）
-
-close
+### 获取元素节点（文档中的每个元素都是一个对象）
 
 - 所有类型的节点:`node.firstChild/lastChild/childNodes/nextSibling/previousSibling/parentNode`
 - 只是元素节点`node.firstElementChild/Children/previousElementSibling/parentElement`
-  
-- `elem.closest(css)` //查找与 CSS 选择器匹配的最近的祖先。elem 自己也会被搜索。
+
+- `element.closest(css)` //查找与 CSS 选择器匹配的最近的祖先。elem 自己也会被搜索。
 - `table.rows/table.caption/tHead/tFoot/table.tBodies` -tbody 是一定会有的
 - `tbody.rows/tr.cells/tr.rowIndex/td.cellIndex` etc.
 - `document.getElementById('id')` id 是唯一的,返回一个对象；`document.all.id`;`document.getElementsByTagName('tag')` `document.getElementsByClassName('class')` 返回数组
 
 * 所有的 "getElementsBy xx" 方法都会返回一个 实时的（live） 集合,会自动更新，而"querySelector"则是静态的。
   **查询选择器**
-  `document.querySelectorAll()`
-  `document.querySelector()`
+  `document/element.querySelectorAll()`
+  `document/element.querySelector()`
 
 - 在全局范围查询,可以使用任何 CSS 选择器
 - 可以选择一部分伪类,不能选择伪元素
@@ -749,29 +741,35 @@ close
 
 匹配
 
-- `elem.matches(css)` //返回 true/false
+- `element.matches(css)` //返回 true/false
 - `elemA.contains(elemB)` //检查子级与父代，自己也自己也返回 true
 
-#### 修改文档
+### 修改文档
 
 - `parentnode.removeChild(node)`
 - `parentnode.appendChild(node)`//放在子节点末尾
 - `parentnode.prepend/append(...nodes)`//在所有子节点前面/后面增加一个节点.//同一个节点在文档中只能出现一次
 - `parentnode.insertBefore(node1,node2)`//把第一个节点放在第二个节点前面
 - `parentnode.replaceChild(newnode,oldnode)`
-- `document.createElement('xx')`//创建元素节点
-- `document.createTextNode('xxxx')`//创建文本节点
+- `document.createElement('xx')createTextNode('xxxx')`//创建节点
+- document.write('<span></span>')
+  // 往解析流里写入字符串。在解析结束(</html>)以后再写就没有意义了。如果解析完成以后再 write 就会重新开启一个解析流，相当于把 DOM 树中的所有内容全部“冲”掉。
+
+- document.createElement('span')
+  // 创建出 DOM 对象。创建之初是不在 DOM 树里的，需要添加进 DOM 树里才能显示出来。不会因为创建或添加而影响 DOM 树的其它部分。
+
+##### innerHTML,outerHTML,innerText,textContent
+
 - `elem.innerHTML`
 - **`innerHTML+=` 会进行完全重写**页面会重新加载，所有的图片和其他资源都重新加载
+  - 使用 innerHTML，我们将其“作为 HTML”插入，带有所有 HTML 标签。
 - `elem.outerHTML` 属性包含了元素的完整 HTML。就像 innerHTML 加上元素本身一样。
-- 可以向 elem.outerHTML 写入内容，但是要记住，它不会改变我们所写的元素（‘elem’）。而是将新的 HTML 放在其位置上。我们可以通过查询 DOM 来获取对新元素的引用。
-- `elem.textContent` 只返回里面的所有文本
+  - 可以向 elem.outerHTML 写入内容，但是要记住，它不会改变我们所写的元素（‘elem’）。而是将新的 HTML 放在其位置上。我们可以通过查询 DOM 来获取对新元素的引用。
+- `elem.textContent` 只返回里面的所有文本,保留回车位，不受 CSS 影响
+  - 使用 textContent，我们将其“作为文本”插入，所有符号（symbol）均按字面意义处理。
 - `element.insertAdjacentHTML(position, text);`//将指定的文本解析为 Element 元素,插入指定的位置
   NOTE: 写入 textContent 要有用得多，因为它允许以“安全方式”写入文本。
   假设我们有一个用户输入的任意字符串，我们希望将其显示出来。
-
-- 使用 innerHTML，我们将其“作为 HTML”插入，带有所有 HTML 标签。
-- 使用 textContent，我们将其“作为文本”插入，所有符号（symbol）均按字面意义处理。
 
 获取和设置属性(实际是操作的 html 特性)
 
@@ -779,7 +777,7 @@ close
 - `object.setAttribute('attr','xxxx')` 设置或修改属性
   ：`element.value = "the new value"`//这个与上面的一般是同步的，有些例外：value，zIndex
 - `node.attributes/id/className/htmlFor/title/tabindex` 获取属性
-- `node.dataset.foo = 'xxx'` //非标准的特性
+- `node.dataset.foo = 'xxx'` //操作元素的 data- 属性
 - `elem.add/remove/has`
 - `elem.classList` //实时的 class 的集合,`add()/remove()/toggle()`方法
 
@@ -799,42 +797,57 @@ window.scrollTo(x, y)
 window.scrollBy(x, y)
 window.innerWidth/Height 窗口内部宽高（css 像素）
 
-- document.write('<span></span>')
-  // 往解析流里写入字符串。在解析结束(</html>)以后再写就没有意义了。如果解析完成以后再 write 就会重新开启一个解析流，相当于把 DOM 树中的所有内容全部“冲”掉。
+- 浏览器的 re-layout（回流）不是 DOM 文档修改后立即执行，而是等所有的 js 代码执行完毕后再执行回流
+  因为浏览器每个时刻都只能做一件事情
+  1 执行 js 代码
+  2 计算布局
+  3 绘制页面（现代浏览器每 16.66 毫秒都会重新绘制一遍，即 60 帧每秒）
 
-- document.createElement('span')
-  // 创建出 DOM 对象。创建之初是不在 DOM 树里的，需要添加进 DOM 树里才能显示出来。不会因为创建或添加而影响 DOM 树的其它部分。
+- requestAnimationFrame(function)
+  告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。该方法需要传入一个回调函数作为参数，该回调函数会在浏览器下一次重绘之前执行
+  回调函数 function 会被传入调用时间作为参数
+- 虚拟 dom
+  - 用一个对象或者字符串表示真实 dom 结构信息
+  - 每次操作真实 dom 会拿到变更后的虚拟 dom
+  - 虚拟 dom 和上一次的虚拟 dom 作对比，得到差异
+  - 直接在真实 dom 上变更差异部分
+  - 现代框架都是这个原理，通过操作数据来操作虚拟 dom，从而更改真实 dom，性能比直接操作 dom 更好，操作也更方便
 
-### 浏览器事件
-
-`window.onload = function` 在页面加载时调用函数
+## 浏览器事件
 
 事件处理函数 特定事件发生时调用.
 
 - 通过 DOM 属性分配，onclick 不能多次调用，新的调用会覆盖旧的 DOM 属性。
   i.e. button.onclick = sayThanks;
   在 HTML 里面：<input type="button" id="button" onclick="sayThanks()">，读取 HTML，会创建一个处理函数，注意这个区别。
+- 分配事件处理程序，调用 addEventListener 允许多次添加。有些事件无法通过 DOM 属性进行分配，必须使用 addEventListener。 `element.addEvenListener（事件名，处理函数，option)`
+  - options 可选
+    一个指定有关 listener 属性的可选参数对象。可用的选项如下：
+    capture: Boolean，表示 listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。
+    once: Boolean，表示 listener 在添加之后最多只调用一次。如果是 true， listener 会在其被调用之后自动移除。
+    passive: Boolean，设置为 true 时，表示 listener 永远不会调用 preventDefault()。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。
+    不仅可以分配函数，还可以使用 addEventListener 将一个对象分配为事件处理程序。当事件发生时，就会调用该对象的 handleEvent 方法。
+- element.removeElementListener（事件名，处理函数） 移除处理器，注意移除的处理函数和之前添加的处理函数是同一个才可以移除，所有需要用一个变量记录函数指向.
+  ```js
+  function handler() {
+    alert("Thanks!");
+  }
+  input.addEventListener("click", handler);
+  input.removeEventListener("click", handler); //移除，需要添加同一个函数
+  ```
 
-- 分配事件处理程序，调用 addEventListener 允许多次添加。有些事件无法通过 DOM 属性进行分配，必须使用 addEventListener。
+**event** 全局事件对象，浏览器同一时刻只有一个事件运行，event 的属性：
 
-```js
-function handler() {
-  alert("Thanks!");
-}
-input.addEventListener("click", handler);
-input.removeEventListener("click", handler); //移除，需要添加同一个函数
-```
-
-event 对象的属性：
-
-- event.type
-  事件类型，这里是 "click"。
-- event.currentTarget
-  处理事件的元素。这与 this 相同，除非处理程序是一个箭头函数，或者它的 this 被绑定到了其他东西上，之后我们就可以从 event.currentTarget 获取元素了。
-- event.clientX / event.clientY
-  鼠标事件的指针的窗口相对坐标。
-
-不仅可以分配函数，还可以使用 addEventListener 将一个对象分配为事件处理程序。当事件发生时，就会调用该对象的 handleEvent 方法。
+- event.type：事件类型，这里是 "click"。
+- event.currentTarget：“当前”处理事件的元素，与 this 相同，除非处理程序是一个箭头函数，或者它的 this 被绑定到了其他东西上，之后我们就可以从 event.currentTarget 获取元素了。
+- event.target：是引发事件的“目标”元素，引发事件的层级最深的元素，它在冒泡过程中不会发生变化。
+- event.which：针对键盘和鼠标事件，确定按的是哪个键
+- event.keyCode：记录哪个键被按下，返回对应的 unicode 码（大写字母）
+- event.key：记录哪个键被按下，返回对应的键（小写字母）
+- event.Propagation 阻止事件传播到下一个元素（调用该元素上后面的事件处理器还是会执行）
+- event.ImmediatePropagation 阻止事件传播到下一个事件处理器（调用该元素上后面的事件处理器不会会执行）
+- event.deltaY 表示鼠标滚轮的滚动方向，小于 0 向上滚动
+- event.clientX / event.clientY：鼠标事件的指针的窗口相对坐标。
 
 ### 冒泡和捕获
 
@@ -842,23 +855,7 @@ event 对象的属性：
 
 当一个事件发生在一个元素上，它会首先运行在该元素上的处理程序，然后运行其父元素上的处理程序，然后一直向上到其他祖先上的处理程序。几乎所有事件都会冒泡，p.s. focus 事件不会冒泡,是例外。
 
-**event.target 与 this 的区别：**
-
-- event.target 是引发事件的“目标”元素，引发事件的层级最深的元素，它在冒泡过程中不会发生变化。
-- this —— 是“当前”元素，其中有一个当前正在运行的处理程序。与`event.currentTarget`一致
-
-```js
-var form = document.querySelector("form");
-form.addEventListener("click", function (e) {
-  if (e.target.tagName === "INPUT") {
-    //e.target拿到被点击的元素
-    console.log("input in me is clicked");
-  }
-});
-```
-
-`event.stopPropagation()`//停止冒泡
-`event.stopPropagation()` 停止向上移动，但是当前元素上的其他处理程序都会继续运行。
+`event.stopPropagation()` 停止冒泡,停止向上移动，但是当前元素上的其他处理程序都会继续运行。
 `event.stopImmediatePropagation()` 方法，可以用于停止冒泡，并阻止当前元素上的处理程序运行。使用该方法之后，其他处理程序就不会被执行。阻止事件向外扩散，但阻止当前元素对当前事件的后续函数的调用。
 
 ```js
@@ -897,13 +894,14 @@ contextmenu —— 事件发生在鼠标右键单击时，触发的行为是显�
 
 DOM 事件标准描述了事件传播的 3 个阶段：
 
-- 捕获阶段（Capturing phase）—— 事件（从 Window）向下走近元素。
+- 捕获阶段（Capturing phase）—— 事件（从 Window）向下走近元素,默认不触发。
 - 目标阶段（Target phase）—— 事件到达目标元素。
-- 冒泡阶段（Bubbling phase）—— 事件从元素上开始冒泡。
+- 冒泡阶段（Bubbling phase）—— 事件从元素上开始向外冒泡，默认触发。
+  传播路径：由捕获阶段到目标阶段，目标阶段里面的处理函数按照代码顺序执行，不区分捕获和冒泡，之后是冒泡阶段；传播过程中遇到没有时间处理器的元素会跳过该元素继续执行
 
-### 事件委托
+#### 事件委托
 
-事件委托真的很酷！这是 DOM 事件最有用的模式之一。它通常用于为许多相似的元素添加相同的处理，但不仅限于此。
+在外部节点添加一个事件处理器，并根据 target 属性判断事件来源，这样可以把内部共用的事件绑定到外部.
 
 算法：
 在容器（container）上放一个处理程序。
@@ -914,22 +912,25 @@ DOM 事件标准描述了事件传播的 3 个阶段：
 更少的代码：添加或移除元素时，无需添加/移除处理程序。
 DOM 修改 ：我们可以使用 innerHTML 等，来批量添加/移除元素。
 
-### 鼠标事件
-
-#### 简单事件
+### 简单事件
 
 mousedown/mouseup
 在元素上点击/释放鼠标按钮，mousedown 的默认浏览器操作是文本选择。
-mouseover/mouseout
+mouseover/mouseout(现在用 mouseenter/mouseleave 来代替)
 鼠标指针从一个元素上移入/移出。
-mouseover
-鼠标在元素上的每个移动都会触发此事件。
-contextmenu（右击）
-尝试打开上下文菜单时触发。在最常见的情况下，此事件发生在鼠标右键被按下时。虽然，还有其他打开上下文菜单的方式，例如使用特殊的键盘键，所以它不完全是一个鼠标事件。
-oncopy="alert('Copying forbidden!');return false"
-禁止复制
 
-#### 复杂事件
+> 快速移动鼠标可能会跳过中间元素。
+> 即使我们从父元素转到子元素时，也会触发 mouseover/out 事件。浏览器假定鼠标一次只会位于一个元素上 —— 最深的那个。
+> mouseenter/leave 事件在这方面不同：它们仅在鼠标进入和离开元素时才触发。并且它们不会冒泡。
+> mouseover/out 和 mouseenter/leave 事件还有一个附加属性：relatedTarget。这就是我们来自/到的元素，是对 target 的补充。
+> contextmenu（右击）
+> 尝试打开上下文菜单时触发。在最常见的情况下，此事件发生在鼠标右键被按下时。虽然，还有其他打开上下文菜单的方式，例如使用特殊的键盘键，所以它不完全是一个鼠标事件。
+> oncopy="alert('Copying forbidden!');return false"
+> 禁止复制
+> keydown,keyup,keypress
+> 按键事件只能在有焦点的元素上触发，没有焦点的元素可以通过 tabindex 获取焦点
+
+### 复杂事件
 
 click
 如果使用的是鼠标左键，则在同一个元素上的 mousedown 及 mouseup 相继触发后，触发该事件。
@@ -941,9 +942,9 @@ dblclick
 在单个动作触发多个事件时，事件的顺序是固定的。
 mousedown → mouseup → click
 mousedown → mouseup → contextmenu
--BNV50--7
+识别复杂手势，框架：hammer.js
 **事件属性**：
-Witch：1/2/3 左中右键
+which：1/2/3 左中右键
 如果在事件期间按下了相应的键，则它们为 true：
 shiftKey：Shift
 altKey：Alt（或对于 Mac 是 Opt）
@@ -955,20 +956,62 @@ metaKey：对于 Mac 是 Cmd
 相对于窗口的坐标：clientX 和 clientY。
 相对于文档的坐标：pageX 和 pageY。
 
-#### 鼠标移动
+### 鼠标移动
 
-mouseover，mouseout，mousemove，mouseenter 和 mouseleave 事件。
+## BOM
 
-- 快速移动鼠标可能会跳过中间元素。
-- mouseover/out 和 mouseenter/leave 事件还有一个附加属性：relatedTarget。这就是我们来自/到的元素，是对 target 的补充。
-- 即使我们从父元素转到子元素时，也会触发 mouseover/out 事件。浏览器假定鼠标一次只会位于一个元素上 —— 最深的那个。mouseenter/leave 事件在这方面不同：它们仅在鼠标进入和离开元素时才触发。并且它们不会冒泡。
+BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处理文档之外的所有内容的对象。i.e. navigator location window screen history
 
-识别复杂手势，框架：hammer.js
+- 函数 alert/confirm/prompt 是 BOM 的一部分.
+- 泛指浏览器中除 js 内置和 dom 操作相关的 api.
+  - DOM document 上提供的相关的 api
+  - api Application Programming Interface 应用编程接口，以函数，类，方法，属性等体现出来
+
+### 相关对象
+
+- navigator:主要是 navigator.userAgent——格式不完全统一，不好匹配
+- location：完整的 url 分解成不同的片段放在不同的属性中(包括完整的 url),可读可写入。
+  - port端口，protocol协议，origin域/源：协议+域名+端口
+  - location.reload() 刷新，参数为true时一定从服务器重新获取，否则可能从缓存中加载.除了修改hash，其余修改都会刷新页面。
+  - location.assign('xxx') ===location.href ='xxx'===location ='xxx' 相当于打开了新页面并加入历史记录，可以前进后退
+  - location.replace('xx') 当前地址直接换一个,无法前进后退
+  - hash 指的是#号及后面的部分对应页面内id,HTTP请求没有这部分。hash change事件就是监测hash值的变化，必须绑定至window对象
+- **history:**实际是一个栈，前进后退会在栈中游走
+  - history.go() history.forward()/back()——>popstate事件
+  - history.state储存当前页面的state对象
+  - pushState(data,title,url)
+    - data会绑定为history.state对象
+    - 页面不会刷新，但记录url的改变，可以前进后退，点击前进后退会触发**popstate**事件，事件包含history中的state对象
+    - 通过Ajax请求数据更新并更新页面内容，通过window.onpopstate事件在浏览器前进后退时，将页面改变位对应url的内容。现代浏览器中以此实现url改变但不刷新页面 pjax——>ajax+pushState
+  - replaceState(data,title,url)，功能同上，替换掉当前网页
+- window
+  - close() 只能关掉由他开启的页面，不能关自己。
+  - open(url,location)
+  - opener() 可以访问到打开者(open)的部分对象。同一个域内可以相互通信。
+  - name  一定是字符串类型，不随页面的导航而清空(除非js主动更改)，可以实现跨域
+  - 
 
 
-## 计算机网络
 
-### 数据在计算机中存储中的表示
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 计算机网络
+
+## 数据在计算机中存储中的表示
 
 浮点数一般使用 8 个字节表示，64bit
 最左是符号，然后十一位为指数
@@ -986,13 +1029,13 @@ IEEE754 标准：二进制浮点顺运算标准
 - 双精度浮点数使用 8 字节表示，指数部分 11bit, 底数 62bit
 - 单精度浮点数使用 4 字节表示，指数部分 8bit, 底数 23bit
 
-### URL 网址
+## URL 网址
 
 - 格式： 协议：//主机地址+目录路径+参数
 - 常用协议
   ![常用协议](https://cdn.jsdelivr.net/gh/brightzoe/img/xieyi.png)
 
-### 浏览器及其内核
+## 浏览器及其内核
 
 ![](https://cdn.jsdelivr.net/gh/brightzoe/img/browser.png)
 
@@ -1020,17 +1063,17 @@ IEEE754 标准：二进制浮点顺运算标准
 - 打开页面,网络层面的操作
   读缓存 =>hosts 文件的读取 =>dns 解析器 =>网络层数据包的转发 =>tcp 连接 =>证书交换，建立 tls 连接 =>发送 http 请求 =>接收响应 =>构建 DOM 树 =>渲染页面
 
-### HTTP 协议
+## HTTP 协议
 
 [HTTP](##HTTP)
 
-### DNS 解析
+## DNS 解析
 
 真正的网址是一串数字，比如 10.230.217.105，这叫 IP 地址，代表互联网上一个独特的位置。但并不好记忆，DNS 就是将域名与实际的 IP 地址相匹配的特殊服务器，达到让人使用域名，路由器使用 IP 地址的目的。
 例如 IP Checker 可以通过域名查找 IP 地址。
 解析器向 DNS 服务器发出查询，接收服务器返回的响应消息，响应消息包含查询到的 IP 地址。
 
-#### DNS 解析器
+### DNS 解析器
 
 解析器包含在操作系统的 Socket 库(网络开发的一种标准库，其中包含的程序组件可以让其他的应用调用操作系统的网络功能)中。
 `nslookup www.baidu.com 8.8.8.8` 用指定的 DNS 服务器查询 IP 地址
@@ -1038,7 +1081,7 @@ IEEE754 标准：二进制浮点顺运算标准
 - 调用解析器：`gethostbyname("www.xx.xx")`
 - 计算机内部：控制流程转移 ![](https://i.loli.net/2020/07/07/AJBEzOsc7MYndhD.png)
 
-#### DNS 服务器
+### DNS 服务器
 
 DNS 服务器的基本工作就是根据需要查询的域名和记录类型查找相关的记录，并向客户端返回响应消息。
 其中，来自客户端的查询消息包含以下 3 种信息。
@@ -1059,7 +1102,7 @@ DNS 服务器的缓存功能，加快服务器的响应。 ——>host:把域名
 DNS 污染：解析成错误的 IP——>可以通过修改 host 解决
 DDNS：动态 DNS ——>IP 变掉了，自动指向新 IP
 
-#### IP 地址
+## IP 地址
 
 IP 地址和现实中的地址一样，不能重复。
 局域网都是基于 TCP/IP 思路设计的。TCP/IP 的结构就是由一些小的子网，通过路由器连接起来组成一个大的网络。这里的子网可以理解为用集线器连接起来的几台计算机，我们将它看作一个单位，称为子网。将子网通过路由器连接起来，就形成了一个网络。
@@ -1081,7 +1124,7 @@ IP 地址的表示方法：![IP 地址的表示方法](https://i.loli.net/2020/0
 - 全 0：表示整个子网
 - 全 1：表示向子网上所有设备发送包，即“广播”
 
-### 委托协议栈向 Web 服务器发送消息
+## 委托协议栈向 Web 服务器发送消息
 
 向操作系统内部的协议栈发出委托时，需要按照指定的顺序来调用 Socket 库中的程序组件。
 收发数据的操作分为若干个阶段，可以大致总结为以下 4 个。——TCP
@@ -1110,7 +1153,7 @@ IP 地址的表示方法：![IP 地址的表示方法](https://i.loli.net/2020/0
   （1）头部中记录的信息，在 TCP 协议的规格中进行了定义。头部是用来记录和交换控制信息的。
   （2）套接字（协议栈中的内存空间）中记录的信息，用来控制协议栈操作。
 
-#### 连接
+### 连接
 
 实际上是通信双方交换控制信息，在套接字中记录这些必要信息并准备数据收发的一连串操作，像上面提到的客户端将 IP 地址和端口号告知服务器这样的过程就属于交换控制信息的一个具体的例子。
 连接操作的第一步是在 TCP 模块处创建表示连接控制信息的头部.通过 TCP 头部中的发送方和接收方端口号可以找到要连接的套接字。
@@ -1118,7 +1161,7 @@ SYN 比特表示连接，和 ACK 比特确认响应
 
 - 三次握手：三次成功的单向通信，才能确定双方都能收能发信息
 
-#### 收发数据
+### 收发数据
 
 数据收发操作是从应用程序调用 write 将要发送的数据交给协议栈开始的，协议栈收到数据后执行发送操作。
 协议栈收到数据会将数据存放在内部的发送缓冲区中，并等待应用程序的下一段数据。
@@ -1140,23 +1183,23 @@ SYN 比特表示连接，和 ACK 比特确认响应
 如果只有一个包就可以解决的短数据，适合使用**UDP**。UDP 只需要在应用程序获得的数据前面加上 UDP 头部，然后交给 IP 进行发送。接收就是根据 IP 头部中的接收方和发送方 IP 地址，以及 UDP 头部中的接收方和发送方端口号，找到相应的套接字并将数据交给相应的应用程序。
 还有另一个场景会使用 UDP，就是发送音频和视频数据的时候。音频和视频数据必须在规定的时间内送达，一旦送达晚了，就会错过播放时机，导致声音和图像卡顿。
 
-##### 错误补偿机制
+#### 错误补偿机制
 
 - 返回 ACK 号的等待时间——超时时间：当网络传输繁忙时就会发生拥塞，ACK 号的返回会变慢，等待时间需要稍长一点，但等待时间过长，包的重传会出现很大的延迟，所以等待时间不能设定为一个固定的值。TCP 采用**动态调整等待时间**的方法，根据 ACK 号返回所需的时间来判断。
 - 使用滑动窗口有效管理数据发送和 ACK 号。滑动窗口，就是在发送一个包之后，不等待 ACK 号返回，而是直接发送后续的一系列包。有可能出现发送报的频率超过接收方处理能力的情况， 数据将暂存到接收缓冲区中，能够接受的最大数据量称为窗口大小。
 - 提高收发数据的效率：返回 ACK 号和更新窗口合并。
 
-##### 断开连接并删除套接字
+#### 断开连接并删除套接字
 
 断开连接后，套接字并不会立即被删除，而是会等待一段时间之后再被删除。——为了防止误操作
 
-### IP 与以太网的包收发操作
+## IP 与以太网的包收发操作
 
 TCP 模块在执行连接、收发、断开等各阶段操作时，都需要委托 IP 模块将数据封装成包发送给通信对象。
 发送方的网络设备会负责创建包，网络包是由头部和数据两部分构成。
 ![网络包的结构](https://i.loli.net/2020/07/08/clK6TsZuvfAjFdr.png)
 
-#### IP 模块如何完成包收发操作
+### IP 模块如何完成包收发操作
 
 TCP 模块委托 IP 模块发送包，TCP 模块在数据块前面加上 TCP 头部，传递给 IP 模块。还需要指定通信对象的 IP 地址。
 IP 模块收到委托，添加 MAC 头部和 IP 头部，这样一个包就封装好了。
@@ -1187,7 +1230,7 @@ IP 模块收到委托，添加 MAC 头部和 IP 头部，这样一个包就封�
    > ARP 协议：address resolution protocol(地址解析协议), 通过广播获得 MAC 地址。将 ip 地址转化为 MAC 地址并记录对应关系，命令行 arp -a 可查看所有记录
    > ARP 缓存：缓存查询过的 MAC 地址 显示 ARP 缓存`arp -a` 经过一段时间缓存会被删除。如果缓存还未删除出现通信异常，可以手动删除 ARP 缓存
 
-#### 以太网的基本知识
+### 以太网的基本知识
 
 以太网是为多台计算机能够自由且廉价地相互通信设计的通信技术(有线网)，本质就是一根网线，通过 MAC 头部进行通信，根据 MAC 地址来传输包。
 性质：根据 MAC 头部的三个字段，将包发送到接收方 MAC 地址，根据发送方 MAC 地址识别发送方，根据以太类型识别报的内容。（也适用于无线局域网）
@@ -1200,7 +1243,7 @@ IP 模块收到委托，添加 MAC 头部和 IP 头部，这样一个包就封�
 
 ![加工网络包的分工](https://i.loli.net/2020/07/09/KMGHfJSLo5yINEq.png)
 
-#### 转发设备：
+### 转发设备：
 
 路由器：根据目标地址判断下一个路由器的位置——>按照 IP 规则
 集线器：在子网中将网络包传输到下一个路由——>按以太网规则
@@ -1500,7 +1543,7 @@ xhr2.responseXML; //解析XML出来的一个document对象
     `Access-Control-Allow-Origin:*` //允许其他服务器访问
     js 只能操作协议，域名，端口都相同的服务器；
     cookie 是个例外，只有协议，域名相同，端口不同也会共享 cookie
-- 抽象请求
+- 抽象请求 AJAX
 
 ```js
 function post(url, data, success) {
@@ -1539,9 +1582,9 @@ get("http://www.xxx.com/a/b", function (data, error) {
 });
 ```
 
-## generator 生成器函数 
-iterator 迭代器
-生成器函数的返回值是迭代器
+### generator 生成器函数
+
+调用生成器函数，返回生成器。
 
 - 必要构成，1 个\*号和 yield 运算符
   ```js
@@ -1559,7 +1602,7 @@ iterator 迭代器
   g1.next(55); //=>{value: undefined, done: true} 此时函数运行完毕，完成上一个 = 号赋值，d=55
   ```
 - next 属性返回一个对象，里面 value 是当前 yield 后面的值，done 表示当前生成器有没有运行完
-- yield: yield 的运算结果是生成器 next() 里面的参数
+- 生成器 next() 里面的参数，会赋值给上一个 yield 左边
 - return()；结束函数
   `g1.return(8)=>{value: 8, done: true}` 此时函数从上一个暂停的地方立即停止，返回一个值
 - throw() 此时函数从上一个暂停的地方抛出一个错误，需要一个 try{}catch{}语句配合使用，try{}catch{}语句里面的函数没有运行，try{}catch{}语句结束后下面的代码继续执行
@@ -1594,46 +1637,47 @@ iterator 迭代器
   }
   ```
 
-  - Symbol
+### Symbol
 
-    - ES6 里添加得到一种原始数据类型，不能用 new 调用，可以用 type of 检测类型——>symbol。
-    - 表示是一个唯一的标识符（符号）, Symbol() 可以作为对象的属性名，目前这个也是其主要作用；
-    - `var a = Symbol() ,b = Symbol(); a === b =>false` 唯一的
-    - Symbol 也无法进行隐式类型转换，会报错——>a + 2 会报错.可以用 toString()进行类型转换
-    - Symbol.for（可以理解位为 Symbol 取名）可共享的Symbol,可以用来让不同的对象使用同一个Symbol属性
-      `a = Symbol.for("aa");b = Symbol.for("aa")；a === b =>true`
-      读取：
+- ES6 里添加得到一种原始数据类型，不能用 new 调用，可以用 type of 检测类型——>symbol。
+- 表示是一个唯一的标识符（符号）, Symbol() 可以作为对象的属性名，目前这个也是其主要作用；
+- `var a = Symbol() ,b = Symbol(); a === b =>false` 唯一的
+- Symbol 也无法进行隐式类型转换，会报错——>a + 2 会报错.可以用 toString()进行类型转换
+- Symbol.for（可以理解位为 Symbol 取名）可共享的 Symbol,可以用来让不同的对象使用同一个 Symbol 属性
+  `a = Symbol.for("aa");b = Symbol.for("aa")；a === b =>true`
+  读取：
+- Symbol.iterator
+  Symbol.iterator 为每一个对象定义了默认的迭代器。该迭代器可以被 for...of 循环使用。
+  ```js
+  var myIterable = {};
+  myIterable[Symbol.iterator] = function* () {
+    yield 1;
+    yield 2;
+    yield 3;
+  };
+  [...myIterable]; // [1, 2, 3]
+  ```
+- 一些内置类型拥有默认的迭代器行为，如 Array，String,Map，Set,TypeArray，可以直接使用 for of 循环调用
+- Symbol 实现私有属性
+  `js
+  unction () {
+  var age = Symbol();
+  window.People = class People {
+  constructor(name, gender, theAge) {
+  this.name = name;
+  this.gender = gender;
+  this[age] = theAge;
+  }
+  getAge() {
+  if ((this.gender = "f")) {
+  return 18;
+  } else {
+  return this[age];
+  }
+  }
+  };
+  ();
 
-    - Symbol.iterator
-      Symbol.iterator 为每一个对象定义了默认的迭代器。该迭代器可以被 for...of 循环使用。
-      ```js
-      var myIterable = {}
-      myIterable[Symbol.iterator] = function * () {
-      yield 1;
-      yield 2;
-      yield 3;
-      };
-      [...myIterable] // [1, 2, 3]
-      ```
-    * 一些内置类型拥有默认的迭代器行为，如 Array，String,Map，Set,TypeArray，可以直接使用 for of 循环调用
+```
 
-
-    * Symbol 实现私有属性
-      (function(){
-      var age = Symbol()
-
-      window.People = class People {
-      constructor(name, gender, theAge) {
-      this.name = name
-      this.gender = gender
-      this[age] = theAge
-      }
-      getAge() {
-      if (this.gender = 'f') {
-      return 18
-      } else {
-      return this[age]
-      }
-      }
-      }
-      }())
+```

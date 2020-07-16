@@ -30,27 +30,22 @@ mathjax: false
 
 ### BOM
 
-- browser object model
-- 指的是浏览器中除js内置和dom操作相关的api
+
 - window
   - open方法，接受一个url字符串，打开新窗口，还接受其他三个参数，仅作了解
     - 返回一个对象指向新窗口的，其中有一个opener属性指向原窗口，可以用这个返回的对象(这个对象并不是指向对应的window，只有几个简单的属性和方法)的`postMessage`方法传递一个字符串给打开的窗口，在新窗口中也可以通过`opener.postMessage()`向原窗口传递字符串(将`message`事件绑定处理机来接收)，来实现跨域通信
   - `getComputedStyle`方法，接收两个参数，第一参数为元素节点，第二个参数为伪元素字符串，不需要获取伪元素可以填null，返回一个CSSStyleDeclaration对象，这个对象的属性是**只读且动态更新**的，包含当前元素的所有计算样式，应为伪元素不是dom节点，不能直接通过dom操作获取，所以多用此方法获取伪元素的样式
 - location
   - 既是window的属性也是document的属性
-  - location将完整的url分解成不同的片段存放在不同的属性中(完整的url也保存)
-  - `assign`方法，打开一个新窗口，并加入历史记录，将location的href属性赋值相当于调用assign方法
-    - 每次修改location的属性页面都会重新加载
-  - 此外还有replace方法和reload方法，replace方法不会生成历史记录；reload参数为true时一定从服务器重新获取，否则可能从缓存中加载
-  - url中的hash值指的是#号及后面的部分，hashchange事件就是监测hash值的变化，必须绑定至window对象
+
+
 - [history对象](https://developer.mozilla.org/zh-CN/docs/Web/API/History_API)
   - 重点理解pushState方法，三个参数，一个state对象，一个标题(现在失效了)， 可选url
     - `popstate`事件触发时事件中会包含history中的state对象(history中储存的也是当前页面的state)，可利用其记录一些信息
     - url一定与当前域名相同或者省略域名，否则会报错，新的url指向的目标可以不存在，因为并不会跳转，只是添加了一条历史记录，因为并不会刷新页面，所以设置了新的hash值(锚点)也不会触发hashchange事件，省略则继续用当前url
   - state属性返回**当前**页面的state对象
   - 在历史记录中跳转才会触发popstate事件，注意 使用pushState方法等并不会触发这个事件
-- navigator对象
-  - 主要是userAgent属性
+
 
 
 
