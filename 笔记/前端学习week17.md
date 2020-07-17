@@ -28,23 +28,7 @@ mathjax: false
 
 
 
-### BOM
 
-
-- window
-  - open方法，接受一个url字符串，打开新窗口，还接受其他三个参数，仅作了解
-    - 返回一个对象指向新窗口的，其中有一个opener属性指向原窗口，可以用这个返回的对象(这个对象并不是指向对应的window，只有几个简单的属性和方法)的`postMessage`方法传递一个字符串给打开的窗口，在新窗口中也可以通过`opener.postMessage()`向原窗口传递字符串(将`message`事件绑定处理机来接收)，来实现跨域通信
-  - `getComputedStyle`方法，接收两个参数，第一参数为元素节点，第二个参数为伪元素字符串，不需要获取伪元素可以填null，返回一个CSSStyleDeclaration对象，这个对象的属性是**只读且动态更新**的，包含当前元素的所有计算样式，应为伪元素不是dom节点，不能直接通过dom操作获取，所以多用此方法获取伪元素的样式
-- location
-  - 既是window的属性也是document的属性
-
-
-- [history对象](https://developer.mozilla.org/zh-CN/docs/Web/API/History_API)
-  - 重点理解pushState方法，三个参数，一个state对象，一个标题(现在失效了)， 可选url
-    - `popstate`事件触发时事件中会包含history中的state对象(history中储存的也是当前页面的state)，可利用其记录一些信息
-    - url一定与当前域名相同或者省略域名，否则会报错，新的url指向的目标可以不存在，因为并不会跳转，只是添加了一条历史记录，因为并不会刷新页面，所以设置了新的hash值(锚点)也不会触发hashchange事件，省略则继续用当前url
-  - state属性返回**当前**页面的state对象
-  - 在历史记录中跳转才会触发popstate事件，注意 使用pushState方法等并不会触发这个事件
 
 
 

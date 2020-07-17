@@ -175,7 +175,7 @@ https://wangdoc.com/javascript/operators/bit.html
 ### let var const
 
 - var 声明的变量处于函数级作用域，声明会被提前.
-- var定义的全局变量存在window的属性上，let定义的全局变量不在window的属性上。
+- var 定义的全局变量存在 window 的属性上，let 定义的全局变量不在 window 的属性上。
 - let 声明的变量在块级作用域(最近的语句块{})变量声明不会提前，出现 TDZ
   - 暂时性死区 temper dead zone->变量作用域内声明完成前不能使用
 - const 声明的变量的指向不能改变。变量指向的对象可以改变。
@@ -883,8 +883,8 @@ a.addEventListener("click", function (e) {
 
 **浏览器默认行为**：
 mousedown —— 开始选择（移动鼠标进行选择）。
-在 <input type="checkbox"> 上的 click —— 选中/取消选中的 input。
-submit —— 点击 <input type="submit"> 或者在表单字段中按下 Enter 键会触发该事件，之后浏览器将提交表单。
+在 `<input type="checkbox">` 上的 click —— 选中/取消选中的 input。
+submit —— 点击 `<input type="submit">` 或者在表单字段中按下 Enter 键会触发该事件，之后浏览器将提交表单。
 keydown —— 按下一个按键会导致将字符添加到字段，或者触发其他行为。
 contextmenu —— 事件发生在鼠标右键单击时，触发的行为是显示浏览器上下文菜单。
 
@@ -971,43 +971,33 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
 
 - navigator:主要是 navigator.userAgent——格式不完全统一，不好匹配
 - location：完整的 url 分解成不同的片段放在不同的属性中(包括完整的 url),可读可写入。
-  - port端口，protocol协议，origin域/源：协议+域名+端口
-  - location.reload() 刷新，参数为true时一定从服务器重新获取，否则可能从缓存中加载.除了修改hash，其余修改都会刷新页面。
+  - port 端口，protocol 协议，origin 域/源：协议+域名+端口
+  - location.reload() 刷新，参数为 true 时一定从服务器重新获取，否则可能从缓存中加载.除了修改 hash，其余修改都会刷新页面。
   - location.assign('xxx') ===location.href ='xxx'===location ='xxx' 相当于打开了新页面并加入历史记录，可以前进后退
   - location.replace('xx') 当前地址直接换一个,无法前进后退
-  - hash 指的是#号及后面的部分对应页面内id,HTTP请求没有这部分。hash change事件就是监测hash值的变化，必须绑定至window对象
+  - hash 指的是#号及后面的部分对应页面内 id,HTTP 请求没有这部分。hash change 事件就是监测 hash 值的变化，必须绑定至 window 对象
 - **history:**实际是一个栈，前进后退会在栈中游走
-  - history.go() history.forward()/back()——>popstate事件
-  - history.state储存当前页面的state对象
+  - history.go() history.forward()/back()——>popstate 事件
+  - history.state 储存当前页面的 state 对象
   - pushState(data,title,url)
-    - data会绑定为history.state对象
-    - 页面不会刷新，但记录url的改变，可以前进后退，点击前进后退会触发**popstate**事件，事件包含history中的state对象
-    - 通过Ajax请求数据更新并更新页面内容，通过window.onpopstate事件在浏览器前进后退时，将页面改变位对应url的内容。现代浏览器中以此实现url改变但不刷新页面 pjax——>ajax+pushState
+    - data 会绑定为 history.state 对象
+    - 页面不会刷新，但记录 url 的改变，可以前进后退，点击前进后退会触发**popstate**事件，事件包含 history 中的 state 对象
+    - 因为并不会刷新页面，所以设置了新的 hash 值(锚点)也不会触发 hashchange 事件
+    - 通过 Ajax 请求数据更新并更新页面内容，通过 window.onpopstate 事件在浏览器前进后退时，将页面改变位对应 url 的内容。现代浏览器中以此实现 url 改变但不刷新页面 pjax——>ajax+pushState
   - replaceState(data,title,url)，功能同上，替换掉当前网页
 - window
+
   - close() 只能关掉由他开启的页面，不能关自己。
-  - open(url,location)
+  - **open(url,location)**
+    - 返回一个对象指向新窗口，其中有一个 opener 属性指向原窗口，可以用这个返回的对象(这个对象并不是指向对应的 window，只有几个简单的属性和方法)的`postMessage`方法传递一个字符串给打开的窗口，在新窗口中也可以通过`opener.postMessage()`向原窗口传递字符串(将`message`事件绑定处理机来接收)，来实现跨域通信
   - opener() 可以访问到打开者(open)的部分对象。同一个域内可以相互通信。
-  - name  一定是字符串类型，不随页面的导航而清空(除非js主动更改)，可以实现跨域
-  - 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  - name 一定是字符串类型，不随页面的导航而清空(除非 js 主动更改)，可以实现跨域
+  - status 状态栏 window.document.title 网页标题
+  - atob/btoa() base64 编解码
+    > base64 编码 以文本的形式表达一份二进制原始信息
+  - blur/focus() 让窗口获取或失去焦点 onblur/onfocus 事件
+  - getComputedStyle(element,['before']) 第二个参数可选为伪元素字符串，这个对象的属性是**只读且动态更新**的，包含当前元素的所有计算样式，应为伪元素不是 dom 节点，不能直接通过 dom 操作获取，所以多用此方法获取伪元素的样式
+  - stop() 停止加载页面
 
 # 计算机网络
 
@@ -1029,16 +1019,6 @@ IEEE754 标准：二进制浮点顺运算标准
 - 双精度浮点数使用 8 字节表示，指数部分 11bit, 底数 62bit
 - 单精度浮点数使用 4 字节表示，指数部分 8bit, 底数 23bit
 
-## URL 网址
-
-- 格式： 协议：//主机地址+目录路径+参数
-- 常用协议
-  ![常用协议](https://cdn.jsdelivr.net/gh/brightzoe/img/xieyi.png)
-
-## 浏览器及其内核
-
-![](https://cdn.jsdelivr.net/gh/brightzoe/img/browser.png)
-
 ## 万维网是如何工作的
 
 ![客户端和服务器](https://cdn.jsdelivr.net/gh/brightzoe/img/20200105191449.png)
@@ -1050,6 +1030,16 @@ IEEE754 标准：二进制浮点顺运算标准
 - 组成文件：一个网页由许多文件组成，就像商店里不同的商品一样。这些文件有两种类型：
   - 代码 : 网页大体由 HTML、CSS、JavaScript 组成，不过你会在后面看到不同的技术。
   - 资源 : 这是其他组成网页的东西的集合，比如图像、音乐、视频、Word 文档、PDF 文件。
+
+### URL 网址
+
+- 格式： 协议：//主机地址+目录路径+参数
+- 常用协议
+  ![常用协议](https://cdn.jsdelivr.net/gh/brightzoe/img/xieyi.png)
+
+### 浏览器及其内核
+
+![](https://cdn.jsdelivr.net/gh/brightzoe/img/browser.png)
 
 ### 发生了什么？
 
@@ -1497,10 +1487,125 @@ message body//消息体
 ![HTTP消息的格式](https://i.loli.net/2020/07/08/4Gu5YTNeUvSJl8H.png)
 ![响应消息的状态码](https://i.loli.net/2020/07/08/eqmHZIw81uyJB53.png)
 
+### HTTP 常见头部
+
+HTTP 请求头:
+
+- User-Agent 用户代理字符串，可以读到浏览器的内核，版本，操作系统版本等信息
+- Host 浏览器使用什么域名进行的该次 http 请求
+  > 一个服务器上可能有多个网站，不同的网站域名不同，但此种情况下 ip 相同。对于客户端来说，连接的 ip 是相同的，而 ip 在连接之前已经解析好的，在 tcp/ip 层服务器是不知道对方用什么域名连接的
+- Referer 当前请求的资源的使用者是谁
+  > 可以实现防盗链，如果服务器发现 referer 属于别的域名，可以返回空内容，或者返回一个版权声明的图片
+  > 由于会把当前用户地址栏的完全地址发给资源所在服务器，有一定隐私风险，现在可以通过一定方式禁止浏览器发 referer 头
+- Accept 可接受的媒体类型，q 代表期望值大小
+- Accept-Encoding 可以接收的资源的响应体的压缩算法
+- Accept-Language 期望接收的自然语言
+- Content-Type 请求体/响应体的媒体类型及编码方式
+- Content-length 请求体长度
+- If-Modified-Since（请求）/Last-Modified（响应） 协商缓存，基于时间
+- If-None-Match（请求） /ETag（响应）协商缓存，基于内容
+- Connection:keep-alive 协商承载该 http 的 TCP 连接的状态。如果在同一个 tcp 上执行多个 http 请求/响应，需要配合 content-length 使用
+  > Pipeline 管线化请求/响应 即无需等待响应收到后再在同一个连接上发下一个请求，而是可以一次性把所有请求都发过去，等待所有响应按序收到
 - URL 编码
   - URL 会对一些特殊的字符进行转义编码，使用 %16 进制编码方式
   - encodeURLComponent() 通过 URL 编码方式编码特殊字符
     decodeURLComponent() 通过 URL 编码方式解码特殊字符
+
+HTTP 响应头:
+
+- Date 日期，响应时间，GMT
+- Content-Encoding 响应体的压缩算法
+- Content-Length 响应体的长度（如果压缩则是压缩之后的长度）
+- Content-Type 响应体的媒体类型及编码方式
+- ETag 响应体的哈希值
+- Last-Modified 本资源的最后修改时间
+- Server 服务器所使用的软件，一般服务器是不会响应这个头的
+  > 因为如果某个服务器软件有漏洞，这么做相当于告诉别人服务器有漏洞
+- Expires 本资源的过期时间，在这个过期时间之前，浏览器重新使用这个资源时可以不发请求
+- Accept-Range：bytes 用来支持断点续传
+- Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin 设置浏览器发送 Referer 策略,只需要在 html（即页面）的响应头里设置
+- Transfer-Encoding: chunked 响应数据的传输方式，一段一段的发。
+  > 当服务器无法预测响应体长度时使用。
+  > 当使用这个功能时，一个 tcp 上就只能走这一个 http 请求了。tcp 连接断开时响应结束。
+  > 有这个头时就没有 Content-Length 了
+- content-disposition: attachment; filename="index.html" 该响应头触发浏览器弹出下载对话框，并在对话框里填写默认文件名为 filename
+- X-Frame-Options 设置本页面能否被放入其它页面的 iframe
+
+  deny 完全不允许被放入任何 iframe
+  same-origin 可以被放入同源页面的 iframe 里
+
+- Content-Security-Policy 内容安全策略，只对 html 页面响应，设置本页面的各项安全相关的配置
+
+  default-src 'none';
+  base-uri 'self';
+
+  block-all-mixed-content;
+  禁用所有混合内容（即 https 页面里的 http 内容）
+
+  connect-src 'self' uploads.github.com www.google-analytics.com github-cloud.s3.amazonaws.com wss://alive.github.com;  
+  页面里的 js 能够连接的目标服务器（ajax，其它方式的连接如 websocket）
+
+  font-src github.githubassets.com;
+  页面能够加载的字体来源
+
+  form-action 'self' github.com gist.github.com;
+  表单能够提交到的目标服务器
+
+  frame-ancestors 'none';
+  谁能做为本页面的 frame 祖先,能放在谁的iframe里
+
+  frame-src render.githubusercontent.com;
+  本页面的 iframe 可以加载来自哪里的页面
+
+  img-src 'self' data: customer-stories-feed.github.com spotlights-feed.github.com;
+  图片能够加载来自哪里的页面
+
+  manifest-src 'self';
+  manifest 能够加载来自哪里的
+
+  media-src 'none';
+  media 能够加载来自哪里的视频/音频等
+
+  script-src github.githubassets.com;
+  脚本能够加载来自哪里的 
+  > unsafe-inline 内联的，没写就不能加载`<div onclick="alert(2)"></div>`
+
+  style-src github.githubassets.com;
+  样式能够加载来自哪里的 <div style="color:red";
+
+  worker-src github.com/socket-worker.js gist.github.com/socket-worker.js
+  worker 的代码能够加载来自哪里的
+
+  Cache-Control 缓存控制。可以做为请求头，也可以做为响应头
+  提供对缓存策略的精细控制，
+  内容可以是给浏览器看的，也可以是给服务器看的，还可以是给中间服务器看的。
+
+断点续传
+Accept-Range：bytes
+Range: 10000-99999
+
+- 常见响应状态码
+
+  - 401 UnAuthorized 未授权，当前请求需要用户验证
+  - 403 Forbidden 隐藏，服务器已经理解请求，但是拒绝执行它
+  - 404 Not found 未找到，请求所希望得到的资源未被在服务器上发现
+  - 452 Unavailable For Legal Reasons 非法资源，政治原因不可展示
+  - 301 Move Permanently 永久移动到新的地址，以后访问请求新地址；
+  - 302 Moved Temporarily 暂时移动到新的地址，以后访问还是请求旧地址
+    - 以上 2 个要配合响应头 location：url 使用，表示跳转地址
+  - 304 Not Modified 未更改
+
+    - 协商缓存
+      - If-Modified-Since（请求）/Last-Modified（响应）: 自上次访问以来资源未更新，返回 304
+      - If-None-Match（请求 /ETag（响应）: 一个哈希值，如果这个值和服务器储存的对应值一样，表示资源未更新，返回 304
+    - 强缓存 和 304 没有关系，主要是用于减轻浏览器负担
+      - Expires: 日期；资源未过期都会储存在浏览器里，不用去加载
+      - age ：时间；本次请求以后该资源可以强缓存在浏览器里的时间长度
+      - cache-control: 现在最常用的，可以在请求头里，也可以在响应头里，可以设置各种缓存，也可以设置为协商缓存；详细见 MDN
+
+  - 501 Not implemented 未实现；此请求方法不被服务器支持且无法被处理。
+    - 只有 GET 和 HEAD 是要求服务器支持的
+  - 502 Internal Server Error 服务器内部错误
 
 ### XMLHttpRequest
 
