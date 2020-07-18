@@ -1534,7 +1534,7 @@ HTTP 响应头:
   deny 完全不允许被放入任何 iframe
   same-origin 可以被放入同源页面的 iframe 里
 
-- Content-Security-Policy 内容安全策略，只对 html 页面响应，设置本页面的各项安全相关的配置
+- Content-Security-Policy CSP 内容安全策略，只对 html 页面响应，设置本页面的各项安全相关的配置
 
   default-src 'none';
   base-uri 'self';
@@ -1552,7 +1552,7 @@ HTTP 响应头:
   表单能够提交到的目标服务器
 
   frame-ancestors 'none';
-  谁能做为本页面的 frame 祖先,能放在谁的iframe里
+  谁能做为本页面的 frame 祖先,能放在谁的 iframe 里
 
   frame-src render.githubusercontent.com;
   本页面的 iframe 可以加载来自哪里的页面
@@ -1567,7 +1567,8 @@ HTTP 响应头:
   media 能够加载来自哪里的视频/音频等
 
   script-src github.githubassets.com;
-  脚本能够加载来自哪里的 
+  脚本能够加载来自哪里的
+
   > unsafe-inline 内联的，没写就不能加载`<div onclick="alert(2)"></div>`
 
   style-src github.githubassets.com;
@@ -1576,15 +1577,10 @@ HTTP 响应头:
   worker-src github.com/socket-worker.js gist.github.com/socket-worker.js
   worker 的代码能够加载来自哪里的
 
-  Cache-Control 缓存控制。可以做为请求头，也可以做为响应头
-  提供对缓存策略的精细控制，
-  内容可以是给浏览器看的，也可以是给服务器看的，还可以是给中间服务器看的。
+  **Cache-Control** 缓存控制。可以做为请求头，也可以做为响应头
+  提供对缓存策略的精细控制，内容可以是给浏览器看的，也可以是给服务器看的，还可以是给中间服务器看的。（面试重要）
 
-断点续传
-Accept-Range：bytes
-Range: 10000-99999
-
-- 常见响应状态码
+* 常见响应状态码
 
   - 401 UnAuthorized 未授权，当前请求需要用户验证
   - 403 Forbidden 隐藏，服务器已经理解请求，但是拒绝执行它
@@ -1606,6 +1602,21 @@ Range: 10000-99999
   - 501 Not implemented 未实现；此请求方法不被服务器支持且无法被处理。
     - 只有 GET 和 HEAD 是要求服务器支持的
   - 502 Internal Server Error 服务器内部错误
+
+### 跨域问题
+
+合理跨域：所要跨域请求的服务端资源的服务器以某种方式配合不同域的前端，如果服务端不配合，是不可以跨域的
+最现代的方式：CORS cross origin resource sharing 跨域资源共享
+
+- 预检请求
+  - 需预检的请求必须首先使用 OPTIONS 方法发起一个预检请求到服务器，以获知服务器是否允许该实际请求
+  - 一些简单的方法不会有预检请求（get/head/post）, 因为不能破坏 Web 的兼容性。
+- 常用的 CORS 头
+  Access-Control-Allow-Origin:url/\*
+  服务器在响应头中加上这个信息其它域名的网站可以通过 js 获取该服务器信息，但每次服务器都有发这个响应头
+  Access-Control-max-age:60000 浏览器收到这个响应后 60000 秒以内可以跨域，服务器不需要再发这个响应头
+  Access-Control-Allow-Methods: POST, GET, OPTIONS 服务器允许使用这些方法
+  Access-Control-Allow-Headers: X-PINGOTHER, Content-Type 服务器允许使用这些请求头
 
 ### XMLHttpRequest
 

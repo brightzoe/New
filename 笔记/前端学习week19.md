@@ -64,18 +64,7 @@ mathjax: false
   - access-control-allow-origin
   
     - 允许跨域的域，当请求带上了cookie(withCredentials)时不能设置为`*`
-  
-  - access-control-allow-methods
-  
-    - 用于预检请求，表示允许的跨域方法
-  
-  - access-control-allow-headers
-  
-    - 用于预检请求，表示允许的跨域请求头
-  
-  - access-control-max-age
-  
-    - 用于预检请求，表示一段时间内可以不用再次发送预检请求
+
   
   - CSRF
     - 浏览器虽然有同源策略，但是浏览器请求实际是已经发送出去的
