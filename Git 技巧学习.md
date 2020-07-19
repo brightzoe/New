@@ -15,7 +15,7 @@
 ## 一些基本操作
 
 `git init` 初始化仓库
-`git add xx.txt` 添加工作区的文件;`git rm xx.txt` 删除工作区文件
+`git add xx.txt` 添加工作区的文件到暂存区;`git rm xx.txt` 删除工作区文件
 `git checkout -- file` 丢弃工作区的修改（用版本库的修改替换工作区版本）
 `git commit -m "add a file"` 提交修改到本地版本库;`git commit -a -m"xxxx"`添加并提交
 

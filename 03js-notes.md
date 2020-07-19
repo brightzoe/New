@@ -1606,17 +1606,59 @@ HTTP 响应头:
 ### 跨域问题
 
 合理跨域：所要跨域请求的服务端资源的服务器以某种方式配合不同域的前端，如果服务端不配合，是不可以跨域的
-最现代的方式：CORS cross origin resource sharing 跨域资源共享
+跨域：只要请求资源的协议，域名，端口有一个不同就叫做跨域
+#### 最现代的方式：CORS 
+cross origin resource sharing 跨域资源共享
+一般由 XMLHttpRequest 发起的跨域 HTTP 请求需要 CORS 标准
 
 - 预检请求
   - 需预检的请求必须首先使用 OPTIONS 方法发起一个预检请求到服务器，以获知服务器是否允许该实际请求
   - 一些简单的方法不会有预检请求（get/head/post）, 因为不能破坏 Web 的兼容性。
 - 常用的 CORS 头
-  Access-Control-Allow-Origin:url/\*
-  服务器在响应头中加上这个信息其它域名的网站可以通过 js 获取该服务器信息，但每次服务器都有发这个响应头
-  Access-Control-max-age:60000 浏览器收到这个响应后 60000 秒以内可以跨域，服务器不需要再发这个响应头
+  响应头：
+  Access-Control-Allow-Origin:url/*  服务器允许的域  
   Access-Control-Allow-Methods: POST, GET, OPTIONS 服务器允许使用这些方法
   Access-Control-Allow-Headers: X-PINGOTHER, Content-Type 服务器允许使用这些请求头
+  Access-Control-Allow-Credientials:允许带上的凭据(cookie头)
+  Access-Control-max-age:60000 允许的有效期，有效期内不用再发预检请求，单位秒
+  请求头：
+  Access-Control-Request-Methods 请求期望带上的额外的头
+  Access-Control-Request-Headers 请求期望使用的请求方法
+  Origin:
+  Referer:
+#### 以前的方式
+- 通过html的标签(img, video, script)的src属性引入的外域资源是不受限制的
+  - 原理可能是因为早期设计的时候没有考虑周全，并且这样是拿不到源码的，script标签通过src引入的内容是自动执行的
+- JSONP
+  - 通过 script 标签请求其他域的js文件，js文件运行时为页面带来了所需的信息和数据。需要服务器的配合，只能用于get请求
+  - 处理出错的情况？
+  - 处理超时的情况？
+```js
+//jsonp的简单实现
+function jsonp(url, callback) {
+  var functionName = 'JSONP_CALLBACK_' + Math.random().toString(16).slice(2)
+  url = url + '&callback=' + functionName
+  var script = document.createElement('script')
+  script.src = url
+  document.body.append(script)
+  window[functionName] = callback
+  script.onload = function () {//执行完后把副作用删除
+    document.body.removeChild(script)
+    delete window[functionName]
+  }
+}
+
+jsonp('http://wthrcdn.etouch.cn/weather_mini?city=杭州', function (info) {
+  console.log(info)
+});
+```
+- window.name  window.name 这个值在页面跨域跳转时也不会改变，配合 iframe
+- 服务器代理  服务器之间的通信没有跨域问题，让服务器去请求相关资源并返回给前端
+- 两个不同的域的页面的通信
+  - postMessage 可以实现跨域
+
+
+
 
 ### XMLHttpRequest
 

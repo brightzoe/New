@@ -30,36 +30,10 @@ mathjax: false
 
 ### HTTP
 
-- 文本协议(文本格式)，请求/响应模型(双向通信)，基于tcp
-
-- 状态码
-  - 301
-    - 重定向，根据location字段跳转
-    - 服务器也可先返回200， 再通过js代码根据user-agent跳转
-  - 302
-    - 跳转对ajax是透明的，xhr获得的响应是跳转后的响应
-  - 304
-    - 协商缓存
-    - 响应条件请求头
-      - [cache-control](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Cache-Control)
-      - age
-      - expires
-      - last-modified等
-  - 401
-  - 403
-  - 404
-  - 501
-    - 服务器必须支持GET和HEAD方法
-  
-- 502
-
-- 安全相关首部
-  
-  - content-security-policy
   
 - CORS
   
-  - 跨域的概念：只要请求资源的协议，域名，端口有一个不同就叫做跨域
+
   
   - access-control-allow-origin
   
@@ -72,8 +46,7 @@ mathjax: false
       - 有些请求有预检请求，有些没有：不能破坏web的兼容性
       - http/1.1才有预检请求，在发送有副作用的跨域请求之前会先发送预检请求，以获知服务器是否允许该请求
     
-  - 通过html的标签(img, video, script)的src属性引入的外域资源是不受限制的
-    - 原理可能是因为早期设计的时候没有考虑周全，并且这样是拿不到源码的，script标签通过src引入的内容是自动执行的
+
   
     - jsonp就是利用了script标签不受同源策略限制
   
@@ -92,11 +65,7 @@ mathjax: false
         <script type="text/javascript" src="http://wsdetail.b2b.hc360.com/getSupplyPrice?callback=getPrice&bcid=47296567"></script>
         ```
   ```
-        
-  - 由此可知jsonp只能用于get请求的跨域，被CORS的方式完爆，只是能支持老式浏览器
-      
-      - [说说JSON和JSONP](https://www.cnblogs.com/dowinning/archive/2012/04/19/json-jsonp-jquery.html)
-  ```
+
   
 - http报文的时间单位一般是秒
 
