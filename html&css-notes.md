@@ -1048,15 +1048,14 @@ background-color 会充满 content,padding,border.
   两个 margin 为 auto: 两边 auto 计算成一样的正值；如无法都为正，则左为 0, 右为负值
   一个 margin 为 auto,width 为 auto: 相当于为 auto 的 margin 为 0
 
-- 三个 auto: 相当于左右 margin 为 auto
+- 三个 auto: 相当于左右 margin 为 0,width为auto.
 
 - 零个 auto: 过分受限，重置右 margin
 
 **块元素垂直格式化**：(date:11-26)
-如果一个块级元素的高度是百分数，这个值是包含块高度的百分数。
-如果没有显式声明包含块的高度，子元素的百分比高度无效；如果用百分数表示 margin 或 padding, 值是包含块宽度的百分数。
+如果一个块级元素的高度是百分数，这个值是包含块高度的百分数。如果没有显式声明包含块的高度，子元素的百分比高度无效；如果用百分数表示 margin 或 padding, 值是包含块宽度的百分数。
 - content box（文本盒子，没有文本时其尺寸为 0）
-- padding box，border box（可见区域）。margin box（不可见，不可交互）
+
 - 一个块元素没有内容时，默认 margin padding border content 都为 0。width 的默认值为 auto，margin 和 padding 一般默认为 0；
   标题，列表，表格等元素一般有默认的 margin 或者 padding
 - background-color 说的是 border box 的背景颜色
@@ -1077,16 +1076,21 @@ background-color 会充满 content,padding,border.
   水平方向 margin 不会合并，左右 margin 会紧挨着排列；
 ## **行内布局**
 
-匿名文本：未包含在行内元素的字符串，在块内，不在行内。
+匿名文本：未包含在行内元素的字符串，在块内，不在行内，继承父元素line-height。空格的大小和字体一致，字体为 0 时没有空格。
 em 框：字符框，字号确定了 em 框高度。
 内容区：在非替换元素中，就是 em 框串起来的框。替换元素中，是元素固有高度加上外边距，边框，内边距。
 行间距：line-height - font-size, 只用于非替换元素。
-行内框：对于非替换元素，就是行高。替换元素，看 margin-box.
-行框：包裹住该行出现的行内框的最高点和最低点的最小框。
-行高默认继承，行高有可能小于 font-size, 导致文本超出行框，两行字重叠。行高确定了行框的最小值。
+行内框：对于非替换元素，就是行高，line-height框。替换元素，是 margin-box。仅与行高有关。
+行框：包裹住该行出现的行内框的最高点和最低点的最小框。上下行框紧紧挨着形成布局，如果父元素是块元素，行框撑起了父元素的高度。行框和 line-height 和 vertical-align 有关。
+line height 框：假想概念，高度为行高，内容区和其共用一条居中线。
+  - 包含块行高等于其高度，其内部文本和 inline 元素垂直居中；
+  - 当 line-height 的值为数字或者百分比时，表示用字体的大小乘以数字或者百分比
+  - 行高默认继承，行高有可能小于 font-size, 导致文本超出行框，两行字重叠。行高确定了行框的最小值。
+
+
 
 **行内格式化**：
-vertical-align:
+vertical-align:指定行内元素（inline）或表格单元格（table-cell）元素的垂直对齐方式。
 top/bottom: 元素行内框顶端对着行框顶端。
 text-top/text-bottom
 middle: 元素行内框中点对着基线上 ex 的中点。
@@ -1099,17 +1103,32 @@ display:（改变元素显示）
 inline-block: 看他自身位置认为是行内元素；看里面的布局，内容认为自己在块元素里。里面有内容时，基线是内容最后一行的基线；无内容时，将 margin-box 底部作为基线。
 inline-block 元素触发 BFC
 
-**BFC** //Block Format Context 块级格式化上下文
-不会与子元素 margin 重叠
-自身形成一个布局单元：布局此元素内部时不用考虑其外部，可以理解为完全隔离的，可以理解为一个 iframe
-
+## BFC 
+Block Format Context 块级格式化上下文
+自身形成一个布局单元：布局此元素内部时不用考虑其外部，可以理解为完全隔离的独立容器，容器里面的元素不会在布局上影响到外面的元素
+- 在常规流和 float 里面有效，不能包着脱离常规流的定位元素
+- 常规流块元素没有边框和内边距时，包裹着子元素的 border-box，父子元素的 margin 会合并。而触发了 BFC 的元素，父元素无论如何都会包裹着其子元素的 margin-box，父子元素的 margin 也不会合并
+- 下列方式会触发 BFC：
+  浮动元素（元素的 float 不是 none）
+  绝对定位元素（元素的 position 为 absolute 或 fixed）
+  行内块元素（元素的 display 为 inline-block）
+  弹性元素（display 为 flex 或 inline-flex 元素的直接子元素）
+  表格单元格（元素的 display 为 table-cell，HTML 表格单元格默认为该值）
+  display 值为 flow-root 的元素
+  overflow 值不为 visible 的块元素
+  表格标题（元素的 display 为 table-caption，HTML 表格标题默认为该值）
+  匿名表格单元格元素（元素的 display 为 table、table-row、 table-row-group、table-header-group、table-footer-group（分别是 HTML table、row、tbody、thead、tfoot 的默认属性）或 inline-table）
+  contain 值为 layout、content 或 strict 的元素
+  网格元素（display 为 grid 或 inline-grid 元素的直接子元素）
+  多列容器（元素的 column-count 或 column-width 不为 auto，包括 column-count 为 1）
+  column-span 为 all 的元素始终会创建一个新的 BFC，即使该元素没有包裹在一个多列容器中（标准变更，Chrome bug）。
 ## 定位布局
-
+定位指的是 margin box 定位到对象的 padding box
 position:
 
-static: 不定位
+static: 不定位，常规流
 
-fixed: 固定定位，相对于视口定位；元素脱离常规流。当不指定位置时，定位元素以原来的起点开始绘制。
+fixed: 固定定位，相对于视口定位，不随滚动条滚动；元素脱离常规流。当不指定位置时，定位元素以原来的起点开始绘制。
 
 - 脱离常规流：他后续的元素及其包含块完全当他不存在。
 
@@ -1119,11 +1138,11 @@ absolute: 绝对定位，相对于最近定了位的祖先的 padding-box 定位
 
 - 如果找不到定位祖先，则相对于页面的首屏定位，会随着第一屏的滚动而滚动。完全脱离常规流。
 
-sticky: 粘连定位。
+sticky: 粘连定位。粘性定位可以被认为是相对定位和固定定位的混合。元素在跨越特定值前为相对定位，之后为固定定位,固定定位相对于他的包含块。
 
 非常规流块元素（定位，浮动）的宽度，首先是尽量窄到正好包裹内容，当内容足够多的时候，会把它撑大到不溢出包含块为止。但如果强行让文本不折行，则可以被撑到更宽。
 
-z-index: 元素上下位置设置
+z-index: 元素覆盖关系设置
 
 伪元素：相当于所属元素的第一个和最后一个子元素；通过 xxx::before/xxx::after 选中，通过 content 激活；伪元素选择器与普通选择器不需要对比优先级，选中的一定是不同的元素；伪元素无法交互，只能在父元素发生交互时，切换对应伪元素的样式。
 
