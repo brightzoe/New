@@ -132,6 +132,7 @@ A：`git remote add upstream <url>`配置上游仓库；
   查看文件内容 cat, con cate nate
 
 ## vscode 的常用快捷键
+
 - 补齐 html5 模板：！ + tab 或 ! + enter
 - 一列光标：alt + shift 然后点击
 - 替换： CTRL + H
@@ -163,16 +164,15 @@ A：`git remote add upstream <url>`配置上游仓库；
 - 选中文字：shift + left / right / up / down
 - 快速切换主题：ctrl + k / ctrl + t
 - 格式化选定代码 ：ctrl + k / ctrl +f
-## windows快捷键
+
+## windows 快捷键
 
 - 任务视图： win + tab
 - 切换程序： alt + tab
 - win 截图：win + shift + S
 - qq 截图：CTRL + alt + B
 
-
 # js-notes：
-
 
 - 待学：
   <深入了解计算机系统> 大名鼎鼎的 CSAPP
@@ -946,13 +946,17 @@ Domain Specific Language 领域特定语言
 
 - `object.getAttribute('attribute')`
 - `object.setAttribute('attr','xxxx')` 设置或修改属性
-  ：`element.value = "the new value"`//这个与上面的一般是同步的，有些例外：value，zIndex
+  `element.value = "the new value"`//这个与上面的一般是同步的，有些例外：value，zIndex
 - `node.attributes/id/className/htmlFor/title/tabindex` 获取属性
 - `node.dataset.foo = 'xxx'` //操作元素的 data- 属性
 - `elem.add/remove/has`
 - `elem.classList` //实时的 class 的集合,`add()/remove()/toggle()`方法
 
 NOTE: HTML 特性：它们的名字是大小写不敏感的 getAttribute(),它们的值总是字符串类型的。DOM 属性是多类型的。 i.e. div.style,input.checked
+>在这个语境下，Attribute:指HTML标签特性，Property:指DOM对象的属性
+  obj.setAttribute('xx','xxx')
+  obj.xx
+  这两个不一定完全同步
 
 尺寸和位置
 node.offsetWidth/Height //节点宽度（以像素度量）
@@ -1157,7 +1161,6 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
     - 通过 Ajax 请求数据更新并更新页面内容，通过 window.onpopstate 事件在浏览器前进后退时，将页面改变位对应 url 的内容。现代浏览器中以此实现 url 改变但不刷新页面 pjax——>ajax+pushState
   - replaceState(data,title,url)，功能同上，替换掉当前网页
 - window
-
   - close() 只能关掉由他开启的页面，不能关自己。
   - **open(url,location)**
     - 返回一个对象指向新窗口，其中有一个 opener 属性指向原窗口，可以用这个返回的对象(这个对象并不是指向对应的 window，只有几个简单的属性和方法)的`postMessage`方法传递一个字符串给打开的窗口，在新窗口中也可以通过`opener.postMessage()`向原窗口传递字符串(将`message`事件绑定处理机来接收)，来实现跨域通信
@@ -1169,6 +1172,59 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
   - blur/focus() 让窗口获取或失去焦点 onblur/onfocus 事件
   - getComputedStyle(element,['before']) 第二个参数可选为伪元素字符串，这个对象的属性是**只读且动态更新**的，包含当前元素的所有计算样式，应为伪元素不是 dom 节点，不能直接通过 dom 操作获取，所以多用此方法获取伪元素的样式
   - stop() 停止加载页面
+
+## 表单和表单域
+
+- 表单域中的内容更改时会触发 change 事件，但只有在光标移出输入框（失去焦点）才会触发，并且通过 js 修改文本不会触发该事件；
+  如果在输入过程中就触发其改变，就可以使用 keydown/keyup/keypress/input 事件
+- paste/cut/copy 事件
+  compositionstart/compositionend 输入法输入时触发 / 输入完成时触发 可以用于汉字
+- focus/blur事件  获取焦点/失去焦点 autofocus
+- document.forms 文档中所有的表单元素
+  document.all 文档中所有的元素以及 id 映射
+  document.images 文档中所有的图片元素
+  document.links 文档在所以的链接元素
+  document.activeElement 执向当前获得焦点的元素（默认指向 body 元素）
+- draggable = "true" 设置标签是否可以拖拽
+- 表单的 elements 属性指向其所有的内部元素 form.elements
+  表单的内部元素的 form 属性指向表单元素 element.form
+- selectionStart/selectEnd 光标选择文字范围，返回下标
+  selectionStart = selectEnd =length 指定光标在某个位置
+  document.getSelection() 拿到选中的内容
+- input 标签和 textarea 标签里面内容是 text 时，这两个标签都有一个 value 属性（在其 set 方法里），可以通过修改 value 属性的值更改文本内容
+- select 标签有个 options 属性可以访问其内部所有的 option 标签
+  每个 option 标签都有一个 selected 属性表示自身是否被选中（true/false）, 也可以通过这个属性操作 option 是否被选中
+  select.value 表示当前选择的 option 元素的 value/textContent
+  select 标签上面加上 multiple 属性表示可以多选（要配合 ctrl 使用 ）
+- `<input type = "file">` input.value=>文件路径
+  input.files 表示所有选中的文件类数组对象，其中每一个文件 file（ input.files[0]）都有 name，size，type 等等属性
+  FileReader 构造函数接口，配合 load 事件，调用实例的 readAsText 方法，实例的 result 属性会接受读取结果
+  ```js
+  function getFileContent(file, done) {
+    var reader = new FileReader()
+    reader.addEventListener('load', function() {
+      done(reader.result)
+    })
+    reader.readAsText(file)
+  }
+  ```
+  URL.creatObjectURL(file) 为文件创建一个地址，可以被其它元素访问的地址
+
+- localStorage 保存数据的对象，使用方法类似 Map, 里面的值会保存直到其被重写或者清除掉；每个域名都有自己的 localStorage 属性，大小一般最大 5 兆，相同的域名 localStorage 属性通用
+  localStorage.setItem(item,value)
+  localStorage.getItem(item)
+  localStorage.removeItem(item)
+  sessionStorage 和 localStorage 用法一样，但是它只保存数据到浏览器关闭，不会触发 onstorage 事件
+- window.onstorage 会在 localStorage 发生变化时触发
+  window.hashchange 会在 location.hash 发生变化时触发
+  window.onresize 会在窗口大小发生变化时触发
+- FormData 接口提供了一种表示表 location 单数据的键值对的构造方式，经过它的数据可以使用 XMLHttpRequest.send 方法送出
+  var formData = new FormData()
+  formData.append("username", "Groucho");
+  formData.append("accountnum", 123456)
+  var request = new XMLHttpRequest()
+  request.open("POST", "http://foo.com/submitform.php");
+  request.send(formData)
 
 # 计算机网络
 
@@ -1756,6 +1812,7 @@ HTTP 响应头:
   - 401 UnAuthorized 未授权，当前请求需要用户验证
   - 403 Forbidden 隐藏，服务器已经理解请求，但是拒绝执行它
   - 404 Not found 未找到，请求所希望得到的资源未被在服务器上发现
+  - 406 Not Acceptable 不能返回符合要求的数据，请求头的Accept有问题
   - 452 Unavailable For Legal Reasons 非法资源，政治原因不可展示
   - 301 Move Permanently 永久移动到新的地址，以后访问请求新地址；
   - 302 Moved Temporarily 暂时移动到新的地址，以后访问还是请求旧地址
@@ -1778,7 +1835,9 @@ HTTP 响应头:
 
 合理跨域：所要跨域请求的服务端资源的服务器以某种方式配合不同域的前端，如果服务端不配合，是不可以跨域的
 跨域：只要请求资源的协议，域名，端口有一个不同就叫做跨域
-#### 最现代的方式：CORS 
+
+#### 最现代的方式：CORS
+
 cross origin resource sharing 跨域资源共享
 一般由 XMLHttpRequest 发起的跨域 HTTP 请求需要 CORS 标准
 
@@ -1787,49 +1846,51 @@ cross origin resource sharing 跨域资源共享
   - 一些简单的方法不会有预检请求（get/head/post）, 因为不能破坏 Web 的兼容性。
 - 常用的 CORS 头
   响应头：
-  Access-Control-Allow-Origin:url/*  服务器允许的域  
+  Access-Control-Allow-Origin:url/\* 服务器允许的域  
   Access-Control-Allow-Methods: POST, GET, OPTIONS 服务器允许使用这些方法
   Access-Control-Allow-Headers: X-PINGOTHER, Content-Type 服务器允许使用这些请求头
-  Access-Control-Allow-Credientials:允许带上的凭据(cookie头)
+  Access-Control-Allow-Credientials:允许带上的凭据(cookie 头)
   Access-Control-max-age:60000 允许的有效期，有效期内不用再发预检请求，单位秒
   请求头：
   Access-Control-Request-Methods 请求期望带上的额外的头
   Access-Control-Request-Headers 请求期望使用的请求方法
   Origin:
   Referer:
+
 #### 以前的方式
-- 通过html的标签(img, video, script)的src属性引入的外域资源是不受限制的
-  - 原理可能是因为早期设计的时候没有考虑周全，并且这样是拿不到源码的，script标签通过src引入的内容是自动执行的
+
+- 通过 html 的标签(img, video, script)的 src 属性引入的外域资源是不受限制的
+  - 原理可能是因为早期设计的时候没有考虑周全，并且这样是拿不到源码的，script 标签通过 src 引入的内容是自动执行的
 - JSONP
-  - 通过 script 标签请求其他域的js文件，js文件运行时为页面带来了所需的信息和数据。需要服务器的配合，只能用于get请求
+  - 通过 script 标签请求其他域的 js 文件，js 文件运行时为页面带来了所需的信息和数据。需要服务器的配合，只能用于 get 请求
   - 处理出错的情况？
   - 处理超时的情况？
+
 ```js
 //jsonp的简单实现
 function jsonp(url, callback) {
-  var functionName = 'JSONP_CALLBACK_' + Math.random().toString(16).slice(2)
-  url = url + '&callback=' + functionName
-  var script = document.createElement('script')
-  script.src = url
-  document.body.append(script)
-  window[functionName] = callback
-  script.onload = function () {//执行完后把副作用删除
-    document.body.removeChild(script)
-    delete window[functionName]
-  }
+  var functionName = "JSONP_CALLBACK_" + Math.random().toString(16).slice(2);
+  url = url + "&callback=" + functionName;
+  var script = document.createElement("script");
+  script.src = url;
+  document.body.append(script);
+  window[functionName] = callback;
+  script.onload = function () {
+    //执行完后把副作用删除
+    document.body.removeChild(script);
+    delete window[functionName];
+  };
 }
 
-jsonp('http://wthrcdn.etouch.cn/weather_mini?city=杭州', function (info) {
-  console.log(info)
+jsonp("http://wthrcdn.etouch.cn/weather_mini?city=杭州", function (info) {
+  console.log(info);
 });
 ```
-- window.name  window.name 这个值在页面跨域跳转时也不会改变，配合 iframe
-- 服务器代理  服务器之间的通信没有跨域问题，让服务器去请求相关资源并返回给前端
+
+- window.name window.name 这个值在页面跨域跳转时也不会改变，配合 iframe
+- 服务器代理 服务器之间的通信没有跨域问题，让服务器去请求相关资源并返回给前端
 - 两个不同的域的页面的通信
   - postMessage 可以实现跨域
-
-
-
 
 ### XMLHttpRequest
 
@@ -1902,6 +1963,7 @@ function get(url, callback) {
   };
 }
 xhr.send();
+
 get("http://www.xxx.com/a/b", function (data, error) {
   if ((data = null)) {
     //出错
@@ -1910,6 +1972,331 @@ get("http://www.xxx.com/a/b", function (data, error) {
   }
 });
 ```
+
+### 异步 async 任务队列 jQuery TaskQueue
+
+```js
+function parallel(tasks, cb) {
+  //多个任务并行，全执行完调用callback
+  var count = 0;
+  for (let task of tasks) {
+    task(() => {
+      count++;
+      if (count == tasks.length) {
+        cb();
+      }
+    });
+  }
+}
+
+function series(tasks, cb) {
+  //一个任务执行完才能执行下一个,全执行完执行callback
+  var i = 0;
+  startOneTask();
+  function startOneTask() {
+    if (i < tasks.length) {
+      tasks[i++](() => {
+        startOneTask();
+      });
+    } else {
+      cb();
+    }
+  }
+}
+
+function parallel(tasks, cb) {
+  parallelLimit(tasks, tasks.length, cb);
+}
+function series(tasks, cb) {
+  parallelLimit(tasks, 1, cb);
+}
+function parallelLimit(tasks, limit, cb) {
+  //最多limit个任务同时运行
+  var i = 0;
+  var completedCount = 0;
+  for (var j = 0; j < limit; j++) {
+    one();
+  }
+  function one() {
+    if (i < tasks.length) {
+      //只能判断所有任务都启动了，不能判断都结束了，还得计数
+      tasks[i++](() => {
+        completedCount++;
+        if (completedCount == tasks.length) {
+          cb();
+        } else {
+          one();
+        }
+      });
+    }
+  }
+}
+
+asyncMap(
+  [1, 2, 3, 4],
+  function mapper(it, cb) {
+    setTimeout(() => cb(null, it * it));
+  }, //异步具有传染性
+  function (err, mapped) {
+    console.log(mapped);
+  }
+);
+function asyncMap(ary, mapper, cb) {
+  //任务队列，但是必须提前准备好任务，不能临时加任务
+  var result = [];
+  var count = 0;
+  for (let i = 0; i < ary.length; i++) {
+    mapper(ary[i], function (err, value) {
+      result[i] = value;
+      count++;
+      if (count == ary.length) {
+        cb(null, result);
+      }
+    });
+  }
+}
+
+asyncFilter(
+  [1, 2, 3, 4],
+  function test(it, cb) {
+    setTimeout(() => {
+      cb(null, it % 2 == 1);
+    }, 200);
+  },
+  function (err, filtered) {
+    console.log(filtered);
+  }
+);
+
+function asyncFilter(ary, test, cb) {
+  var result = new Array(ary.length).fill(false);
+  var count = 0;
+  for (let i = 0; i < ary.length; i++) {
+    test(ary[i], function (err, pass) {
+      if (pass) {
+        result[i] = true; //通过测试的
+      }
+      count++;
+      if (count == ary.length) {
+        //调用完了
+        var filtered = ary.filter((_, idx) => result[idx]); //用result来过滤数组，相同坐标为true，是通过测试的
+        cb(null, filtered);
+      }
+    });
+  }
+}
+
+class TaskQueue {
+  //jQuery任务队列实现，可以临时加任务
+  constructor() {
+    this.tasks = [];
+    this.hasTaskRunning = false;
+  }
+  next = () => {
+    //用箭头函数,这个this永远指向实例
+    if (this.tasks.length) {
+      let task = this.tasks.shift();
+      task(this.next);
+    } else {
+      this.hasTaskRunning = false;
+    }
+  };
+  addTask(task) {
+    if (this.hasTaskRunning) {
+      this.tasks.push(task);
+    } else {
+      this.hasTaskRunning = true;
+      task(this.next);
+    }
+    return this;
+  }
+}
+```
+
+### Promise
+
+- var promise = new Promise((resolve,reject)=>{})
+
+  - 构造器里面传递一个异步函数 executor，该函数有两个类型为函数的参数 resolve,reject，该异步函数有错误时执行 reject 函数，没有错误时执行 resolve 函数。executor 会马上运行，里面的 resolve/reject 函数会异步运行。
+  - 1 个 promise 对象代表一个异步操作的结果
+    ![](https://i.loli.net/2020/07/22/PNoOaEzvhdpmFr6.png)
+  - [[PromiseStatus]] 表示 promise 的状态，有 rejected（已拒绝）和 resolved（已解决）和 pending（待定，初始状态）,settled（包括 rejected 和 resolved)
+  - [[PromiseValue]] 表示 reject 或者 reject 状态的返回值，这个值一旦确定就无法变更，以第一次的值为准。executor 完成的工作只能有一个 result 或一个 error
+  - 异步函数永远比调用栈后面的同步函数后执行，即使延迟时间为 0
+
+- promise.then(f1,f2)
+  如果异步函数状态为 resolved 执行 f1，状态为 rejected 执行 f2;
+  f1 或者 f2 的参数是 promise 的 [[PromiseValue]]
+  f1 和 f2 函数都要有返回值
+  promise.then 的返回值是一个新的 promise 对象
+- promise1 = promise.then(f1,f2)
+  如果 f1 或者 f2 正常执行，那么 promise1 的状态就是 resolve，promise1.then(f3,f4) 会执行 f3
+  如果 f1 或者 f2 抛出了一个错误（throw），那么 promise1 的状态就是 reject，promise1.then(f3,f4) 会执行 f4
+  如果 f1 或者 f2 返回了一个新的 promise，那么 promise1 就是返回的新的 promise 对象，promise1.then(f3,f4) 的执行方式取决于新 promise 对象的状态
+- 如果 promise.then() 里面没有传递参数或参数不是函数,会跳过这个.then 称为 promise 穿透
+  p2 = p1.then() 相当于下面
+  p2 = p1.then(val=>val,reason=>{throw reason})
+- 如果 promise.then() 里面没有传递第一个参数，可以用 catch 代替 then
+  p2 = p1.then(null,f1) 相当于下面
+  p2 = p1.catch(f1)
+- promise 的链式跳转
+  p1.then(f1).catch(f2).then(f3).catch(f4)
+  promise 状态为 resolve 直接可以跳转执行 then，为 reject 可以跳转执行 catch
+- promise.finally(f)
+- Promise.resolve(val)
+  创建一个 [[PromiseStatus]]: "resolved"，[[PromiseValue]]: val 的 promise
+- Promise.reject(val)
+  创建一个 [[PromiseStatus]]: "rejected"，[[PromiseValue]]: val 的 promise
+- Promise.race(promises) 返回一个在迭代器中遇到的第一个状态确定（settled）的 promise
+- Promise.all(promises) 返回一个 promise 实例，
+  如果迭代器中所有的 promise 参数状态都是 resolved, 则 promise 实例的状态为 resolved，其 [[PromiseValue]] 为每个参数的 [[PromiseValue]] 组成的数组；
+  如果参数中的 promise 有一个失败（rejected），此实例的状态为 rejected，其 [[PromiseValue]] 为是第一个失败 promise 的 [[PromiseValue]]
+- Promise.allSettled (promises) 返回一个 promise，该 promise 在迭代器所有给定的 promise 已被解析或被拒绝后解析，返回的 promise 的 [[PromiseValue]] 值是一个对象数组，每个对象都描述迭代器里每个 promise 的结果（状态和返回值）
+
+```js
+//相关方法的实现及例子
+function getJSON(url) {
+  return new Promise((resolve, reject) => {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url);
+    xhr.onload = () => {
+      if (xhr.status < 400) {
+        resolve(JSON.parse(xhr.responseText));
+      } else {
+        reject(JSON.parse(xhr.responseText));
+      }
+    };
+    xhr.onerror = (e) => reject(e);
+    xhr.send();
+  });
+}
+
+Promise.resolve = function (value) {
+  return new Promise((resolve) => {
+    resolve(value);
+  });
+};
+
+function sleep(time) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
+}
+
+Promise.resolve()
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  })
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  })
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  })
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  })
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  });
+
+Promise.all = function (promises) {
+  return new Promise((resolve, reject) => {
+    let result = new Array(promises.length);
+    if (promises.length) {
+      let count = 0;
+      for (let i = 0; i < promises.length; i++) {
+        let promise = promises[i];
+        Promise.resolve(promise).then(
+          //确保promise一定是promise，如果不是，把它转换成promise
+          (value) => {
+            result[i] = value;
+            count++;
+            if (count == promises.length) {
+              resolve(result);
+            }
+          },
+          (reason) => {
+            reject(reason);
+          }
+        );
+      }
+    } else {
+      resolve(result);
+    }
+  });
+};
+
+Promise.race = function (promises) {
+  return new Promise((resolve, reject) => {
+    for (let i = 0; i < promises.length; i++) {
+      Promise.resolve(promises[i]).then(resolve, reject);
+    }
+  });
+};
+
+Promise.allSettled = function (promises) {
+  return new Promise((resolve) => {
+    let result = [];
+    let count = 0;
+    if (promises.length) {
+      for (let i = 0; i < promises.length; i++) {
+        let promise = Promise.resolve(promises[i]);
+        promise.then(
+          (value) => {
+            result[i] = {
+              status: "fulfilled",
+              value,
+            };
+            count++;
+            if (count == promises.length) {
+              //确定resolve执行完毕
+              resolve(result);
+            }
+          },
+          (reason) => {
+            result[i] = {
+              status: "rejected",
+              reason,
+            };
+            count++;
+            if (count == promises.length) {
+              //确定rejected执行完毕
+              resolve(result);
+            }
+          }
+        );
+      }
+    } else {
+      resolve(result);
+    }
+  });
+};
+```
+
+- [promise 经典错误](https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html?tdsourcetag=s_pctim_aiomsg)
+- [并行加载，串行显示](https://developers.google.com/web/fundamentals/primers/promises?hl=zh-cn&tdsourcetag=s_pctim_aiomsg)
+```js
+  //并行加载，串行显示
+story.chapterUrls
+  .map((url) => getJson(url)) //先创建所有的promise,同时开始加载
+  .reduce((seq, chapterPromise) => {
+    return seq
+      .then(() => chapterPromise)
+      .then((chapter) => {//确保显示顺序，前面的加载完才能显示后面的
+        addHtmlToPage(chapter.html);
+      });
+  }, Promise.resolve())
+  .then(() => {
+    removeLoading();
+  });
+```
+## ES6
 
 ### generator 生成器函数
 
@@ -1986,9 +2373,9 @@ get("http://www.xxx.com/a/b", function (data, error) {
   };
   [...myIterable]; // [1, 2, 3]
   ```
-- 一些内置类型拥有默认的迭代器行为，如 Array，String,Map，Set,TypeArray，可以直接使用 for of 循环调用
+- 一些内置类型拥有默认的迭代器行为（有 Symbol.iterator 的方法），如 Array，String，Map，Set，TypeArray，可以直接使用 for of 循环调用
 - Symbol 实现私有属性
-  `js
+  ```js
   unction () {
   var age = Symbol();
   window.People = class People {
@@ -2006,6 +2393,7 @@ get("http://www.xxx.com/a/b", function (data, error) {
   }
   };
   ();
+  ```
 
 ```
 

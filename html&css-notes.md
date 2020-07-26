@@ -235,9 +235,14 @@
 />
 <!-- name 很重要，表单提交时为这个域 formcontrol 的名字 -->
 <!-- 在 radio 和 checkbox 阵列里，name 相同的元素被分在一组里 -->
-<button type="reset/button/submit"></button>
+<button type="reset/button/submit" disabled></button>
 ```
-
+设置禁用button的属性：
+```css
+[disabled],:disabled{
+  curso r:not-allowed
+}
+```
 `<button type="reset/button/submit"></button>`与`<input type="button" >`的区别：
 
 - input 的 button 只能在按钮上显示纯文字，非闭合标签无法嵌套
