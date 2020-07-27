@@ -953,10 +953,11 @@ Domain Specific Language 领域特定语言
 - `elem.classList` //实时的 class 的集合,`add()/remove()/toggle()`方法
 
 NOTE: HTML 特性：它们的名字是大小写不敏感的 getAttribute(),它们的值总是字符串类型的。DOM 属性是多类型的。 i.e. div.style,input.checked
->在这个语境下，Attribute:指HTML标签特性，Property:指DOM对象的属性
-  obj.setAttribute('xx','xxx')
-  obj.xx
-  这两个不一定完全同步
+
+> 在这个语境下，Attribute:指 HTML 标签特性，Property:指 DOM 对象的属性
+> obj.setAttribute('xx','xxx')
+> obj.xx
+> 这两个不一定完全同步
 
 尺寸和位置
 node.offsetWidth/Height //节点宽度（以像素度量）
@@ -1179,7 +1180,7 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
   如果在输入过程中就触发其改变，就可以使用 keydown/keyup/keypress/input 事件
 - paste/cut/copy 事件
   compositionstart/compositionend 输入法输入时触发 / 输入完成时触发 可以用于汉字
-- focus/blur事件  获取焦点/失去焦点 autofocus
+- focus/blur 事件 获取焦点/失去焦点 autofocus
 - document.forms 文档中所有的表单元素
   document.all 文档中所有的元素以及 id 映射
   document.images 文档中所有的图片元素
@@ -1199,18 +1200,21 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
 - `<input type = "file">` input.value=>文件路径
   input.files 表示所有选中的文件类数组对象，其中每一个文件 file（ input.files[0]）都有 name，size，type 等等属性
   FileReader 构造函数接口，配合 load 事件，调用实例的 readAsText 方法，实例的 result 属性会接受读取结果
+
   ```js
   function getFileContent(file, done) {
-    var reader = new FileReader()
-    reader.addEventListener('load', function() {
-      done(reader.result)
-    })
-    reader.readAsText(file)
+    var reader = new FileReader();
+    reader.addEventListener("load", function () {
+      done(reader.result); //只有全部内容，没有名字
+    });
+    reader.readAsText(file);
   }
   ```
-  URL.creatObjectURL(file) 为文件创建一个地址，可以被其它元素访问的地址
 
-- localStorage 保存数据的对象，使用方法类似 Map, 里面的值会保存直到其被重写或者清除掉；每个域名都有自己的 localStorage 属性，大小一般最大 5 兆，相同的域名 localStorage 属性通用
+  读取大文件 form=>enctype ='xxxx'
+  img.src = URL.createObjectURL(file) 为文件创建一个地址，可以被其它元素访问的地址
+
+- localStorage 保存数据的对象，使用方法类似 Map, 里面的值会保存直到其被重写或者清除掉；每个域名都有自己的 localStorage 属性，大小一般最大 5 M，相同的域名 localStorage 属性通用
   localStorage.setItem(item,value)
   localStorage.getItem(item)
   localStorage.removeItem(item)
@@ -1219,12 +1223,14 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
   window.hashchange 会在 location.hash 发生变化时触发
   window.onresize 会在窗口大小发生变化时触发
 - FormData 接口提供了一种表示表 location 单数据的键值对的构造方式，经过它的数据可以使用 XMLHttpRequest.send 方法送出
-  var formData = new FormData()
+  ```js
+  var formData = new FormData();
   formData.append("username", "Groucho");
-  formData.append("accountnum", 123456)
-  var request = new XMLHttpRequest()
+  formData.append("accountnum", 123456);
+  var request = new XMLHttpRequest();
   request.open("POST", "http://foo.com/submitform.php");
-  request.send(formData)
+  request.send(formData);
+  ```
 
 # 计算机网络
 
@@ -1812,7 +1818,7 @@ HTTP 响应头:
   - 401 UnAuthorized 未授权，当前请求需要用户验证
   - 403 Forbidden 隐藏，服务器已经理解请求，但是拒绝执行它
   - 404 Not found 未找到，请求所希望得到的资源未被在服务器上发现
-  - 406 Not Acceptable 不能返回符合要求的数据，请求头的Accept有问题
+  - 406 Not Acceptable 不能返回符合要求的数据，请求头的 Accept 有问题
   - 452 Unavailable For Legal Reasons 非法资源，政治原因不可展示
   - 301 Move Permanently 永久移动到新的地址，以后访问请求新地址；
   - 302 Moved Temporarily 暂时移动到新的地址，以后访问还是请求旧地址
@@ -2111,6 +2117,21 @@ class TaskQueue {
     return this;
   }
 }
+
+//jQuery的promise实现
+var dfd = $dererred();
+dfd.promise;
+dfd.resolve;
+dfd.reject;
+
+function dererred() {
+  var dfd = {};
+  dfd.promise = new Promise((resolve, reject) => {
+    dfd.resolve = resolve;
+    dfd.reject = reject;
+  });
+  return dfd;
+}
 ```
 
 ### Promise
@@ -2281,14 +2302,16 @@ Promise.allSettled = function (promises) {
 
 - [promise 经典错误](https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html?tdsourcetag=s_pctim_aiomsg)
 - [并行加载，串行显示](https://developers.google.com/web/fundamentals/primers/promises?hl=zh-cn&tdsourcetag=s_pctim_aiomsg)
+
 ```js
-  //并行加载，串行显示
+//并行加载，串行显示
 story.chapterUrls
   .map((url) => getJson(url)) //先创建所有的promise,同时开始加载
   .reduce((seq, chapterPromise) => {
     return seq
       .then(() => chapterPromise)
-      .then((chapter) => {//确保显示顺序，前面的加载完才能显示后面的
+      .then((chapter) => {
+        //确保显示顺序，前面的加载完才能显示后面的
         addHtmlToPage(chapter.html);
       });
   }, Promise.resolve())
@@ -2296,6 +2319,7 @@ story.chapterUrls
     removeLoading();
   });
 ```
+
 ## ES6
 
 ### generator 生成器函数
