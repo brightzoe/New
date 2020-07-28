@@ -1231,6 +1231,18 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
   request.open("POST", "http://foo.com/submitform.php");
   request.send(formData);
   ```
+## jQuery
+
+jQuery现在式微：
+浏览器的兼容性变好了。
+框架的流行，不再需要人肉操作DOM了。
+jQuery提供的各大方面的功能有各自专门的其他库来解决，而且解决得更好。常用函数：Lodash,ajax封装：axios等
+目前在维护的有三个版本：
+1.x版本，为了兼容一直以来的旧浏览器
+2.x版本，不再支持IE9及以下的版本
+3.x版本分两个系列：
+  - 3.x是2.x的正常升级
+  - 3.x-compatible是对1.x的升级
 
 # 计算机网络
 
