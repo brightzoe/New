@@ -1118,7 +1118,7 @@ dblclick
 在单个动作触发多个事件时，事件的顺序是固定的。
 mousedown → mouseup → click
 mousedown → mouseup → contextmenu
-识别复杂手势，框架：hammer.js
+识别复杂手势，触摸手势 框架：hammer.js
 **事件属性**：
 which：1/2/3 左中右键
 如果在事件期间按下了相应的键，则它们为 true：
@@ -1197,6 +1197,57 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
   每个 option 标签都有一个 selected 属性表示自身是否被选中（true/false）, 也可以通过这个属性操作 option 是否被选中
   select.value 表示当前选择的 option 元素的 value/textContent
   select 标签上面加上 multiple 属性表示可以多选（要配合 ctrl 使用 ）
+```js
+// 实现表单元素的序列化; jQuery('form').serialize
+
+function serialize(formNode) {
+  var res = "";
+  for (let i = 0; i < formNode.elements.length; i++) {
+    let element = formNode.elements[i];
+    if (element.name) {
+      let name = element.name;
+      let nodeName = element.nodeName;
+      if (nodeName == "INPUT") {
+        switch (element.type) {
+          case "radio":
+          case "checkbox":
+            if (element.checked) {
+              res += name + "=" + (element.value || "on");
+              if (i < formNode.elements.length - 1) {
+                res += "&";
+              }
+            }
+            break;
+          default:
+            res += name + "=" + (element.value || "on");
+            if (i < formNode.elements.length - 1) {
+              res += "&";
+            }
+        }
+      } else if (nodeName == "TEXTAREA") {
+        res += name + "=" + element.value;
+      } else if (nodeName == "SELECT") {
+        if (element.multiple) {
+          Array.from(element.options).forEach((option) => {
+            if (option.selected) {
+              res += name + "=" + element.value;
+              if (i < formNode.elements.length - 1) {
+                res += "&";
+              }
+            }
+          });
+        } else {
+          res += name + "=" + element.value;
+          if (i < form.elements.length - 1) {
+            res += "&";
+          }
+        }
+      }
+    }
+  }
+  return res;
+}
+```
 - `<input type = "file">` input.value=>文件路径
   input.files 表示所有选中的文件类数组对象，其中每一个文件 file（ input.files[0]）都有 name，size，type 等等属性
   FileReader 构造函数接口，配合 load 事件，调用实例的 readAsText 方法，实例的 result 属性会接受读取结果
@@ -1209,9 +1260,22 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
     });
     reader.readAsText(file);
   }
+  
+  function readFileAsText(file) {
+  return new Promise((resolve, reject) => {
+    var reader = new FileReader();
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.onerror = (e) => {
+      reject(new Error(e));
+    };
+    reader.readAsText(file);
+  });
+}
   ```
 
-  读取大文件 form=>enctype ='xxxx'
+  读取大文件 form=>enctype ='xxxx'  分段
   img.src = URL.createObjectURL(file) 为文件创建一个地址，可以被其它元素访问的地址
 
 - localStorage 保存数据的对象，使用方法类似 Map, 里面的值会保存直到其被重写或者清除掉；每个域名都有自己的 localStorage 属性，大小一般最大 5 M，相同的域名 localStorage 属性通用
@@ -1231,18 +1295,20 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
   request.open("POST", "http://foo.com/submitform.php");
   request.send(formData);
   ```
+
 ## jQuery
 
-jQuery现在式微：
+jQuery 现在式微：
 浏览器的兼容性变好了。
-框架的流行，不再需要人肉操作DOM了。
-jQuery提供的各大方面的功能有各自专门的其他库来解决，而且解决得更好。常用函数：Lodash,ajax封装：axios等
+框架的流行，不再需要人肉操作 DOM 了。
+jQuery 提供的各大方面的功能有各自专门的其他库来解决，而且解决得更好。常用函数：Lodash,ajax 封装：axios 等
 目前在维护的有三个版本：
-1.x版本，为了兼容一直以来的旧浏览器
-2.x版本，不再支持IE9及以下的版本
-3.x版本分两个系列：
-  - 3.x是2.x的正常升级
-  - 3.x-compatible是对1.x的升级
+1.x 版本，为了兼容一直以来的旧浏览器
+2.x 版本，不再支持 IE9 及以下的版本
+3.x 版本分两个系列：
+
+- 3.x 是 2.x 的正常升级
+- 3.x-compatible 是对 1.x 的升级
 
 # 计算机网络
 
@@ -2338,7 +2404,7 @@ story.chapterUrls
 
 调用生成器函数，返回生成器。
 
-- 必要构成，1 个\*号和 yield 运算符
+- 必要构成，1 个'\*'号和 yield 运算符
   ```js
   function* gen() {
     a = yield 1;
@@ -2389,6 +2455,98 @@ story.chapterUrls
   }
   ```
 
+- 异步回调函数和 promise 函数的转化
+```js
+    function promisify(callbackBasedFunction) {
+    return function (...args) {
+    return new Promise((resolve, reject) => {
+    callbackBasedFunction(...args, (err, data) => { <!-- data异步调用args后得到的结果 -->
+    if (err) {
+    reject(err)
+    } else {
+    resolve(data)
+    }
+    })
+    })
+    }
+    }
+
+    function callbackify(promiseBased) {
+    return function(...args) {
+    var cb = args.pop()
+    promiseBased(...args).then(val => {
+    cb(null, val)
+    }, reason => {
+    cb(reason)
+    })
+    }
+    }
+```
+  - 生成器函数和 promise 结合替代异步调用 (async await 的原理）
+```js
+function run(generatorFunction) {
+  return new Promise((resolve, reject) => {
+    var iter = generatorFunction();
+    var generated;
+    try {
+      generated = iter.next();
+      step();
+    } catch (e) {
+      reject(e);
+    }
+    function step() {
+      if (!generated.done) {
+        generated.value.then(
+          (val) => {
+            try {
+              generated = iter.next(val);
+              step();
+
+              // generated.value是一个promise, val 在生成器函数中完成赋值，从而可以在生成器函数中操作 val ，这个val可以赋值到=号右边，这样就可以拿到异步结果
+            } catch (e) {
+              reject(e);
+            }
+          },
+          (reason) => {
+            try {
+              generated = iter.throw(reason);
+              step();
+            } catch (e) {
+              reject(e);
+            }
+          }
+        );
+      } else {
+        Promise.resolve(generated.value).then(resolve, reject);
+      }
+    }
+  });
+} 
+```
+  - async + 生成器函数 function {await ：promise 函数}
+    async 函数就是将 Generator 函数的星号（\*）替换成 async，将 yield 替换成 await；async 函数对 Generator 函数的改进，配合 promise 使用，包装原理如上；并且 function() 返回一个 promise
+```js
+    async function showStory(storyUrl) {
+    var story = await getJSON(storyUrl)
+
+      // <!-- story 会接收 promise 函数返回的结果 -->
+
+    for(var chapterUrl of story.chapterUrls) {
+    var chapter = await getJSON(chapterUrl)
+    addContentToPage(chapter)
+    }
+    }
+    //  <!-- 串形加载，串形调用 -->
+
+    async function showStory(storyUrl) {
+    var story = await getJSON(storyUrl)
+    var chapterPromises = story.chapterUrls.map(getJSON)
+    for(var chapterPromise of chapterPromises) {
+    var chapter = await chapterPromise
+    addContentToPage(chapter)
+    }
+    // }<!-- 并行加载，串形调用 -->
+```
 ### Symbol
 
 - ES6 里添加得到一种原始数据类型，不能用 new 调用，可以用 type of 检测类型——>symbol。
@@ -2430,7 +2588,3 @@ story.chapterUrls
   };
   ();
   ```
-
-```
-
-```
