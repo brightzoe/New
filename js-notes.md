@@ -1197,6 +1197,7 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
   每个 option 标签都有一个 selected 属性表示自身是否被选中（true/false）, 也可以通过这个属性操作 option 是否被选中
   select.value 表示当前选择的 option 元素的 value/textContent
   select 标签上面加上 multiple 属性表示可以多选（要配合 ctrl 使用 ）
+
 ```js
 // 实现表单元素的序列化; jQuery('form').serialize
 
@@ -1248,6 +1249,7 @@ function serialize(formNode) {
   return res;
 }
 ```
+
 - `<input type = "file">` input.value=>文件路径
   input.files 表示所有选中的文件类数组对象，其中每一个文件 file（ input.files[0]）都有 name，size，type 等等属性
   FileReader 构造函数接口，配合 load 事件，调用实例的 readAsText 方法，实例的 result 属性会接受读取结果
@@ -1260,22 +1262,22 @@ function serialize(formNode) {
     });
     reader.readAsText(file);
   }
-  
+
   function readFileAsText(file) {
-  return new Promise((resolve, reject) => {
-    var reader = new FileReader();
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-    reader.onerror = (e) => {
-      reject(new Error(e));
-    };
-    reader.readAsText(file);
-  });
-}
+    return new Promise((resolve, reject) => {
+      var reader = new FileReader();
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = (e) => {
+        reject(new Error(e));
+      };
+      reader.readAsText(file);
+    });
+  }
   ```
 
-  读取大文件 form=>enctype ='xxxx'  分段
+  读取大文件 form=>enctype ='xxxx' 分段
   img.src = URL.createObjectURL(file) 为文件创建一个地址，可以被其它元素访问的地址
 
 - localStorage 保存数据的对象，使用方法类似 Map, 里面的值会保存直到其被重写或者清除掉；每个域名都有自己的 localStorage 属性，大小一般最大 5 M，相同的域名 localStorage 属性通用
@@ -1976,7 +1978,7 @@ jsonp("http://wthrcdn.etouch.cn/weather_mini?city=杭州", function (info) {
 - 两个不同的域的页面的通信
   - postMessage 可以实现跨域
 
-### XMLHttpRequest
+### XMLHttpRequest //AJAX
 
 浏览器端的 JavaScript 发送 HTTP 请求所用的接口.虽然它的名字里面有 “XML” 一词，但它可以操作任何数据，我们可以用它来上传/下载文件，跟踪进度等。
 
@@ -1990,10 +1992,6 @@ jsonp("http://wthrcdn.etouch.cn/weather_mini?city=杭州", function (info) {
     - 当为同步请求时（false）,xhr.send 函数只有在浏览器收到了响应才返回，才算执行完。send 在运行时，页面在发呆，不能和页面交互，不能选中文字，不能右键。如果请求资源过大会卡住（相当于浏览器在循环接收服务器发来的每一个字节，没法再进行其他操作）
     - 当为异步请求时（默认），xhr.send 函数触发请求的发送就返回，会立刻执行完，不会等着收完响应
   - xhr.responseText 当 send 返回时得到来自服务器的响应体；同步时会得到完整的响应体，**异步时要配合 load 事件，否则返回""，短时间拿不到返回**
-    xhr = new XMLHttpRequest()
-    xhr.open('get', url)
-    xhr.send()
-    xhr.addEventListener('load'，console.log(xhr.responseText))
   - xhr.status/xhr.statusText 得到请求的响应状态号和状态描述文字（200/Ok）
 
 ```js
@@ -2001,14 +1999,10 @@ jsonp("http://wthrcdn.etouch.cn/weather_mini?city=杭州", function (info) {
 var xhr = new XMLHttpRequest(); //构建一个请求对象
 xhr.open("GET", "https://xieranmaya.github.io/images/cats/cats.json");
 xhr.send();
+xhr.addEventListener('load'，console.log(xhr.responseText))
 var cats = JSON.parse(xhr.responseText); //拿到请求数据，json解析出来的一个对象
 xhr.getAllResponseHeaders(); //拿到请求头
 
-//请求了一个xml文件
-var xhr2 = new XMLHttpRequest();
-xhr2.open("GET", "https://xieranmaya.github.io/images/cats/cats.xml");
-xhr2.send();
-xhr2.responseXML; //解析XML出来的一个document对象
 ```
 
 - HTTP 沙箱
@@ -2456,40 +2450,47 @@ story.chapterUrls
   ```
 
 - 异步回调函数和 promise 函数的转化
-```js
-    function promisify(callbackBasedFunction) {
-    return function (...args) {
-    return new Promise((resolve, reject) => {
-    callbackBasedFunction(...args, (err, data) => { <!-- data异步调用args后得到的结果 -->
-    if (err) {
-    reject(err)
-    } else {
-    resolve(data)
-    }
-    })
-    })
-    }
-    }
 
-    function callbackify(promiseBased) {
-    return function(...args) {
-    var cb = args.pop()
-    promiseBased(...args).then(val => {
-    cb(null, val)
-    }, reason => {
-    cb(reason)
-    })
-    }
-    }
+```js
+function promisify(callbackBasedFunction) {
+  return function (...args) {
+    return new Promise((resolve, reject) => {
+      callbackBasedFunction(...args, (err, data) => {
+        // data异步调用args后得到的结果
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  };
+}
+
+function callbackify(promiseBased) {
+  return function (...args) {
+    var cb = args.pop();
+    promiseBased(...args).then(
+      (val) => {
+        cb(null, val);
+      },
+      (reason) => {
+        cb(reason);
+      }
+    );
+  };
+}
 ```
-  - 生成器函数和 promise 结合替代异步调用 (async await 的原理）
+
+- 生成器函数和 promise 结合替代异步调用 (async await 的原理）
+
 ```js
 function run(generatorFunction) {
   return new Promise((resolve, reject) => {
-    var iter = generatorFunction();
+    var generator = generatorFunction();
     var generated;
     try {
-      generated = iter.next();
+      generated = generator.next();
       step();
     } catch (e) {
       reject(e);
@@ -2499,9 +2500,8 @@ function run(generatorFunction) {
         generated.value.then(
           (val) => {
             try {
-              generated = iter.next(val);
+              generated = generator.next(val);
               step();
-
               // generated.value是一个promise, val 在生成器函数中完成赋值，从而可以在生成器函数中操作 val ，这个val可以赋值到=号右边，这样就可以拿到异步结果
             } catch (e) {
               reject(e);
@@ -2509,7 +2509,7 @@ function run(generatorFunction) {
           },
           (reason) => {
             try {
-              generated = iter.throw(reason);
+              generated = generator.throw(reason);
               step();
             } catch (e) {
               reject(e);
@@ -2517,36 +2517,59 @@ function run(generatorFunction) {
           }
         );
       } else {
-        Promise.resolve(generated.value).then(resolve, reject);
+        resolve(generated.value);
       }
     }
   });
-} 
+}
+
+//核心
+function run(generatorFunction, ...args) {
+  var generator = generatorFunction(...args);
+  var generated = generator.next();
+  tick();
+  function tick() {
+    generated.value.then((val) => {
+      generated = generator.next();
+      tick();
+    });
+  }
+}
+
+//实例
+function loadStory() {
+  var story = await getJSON('story.json')
+  var chapterPromises = story.chapters.map(getJSON)//同时加载了
+  for (var chapterPromise of chapterPromises) {
+    var chapter = await chapterPromise
+    addToPage(chapter)
+  }
+}
 ```
-  - async + 生成器函数 function {await ：promise 函数}
-    async 函数就是将 Generator 函数的星号（\*）替换成 async，将 yield 替换成 await；async 函数对 Generator 函数的改进，配合 promise 使用，包装原理如上；并且 function() 返回一个 promise
+
+[async+await](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
+
+- async + 生成器函数 function {await ：promise 函数}
+  async 函数就是将 Generator 函数的星号（\*）替换成 async，将 yield 替换成 await；async 函数对 Generator 函数的改进，配合 promise 使用，包装原理如上；并且 function() 返回一个 promise
+
 ```js
     async function showStory(storyUrl) {
     var story = await getJSON(storyUrl)
-
-      // <!-- story 会接收 promise 函数返回的结果 -->
-
+    //story 会接收 promise 函数返回的结果
     for(var chapterUrl of story.chapterUrls) {
-    var chapter = await getJSON(chapterUrl)
-    addContentToPage(chapter)
+      var chapter = await getJSON(chapterUrl)
+      addContentToPage(chapter)//串形加载，串形调用
     }
     }
-    //  <!-- 串形加载，串形调用 -->
-
     async function showStory(storyUrl) {
     var story = await getJSON(storyUrl)
     var chapterPromises = story.chapterUrls.map(getJSON)
     for(var chapterPromise of chapterPromises) {
-    var chapter = await chapterPromise
-    addContentToPage(chapter)
+      var chapter = await chapterPromise
+      addContentToPage(chapter)//并行加载，串形调用
     }
-    // }<!-- 并行加载，串形调用 -->
 ```
+
 ### Symbol
 
 - ES6 里添加得到一种原始数据类型，不能用 new 调用，可以用 type of 检测类型——>symbol。
@@ -2588,3 +2611,69 @@ function run(generatorFunction) {
   };
   ();
   ```
+
+## 模块
+
+- Function 构造器生成的 Function 对象是在函数创建时解析的，所有被传递到构造函数中的参数，都将被视为将被创建的函数的参数，并且是相同的标示符名称和传递顺序；
+  这种方式比 eval 好的地方是可以传递参数
+  var sum = new Function('a', 'b', 'return a + b');
+  console.log(sum(2, 6)); =>8
+- 直接调用函数表达式
+  ```js
+  var add = (function (a, b) {
+    return a + b;
+  })((1, 2))(function add(a, b) {
+    return a + b;
+  })(1, 2); //加（）将函数声明语句变成表达式，然后再调用
+  ```
+  IIFE： immediately invoked function expression 立即执行函数表达式
+- 两种常用的模块方案
+  - CommonJS require 函数
+  - AMD define 函数
+- require 函数
+
+```js
+require.moduleCache = {}; //创造 1 个映射来储存缓存
+function require(path) {
+  if (require.moduleCache.hasOwnProperty(path)) {
+    return require.moduleCache[path];
+  } // 判断目标模块是否在缓存中
+  var code = new Function("module, exports", readFile(path)); // 根据路径创造新的函数，新的函数有 module 和 exports 两个参数
+  var module = { exports: {} }; //exports 是 module 的属性
+  require.moduleCache[path] = module.exports; //模块循环引用时提前缓存可以防止爆栈，也能为 module.exports 添加东西（没有循环引用可以省略）
+  code(module, module.exports); // 调用 code 函数，修改了局部变量 module 的 exports 属性值
+  require.moduleCache[path] = module.exports; //将结果储存在映射对象里
+  return module.exports; //返回结果
+}
+
+function readFile(path) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", path, false);
+  xhr.send();
+  return xhr.responseText;
+} // readFile 函数将目标路径里面储存的函数以字符串的形式返回
+```
+
+- 模块加载性能问题
+  - 模块的相互依赖会形成树状结构，模块过多会导致加载时间慢
+  - 解决方法
+    - 方法 1
+      找到所有路径的 require 调用，加载入口模块并递归解析其所有的依赖，并收集所有的源代码，映射在一起 Map(path:sourceCode), 再正常运行 require 函数；
+    - 方法 2
+      通过 define 函数；将路径放到 script 中加载，同时触发路径里面 define 函数（拿到模块函数），建立模块函数的缓存 Map(path:modFuncCache)，再正常运行 require 函数（这种情况都可以不用函数构造器，已经有模块函数的缓存；而且可以跨域请求资源，利用了 scrip 标签的跨域性能）
+    - 方法 3
+      通过 webpack 实现自动生成模块函数，其本质和上面是一样的，找到所有的缓存，然后通过 node.js 里面的 fs 模块自动生成一个新的模块函数 js 文件
+  - 为什么 ajax 请求不能跨域而 link script img 标签可以
+    link script img 引用外部文件拿不到外部文件的源代码，而是直接信任该资源直接执行，所有这些标签可以跨域引用资源
+    ajax 请求是直接拿到外部文件的源代码信息，浏览器的同源策略认为服务器不信任非同源的客户端，所有会阻止源代码信息的传递，这个是 ajax 不能异步跨域的原因
+- 接口设计
+<hr>
+
+Q: 模块化的好处？
+A: 解决命名冲突；提高代码复用性；提高代码可维护性。
+
+Q: 实现模块化的方式？
+A: 立即执行函数;IIFE
+AMD 和 CMD;
+CommonJS;
+ES Module
