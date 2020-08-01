@@ -2627,31 +2627,40 @@ function loadStory() {
   })(1, 2); //加（）将函数声明语句变成表达式，然后再调用
   ```
   IIFE： immediately invoked function expression 立即执行函数表达式
+
 - 两种常用的模块方案
   - CommonJS require 函数
   - AMD define 函数
+  - CMD Common Module Definition  sea.js
 - require 函数
 
 ```js
-require.moduleCache = {}; //创造 1 个映射来储存缓存
-function require(path) {
-  if (require.moduleCache.hasOwnProperty(path)) {
-    return require.moduleCache[path];
-  } // 判断目标模块是否在缓存中
-  var code = new Function("module, exports", readFile(path)); // 根据路径创造新的函数，新的函数有 module 和 exports 两个参数
-  var module = { exports: {} }; //exports 是 module 的属性
-  require.moduleCache[path] = module.exports; //模块循环引用时提前缓存可以防止爆栈，也能为 module.exports 添加东西（没有循环引用可以省略）
-  code(module, module.exports); // 调用 code 函数，修改了局部变量 module 的 exports 属性值
-  require.moduleCache[path] = module.exports; //将结果储存在映射对象里
-  return module.exports; //返回结果
-}
-
-function readFile(path) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", path, false);
-  xhr.send();
-  return xhr.responseText;
-} // readFile 函数将目标路径里面储存的函数以字符串的形式返回
+(function () {
+  function readFile(filename) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", filename, false);//同步，不行，要卡
+    xhr.send();
+    return xhr.responseText;
+  }
+  require.cache = {};
+  function require(filename) {
+    //路径问题？base自己
+    if (require.cache.hasOwnProperty(filename)) {
+      return require.cache[filename].exports;
+    }
+    var modFunc = new Function(
+      "require",
+      "module",
+      "exports",
+      readFile(filename)
+    );
+    var module = { exports: {} };
+    require.cache[filename] = module; //最终导出的是module.exports;引用类型，先放在缓存上，解决循环依赖的问题，可以防止爆栈；但是后续只能异步访问
+    modFunc(require, module, module.exports, readFile(filename));
+    return module.exports;
+  }
+})();
+} 
 ```
 
 - 模块加载性能问题
