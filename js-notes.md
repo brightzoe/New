@@ -2629,7 +2629,7 @@ function loadStory() {
   IIFE： immediately invoked function expression 立即执行函数表达式
 
 - 两种常用的模块方案
-  - CommonJS require 函数
+  - CommonJS require 函数,require,import,export
   - AMD define 函数
   - CMD Common Module Definition  sea.js
 - require 函数
@@ -2679,7 +2679,7 @@ function loadStory() {
 <hr>
 
 Q: 模块化的好处？
-A: 解决命名冲突；提高代码复用性；提高代码可维护性。
+A: 解决命名冲突,变量污染；提高代码复用性；提高代码可维护性。
 
 Q: 实现模块化的方式？
 A: 立即执行函数;IIFE
