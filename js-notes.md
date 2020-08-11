@@ -1164,12 +1164,16 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
 - window
   - close() 只能关掉由他开启的页面，不能关自己。
   - **open(url,location)**
+
     - 返回一个对象指向新窗口，其中有一个 opener 属性指向原窗口，可以用这个返回的对象(这个对象并不是指向对应的 window，只有几个简单的属性和方法)的`postMessage`方法传递一个字符串给打开的窗口，在新窗口中也可以通过`opener.postMessage()`向原窗口传递字符串(将`message`事件绑定处理机来接收)，来实现跨域通信
+
   - opener() 可以访问到打开者(open)的部分对象。同一个域内可以相互通信。
   - name 一定是字符串类型，不随页面的导航而清空(除非 js 主动更改)，可以实现跨域
   - status 状态栏 window.document.title 网页标题
   - atob/btoa() base64 编解码
+
     > base64 编码 以文本的形式表达一份二进制原始信息
+
   - blur/focus() 让窗口获取或失去焦点 onblur/onfocus 事件
   - getComputedStyle(element,['before']) 第二个参数可选为伪元素字符串，这个对象的属性是**只读且动态更新**的，包含当前元素的所有计算样式，应为伪元素不是 dom 节点，不能直接通过 dom 操作获取，所以多用此方法获取伪元素的样式
   - stop() 停止加载页面
@@ -1480,6 +1484,7 @@ SYN 比特表示连接，和 ACK 比特确认响应
 - 网络包已经装好数据并发往服务器了，但数据发送操作还没有结束。TCP 具备确认对方是否成功收到网络包，以及当对方没收到时进行重发的功能，因此在发送网络包之后，接下来还需要进行确认操作。
 - 接收方返回 ACK 号给发送方——确认响应。
 - TCP 采用这样的方式确认对方是否收到了数据，在得到对方确认之前，发送过的包都会保存在发送缓冲区中。如果对方没有返回某些包对应的 ACK 号，那么就重新发送这些包。
+
   > 因此，网卡、集线器、路由器都没有错误补偿机制，一旦检测到错误就直接丢弃相应的包。应用程序也是一样，因为采用 TCP 传输，即便发生一些错误对方最终也能够收到正确的数据，所以应用程序只管自顾自地发送这些数据就好了.
 
 **TCP 为什么设置得如此复杂？** 需要将数据高效且可靠的发送给对方。为了实现可靠性，我们需要确认对方是否收到了我们发送给的数据，如果没有还需要再发一遍。为了实现高效的传输，需要避免重发已经送达的包，只重发出错的或未送达的包。
@@ -1806,7 +1811,9 @@ HTTP 请求头:
 
 - User-Agent 用户代理字符串，可以读到浏览器的内核，版本，操作系统版本等信息
 - Host 浏览器使用什么域名进行的该次 http 请求
+
   > 一个服务器上可能有多个网站，不同的网站域名不同，但此种情况下 ip 相同。对于客户端来说，连接的 ip 是相同的，而 ip 在连接之前已经解析好的，在 tcp/ip 层服务器是不知道对方用什么域名连接的
+
 - Referer 当前请求的资源的使用者是谁
   > 可以实现防盗链，如果服务器发现 referer 属于别的域名，可以返回空内容，或者返回一个版权声明的图片
   > 由于会把当前用户地址栏的完全地址发给资源所在服务器，有一定隐私风险，现在可以通过一定方式禁止浏览器发 referer 头
@@ -1818,7 +1825,9 @@ HTTP 请求头:
 - If-Modified-Since（请求）/Last-Modified（响应） 协商缓存，基于时间
 - If-None-Match（请求） /ETag（响应）协商缓存，基于内容
 - Connection:keep-alive 协商承载该 http 的 TCP 连接的状态。如果在同一个 tcp 上执行多个 http 请求/响应，需要配合 content-length 使用
+
   > Pipeline 管线化请求/响应 即无需等待响应收到后再在同一个连接上发下一个请求，而是可以一次性把所有请求都发过去，等待所有响应按序收到
+
 - URL 编码
   - URL 会对一些特殊的字符进行转义编码，使用 %16 进制编码方式
   - encodeURLComponent() 通过 URL 编码方式编码特殊字符
@@ -1833,7 +1842,9 @@ HTTP 响应头:
 - ETag 响应体的哈希值
 - Last-Modified 本资源的最后修改时间
 - Server 服务器所使用的软件，一般服务器是不会响应这个头的
+
   > 因为如果某个服务器软件有漏洞，这么做相当于告诉别人服务器有漏洞
+
 - Expires 本资源的过期时间，在这个过期时间之前，浏览器重新使用这个资源时可以不发请求
 - Accept-Range：bytes 用来支持断点续传
 - Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin 设置浏览器发送 Referer 策略,只需要在 html（即页面）的响应头里设置
@@ -2615,23 +2626,36 @@ function loadStory() {
 ## 模块
 
 - Function 构造器生成的 Function 对象是在函数创建时解析的，所有被传递到构造函数中的参数，都将被视为将被创建的函数的参数，并且是相同的标示符名称和传递顺序；
-  这种方式比 eval 好的地方是可以传递参数
-  var sum = new Function('a', 'b', 'return a + b');
-  console.log(sum(2, 6)); =>8
+  这种方式比 eval 好的地方是<u>可以传递参数</u>
+
+  ```js
+  var sum = new Function("a", "b", "return a + b");
+  console.log(sum(2, 6));
+  ```
+
 - 直接调用函数表达式
+
   ```js
   var add = (function (a, b) {
     return a + b;
-  })((1, 2))(function add(a, b) {
+  })(1, 2);
+  (function add(a, b) {
     return a + b;
   })(1, 2); //加（）将函数声明语句变成表达式，然后再调用
   ```
+
   IIFE： immediately invoked function expression 立即执行函数表达式
 
-- 两种常用的模块方案
-  - CommonJS require 函数,require,import,export
-  - AMD define 函数
-  - CMD Common Module Definition  sea.js
+- 常用的模块方案
+
+  - CommonJS	模块的加载是同步的
+
+     将每个文件都看作一个模块，模块内部定义的变量都是私有的，无法被其他模块使用，除非使用预定义的方法将内部的变量暴露出来（通过**exports和require**关键字来实现），CommonJS最为出名的实现就是Node.js。
+
+  - AMD define 函数    异步方式加载模块
+
+  - CMD Common Module Definition sea.js
+
 - require 函数
 
 ```js
@@ -2660,7 +2684,7 @@ function loadStory() {
     return module.exports;
   }
 })();
-} 
+}
 ```
 
 - 模块加载性能问题
@@ -2677,7 +2701,6 @@ function loadStory() {
     ajax 请求是直接拿到外部文件的源代码信息，浏览器的同源策略认为服务器不信任非同源的客户端，所有会阻止源代码信息的传递，这个是 ajax 不能异步跨域的原因
 - 接口设计
 <hr>
-
 Q: 模块化的好处？
 A: 解决命名冲突,变量污染；提高代码复用性；提高代码可维护性。
 
@@ -2686,6 +2709,12 @@ A: 立即执行函数;IIFE
 AMD 和 CMD;
 CommonJS;
 ES Module
+
+Q：在Node.js中，require()加载模块是同步而非异步？
+
+A：CommonJS标准是同步加载的。另一方面作为公共依赖的模块，自然要一步加载到位。
+
+由于模块的个数往往有限，且Node会自动缓存已经加载的模块，再加上访问的都是本地文件，产生的IO开销几乎可以忽略。另外，Node程序运行在服务器端，很少遇到需要频繁重启服务的情况，那么就算在服务启动时在加载上花点时间（几秒）也没有什么影响。
 
 ```js
 //模块化
