@@ -2463,10 +2463,11 @@ story.chapterUrls
 - 异步回调函数和 promise 函数的转化
 
 ```js
-function promisify(callbackBasedFunction) {
+//将基于callback的函数转换为返回promise的函数
+function promisify(cbFunc) {
   return function (...args) {
     return new Promise((resolve, reject) => {
-      callbackBasedFunction(...args, (err, data) => {
+      cbFunction(...args, (err, data) => {
         // data异步调用args后得到的结果
         if (err) {
           reject(err);
@@ -2477,11 +2478,11 @@ function promisify(callbackBasedFunction) {
     });
   };
 }
-
-function callbackify(promiseBased) {
+//将基于promise的函数转换为一个基于回调的函数
+function callbackify(promiseFunc) {
   return function (...args) {
-    var cb = args.pop();
-    promiseBased(...args).then(
+    var cb = args.pop();//取出回调函数
+    promiseFunc(...args).then(
       (val) => {
         cb(null, val);
       },
@@ -2701,6 +2702,7 @@ function loadStory() {
     ajax 请求是直接拿到外部文件的源代码信息，浏览器的同源策略认为服务器不信任非同源的客户端，所有会阻止源代码信息的传递，这个是 ajax 不能异步跨域的原因
 - 接口设计
 <hr>
+
 Q: 模块化的好处？
 A: 解决命名冲突,变量污染；提高代码复用性；提高代码可维护性。
 
