@@ -2927,7 +2927,7 @@ function loadAllDeps(entryFile) {
   - dirname 模块所在文件夹的绝对路径，全局变量
     filename 模块本身目录的绝对路径 ，全局变量
 
-  ## node模块
+## node模块
 
   - 路径分析 require(X)	require是如何找到需要的文件的？
 
@@ -2985,22 +2985,22 @@ function loadAllDeps(entryFile) {
 
     - fd file descriptor 文件描述符 用一个整数表示（可读可写等）
 
-  - ### HTTP 模块 require('http')
+### HTTP 模块
 
     - const server = http.createServer((request,response)=>{}) 创造 http 服务器，当服务器收到客户端 http 请求时触发，相当于绑定了一个 request 帧听事件
-
+    
       server.on(‘connection’,{res,req}=>{})
-
+    
       server.on(‘request’,{res,req}=>{})
-
+    
       - request 是一个对象，是IncomingMessage的实例，里面有客户端请求的各种信息（method,url,header 等）
-
+    
         req.on(‘data’,func)
-
+    
         req.on(‘end’,func)
-
+    
       - response 是一个对象，是ServerResponse的实例，也是一个writableStream实例，里面编辑发送给客户端的信息（响应体，响应头等），发完之后调用 response.end()
-
+    
         ```js
         res.statusCode = 200/404
         
@@ -3019,54 +3019,55 @@ function loadAllDeps(entryFile) {
         res.end('<html><body><p>gerwgqw</p></body></html>')
         ```
 
-        
+
+​        
 
     - 两个服务器之间也可以通过 http 模块建立 http 连接，利用 http.request() 函数充当客户端
       http.request({请求的网络配置}，f(response){收到对方的响应对象})
-
+    
       http模块也可以作为客户端向服务器发起请求，例如http.get(url,cb)
-
+    
     - index.html 导航页 每个网站首页基本都是这个文件，储存在网站服务器里面
 
-  - ### Stream模块
+### Stream模块
 
     - 一种数据传输的模型
-
+    
       - 一片一片的传输数据
       - 传输速度是可控的，不同类型的流速度不一样
       - 减少 CPU 内存占用（超过 CPU 的最大缓存内存可以暂停接收）
-
+    
     - 流的类型
-
+    
       - 可读流 类似将数据读取到 CPU Readable
       - 可写流 类似将数据写入到硬盘 Writable
       - 既可读又可写，如 TCP/net.Socket Duplex
       - 转化流 如 zip 压缩 Transform
       - const { Readable，Writable} = require('stream')
-
+    
     - 主要的方法和事件
-
+    
       - rs = fs.createReadStream(path) 创造从某个路径文件读取数据的可读流
-
+    
         事件：‘data’,’close’,’end’,’error’,’readable’
-
+    
       - ws = fs.createWriteStream(path) 创造向某个路径文件写入数据的可写流
-
+    
         事件：‘close’,’drain’,’error’,’finish’,’unpipe’
-
+    
       - ws.write(data) 可写流都有 write 方法，向目标 path 写入数据；可写流的 finish 事件，end 之后缓冲区里面的数据全部处理完了之后触发
-
+    
       - rs 可读流通过监听 data 事件，end 事件，readable 事件（自身缓冲区有准备好的数据）来操作数据传输
-
+    
       - pause() 方法，暂停流的传输； resume() 方法 ，恢复流的传输；end() 方法，告知已经没有数据传递给该流了；destory() 销毁该流；以上都是所有流的通用方法
-
+    
       - drain 事件，表示流的缓存区数据都已经传输到了下一级，一般通过该事件让上一级恢复流的传输
-
+    
       - pipe 连接两个流的管道，可链式调用；rs.pipe(ws) 从可读流出来的数据进入到可写流
-
+    
     - process 相关的 3 个标准流对象
       process.stdout 当前进程标准输出流，本进程输出的东西，默认情况下是输出到控制台；
-
+    
       - 对于自己是一个可写流，可以 pipe 到一个可读流里面
         process.stderr 当前进程标准错误流，本进程输出的错误，默认情况下是输出到控制台
         process.stdin 当前进程的标准输入流，别的进程给本进程输入的东西
@@ -3135,7 +3136,7 @@ function loadAllDeps(entryFile) {
 
   - Worker Thread 和 js 中的 worker 功能一样
 
-    ### Events
+### Events
 
   - EventEmitier类，所有能触发事件的对象都是他的实例
 
@@ -3224,7 +3225,7 @@ function loadAllDeps(entryFile) {
       - var hexColor = Jimp.cssColorToHex(color) 将颜色解析为 16 进制，如 converts #FF00FF to 0xFF00FFFF
       - pixelData.setPixelColor(hexColor, col, row) 设置图片对象某个像素点的颜色
 
-  ### 事件循环
+### 事件循环
 
   - nodejs 是单线程执行的，同时它又是基于事件驱动的非阻塞 IO 编程模型，事件循环机制是实现这一特性的原理
   - 异步操作时，将任务给到另外的线程（CPU 的其它核），异步事件触发之后，就会通知主线程，主线程执行相应事件的回调。
@@ -3297,29 +3298,28 @@ function loadAllDeps(entryFile) {
 
 ```js
 // 引入依赖
-var express = require("express");
-var utility = require("utility");
+let express = require("express");
+let utility = require("utility");
 
 // 建立 express 实例
-var app = express();
+let app = express();
 // app 本身有很多方法，其中包括最常用的 get、post、put/patch、delete
 // request 中包含了浏览器传来的各种信息，比如 query 啊，body 啊，headers 啊之类的，都可以通过 req 对象访问到。
 // res 对象，我们一般不从里面取信息，而是通过它来定制我们向浏览器输出的信息，比如 header 信息，比如想要向浏览器输出的内容。这里我们调用了它的 #send 方法，向浏览器输出一个字符串。
 app.get("/", (req, res) => {
   //get的数据，从req.query中的q参数
   //post的数据，从req.body里面。不过 express 默认不处理 body 中的信息，需要引入 https://github.com/expressjs/body-parser 这个中间件才会处理。
-  var q = req.query.q;
+  let q = req.query.q;
   // 调用 utility.md5 方法，得到 md5 之后的值
-  var md5Value = utility.md5(q);
+  let md5Value = utility.md5(q);
   res.send(md5Value);
 });
 app.listen(3000, () => {
   console.log("app is listening at port 3000");
 });
 
-express=require('express')
-let app = express() 
 app.use((req,res,next)=>{}) //中间件，对所有请求做一种方式的处理
+//use第一个参数，只要以这个开头，而get必须完全是这个路径，不包含子路径
 //app.get/app.post
 //req,res对象和http模块的对象不一样，是express.req/epress.req
 app.use(path,()=>{}) //以该路径开头走这个中间件，也可以接多个中间件
@@ -3339,9 +3339,9 @@ app.use('/wenda',wendaRouter)
   app.route(path)//对这个路径的不同请求做不同处理
     .get((req,res,next)=>{})
     .post((req,res,next)=>{})
-* 创建静态文件
-    app.use(express.static('./public'));     创建了位于 public 目录中的静态文件作为服务器器
-* 调试   $ DEBUG=express:* node index.js
+//创建静态文件
+app.use(express.static('./public')); //创建了位于 public 目录中的静态文件作为服务器器
+//调试   $ DEBUG=express:* node index.js
 //req 相关
 req.body  //请求体通过一些中间键解析后的数据会储存在 req.body 里面
 req.query //?后面的内容，不需要自己解析了
@@ -3358,8 +3358,8 @@ res.json()	// 响应一个json并end
 res.jsonp()
 res.download()
 res.redirect()	//重定向请求并end
-res.render(path,local)	//呈现指定路径视图模板，local 是一个对象，里面可以为模板文件传递参数
-res.set("Content-Type","text/html;charset=UTF-8") 设置响应头
+res.render(path,local)	//呈现指定路径视图模板，第二个参数是一个对象，可以为模板文件传递数据，参数
+res.set("Content-Type","text/html;charset=UTF-8") //设置响应头
 res.send() //发送响应	
 //app相关 app = express()
 app.locals//存储一些信息
@@ -3368,8 +3368,8 @@ express.json() //解析json请求体
 express.urlencoded([{extended:true}]) //请求体为 url 编码时解析
 express.query() //解析请求体 query 部分
 express.static(path) //将某个文件夹暴露为一个静态文件服务器
-* express //应用程序生成器
-$ npm install express-generator -g
+* express generator //应用程序生成器
+$ npm install express-generator
 ```
 
 
