@@ -2943,7 +2943,7 @@ function loadAllDeps(entryFile) {
       './' ，'.' 当前目录
       '../'父目录
 
-  - ### 文件模块 require（'fs'）
+### 文件模块
 
     - 主要方法
       fs.readFile（path，'utf8',（error，data）=>{}) 读取当前路径文件
@@ -3347,12 +3347,12 @@ req.body  //请求体通过一些中间键解析后的数据会储存在 req.bod
 req.query //?后面的内容，不需要自己解析了
 req.params //这是一个对象，储存了路径中的变量，如"token = 12344",当对'/password/:token'这个路径发出请求时，可以通过 req.params.token 拿到 12344
 //res 相关
-res.cookie() 一个验证身份的字符串，网站在用户验证成功之后都会设置一个 cookie，只要 cookie 没有过期，用户就可以自由浏览这个网站的任意页面不需要再次登录
-	- const cookieParse = require('cookie-parser') 要安装
-	- app.use(cookieParse("secret")) 解析 cookie，加参数表示自己签名
+res.cookie() 一//个验证身份的字符串，网站在用户验证成功之后都会设置一个 cookie，只要 cookie 没有过期，用户就可以自由浏览这个网站的任意页面不需要再次登录
+	- const cookieParse = require('cookie-parser') //要安装
+	- app.use(cookieParse("secret")) //解析 cookie，加参数表示自己签名
 	- res.cookie('user',loginUser.name,{signed:true})
-  -  res.signedcookies 签名的 cookie 只能在这个上面读到，req.signedCookies.user
-	- res.clearCookie('user') 清除 cookie
+  -  res.signedcookies //签名的 cookie 只能在这个上面读到，req.signedCookies.user
+	- res.clearCookie('user') //清除 cookie
 res.status(404) 响应一个状态码
 res.json()	// 响应一个json并end
 res.jsonp()
@@ -3368,19 +3368,26 @@ express.json() //解析json请求体
 express.urlencoded([{extended:true}]) //请求体为 url 编码时解析
 express.query() //解析请求体 query 部分
 express.static(path) //将某个文件夹暴露为一个静态文件服务器
-* express generator //应用程序生成器
+express generator //应用程序生成器
 $ npm install express-generator
 ```
+**cookie**
 
 
 
 
 
-## express默认的模板引擎 Pug
+### express默认的模板引擎 Pug
 
-```js
+格式要求比较奇怪。
+
+p= post.id	等号前面不能有空格
+
+span 登录	与文字之间只能有一个空格
+
+
 * https://pug.bootcss.com/api/getting-started.html
-* include path 把另外的文件引入到模板文件里面，方便将一份代码重复使用 ；如 include head.pug  includes foot.pug
+* include path //把另外的文件引入到模板文件里面，方便将一份代码重复使用 ；如 include head.pug  includes foot.pug
 * 继承与扩展；
   * 一个父文件 layout.pug ，里面有一个 block 语句，block + 标识名，后面的代码可以继承修改，其它地方不可以
   * extends layout.pug  extends 语句，子文件用该语句继承父文件的内容，然后 block + 标识名 + 修改内容 ，实现继承与扩展
@@ -3394,109 +3401,121 @@ $ npm install express-generator
       ul
         while n < 6
           li= n++
-```
 
 ## Koa
 
-    * https://koajs.com
-    * 另一种node框架，express 团队开发的，下一代node框架
-    * 只接受异步函数，next函数也是异步函数，express里面的next是同步函数
-      express里面的next放到最后，而koa可以放到中间
-    * 没有任何中间键，全部需要第三方库加载进来，基本只有use方法
-    * 洋葱模型，如果涉及到互相调用，后进先出,因为next函数的异步机制，后面的中间键执行完后执行前面next函数后面的内容
-    * const Koa = require('koa)
-      const app = new Koa() 实例需要用new调用
-      app.use((async ctx,next)=>{
-        ctx.method
-        ctx.cookie.id
-        await next()
-        ctx.body
-        ctx是app的上下文，context;对象包括req和res，它会自动根据上下文判断是req还是res,直接代理这2个对象
-      })
-    * 方便记录一个请求所需要的时间
-    * egg.js 基于koa再封装了一层的框架
+
+* https://koajs.com
+* 另一种node框架，express 团队开发的，下一代node框架
+* 只接受异步函数，next函数也是异步函数，express里面的next是同步函数
+  express里面的next放到最后，而koa可以放到中间
+* 没有任何中间件，全部需要第三方库加载进来，基本只有use方法
+* 洋葱模型，如果涉及到互相调用，后进先出,因为next函数的异步机制，后面的中间键执行完后执行前面next函数后面的内容
+* const Koa = require('koa)
+  const app = new Koa() 实例需要用new调用
+  app.use((async ctx,next)=>{
+    ctx.method
+    ctx.cookie.id
+    await next()
+    ctx.body
+    ctx是app的上下文，context;对象包括req和res，它会自动根据上下文判断是req还是res,直接代理这2个对象
+  })
+* 方便记录一个请求所需要的时间
+* egg.js 基于koa再封装了一层的框架
+
 
 ## 数据库
 
-    * SQL  结构化查询语言（Structured Query Language）
-    * https://www.w3schools.com/sql
-    * sqlite  一个数据库相当于一个 excel 文件，可以有多个 sheet
-      * 按装方法
-        - 先下载其到项目文件
-        - 命令行运行    ./sqlite3 + 数据库名
-      * 基本使用方法
-        * 以下 base 表示 SELECT column1, column2, FROM tablename/SELECT * FROM tablename
-        * creat table 表名字（列名 1，列名 2，列名 3） 如 creat table users (name,email,password)
-          create table users(
-           id integer primary key autoincrement,    primary key 表示既不空，也自动增加; autoincrement表示id不会重复，即使把最后一个id删除，再添加也是在之前删除的id基础上增加
-           name string not null,
-           email string,
-           password string not null)
-        * INSERT INTO  users()  VALUES('jim',"123@77.com","12341")  为指定表插入数据
-          insert into users(name,password,email,title) values("a","a","a@qq.com","御膳房");
-          insert into users values(1,"a","a","a@qq.com","御膳房");
-    
-        * .header on  查看时显示头行
-        * .mode column 每列对应排齐查看
-        * .schema 查看所有表
-        * SELECT * FROM tablename 查看指定表单所有列
-        * .table 查看所有已创建的表单
-        * SELECT column1, column2, FROM tablename  查看指定表单指定列
-        * SELECT DISTINCT column, FROM tablename; 为指定列去重复
-        * where 后面接有条件的查找数据，可以有多个条件，用 AND,OR，NOT 连接
-          base WHERE condition;
-          SELECT * FROM users WHERE name =name "jim";
-    
-        * UPDATE table_name SET column1 = value1, column2 = value2, WHERE condition;
-          更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
-          update foods set status="off" where id=1;
-    
-        * base ORDER BY column1, column2, ... ASC|DESC;  表单指定列按照升序 / 降序排列
-        * NULL 在数据库里面表示该位置是空值，base where name is NUll
-    
-        * DELETE FROM table_name WHERE condition;
-           DELETE 语句用于在表中删除现有记录。如果省略 WHERE 子句，所有记录都将被更新！
-    
-        * base LIMIT number;  LIMIT 表示选择前几行
-    
-        * SELECT COUNT(column_name) 所选列一共多少行
-          SELECT AVG(column_name)  所选数值列的平均值
-          SELECT SUM(column_name) 所选数值列的总和
-          SELECT MIN(column_name) 所选列的最小值
-          SELECT MAX(column_name) 所选列的最大值
-    
-        * drop table tablename    如drop table users 删除users表
-    
-        *  alter table orders add totalPrice integer; 为orders表增加一列totalPrice，为整数
-    
-        * LIKE 运算符在 WHERE 子句用于搜索在一列中指定的模式。
-          % 表示任意个字符，_表示单个字符
-          where a_____  筛选以 a 开头 6 个字符长度
-        * in 运算符，WHERE name IN ('jim', 'bob', 'merry') 筛选 name 列满足任意一个
-        * BETWEEN...AND..   WHERE price BETWEEN 10 AND 20  筛选 10 到 20 的价格
-        * 别名，可以为列或者表起一个别名
-          SELECT column_name AS alias_name FROM table_name;
-          base AS alias_name;
-      * SQL 的多表连接
-          * 用法
-            - base join tablename on condition
-          * 种类
-            INNER JOIN（内连接）：返回有两个表中的匹配值的记录
-            LEFT JOIN：返回左表的所有记录，以及匹配的记录
-            RIGHT JOIN：返回右表的所有记录，以及匹配的记录
-            FULL JOIN： 交叉连接，返回所有的排列组合记录
-    
-      * 项目使用 sqlite 的方法
-        * npm i sqlite   sqlite 是基于 promise 对 sqlite3API 的封装
-          sqlite = require('sqlite')
-          db = sqlite.open(数据库实例地址path) 创建一个 promise
-          db = await db   拿到 promise 的结果
-        * 相关方法
-          db 里面的相关方法进行 ('SQL 操作') 时，可以用？代码后面出现的参数，如
-            db.run('insert into users VALUES(?,?,?),jim',"123@77.com","12341")
-          var datas = await db.all('select * from datas') 可以拿到数据库里的所有的数据,一个对象集合的数组
-          db.run('SQL 操作') 操作数据库
-          db.get('SQL 操作') 返回从数据库查找到的数据，只能拿一条,得到一个对象
+数据库种类：
+
+1. 关系型数据库(SQLite,MySQL)
+2. 缓存型数据库(Redis,可以理解为超大型Map)
+3. 文档型数据库(Mongo DB,存储JSON,使用js操作)
+4. 日志数据库(HBase)
+
+* SQL  结构化查询语言（Structured Query Language）
+
+* sqlite  一个数据库相当于一个 excel 文件，可以有多个 sheet
+  - 先下载其到项目文件
+  - 命令行运行    ./sqlite3 + 数据库名
+
+  * 基本使用方法
+
+```sql
+ 以下 base 表示 SELECT column1, column2, FROM tablename/SELECT * FROM tablename
+--creat table 表名字（列名 1，列名 2，列名 3） 如 
+creat table users (name,email,password)
+create table users(
+	id integer primary key autoincrement,    
+  name string not null,
+  email string,
+  password string not null)
+  --primary key 表示既不空，也自动增加; autoincrement表示id不会重复，即使把最后一个id删除，再添加也是在之前删除的id基础上增加
+  INSERT INTO  users()  VALUES('jim',"123@77.com","12341")  --为指定表插入数据
+  insert into users(name,password,email,title) values("a","a","a@qq.com","御膳房");
+  insert into users values(1,"a","a","a@qq.com","御膳房");
+    * .header on  查看时显示头行
+    * .mode column 每列对应排齐查看
+    * .schema 查看所有表
+    * SELECT * FROM tablename 查看指定表单所有列
+    * .table 查看所有已创建的表单
+    * SELECT column1, column2, FROM tablename  查看指定表单指定列
+    * SELECT DISTINCT column, FROM tablename; 为指定列去重复
+    * where 后面接有条件的查找数据，可以有多个条件，用 AND,OR，NOT 连接
+      base WHERE condition;
+      SELECT * FROM users WHERE name =name "jim";
+
+    * UPDATE table_name SET column1 = value1, column2 = value2, WHERE condition;
+      更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
+      update foods set status="off" where id=1;
+
+    * base ORDER BY column1, column2, ... ASC|DESC;  表单指定列按照升序 / 降序排列
+    * NULL 在数据库里面表示该位置是空值，base where name is NUll
+
+    * DELETE FROM table_name WHERE condition;
+       DELETE 语句用于在表中删除现有记录。如果省略 WHERE 子句，所有记录都将被更新！
+
+    * base LIMIT number;  LIMIT 表示选择前几行
+
+    * SELECT COUNT(column_name) 所选列一共多少行
+      SELECT AVG(column_name)  所选数值列的平均值
+      SELECT SUM(column_name) 所选数值列的总和
+      SELECT MIN(column_name) 所选列的最小值
+      SELECT MAX(column_name) 所选列的最大值
+
+    * drop table tablename    如drop table users 删除users表
+
+    *  alter table orders add totalPrice integer; 为orders表增加一列totalPrice，为整数
+
+    * LIKE 运算符在 WHERE 子句用于搜索在一列中指定的模式。
+      % 表示任意个字符，_表示单个字符
+      where a_____  筛选以 a 开头 6 个字符长度
+    * in 运算符，WHERE name IN ('jim', 'bob', 'merry') 筛选 name 列满足任意一个
+    * BETWEEN...AND..   WHERE price BETWEEN 10 AND 20  筛选 10 到 20 的价格
+    * 别名，可以为列或者表起一个别名
+      SELECT column_name AS alias_name FROM table_name;
+      base AS alias_name;
+  * SQL 的多表连接
+      * 用法
+        - base join tablename on condition
+      * 种类
+        INNER JOIN（内连接）：返回有两个表中的匹配值的记录
+        LEFT JOIN：返回左表的所有记录，以及匹配的记录
+        RIGHT JOIN：返回右表的所有记录，以及匹配的记录
+        FULL JOIN： 交叉连接，返回所有的排列组合记录
+
+  * 项目使用 sqlite 的方法
+    * npm i sqlite   sqlite 是基于 promise 对 sqlite3API 的封装
+      sqlite = require('sqlite')
+      db = sqlite.open(数据库实例地址path) 创建一个 promise
+      db = await db   拿到 promise 的结果
+    * 相关方法
+      db 里面的相关方法进行 ('SQL 操作') 时，可以用？代码后面出现的参数，如
+        db.run('insert into users VALUES(?,?,?),jim',"123@77.com","12341")
+      var datas = await db.all('select * from datas') 可以拿到数据库里的所有的数据,一个对象集合的数组
+      db.run('SQL 操作') 操作数据库
+      db.get('SQL 操作') 返回从数据库查找到的数据，只能拿一条,得到一个对象
+```
 
 ## websocked 协议，TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
 
