@@ -3450,26 +3450,27 @@ create table users(
   name string not null,
   email string,
   password string not null)
-  --primary key 表示既不空，也自动增加; autoincrement表示id不会重复，即使把最后一个id删除，再添加也是在之前删除的id基础上增加
+  --primary key 表示既不空，也自动增加; 
+  --autoincrement表示id不会重复，即使把最后一个id删除，再添加也是在之前删除的id基础上增加
   INSERT INTO  users()  VALUES('jim',"123@77.com","12341")  --为指定表插入数据
   insert into users(name,password,email,title) values("a","a","a@qq.com","御膳房");
   insert into users values(1,"a","a","a@qq.com","御膳房");
-    * .header on  查看时显示头行
-    * .mode column 每列对应排齐查看
-    * .schema 查看所有表
-    * SELECT * FROM tablename 查看指定表单所有列
-    * .table 查看所有已创建的表单
-    * SELECT column1, column2, FROM tablename  查看指定表单指定列
-    * SELECT DISTINCT column, FROM tablename; 为指定列去重复
+    * .header on  --查看时显示头行
+    * .mode column --每列对应排齐查看
+    * .schema --查看所有表
+    * SELECT * FROM tablename --查看指定表单所有列
+    * .table --查看所有已创建的表单
+    * SELECT column1, column2, FROM tablename  --查看指定表单指定列
+    * SELECT DISTINCT column, FROM tablename; --为指定列去重复
     * where 后面接有条件的查找数据，可以有多个条件，用 AND,OR，NOT 连接
       base WHERE condition;
       SELECT * FROM users WHERE name =name "jim";
 
     * UPDATE table_name SET column1 = value1, column2 = value2, WHERE condition;
-      更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
+      --更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
       update foods set status="off" where id=1;
 
-    * base ORDER BY column1, column2, ... ASC|DESC;  表单指定列按照升序 / 降序排列
+    * base ORDER BY column1, column2, ... ASC|DESC;  --表单指定列按照升序 / 降序排列
     * NULL 在数据库里面表示该位置是空值，base where name is NUll
 
     * DELETE FROM table_name WHERE condition;
@@ -3477,15 +3478,16 @@ create table users(
 
     * base LIMIT number;  LIMIT 表示选择前几行
 
-    * SELECT COUNT(column_name) 所选列一共多少行
-      SELECT AVG(column_name)  所选数值列的平均值
-      SELECT SUM(column_name) 所选数值列的总和
-      SELECT MIN(column_name) 所选列的最小值
-      SELECT MAX(column_name) 所选列的最大值
+    * SELECT COUNT(column_name) --所选列一共多少行
+      SELECT AVG(column_name)  --所选数值列的平均值
+      SELECT SUM(column_name) --所选数值列的总和
+      SELECT MIN(column_name) --所选列的最小值
+      SELECT MAX(column_name) --所选列的最大值
 
-    * drop table tablename    如drop table users 删除users表
+    * drop table tablename    --如drop table users 删除users表
 
-    *  alter table orders add totalPrice integer; 为orders表增加一列totalPrice，为整数
+    *  alter table orders add totalPrice integer; --为orders表增加一列totalPrice，为整数
+```
 
     * LIKE 运算符在 WHERE 子句用于搜索在一列中指定的模式。
       % 表示任意个字符，_表示单个字符
@@ -3505,17 +3507,18 @@ create table users(
         FULL JOIN： 交叉连接，返回所有的排列组合记录
 
   * 项目使用 sqlite 的方法
-    * npm i sqlite   sqlite 是基于 promise 对 sqlite3API 的封装
-      sqlite = require('sqlite')
-      db = sqlite.open(数据库实例地址path) 创建一个 promise
-      db = await db   拿到 promise 的结果
+
+    * `npm i sqlite`   sqlite 是基于 promise 对 sqlite3API 的封装
+      `sqlite = require('sqlite')`
+      `db = sqlite.open(数据库实例地址path)` 创建一个 promise
+      `db = await db`   拿到 promise 的结果
     * 相关方法
       db 里面的相关方法进行 ('SQL 操作') 时，可以用？代码后面出现的参数，如
-        db.run('insert into users VALUES(?,?,?),jim',"123@77.com","12341")
-      var datas = await db.all('select * from datas') 可以拿到数据库里的所有的数据,一个对象集合的数组
+        `db.run('insert into users VALUES(?,?,?),jim',"123@77.com","12341")`
+      `var datas = await db.all('select * from datas')` 可以拿到数据库里的所有的数据,一个对象集合的数组
       db.run('SQL 操作') 操作数据库
       db.get('SQL 操作') 返回从数据库查找到的数据，只能拿一条,得到一个对象
-```
+
 
 ## websocked 协议，TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
 
