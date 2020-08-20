@@ -811,6 +811,10 @@ NOTE:面向对象
 ## lodash `_`下划线
 
 - 一个函数库，前身 underscore
+  _(array) //创建一个 lodash 对象，隐式链调用
+  _.chain(array) //显式链调用
+  - 都需要解链
+  - 懒惰运算，惰性求值,减少不必要的运算
 
 ## 正则表达式 RegExp
 
@@ -3433,6 +3437,12 @@ span 登录 与文字之间只能有一个空格
   - 命令行运行 ./sqlite3 + 数据库名
 
   * 基本使用方法
+    命令行：
+    .header on --查看时显示头行
+    .mode column --每列对应排齐查看
+    .mode box
+    .schema --查看所有表
+    .table --查看所有已创建的表单
 
 ```sql
 --create table 表名字（列名 1，列名 2，列名 3） 如
@@ -3440,21 +3450,15 @@ CREATE TABLE users (name,email,password);
 CREATE TABLE users(
 	id INTEGER PRIMARY KEY autoincrement,
   name STRING NOT NULL,
-  email STRING,
+  email STRING UNIQUE,
   password STRING NOT NULL)
-  --primary key 表示既不空，也自动增加;
-  --autoincrement表示id不会重复。
-  --即使把最后一个id删除，再添加也是在之前删除的id基础上增加
+  --primary key 表示既不空，也不重复;
+  --autoincrement表示id不会重复,即使把最后一个id删除，也不会重复使用
   INSERT INTO users VALUES('jim',"123@77.com","12341")
   INSERT INTO users(name,password,email,title)
   VALUES("a","a","a@qq.com","御膳房");
   INSERT INTO users VALUES(1,"a","a","a@qq.com","御膳房");
-  --命令行：
-  .header on  --查看时显示头行
-  .mode column --每列对应排齐查看
-  .mode box
-  .schema --查看所有表
-  .table --查看所有已创建的表单
+  INSERT INTO users SELECT * from table --通过选择的直接插入到表中
   SELECT * FROM table --查看指定表单所有列
   SELECT column1, column2, FROM table  --查看指定表单指定列
   SELECT DISTINCT column, FROM table;
@@ -3469,10 +3473,8 @@ CREATE TABLE users(
   --表单指定列按照升序 / 降序排列
   SELECT * FROM table WHERE name IS NUll;
   --NULL 在数据库里面表示该位置是空值
-  DELETE FROM table_name WHERE condition;
-  --DELETE 语句用于在表中删除现有记录。
-  --如果省略 WHERE 子句，所有记录都将被更新！
-  SELECT * FROM table HAVING COUNT(user)<5 --与where的区别
+  SELECT * FROM table HAVING COUNT(user)<5
+  --与where的区别:对聚合结果进行筛选
   SELECT * FROM table LIMIT 3;  LIMIT 表示选择前几行
   LIMIT 5,2 --从第六条开始选择两条，跳过前五条
   LIMIT 2 OFFSET 5 --去除5行,选择第6，7行，与上一致
@@ -3481,10 +3483,11 @@ CREATE TABLE users(
   SELECT SUM(column_name) --所选数值列的总和
   SELECT MIN(column_name) --所选列的最小值
   SELECT MAX(column_name) --所选列的最大值
-  SELECT MIN(SALARY),* FROM orders --拿到这一行
+  SELECT MIN(salary), * FROM orders --拿到这一行
 
-  DROP TABLE table    --如drop table users 删除users表
-
+  DELETE FROM table_name WHERE condition;
+  --DELETE 语句用于在表中删除现有记录。
+  DROP TABLE users    --删除users表
   ALTER TABLE orders add totalPrice INTEGER;
   --为orders表增加一列totalPrice，为整数
 ```
@@ -3499,11 +3502,12 @@ CREATE TABLE users(
 - SQL 的多表连接
 
   - 种类
-    `INNER JOIN` 返回有两个表中的匹配值的记录
-    `LEFT JOIN` 返回左表的所有记录，以及匹配的记录
-    `RIGHT JOIN` 返回右表的所有记录，以及匹配的记录
-    `FULL JOIN` 交叉连接，返回所有的排列组合记录
-
+    `[INNER] JOIN` 返回两个表中的匹配值的记录，取交集
+    `LEFT JOIN`    返回左表的所有记录，以及匹配的记录
+    `RIGHT JOIN`   返回右表的所有记录，以及匹配的记录
+    `FULL JOIN`    全连接，返回所有的排列组合记录
+    `a join b where a.id = b.id`
+    `a join b on a.id = b.id`
 - 项目使用 sqlite 的方法
 
   - `npm i sqlite` sqlite 是基于 promise 对 sqlite3API 的封装
@@ -3516,42 +3520,49 @@ CREATE TABLE users(
     `db.run('SQL 操作')` 操作数据库
     `db.get('SQL 操作')` 返回从数据库查找到的数据，只能拿一条,得到一个对象
 
-## websocked 协议，TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
-  - 长轮询
-    * 由于基于 http 协议的服务器不能主动向客户端发送消息（响应式），如果服务器有没有指定客户端的数据要发往指定客户端，需要指定客户端发来请求才能发送，这样会造成延时
-    * 长轮询是指客户端发送一个请求到服务端，这条连接会在一段时间类不会断开
-      - 这段时间内服务器拿到了客户端想要的数据会基于这条连接立即把数据发送给客户端
-      - 这段时间内服务器没有拿到数据，连接断开，之后客户端再次发送同样的连接
-    - node 服务器不支持 ws 协议，需要安装 npm i ws,通过监听http的upgrade事件
-    - 开始客户端发送 http 请求，询问服务器是否接收 websocked 协议，服务器同意就可以升级为 websocked 协议
-    - 数据以消息为单位
-    - TCP 传输的是二进制字节流，而 websocked 是将字节流按照需要分为一份一份的，每一份都是完整的消息片段
-    - 缺点容易断线，兼容性不好，建议使用socked.io
+## websocked 协议
 
-    - Connection:Upgrade ；Upgrade:websocket
-      http请求带上这2个主要的请求头告知服务器请求升级为websocked协议，服务器同意后TCP连接就不会中断
+TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
 
-    * socked.io 对 websocked 的更高级的一层封装
-      * 使用方法
-        npm i socked.io
-        var app = require('express')();
-        var http = require('http').createServer(app);
-        var io = require('socket.io')(http);/var io = require('socket.io').attach(http)
-      * 前端使用安装 socked.io-client
-        或者通过页面加载<script src="/socket.io/socket.io.js"></script>
-      * 优点
-          - 房间
-              - 服务器可以给某个频道所有的客户端发送消息，常用聊天室
-              - 客户端也可以给其它客户端发送消息
-              - 加入和离开房间的功能
-          - 解析：自动编码为字符串，自动编码为其它数据类型
-          - 远程事件：客户端和服务器可以监听对方的事件，对方触发了事件，己方可以马上得到触发事件的数据，实现了无延时的双向通信
-            io/socked.emit("event",{传递数据}) 服务器/客户端绑定事件
-            io/socked.on("event",()=>{}) 服务器/客户端监听事件
-            socket.join/leave（'some room'）加入或者离开房间
-          - 发送的参数数据可以同时有字符串和二进制字节流，而websocket不能混合发送
+- 长轮询
 
-      * socket.handshake.query可以拿到query部分的参数
+  - 由于基于 http 协议的服务器不能主动向客户端发送消息（响应式），如果服务器有没有指定客户端的数据要发往指定客户端，需要指定客户端发来请求才能发送，这样会造成延时
+  - 长轮询是指客户端发送一个请求到服务端，这条连接会在一段时间类不会断开
+    - 这段时间内服务器拿到了客户端想要的数据会基于这条连接立即把数据发送给客户端
+    - 这段时间内服务器没有拿到数据，连接断开，之后客户端再次发送同样的连接
+
+  * node 服务器不支持 ws 协议，需要安装 npm i ws,通过监听 http 的 upgrade 事件
+  * 开始客户端发送 http 请求，询问服务器是否接收 websocked 协议，服务器同意就可以升级为 websocked 协议
+  * 数据以消息为单位
+  * TCP 传输的是二进制字节流，而 websocked 是将字节流按照需要分为一份一份的，每一份都是完整的消息片段
+  * 缺点容易断线，兼容性不好，建议使用 socked.io
+
+  * Connection:Upgrade ；Upgrade:websocket
+    http 请求带上这 2 个主要的请求头告知服务器请求升级为 websocked 协议，服务器同意后 TCP 连接就不会中断
+
+  - socked.io 对 websocked 的更高级的一层封装
+
+    - 使用方法
+      npm i socked.io
+      var app = require('express')();
+      var http = require('http').createServer(app);
+      var io = require('socket.io')(http);/var io = require('socket.io').attach(http)
+    - 前端使用安装 socked.io-client
+      或者通过页面加载<script src="/socket.io/socket.io.js"></script>
+    - 优点
+
+      - 房间
+        - 服务器可以给某个频道所有的客户端发送消息，常用聊天室
+        - 客户端也可以给其它客户端发送消息
+        - 加入和离开房间的功能
+      - 解析：自动编码为字符串，自动编码为其它数据类型
+      - 远程事件：客户端和服务器可以监听对方的事件，对方触发了事件，己方可以马上得到触发事件的数据，实现了无延时的双向通信
+        io/socked.emit("event",{传递数据}) 服务器/客户端绑定事件
+        io/socked.on("event",()=>{}) 服务器/客户端监听事件
+        socket.join/leave（'some room'）加入或者离开房间
+      - 发送的参数数据可以同时有字符串和二进制字节流，而 websocket 不能混合发送
+
+    - socket.handshake.query 可以拿到 query 部分的参数
 
 ### linux 服务器知识
 
