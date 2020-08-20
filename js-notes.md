@@ -467,7 +467,7 @@ num1;
 // => 10
 ```
 
-### **回调函数** 
+### **回调函数**
 
 主要思想是我们传递一个函数，并期望在稍后必要时将其“回调”。callback
 
@@ -1164,6 +1164,7 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
     - 通过 Ajax 请求数据更新并更新页面内容，通过 window.onpopstate 事件在浏览器前进后退时，将页面改变位对应 url 的内容。现代浏览器中以此实现 url 改变但不刷新页面 pjax——>ajax+pushState
   - replaceState(data,title,url)，功能同上，替换掉当前网页
 - window
+
   - close() 只能关掉由他开启的页面，不能关自己。
   - **open(url,location)**
 
@@ -2483,7 +2484,7 @@ function promisify(cbFunc) {
 //将基于promise的函数转换为一个基于回调的函数
 function callbackify(promiseFunc) {
   return function (...args) {
-    var cb = args.pop();//取出回调函数
+    var cb = args.pop(); //取出回调函数
     promiseFunc(...args).then(
       (val) => {
         cb(null, val);
@@ -2651,11 +2652,11 @@ function loadStory() {
 
 - 常用的模块方案
 
-  - CommonJS	模块的加载是同步的
+  - CommonJS 模块的加载是同步的
 
-     将每个文件都看作一个模块，模块内部定义的变量都是私有的，无法被其他模块使用，除非使用预定义的方法将内部的变量暴露出来（通过**exports和require**关键字来实现），CommonJS最为出名的实现就是Node.js。
+    将每个文件都看作一个模块，模块内部定义的变量都是私有的，无法被其他模块使用，除非使用预定义的方法将内部的变量暴露出来（通过**exports 和 require**关键字来实现），CommonJS 最为出名的实现就是 Node.js。
 
-  - AMD define 函数    异步方式加载模块
+  - AMD define 函数 异步方式加载模块
 
   - CMD Common Module Definition sea.js
 
@@ -2714,11 +2715,11 @@ AMD 和 CMD;
 CommonJS;
 ES Module
 
-Q：在Node.js中，require()加载模块是同步而非异步？
+Q：在 Node.js 中，require()加载模块是同步而非异步？
 
-A：CommonJS标准是同步加载的。另一方面作为公共依赖的模块，自然要一步加载到位。
+A：CommonJS 标准是同步加载的。另一方面作为公共依赖的模块，自然要一步加载到位。
 
-由于模块的个数往往有限，且Node会自动缓存已经加载的模块，再加上访问的都是本地文件，产生的IO开销几乎可以忽略。另外，Node程序运行在服务器端，很少遇到需要频繁重启服务的情况，那么就算在服务启动时在加载上花点时间（几秒）也没有什么影响。
+由于模块的个数往往有限，且 Node 会自动缓存已经加载的模块，再加上访问的都是本地文件，产生的 IO 开销几乎可以忽略。另外，Node 程序运行在服务器端，很少遇到需要频繁重启服务的情况，那么就算在服务启动时在加载上花点时间（几秒）也没有什么影响。
 
 ```js
 //模块化
@@ -2843,7 +2844,7 @@ function loadAllDeps(entryFile) {
 
 - Node.js 是一个 JS 的运行环境（RunTime）
 
-- Node.js是事件驱动的
+- Node.js 是事件驱动的
 
 - 用途
 
@@ -2855,33 +2856,33 @@ function loadAllDeps(entryFile) {
     - 源代码的压缩混淆，把源代码转化为不可读，改变形参的名字
     - 爬虫，命令行程序的编写等
 
-- 适合处理 I/O 密集型任务       // CPU 密集型及I/O 密集型
+- 适合处理 I/O 密集型任务 // CPU 密集型及 I/O 密集型
 
-  > IO输入输出操作是指内存和外部设备（如磁盘、终端和网络）之间复制数据的过程。node希望把异步IO做的简单且方便。
+  > IO 输入输出操作是指内存和外部设备（如磁盘、终端和网络）之间复制数据的过程。node 希望把异步 IO 做的简单且方便。
 
-    同步与异步指的是进程/线程的调用方式。而阻塞与非阻塞的概念是针对IO状态而言，关注的是程序在等待IO调用返回这段时间的状态。
+  同步与异步指的是进程/线程的调用方式。而阻塞与非阻塞的概念是针对 IO 状态而言，关注的是程序在等待 IO 调用返回这段时间的状态。
 
-    > 同步调用会造成调用进程的IO阻塞，异步调用不会造成调用进程的IO阻塞。	——《Unix网络编程》第三版6.2
+  > 同步调用会造成调用进程的 IO 阻塞，异步调用不会造成调用进程的 IO 阻塞。 ——《Unix 网络编程》第三版 6.2
 
-  **IO编程模型:**	
+  **IO 编程模型:**
 
-  1. blocking I/O	阻塞IO
+  1. blocking I/O 阻塞 IO
 
-  2. non-blocking I/O	非阻塞IO
+  2. non-blocking I/O 非阻塞 IO
 
-  3. I/O multiplexing（select and poll）事件驱动IO
+  3. I/O multiplexing（select and poll）事件驱动 IO
 
   4. signal driven I/O（SIGIO）不常用
 
-  5. asynchronous I/O（the POSIX aio_functions）	异步IO
+  5. asynchronous I/O（the POSIX aio_functions） 异步 IO
 
 - 并行与并发
 
   - 并发是假设有两对人排队，但只有一个取票机，为了公平起见，先由队列一排头的人上前取票，再由队列二的一个人上前取票，两个队列都在向前移动。
   - 并行同样是两队人排队取票，不同的是开放了两个取票机，那么两个队列可以同时向前移动，速度是一个窗口的两倍以上（避免了一个窗口在两个队列间切换）。
   - 并发和并行对应了两种需求，一个是希望计算机做更多的事（处理多个队列），另一个是希望计算机能更快地完成任务（让队列以更快的速度向前移动）。
-  - **node中的并发**
-    - <u>单线程支持高并发</u>，通常都是依靠异步+事件驱动（循环）来实现的，异步使得代码在面临多个请求时不会发生阻塞，事件循环提供了IO调用结束后调用回调函数的能力。
+  - **node 中的并发**
+    - <u>单线程支持高并发</u>，通常都是依靠异步+事件驱动（循环）来实现的，异步使得代码在面临多个请求时不会发生阻塞，事件循环提供了 IO 调用结束后调用回调函数的能力。
 
 - 进程和线程
 
@@ -2899,9 +2900,9 @@ function loadAllDeps(entryFile) {
 
   - nodemon xxx.js 以 nodemon 启动某 js 文件，文件修改时客户端同步更新
 
-  - `node xxx.js arguments`  给 xxx.js 传递参数 arguments：通过 process.argv 接收 arguments。process.argv 返回一个数组，第一项是 node 的运行路径，第二项是 xxx.js 文件路径，第三项开始是 arguments(process.argv[2])
+  - `node xxx.js arguments` 给 xxx.js 传递参数 arguments：通过 process.argv 接收 arguments。process.argv 返回一个数组，第一项是 node 的运行路径，第二项是 xxx.js 文件路径，第三项开始是 arguments(process.argv[2])
 
-  - process 一个全局对象，每个Node进程都有独立的process对象，存储了当前进程的环境变量，也定义了一些事件。
+  - process 一个全局对象，每个 Node 进程都有独立的 process 对象，存储了当前进程的环境变量，也定义了一些事件。
 
     - process.exit(0) 正常结束一个脚本模块
     - process.cwd() 当前工作目录
@@ -2909,13 +2910,13 @@ function loadAllDeps(entryFile) {
 
   - global 全局对象
 
-    node里面的this:在Node repl环境中控制台的全局this和global可以看作是同一对象，脚本文件中的this指向module.exports.
+    node 里面的 this:在 Node repl 环境中控制台的全局 this 和 global 可以看作是同一对象，脚本文件中的 this 指向 module.exports.
 
-    node中的作用域：全局作用域，模块作用域，
+    node 中的作用域：全局作用域，模块作用域，
 
   - node.js 的调试
     `node --inspect[-brk][=ip端口号] script.js arguments node.js` 在指定地址端口调试
-    `ndb node --inspect-brk script.js arguments`  `ndb node --inspect-brk=ip 地址端口号 script.js arguments node.js` 调试功能在指定地址端口
+    `ndb node --inspect-brk script.js arguments` `ndb node --inspect-brk=ip 地址端口号 script.js arguments node.js` 调试功能在指定地址端口
 
   - http server 开启网络服务
     npm install http-server -g 通过 npm 安装
@@ -2927,21 +2928,21 @@ function loadAllDeps(entryFile) {
   - dirname 模块所在文件夹的绝对路径，全局变量
     filename 模块本身目录的绝对路径 ，全局变量
 
-## node模块
+## node 模块
 
-  - 路径分析 require(X)	require是如何找到需要的文件的？
+- 路径分析 require(X) require 是如何找到需要的文件的？
 
-    - 如果 X 是路径，直接加载对应路径的文件
-    - 如果 X 是内置模块，直接返回内置模块
-    - 在当前文件夹的 node_modules 文件夹里面找到名为 X 的文件
-      如果此文件夹里面有 package.json, 则加载 main 字段指向的文件
-      如果此文件夹里面没有 package.json，则加载此文件夹里面的 index.js 文件
-      在当前文件夹的 node_modules 文件夹里面找不到名为 X 的文件
-      则往其父文件夹找 node_modules, 顺着往上找，像原型链的查找
-    - 路径
-      '/' 系统根目录
-      './' ，'.' 当前目录
-      '../'父目录
+  - 如果 X 是路径，直接加载对应路径的文件
+  - 如果 X 是内置模块，直接返回内置模块
+  - 在当前文件夹的 node_modules 文件夹里面找到名为 X 的文件
+    如果此文件夹里面有 package.json, 则加载 main 字段指向的文件
+    如果此文件夹里面没有 package.json，则加载此文件夹里面的 index.js 文件
+    在当前文件夹的 node_modules 文件夹里面找不到名为 X 的文件
+    则往其父文件夹找 node_modules, 顺着往上找，像原型链的查找
+  - 路径
+    '/' 系统根目录
+    './' ，'.' 当前目录
+    '../'父目录
 
 ### 文件模块
 
@@ -2970,7 +2971,7 @@ function loadAllDeps(entryFile) {
       }
       ```
 
-      
+
 
     - fs.readdirSync（path) 读取路径上的文件夹所有文件名，返回一个数组；加上Sync，是对应的同步方法
       {withFileTypes:true} 存在的话，数组的每一项都有 isFile() 和 isDirectory() 方法
@@ -2988,22 +2989,22 @@ function loadAllDeps(entryFile) {
 ### HTTP 模块
 
     - const server = http.createServer((request,response)=>{}) 创造 http 服务器，当服务器收到客户端 http 请求时触发，相当于绑定了一个 request 帧听事件
-    
+
       server.on(‘connection’,{res,req}=>{})
-    
+
       server.on(‘request’,{res,req}=>{})
-    
+
       - request 是一个对象，是IncomingMessage的实例，里面有客户端请求的各种信息（method,url,header 等）
-    
+
         req.on(‘data’,func)
-    
+
         req.on(‘end’,func)
-    
+
       - response 是一个对象，是ServerResponse的实例，也是一个writableStream实例，里面编辑发送给客户端的信息（响应体，响应头等），发完之后调用 response.end()
-    
+
         ```js
         res.statusCode = 200/404
-        
+
         res.setHeader(‘Content-Type’,’application/json’)//只能设置单个属性
         res.writeHead(200,{//一次性设置状态码和所有响应头
         xx:xxxxx,
@@ -3019,197 +3020,195 @@ function loadAllDeps(entryFile) {
         res.end('<html><body><p>gerwgqw</p></body></html>')
         ```
 
-
-​        
+​
 
     - 两个服务器之间也可以通过 http 模块建立 http 连接，利用 http.request() 函数充当客户端
       http.request({请求的网络配置}，f(response){收到对方的响应对象})
-    
+
       http模块也可以作为客户端向服务器发起请求，例如http.get(url,cb)
-    
+
     - index.html 导航页 每个网站首页基本都是这个文件，储存在网站服务器里面
 
-### Stream模块
+### Stream 模块
 
     - 一种数据传输的模型
-    
+
       - 一片一片的传输数据
       - 传输速度是可控的，不同类型的流速度不一样
       - 减少 CPU 内存占用（超过 CPU 的最大缓存内存可以暂停接收）
-    
+
     - 流的类型
-    
+
       - 可读流 类似将数据读取到 CPU Readable
       - 可写流 类似将数据写入到硬盘 Writable
       - 既可读又可写，如 TCP/net.Socket Duplex
       - 转化流 如 zip 压缩 Transform
       - const { Readable，Writable} = require('stream')
-    
+
     - 主要的方法和事件
-    
+
       - rs = fs.createReadStream(path) 创造从某个路径文件读取数据的可读流
-    
+
         事件：‘data’,’close’,’end’,’error’,’readable’
-    
+
       - ws = fs.createWriteStream(path) 创造向某个路径文件写入数据的可写流
-    
+
         事件：‘close’,’drain’,’error’,’finish’,’unpipe’
-    
+
       - ws.write(data) 可写流都有 write 方法，向目标 path 写入数据；可写流的 finish 事件，end 之后缓冲区里面的数据全部处理完了之后触发
-    
+
       - rs 可读流通过监听 data 事件，end 事件，readable 事件（自身缓冲区有准备好的数据）来操作数据传输
-    
+
       - pause() 方法，暂停流的传输； resume() 方法 ，恢复流的传输；end() 方法，告知已经没有数据传递给该流了；destory() 销毁该流；以上都是所有流的通用方法
-    
+
       - drain 事件，表示流的缓存区数据都已经传输到了下一级，一般通过该事件让上一级恢复流的传输
-    
+
       - pipe 连接两个流的管道，可链式调用；rs.pipe(ws) 从可读流出来的数据进入到可写流
-    
+
     - process 相关的 3 个标准流对象
       process.stdout 当前进程标准输出流，本进程输出的东西，默认情况下是输出到控制台；
-    
+
       - 对于自己是一个可写流，可以 pipe 到一个可读流里面
         process.stderr 当前进程标准错误流，本进程输出的错误，默认情况下是输出到控制台
         process.stdin 当前进程的标准输入流，别的进程给本进程输入的东西
       - 对于自己是一个可读流，可以 pipe 到一个可写流里面
 
-  - net 模块
+- net 模块
 
-    - socket.write() 服务器向客户端发送数据
-    - socket.end() 服务器向客户端发送 FIN 包中断连接，注意 end 后不能再 write，会报错
-    - socket.on('data',callback) 服务器接收到客户端发送数据时触发
-    - socket.on("end",callback) 服务器接收到客户端发送 fin 包时触发
+  - socket.write() 服务器向客户端发送数据
+  - socket.end() 服务器向客户端发送 FIN 包中断连接，注意 end 后不能再 write，会报错
+  - socket.on('data',callback) 服务器接收到客户端发送数据时触发
+  - socket.on("end",callback) 服务器接收到客户端发送 fin 包时触发
 
-  - Buffer 数据类型，十六进制字符串；提供一段储存数据的原始字节流，是一个表示内存片段的类数组
+- Buffer 数据类型，十六进制字符串；提供一段储存数据的原始字节流，是一个表示内存片段的类数组
 
-    - b = Buffer.alloc(16 ) 构造 10 个字节的 buffer, 数据已清空
-      c = Buffer.allocUnsafe(10) 构造 10 个字节的 buffer，数据未清空
-      d = Buffer.from(value，[utf8/base64]) 返回一个新的 buffer，通过相关协议解析处理的 buffer
+  - b = Buffer.alloc(16 ) 构造 10 个字节的 buffer, 数据已清空
+    c = Buffer.allocUnsafe(10) 构造 10 个字节的 buffer，数据未清空
+    d = Buffer.from(value，[utf8/base64]) 返回一个新的 buffer，通过相关协议解析处理的 buffer
 
-      Buffer.concat(list,[totalLength]) 把数组里的buffer全部拼接在一起
+    Buffer.concat(list,[totalLength]) 把数组里的 buffer 全部拼接在一起
 
-      buffer.toString([encoding],[start],[end])把一个buffer对象转成字符串形式，默认采用utf-8编码并转换整个对象
+    buffer.toString([encoding],[start],[end])把一个 buffer 对象转成字符串形式，默认采用 utf-8 编码并转换整个对象
 
-    - TypedArray 描述一个底层的二进制数据缓存区的一个类似数组 (array-like) 视图，可以直接操作内存，性能非常快；
-      应用：canvas,B 站 flv.js；直接操作二进制字节流
-      https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
+  - TypedArray 描述一个底层的二进制数据缓存区的一个类似数组 (array-like) 视图，可以直接操作内存，性能非常快；
+    应用：canvas,B 站 flv.js；直接操作二进制字节流
+    https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
-  - Child Process 子进程 require('child_process')
+- Child Process 子进程 require('child_process')
 
-    - 主要用来运行计算机已经装好的其它程序
-    - child_process.exec（命令，(err,stdout)=>{})
+  - 主要用来运行计算机已经装好的其它程序
+  - child_process.exec（命令，(err,stdout)=>{})
 
-  - mime 模块 判断媒体类型，需要安装
-    mime = require('mime')
-    mime.getType(path) 得到媒体类型 如'text/html'
-    mime.getExtension(path) 得到扩展名
+- mime 模块 判断媒体类型，需要安装
+  mime = require('mime')
+  mime.getType(path) 得到媒体类型 如'text/html'
+  mime.getExtension(path) 得到扩展名
 
-  - Path 模块 path = require('path')
-    path.resolve([path1],path2) path1 和 path2 合并得到的路径;基于当前工作目录
+- Path 模块 path = require('path')
+  path.resolve([path1],path2) path1 和 path2 合并得到的路径;基于当前工作目录
 
-    path.join(path1,path2)，直接连接两个路径
+  path.join(path1,path2)，直接连接两个路径
 
-    path.relative(path1,path2) path1 怎样操作到 path2
+  path.relative(path1,path2) path1 怎样操作到 path2
 
-    path.basename(path) 拿到文件的名字
-    Path.dirname(path) 拿到文件夹的名字
-    path.extname(path) 拿到扩展名
-    path.normalize(path) 化简路径
-    path.sep 判断系统路径用、还是 /
+  path.basename(path) 拿到文件的名字
+  Path.dirname(path) 拿到文件夹的名字
+  path.extname(path) 拿到扩展名
+  path.normalize(path) 化简路径
+  path.sep 判断系统路径用、还是 /
 
-  - qs 模块 var queryParse = require('querystring') 调用 node 上面的'querystring'模块，可以解析 http 协议的 query 字符串数据
-    queryParse.parse(query)
+- qs 模块 var queryParse = require('querystring') 调用 node 上面的'querystring'模块，可以解析 http 协议的 query 字符串数据
+  queryParse.parse(query)
 
-  - DNS 模块
-    封装了 DNS 协议，node 自己解析域名，自己不用发 UDP 数据包
+- DNS 模块
+  封装了 DNS 协议，node 自己解析域名，自己不用发 UDP 数据包
 
-  - readline 模块
-    从标准输入流中按行读入数据
+- readline 模块
+  从标准输入流中按行读入数据
 
-  - OS 模块 读取当前操作系统的相关信息
+- OS 模块 读取当前操作系统的相关信息
 
-  - VM 模块
-    虚拟机，创建一个可以运行 js 代码的虚拟机，并定义一个全局作用域，js 代码不会影响到虚拟机全局作用域外面的内容
+- VM 模块
+  虚拟机，创建一个可以运行 js 代码的虚拟机，并定义一个全局作用域，js 代码不会影响到虚拟机全局作用域外面的内容
 
-  - cluster 集群
-    多个进程都启动 node，对于复杂的运算可以分配任务到多个进程
+- cluster 集群
+  多个进程都启动 node，对于复杂的运算可以分配任务到多个进程
 
-  - Worker Thread 和 js 中的 worker 功能一样
+- Worker Thread 和 js 中的 worker 功能一样
 
 ### Events
 
-  - EventEmitier类，所有能触发事件的对象都是他的实例
+- EventEmitier 类，所有能触发事件的对象都是他的实例
 
-    ```js
-    var e = new EventEmitter()
-    e.on('eventName',hander) //绑定事件
-    e.off('eventName',hander) //解绑事件 
-    e.emit('eventName') //触发事件
-    console.log(e.eventNames())//输出包含全部事件名称的数组
-    ```
+  ```js
+  var e = new EventEmitter();
+  e.on("eventName", hander); //绑定事件
+  e.off("eventName", hander); //解绑事件
+  e.emit("eventName"); //触发事件
+  console.log(e.eventNames()); //输出包含全部事件名称的数组
+  ```
 
-    函数实现:
+  函数实现:
 
-    ```js
-      class EventEmitter {
-        constructor() {
-        this._events = {}
-        }
-    
-        on(type, handler) {
-        if (type in this._events) {
-        this._events[type].push(handler)
-        } else {
-        this._events[type] = [handler]
-        }
-        return this
-        }
-    
-        off(type, handler) {
-        var listeners = this._events[type]
-        this._events[type] = listeners.filter(it => it != handler)
-        return this
-        }
-    
-        emit(type, ...args) {
-        var listeners = this._events[type]
-        if (listeners) {
-        for (var i = 0; i < listeners.length; i++) {
-        var handler = listeners[i]
-        handler.call(this, ...args)
-        }
-        }
-        }
-        }
-    
-    - node send email
-      npm install nodemailer
-      var nodemailer = require('nodemailer');
-      var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-      user: 'youremail@gmail.com',
-      pass: 'yourpassword'
+  ```js
+    class EventEmitter {
+      constructor() {
+      this._events = {}
       }
-      });
-      var mailOptions = {
-      from: 'youremail@gmail.com',
-      to: 'myfriend@yahoo.com',
-      subject: 'Sending Email using Node.js',
-      text: 'That was easy!'
-      };
-      transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-      console.log(error);
+
+      on(type, handler) {
+      if (type in this._events) {
+      this._events[type].push(handler)
       } else {
-      console.log('Email sent: ' + info.response);
+      this._events[type] = [handler]
       }
-      });
-    
-    - 
-    ```
+      return this
+      }
 
-    
+      off(type, handler) {
+      var listeners = this._events[type]
+      this._events[type] = listeners.filter(it => it != handler)
+      return this
+      }
+
+      emit(type, ...args) {
+      var listeners = this._events[type]
+      if (listeners) {
+      for (var i = 0; i < listeners.length; i++) {
+      var handler = listeners[i]
+      handler.call(this, ...args)
+      }
+      }
+      }
+      }
+
+  - node send email
+    npm install nodemailer
+    var nodemailer = require('nodemailer');
+    var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+    user: 'youremail@gmail.com',
+    pass: 'yourpassword'
+    }
+    });
+    var mailOptions = {
+    from: 'youremail@gmail.com',
+    to: 'myfriend@yahoo.com',
+    subject: 'Sending Email using Node.js',
+    text: 'That was easy!'
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+    console.log(error);
+    } else {
+    console.log('Email sent: ' + info.response);
+    }
+    });
+
+  -
+  ```
+
 
     - node 其它常用 npm 包
 
@@ -3227,28 +3226,27 @@ function loadAllDeps(entryFile) {
 
 ### 事件循环
 
-  - nodejs 是单线程执行的，同时它又是基于事件驱动的非阻塞 IO 编程模型，事件循环机制是实现这一特性的原理
-  - 异步操作时，将任务给到另外的线程（CPU 的其它核），异步事件触发之后，就会通知主线程，主线程执行相应事件的回调。
-  - 事件循环原理
-    ┌───────────────────────────┐
-    ┌─>│ timers │
-    │ └─────────────┬─────────────┘
-    │ ┌─────────────┴─────────────┐
-    │ │ pending callbacks │
-    │ └─────────────┬─────────────┘
-    │ ┌─────────────┴─────────────┐
-    │ │ idle, prepare │
-    │ └─────────────┬─────────────┘ ┌───────────────┐
-    │ ┌─────────────┴─────────────┐ │ incoming: │
-    │ │ poll │<─────┤ connections, │
-    │ └─────────────┬─────────────┘ │ data, etc. │
-    │ ┌─────────────┴─────────────┐ └───────────────┘
-    │ │ check │
-    │ └─────────────┬─────────────┘
-    │ ┌─────────────┴─────────────┐
-    └──┤ close callbacks │
-    └───────────────────────────┘
-
+- nodejs 是单线程执行的，同时它又是基于事件驱动的非阻塞 IO 编程模型，事件循环机制是实现这一特性的原理
+- 异步操作时，将任务给到另外的线程（CPU 的其它核），异步事件触发之后，就会通知主线程，主线程执行相应事件的回调。
+- 事件循环原理
+  ┌───────────────────────────┐
+  ┌─>│ timers │
+  │ └─────────────┬─────────────┘
+  │ ┌─────────────┴─────────────┐
+  │ │ pending callbacks │
+  │ └─────────────┬─────────────┘
+  │ ┌─────────────┴─────────────┐
+  │ │ idle, prepare │
+  │ └─────────────┬─────────────┘ ┌───────────────┐
+  │ ┌─────────────┴─────────────┐ │ incoming: │
+  │ │ poll │<─────┤ connections, │
+  │ └─────────────┬─────────────┘ │ data, etc. │
+  │ ┌─────────────┴─────────────┐ └───────────────┘
+  │ │ check │
+  │ └─────────────┬─────────────┘
+  │ ┌─────────────┴─────────────┐
+  └──┤ close callbacks │
+  └───────────────────────────┘
 
 
     - 进入 timers 阶段
@@ -3360,183 +3358,178 @@ res.download()
 res.redirect()	//重定向请求并end
 res.render(path,local)	//呈现指定路径视图模板，第二个参数是一个对象，可以为模板文件传递数据，参数
 res.set("Content-Type","text/html;charset=UTF-8") //设置响应头
-res.send() //发送响应	
+res.send() //发送响应
 //app相关 app = express()
 app.locals//存储一些信息
 //内置中间件
-express.json() //解析json请求体 
+express.json() //解析json请求体
 express.urlencoded([{extended:true}]) //请求体为 url 编码时解析
 express.query() //解析请求体 query 部分
 express.static(path) //将某个文件夹暴露为一个静态文件服务器
 express generator //应用程序生成器
 $ npm install express-generator
 ```
+
 **cookie**
 
-
-
-
-
-### express默认的模板引擎 Pug
+### express 默认的模板引擎 Pug
 
 格式要求比较奇怪。
 
-p= post.id	等号前面不能有空格
+p= post.id 等号前面不能有空格
 
-span 登录	与文字之间只能有一个空格
+span 登录 与文字之间只能有一个空格
 
-
-* https://pug.bootcss.com/api/getting-started.html
-* include path //把另外的文件引入到模板文件里面，方便将一份代码重复使用 ；如 include head.pug  includes foot.pug
-* 继承与扩展；
-  * 一个父文件 layout.pug ，里面有一个 block 语句，block + 标识名，后面的代码可以继承修改，其它地方不可以
-  * extends layout.pug  extends 语句，子文件用该语句继承父文件的内容，然后 block + 标识名 + 修改内容 ，实现继承与扩展
-* 嵌入
-  *  {代码} 这种写法代码会被求值，可以对变量进行操作
-* 迭代 Iteration; 通过 each 和 while 实现内容为 1 到 5 的 5 个 li 标签
-  * ul
-      each val in [1, 2, 3, 4, 5]
-        li= val
-  * - var n = 1;
+- https://pug.bootcss.com/api/getting-started.html
+- include path //把另外的文件引入到模板文件里面，方便将一份代码重复使用 ；如 include head.pug includes foot.pug
+- 继承与扩展；
+  - 一个父文件 layout.pug ，里面有一个 block 语句，block + 标识名，后面的代码可以继承修改，其它地方不可以
+  - extends layout.pug extends 语句，子文件用该语句继承父文件的内容，然后 block + 标识名 + 修改内容 ，实现继承与扩展
+- 嵌入
+  - {代码} 这种写法代码会被求值，可以对变量进行操作
+- 迭代 Iteration; 通过 each 和 while 实现内容为 1 到 5 的 5 个 li 标签
+  - ul
+    each val in [1, 2, 3, 4, 5]
+    li= val
+  - - var n = 1;
       ul
-        while n < 6
-          li= n++
+      while n < 6
+      li= n++
 
 ## Koa
 
-
-* https://koajs.com
-* 另一种node框架，express 团队开发的，下一代node框架
-* 只接受异步函数，next函数也是异步函数，express里面的next是同步函数
-  express里面的next放到最后，而koa可以放到中间
-* 没有任何中间件，全部需要第三方库加载进来，基本只有use方法
-* 洋葱模型，如果涉及到互相调用，后进先出,因为next函数的异步机制，后面的中间键执行完后执行前面next函数后面的内容
-* const Koa = require('koa)
-  const app = new Koa() 实例需要用new调用
+- https://koajs.com
+- 另一种 node 框架，express 团队开发的，下一代 node 框架
+- 只接受异步函数，next 函数也是异步函数，express 里面的 next 是同步函数
+  express 里面的 next 放到最后，而 koa 可以放到中间
+- 没有任何中间件，全部需要第三方库加载进来，基本只有 use 方法
+- 洋葱模型，如果涉及到互相调用，后进先出,因为 next 函数的异步机制，后面的中间键执行完后执行前面 next 函数后面的内容
+- const Koa = require('koa)
+  const app = new Koa() 实例需要用 new 调用
   app.use((async ctx,next)=>{
-    ctx.method
-    ctx.cookie.id
-    await next()
-    ctx.body
-    ctx是app的上下文，context;对象包括req和res，它会自动根据上下文判断是req还是res,直接代理这2个对象
+  ctx.method
+  ctx.cookie.id
+  await next()
+  ctx.body
+  ctx 是 app 的上下文，context;对象包括 req 和 res，它会自动根据上下文判断是 req 还是 res,直接代理这 2 个对象
   })
-* 方便记录一个请求所需要的时间
-* egg.js 基于koa再封装了一层的框架
-
+- 方便记录一个请求所需要的时间
+- egg.js 基于 koa 再封装了一层的框架
 
 ## 数据库
 
 数据库种类：
 
 1. 关系型数据库(SQLite,MySQL)
-2. 缓存型数据库(Redis,可以理解为超大型Map)
-3. 文档型数据库(Mongo DB,存储JSON,使用js操作)
+2. 缓存型数据库(Redis,可以理解为超大型 Map)
+3. 文档型数据库(Mongo DB,存储 JSON,使用 js 操作)
 4. 日志数据库(HBase)
 
-* SQL  结构化查询语言（Structured Query Language）
+- SQL 结构化查询语言（Structured Query Language）
 
-* sqlite  一个数据库相当于一个 excel 文件，可以有多个 sheet
+- sqlite 一个数据库相当于一个 excel 文件，可以有多个 sheet
+
   - 先下载其到项目文件
-  - 命令行运行    ./sqlite3 + 数据库名
+  - 命令行运行 ./sqlite3 + 数据库名
 
   * 基本使用方法
 
 ```sql
- 以下 base 表示 SELECT column1, column2, FROM tablename/SELECT * FROM tablename
---creat table 表名字（列名 1，列名 2，列名 3） 如 
-creat table users (name,email,password)
-create table users(
-	id integer primary key autoincrement,    
-  name string not null,
-  email string,
-  password string not null)
-  --primary key 表示既不空，也自动增加; 
-  --autoincrement表示id不会重复，即使把最后一个id删除，再添加也是在之前删除的id基础上增加
-  INSERT INTO  users()  VALUES('jim',"123@77.com","12341")  --为指定表插入数据
-  insert into users(name,password,email,title) values("a","a","a@qq.com","御膳房");
-  insert into users values(1,"a","a","a@qq.com","御膳房");
-    * .header on  --查看时显示头行
-    * .mode column --每列对应排齐查看
-    * .schema --查看所有表
-    * SELECT * FROM tablename --查看指定表单所有列
-    * .table --查看所有已创建的表单
-    * SELECT column1, column2, FROM tablename  --查看指定表单指定列
-    * SELECT DISTINCT column, FROM tablename; --为指定列去重复
-    * where 后面接有条件的查找数据，可以有多个条件，用 AND,OR，NOT 连接
-      base WHERE condition;
-      SELECT * FROM users WHERE name =name "jim";
+--create table 表名字（列名 1，列名 2，列名 3） 如
+CREATE TABLE users (name,email,password);
+CREATE TABLE users(
+	id INTEGER PRIMARY KEY autoincrement,
+  name STRING NOT NULL,
+  email STRING,
+  password STRING NOT NULL)
+  --primary key 表示既不空，也自动增加;
+  --autoincrement表示id不会重复。
+  --即使把最后一个id删除，再添加也是在之前删除的id基础上增加
+  INSERT INTO users VALUES('jim',"123@77.com","12341")
+  INSERT INTO users(name,password,email,title)
+  VALUES("a","a","a@qq.com","御膳房");
+  INSERT INTO users VALUES(1,"a","a","a@qq.com","御膳房");
+  --命令行：
+  .header on  --查看时显示头行
+  .mode column --每列对应排齐查看
+  .mode box
+  .schema --查看所有表
+  .table --查看所有已创建的表单
+  SELECT * FROM table --查看指定表单所有列
+  SELECT column1, column2, FROM table  --查看指定表单指定列
+  SELECT DISTINCT column, FROM table;
+  --为指定列去重复,DISTINCT是后面的组合唯一
+  --WHERE 后面接有条件的查找数据，可以有多个条件，用 AND,OR，NOT 连接
+  SELECT * FROM table WHERE condition;
+  --更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
+  UPDATE table_name SET column1 = value1,... WHERE condition;
+  UPDATE foods SET status="off" WHERE id=1;
 
-    * UPDATE table_name SET column1 = value1, column2 = value2, WHERE condition;
-      --更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
-      update foods set status="off" where id=1;
+  SELECT * FROM table ORDER BY column1, column2, ... ASC|DESC;
+  --表单指定列按照升序 / 降序排列
+  SELECT * FROM table WHERE name IS NUll;
+  --NULL 在数据库里面表示该位置是空值
+  DELETE FROM table_name WHERE condition;
+  --DELETE 语句用于在表中删除现有记录。
+  --如果省略 WHERE 子句，所有记录都将被更新！
+  SELECT * FROM table HAVING COUNT(user)<5 --与where的区别
+  SELECT * FROM table LIMIT 3;  LIMIT 表示选择前几行
+  LIMIT 5,2 --从第六条开始选择两条，跳过前五条
+  LIMIT 2 OFFSET 5 --去除5行,选择第6，7行，与上一致
+  SELECT COUNT(column_name) --所选列一共多少行
+  SELECT AVG(column_name)  --所选数值列的平均值
+  SELECT SUM(column_name) --所选数值列的总和
+  SELECT MIN(column_name) --所选列的最小值
+  SELECT MAX(column_name) --所选列的最大值
+  SELECT MIN(SALARY),* FROM orders --拿到这一行
 
-    * base ORDER BY column1, column2, ... ASC|DESC;  --表单指定列按照升序 / 降序排列
-    * NULL 在数据库里面表示该位置是空值，base where name is NUll
+  DROP TABLE table    --如drop table users 删除users表
 
-    * DELETE FROM table_name WHERE condition;
-       DELETE 语句用于在表中删除现有记录。如果省略 WHERE 子句，所有记录都将被更新！
-
-    * base LIMIT number;  LIMIT 表示选择前几行
-
-    * SELECT COUNT(column_name) --所选列一共多少行
-      SELECT AVG(column_name)  --所选数值列的平均值
-      SELECT SUM(column_name) --所选数值列的总和
-      SELECT MIN(column_name) --所选列的最小值
-      SELECT MAX(column_name) --所选列的最大值
-
-    * drop table tablename    --如drop table users 删除users表
-
-    *  alter table orders add totalPrice integer; --为orders表增加一列totalPrice，为整数
+  ALTER TABLE orders add totalPrice INTEGER;
+  --为orders表增加一列totalPrice，为整数
 ```
 
-    * LIKE 运算符在 WHERE 子句用于搜索在一列中指定的模式。
-      % 表示任意个字符，_表示单个字符
-      where a_____  筛选以 a 开头 6 个字符长度
-    * in 运算符，WHERE name IN ('jim', 'bob', 'merry') 筛选 name 列满足任意一个
-    * BETWEEN...AND..   WHERE price BETWEEN 10 AND 20  筛选 10 到 20 的价格
-    * 别名，可以为列或者表起一个别名
-      SELECT column_name AS alias_name FROM table_name;
-      base AS alias_name;
-  * SQL 的多表连接
-      * 用法
-        - base join tablename on condition
-      * 种类
-        INNER JOIN（内连接）：返回有两个表中的匹配值的记录
-        LEFT JOIN：返回左表的所有记录，以及匹配的记录
-        RIGHT JOIN：返回右表的所有记录，以及匹配的记录
-        FULL JOIN： 交叉连接，返回所有的排列组合记录
+- LIKE 运算符在 WHERE 子句用于搜索在一列中指定的模式。
+  `%` 表示任意个字符，`_`表示单个字符
+  `SELECT * FROM ORDERS WHERE name LIKE 'a_____'` 筛选以 a 开头 6 个字符长度
+- in 运算符，`WHERE name IN ('jim', 'bob', 'merry')` 筛选 name 列满足任意一个
+- BETWEEN...AND.. `WHERE price BETWEEN 10 AND 20` 筛选 10 到 20 的价格
+- 别名，可以为列或者表起一个别名
+  `SELECT column_name AS alias_name FROM table_name;`
+- SQL 的多表连接
 
-  * 项目使用 sqlite 的方法
+  - 种类
+    `INNER JOIN` 返回有两个表中的匹配值的记录
+    `LEFT JOIN` 返回左表的所有记录，以及匹配的记录
+    `RIGHT JOIN` 返回右表的所有记录，以及匹配的记录
+    `FULL JOIN` 交叉连接，返回所有的排列组合记录
 
-    * `npm i sqlite`   sqlite 是基于 promise 对 sqlite3API 的封装
-      `sqlite = require('sqlite')`
-      `db = sqlite.open(数据库实例地址path)` 创建一个 promise
-      `db = await db`   拿到 promise 的结果
-    * 相关方法
-      db 里面的相关方法进行 ('SQL 操作') 时，可以用？代码后面出现的参数，如
-        `db.run('insert into users VALUES(?,?,?),jim',"123@77.com","12341")`
-      `var datas = await db.all('select * from datas')` 可以拿到数据库里的所有的数据,一个对象集合的数组
-      db.run('SQL 操作') 操作数据库
-      db.get('SQL 操作') 返回从数据库查找到的数据，只能拿一条,得到一个对象
+- 项目使用 sqlite 的方法
 
+  - `npm i sqlite` sqlite 是基于 promise 对 sqlite3API 的封装
+    `sqlite = require('sqlite')`
+    `db = sqlite.open(数据库实例地址path)` 创建一个 promise
+    `db = await db` 拿到 promise 的结果
+  - 相关方法
+    db 里面的相关方法进行 ('SQL 操作') 时，可以用？代码后面出现的参数，如`db.run('insert into users VALUES(?,?,?),jim',"123@77.com","12341")`
+    `var data = await db.all('select * from data')` 可以拿到数据库里的所有的数据,一个对象集合的数组
+    `db.run('SQL 操作')` 操作数据库
+    `db.get('SQL 操作')` 返回从数据库查找到的数据，只能拿一条,得到一个对象
 
 ## websocked 协议，TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
-
-    - 长轮询
-      * 由于基于 http 协议的服务器不能主动向客户端发送消息（响应式），如果服务器有没有指定客户端的数据要发往指定客户端，需要指定客户端发来请求才能发送，这样会造成延时
-      * 长轮休是指客户端发送一个请求到服务端，这条连接会在一段时间类不会断开
-        - 这段时间内服务器拿到了客户端想要的数据会基于这条连接立即把数据发送给客户端
-        - 这段时间内服务器没有拿到数据，连接断开，之后客户端再次发送同样的连接
-    - node 服务器不支持 ws 协议，需要安装 npm i ws,通过监听http的upgrate事件
+  - 长轮询
+    * 由于基于 http 协议的服务器不能主动向客户端发送消息（响应式），如果服务器有没有指定客户端的数据要发往指定客户端，需要指定客户端发来请求才能发送，这样会造成延时
+    * 长轮询是指客户端发送一个请求到服务端，这条连接会在一段时间类不会断开
+      - 这段时间内服务器拿到了客户端想要的数据会基于这条连接立即把数据发送给客户端
+      - 这段时间内服务器没有拿到数据，连接断开，之后客户端再次发送同样的连接
+    - node 服务器不支持 ws 协议，需要安装 npm i ws,通过监听http的upgrade事件
     - 开始客户端发送 http 请求，询问服务器是否接收 websocked 协议，服务器同意就可以升级为 websocked 协议
     - 数据以消息为单位
     - TCP 传输的是二进制字节流，而 websocked 是将字节流按照需要分为一份一份的，每一份都是完整的消息片段
     - 缺点容易断线，兼容性不好，建议使用socked.io
-    
-    - Connection:Upgrade ；Upgrate:websocket
+
+    - Connection:Upgrade ；Upgrade:websocket
       http请求带上这2个主要的请求头告知服务器请求升级为websocked协议，服务器同意后TCP连接就不会中断
-
-
 
     * socked.io 对 websocked 的更高级的一层封装
       * 使用方法
@@ -3557,7 +3550,7 @@ create table users(
             io/socked.on("event",()=>{}) 服务器/客户端监听事件
             socket.join/leave（'some room'）加入或者离开房间
           - 发送的参数数据可以同时有字符串和二进制字节流，而websocket不能混合发送
-    
+
       * socket.handshake.query可以拿到query部分的参数
 
 ### linux 服务器知识
@@ -3628,9 +3621,9 @@ create table users(
     </div>
 
     v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
-      text 和 textarea 元素使用 value 属性和 input 事件；
-      checkbox 和 radio 使用 checked 属性和 change 事件；
-      select 字段将 value 作为 属性和 change 作为事件。
+    text 和 textarea 元素使用 value 属性和 input 事件；
+    checkbox 和 radio 使用 checked 属性和 change 事件；
+    select 字段将 value 作为 属性和 change 作为事件。
 
 - 创建 vue 应用
   var app = new Vue({
@@ -3991,8 +3984,8 @@ create table users(
         <router-view></router-view>
       </div>
 
-        <router-link>表示组件，to 属性指定链接，会被渲染成一个 `<a>` 标签
-        <router-view></router-view> 路由匹配到的组件将渲染在这里
+      <router-link>表示组件，to 属性指定链接，会被渲染成一个 `<a>` 标签
+      <router-view></router-view> 路由匹配到的组件将渲染在这里
 
     - 对于 router 对象
       const router = new VueRouter({
@@ -4478,45 +4471,45 @@ create table users(
 
     <script src = "https://unpkg.com/react-router-dom@4.3.0/umd/react-router-dom.js"> / npm install react-router-dom
 
-  - var { BrowserRouter,HashRouter,Switch,Route,Link,withRouter} = ReactRouterDOM 引入变量
+* var { BrowserRouter,HashRouter,Switch,Route,Link,withRouter} = ReactRouterDOM 引入变量
 
-  - 相关变量
+* 相关变量
 
-    - HashRouter：一个组件，包裹在所有路由的最外层，表示以 hash 模式进行地址导航
-    - BrowserRouter: H5 模式，一般不需要
-    - Switch, 可选，表示按照顺序匹配内部的路由，只匹配满足条件的第一个
-    - Route： 导航组件 <Route path="/users/:id" exact><Component/></Route>
-      - path 只能接完整路径，嵌套路由也是完整路径
-      - exact 表示必须精确匹配路径，默认都是开头匹配就行，匹配成功就就加载中间的组件
-      - 也可以通过 path 向内部组件参数
-      - path 里面"\*"表示通配符，匹配所有路径
-    - link： 相当于一个 a 标签 <Link to="/about">About</Link>, 点击就导航到对应路由组件
-    - 路由里的不是由 <Route path="">过来的组件不能直接接受 path 传递来的参数，需要 withRouter 将组件包裹一层
-      var User = withRouter(function User(props) {})
-      接受到的属性 props 是个对象，有 history，location,match 几个属性，分别有相关的方法，可以通过 props.match.params. 参数名 (id) 拿到传递过来的参数
+  - HashRouter：一个组件，包裹在所有路由的最外层，表示以 hash 模式进行地址导航
+  - BrowserRouter: H5 模式，一般不需要
+  - Switch, 可选，表示按照顺序匹配内部的路由，只匹配满足条件的第一个
+  - Route： 导航组件 <Route path="/users/:id" exact><Component/></Route>
+    - path 只能接完整路径，嵌套路由也是完整路径
+    - exact 表示必须精确匹配路径，默认都是开头匹配就行，匹配成功就就加载中间的组件
+    - 也可以通过 path 向内部组件参数
+    - path 里面"\*"表示通配符，匹配所有路径
+  - link： 相当于一个 a 标签 <Link to="/about">About</Link>, 点击就导航到对应路由组件
+  - 路由里的不是由 <Route path="">过来的组件不能直接接受 path 传递来的参数，需要 withRouter 将组件包裹一层
+    var User = withRouter(function User(props) {})
+    接受到的属性 props 是个对象，有 history，location,match 几个属性，分别有相关的方法，可以通过 props.match.params. 参数名 (id) 拿到传递过来的参数
 
-  - react 是按照业务逻辑书写，符合用法即可。
-    function App() {
-    return (
-    <HashRouter>
+* react 是按照业务逻辑书写，符合用法即可。
+  function App() {
+  return (
+  <HashRouter>
 
-    <div>
-    <nav>
-    <Link to="/users">Users</Link>
-    </nav>
-    <Switch>
-    <Route path="/users">
-    <Users />
-    </Route>
-    <Route path="/users" component={组件名Users}/>
-    </Switch>
-    </div>
+  <div>
+  <nav>
+  <Link to="/users">Users</Link>
+  </nav>
+  <Switch>
+  <Route path="/users">
+  <Users />
+  </Route>
+  <Route path="/users" component={组件名Users}/>
+  </Switch>
+  </div>
 
-    </HashRouter>
-    )
-    }
+  </HashRouter>
+  )
+  }
 
-- Redux
+* Redux
 
   - 比较底层的封装，单项数据流，全局数据中心，实现了组件之间的数据和事件的传递
 
@@ -4550,6 +4543,7 @@ create table users(
 
     - <script src="https://unpkg.com/react-redux@5.0.6/dist/react-redux.js">
       var { Provider，connect} = ReactRedux
+
 
     - 在根组件里面的最外层用 <Provider store={store}></Provider>包一层，下层组件就可以访问到 store 的 state 以及相关方法
 
