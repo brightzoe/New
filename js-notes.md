@@ -3021,7 +3021,7 @@ function loadAllDeps(entryFile) {
         res.write('</html>')
         res.end()//写入完成后调用end将stream发往客户端
         //也可以直接把request body 作为end的参数返回
-        res.end('<html><body><p>gerwgqw</p></body></html>')
+        res.end('<html><body><p>gewgaw</p></body></html>')
         ```
 
 ​
@@ -3057,7 +3057,7 @@ function loadAllDeps(entryFile) {
 
       - ws = fs.createWriteStream(path) 创造向某个路径文件写入数据的可写流
 
-        事件：‘close’,’drain’,’error’,’finish’,’unpipe’
+        事件：‘close’,’drain’,’error’,’finish’,’pipe’
 
       - ws.write(data) 可写流都有 write 方法，向目标 path 写入数据；可写流的 finish 事件，end 之后缓冲区里面的数据全部处理完了之后触发
 
@@ -3220,7 +3220,7 @@ function loadAllDeps(entryFile) {
     - sharp 图像处理库
     - svg-captcha 生成验证码
     - express-session 会话，存储你通过请求获取到的数据的地方。每一个访问你网站的用户都有一个唯一的 session，包括多次通信，保存到服务器
-      cookie 会储存 sessionid，由 sessionid 确认是不是同一个会话
+      cookie 会储存 sessionId，由 sessionId 确认是不是同一个会话
     - md5 加密算法
     - Jimp 图像处理库
       - pixelData = await Jimp.read('./pixelData.png') 得到这个位置的初始图片对象，图片对象是一个描述这个图片的数据对象
@@ -3270,7 +3270,7 @@ function loadAllDeps(entryFile) {
       第一种情况：
         如果有可用回调（可用回调包含到期的定时器还有一些 IO 事件等），执行所有可用回调。
         检查是否有 process.nextTick 回调，如果有，全部执行。
-        检查是否有 microtaks，如果有，全部执行。
+        检查是否有 microtasks，如果有，全部执行。
         退出该阶段。
       第二种情况：
         如果没有可用回调。
@@ -3279,12 +3279,12 @@ function loadAllDeps(entryFile) {
     - 进入 check 阶段。
         如果有 immediate 回调，则执行所有 immediate 回调。
         检查是否有 process.nextTick 回调，如果有，全部执行。
-        检查是否有 microtaks，如果有，全部执行。
+        检查是否有 microtasks，如果有，全部执行。
         退出 check 阶段
     - 进入 closing 阶段。
         如果有 immediate 回调，则执行所有 immediate 回调。
         检查是否有 process.nextTick 回调，如果有，全部执行。
-        检查是否有 microtaks，如果有，全部执行。
+        检查是否有 microtasks，如果有，全部执行。
         退出 closing 阶段
 
 - 宏任务和微任务
@@ -3323,13 +3323,13 @@ app.listen(3000, () => {
 app.use((req,res,next)=>{}) //中间件，对所有请求做一种方式的处理
 //use第一个参数，只要以这个开头，而get必须完全是这个路径，不包含子路径
 //app.get/app.post
-//req,res对象和http模块的对象不一样，是express.req/epress.req
+//req,res对象和http模块的对象不一样，是express.req/express.req
 app.use(path,()=>{}) //以该路径开头走这个中间件，也可以接多个中间件
 httpServer = app.listen(port,()=>{}) //listen方法会返回一个http服务器
 
 //创建一个模块化的路由处理程序，完整的路由系统的中间件,为项目分流。配合module.exports = wendaRouter使用
 wendaRouter = express.Router
-app.use('/wenda',wendaRouter)
+app.use('/wanda',wendaRouter)
 
 //基本路由
   app.METHOD(PATH, HANDLER)
@@ -3658,7 +3658,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   data:f(){}
   }
   methods{
-  method1:fuction(){}
+  method1:function(){}
   method2(){}
   }
   template：html 代码
@@ -3836,7 +3836,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
 
     - 父组件监听自定义组件 v-on:event1
     - 子组件在某种情况下（比如自己触发了自己的事件）触发该自定义事件
-      如在点击时触发自定义事件 v-on:click="\$emit('event1' ,arguement)
+      如在点击时触发自定义事件 v-on:click="\$emit('event1' ,argument)
     - emit 的第二个参数表示可以给父组件传递的参数，父组件可以通过 $event 接收这个参数，如果这个事件 event1 处理函数是一个方法，那么 $event 将会作为第一个参数传入这个方法
       v-on:event1='$event'
         v-on:event1='fun'   methods:{fun($event){}}
@@ -4011,7 +4011,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
       component: wechat, 路由匹配到该路径就渲染这个组件
       children：[{
       path: 'man', 这个路径表示匹配到 /wechat/man 这个路径
-      components:safd,
+      components:safe,
       这个属性用于路由的嵌套
       }]
       } ,
@@ -4120,7 +4120,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
 
 - 三个引用
 
-  - 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 bable 转化为了 React.creatElement（标签名，属性，子元素）
+  - 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 bable 转化为了 React.createElement（标签名，属性，子元素）
 
   <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
 
@@ -4149,7 +4149,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   - class 组件
     class 大写组件名 extends React.Component{
     constructor(props){
-    super(props) 用来引入 this，props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.chidren 可以直接拿到组件的子元素或者中间的插值
+    super(props) 用来引入 this，props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
     this.state={ 用来记录数据状态
     key：value
     }
@@ -4176,7 +4176,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
 
 - React 的特殊事件和属性写法
 
-  - <lable htmlFor =""> lable 标签里面的 for 属性，因为 for 是 js 关键字
+  - <label htmlFor =""> label 标签里面的 for 属性，因为 for 是 js 关键字
   - className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
   - style 属性只接收对象不接收字符串
   - onClick , onDoubleClick ,onChange 相关事件
@@ -4190,7 +4190,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
 - JSX
 
   - JavaScript 的语法扩展，一种标签语法
-    const element = <h1>Hello, world!</h1>，会调用 React.creatElement（标签名，属性，子元素）构建虚拟 dom
+    const element = <h1>Hello, world!</h1>，会调用 React.createElement（标签名，属性，子元素）构建虚拟 dom
   - JSX 会移除行首尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格
 
 - 条件渲染
@@ -4336,7 +4336,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   - React.memo()
     和 React.PureComponent 功能一样，不过它适用于函数组件 ，不适用于 class 组件；接收一个函数组件为参数，返回包装后的组件
 
-  - React.creatElement（标签名，属性，子元素）
+  - React.createElement（标签名，属性，子元素）
     创建并返回指定类型的新 React 元素，此时还没有实例化，是对虚拟 dom 的描述，上面有 key,ref，props 这些属性，渲染之前会根据这些信息创造实例，实例会调用 render() 函数
 
   - cloneElement( element,[props],[...children]) 克隆 React 元素， props 与原始元素的 props 浅层合并后的结果。新的子元素将取代现有的子元素，而来自原始元素的 key 和 ref 将被保留
@@ -4402,7 +4402,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
       <MyUserContext.Provider value={this.state.user}></MyUserContext.Provider>
     - 内部接收数据方法
       - 通过<MyUserContext.Consumer>接收，其内部是一个函数，参数为接收的 value, 返回需要渲染的 JSX 代码，而且可以多层嵌套
-        <MyUserContext.Consumer>{value=>{reture JSX 代码}}</MyUserContext.Consumer>
+        <MyUserContext.Consumer>{value=>{return JSX 代码}}</MyUserContext.Consumer>
       - 通过子组件的静态属性把 context 实例赋值到 contextType 属性，然后再 JSX 中可以使用 this.context 访问到 value
         static contextType = MyUserContext
         this.context
@@ -4413,7 +4413,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
     - immer.js 一个实现结构共享的库 <script src="https://unpkg.com/immer/dist/immer.umd.js"></script>
       const produce = immer.produce 这个库会引入一个全局变量 immer，上面有个 produce 方法
     - 用法一
-      - 先定义一个变更，等到有数据时再执行这个变更；f = pruduce(draft=>{})
+      - 先定义一个变更，等到有数据时再执行这个变更；f = produce(draft=>{})
       - draft 是对象代理，代理接收到的参数对象 obj，会拦截所有对 obj 的访问；读取数据时，draft 上面没有回溯到 obj 上找，设置数据时设置到 draft 上；
       - f 函数接收一个对象 obj，draft 代理这个对象，直接对 draft 操作就是对传入对象进行操作，而且是最大可能的共用已有数据；
       - produce((draft,action)=>{}), 函数除了代理对象还可以接收其它变更时需要的参数
