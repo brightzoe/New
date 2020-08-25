@@ -1,3 +1,5 @@
+
+
 # 常用命令行
 
 ## git 基础知识
@@ -3333,6 +3335,7 @@ app.use('/wanda',wendaRouter)
 
 //基本路由
   app.METHOD(PATH, HANDLER)
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
     * app 是 express 的实例。
     * METHOD 是 HTTP 请求方法。
     * PATH 是服务器上的路径。
@@ -3503,11 +3506,12 @@ CREATE TABLE users(
 
   - 种类
     `[INNER] JOIN` 返回两个表中的匹配值的记录，取交集
-    `LEFT JOIN`    返回左表的所有记录，以及匹配的记录
-    `RIGHT JOIN`   返回右表的所有记录，以及匹配的记录
-    `FULL JOIN`    全连接，返回所有的排列组合记录
+    `LEFT JOIN` 返回左表的所有记录，以及匹配的记录
+    `RIGHT JOIN` 返回右表的所有记录，以及匹配的记录
+    `FULL JOIN` 全连接，返回所有的排列组合记录
     `a join b where a.id = b.id`
     `a join b on a.id = b.id`
+
 - 项目使用 sqlite 的方法
 
   - `npm i sqlite` sqlite 是基于 promise 对 sqlite3API 的封装
@@ -3584,101 +3588,124 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   - script 引用
   - npm 安装 npm install vue
 
+
+- 插值
+
+  - 文本或 js 表达式(单个表达式)插值 {{value}}
+    `<span>Message: {{ msg }}</span>`
+    `{{ 1+1==2 ? "1" : "hh" }}`
+    只能在两个 html 标签之间插值，不能插值在一个标签内
+
+  - html 插值 v-html 指令
+
+    `<p v-html="rawHtml"></p>`
+
+    p 标签的内容 会替换为 rawHtml 渲染的内容，直接作为html。
+
 - 指令，以 v- 为前缀
 
   - v-bind
-    将某个属性绑定为一个变量 <span v-bind:title="message">
-    缩写<span :title="message">
-
+    将某个属性绑定为一个变量 `<span v-bind:title="message">`
+    缩写`<span :title="message">`
+    动态参数：`<span :[title]="message">` 属性名也是表达式，避免大写字母
   - v-on
-    添加事件监听器 <button v-on:click="reverseMessage">反转消息</button>
-    缩写 <button @click="reverseMessage">反转消息</button>
+    添加事件监听器 `<button v-on:click="reverseMessage">反转消息</button>`
+    缩写 `<button @click="reverseMessage">反转消息</button>`
+    `<button @click="reverseMessage(idx,$event)">反转消息</button>`
+    - 修饰符
+    `<form v-on:submit.prevent.stop="onSubmit">...</form>`
+    .prevent: event.preventDefault();
+    .stop:event.stopPropagation();
+
 
   - v-if
-    判断一个元素是否显示，值为 true 时显示，false 不显示<p v-if="seen">现在你看到我了</p>
-    v-else
-    v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面，否则它将不会被识别
-    可以配合 template 元素实现分组渲染
-
+    判断一个元素是否显示，值为 true 时显示，false 不显示
+    `<p v-if="seen">现在你看到我了</p>`
+    `<p v-else>现在你看到另一个了</p>`
+    v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面，否则它将不会被识别,可以配合 template 元素实现分组渲染,不会被包在别的元素里面，如div.
+    可以配合设置具有唯一值的key属性，来表达“两个元素完全独立，不要复用”的情况
+    ```html
     <template v-if="ok">
       <h1>Title</h1>
       <p>Paragraph 1</p>
       <p>Paragraph 2</p>
     </template>
+    ```
 
   - v-show
-    和 v-if 用法一样，不同的是带有 v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS 属性 display；
-    v-show 不支持 <template> 元素，也不支持 v-else
-
+  和 v-if 用法一样，不同的是带有 v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS 属性 display, v-show 不支持 `<template>` 元素，也不支持 v-else.
+  > **v-if vs v-show**
+    v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
+    v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+    相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+    一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
   - v-for
-    可以绑定数组的数据来渲染一个项目列表 ，需要配合使用 (item, index) in items 形式的特殊语法；
-    index 不用时可以省略
-    <li v-for="todo in todos">
-    {{ todo.text }}
-    </li>
-    也可以绑定对象的数据来渲染一个项目列表，可以传递 3 个参数，index 表示第几个，类似数组
-
-    <div v-for="(value, key, index) in object">
-      {{ index }}. {{ key }}: {{ value }}
-    </div>
-
-  - v-model
-    实现表单输入和应用状态之间的双向绑定。相当于添加一个属性和一个事件监听器<input>、<textarea> 及 <select>
-    可以双向绑定各种数据类型的值
-
+  可以绑定数组的数据来渲染一个项目列表 ,需要配合使用 `(item, index) in items` 形式的特殊语法,index 不用时可以省略.
+  由于vue默认是就地更新每个元素，需要每项设置唯一的`key`,以便它能跟踪每个节点的身份，从而重用和重新排序现有元素.
+  ```html
+  <li v-for="todo in todos" :key="todo.content">
+  {{ todo.text }}
+  </li>
+  ```
+  也可以绑定对象的数据来渲染一个项目列表，可以传递 3 个参数，index 表示第几个，类似数组.
+  ```html
+  <div v-for="(value, key, index) in object">
+    {{ index }}. {{ key }}: {{ value }}
+  </div>
+  ```
+  - v-model 
+  实现表单输入和应用状态之间的双向绑定。相当于添加一个属性和一个事件监听器`<input>`、`<textarea>` 及 `<select>`
+  可以双向绑定各种数据类型的值
+  ```html
     <div id="app-6">
       <p>{{ message }}</p>
       <input v-model="message">
     </div>
-
-    v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
-    text 和 textarea 元素使用 value 属性和 input 事件；
-    checkbox 和 radio 使用 checked 属性和 change 事件；
-    select 字段将 value 作为 属性和 change 作为事件。
+  ```
+  v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
+  text 和 textarea 元素使用 value 属性和 input 事件；
+  checkbox 和 radio 使用 checked 属性和 change 事件；
+  select 字段将 value 作为 属性和 change 作为事件。
 
 - 创建 vue 应用
+  除了数据property,Vue实例还暴露了一些实例property与方法。如`app.$data,app.$el,app.$watch`
+  ```js
   var app = new Vue({
-  el: 选择器，通过选择器指定一个元素，该元素及其后代可以进行 vue 操作
-  data: {
-  _ 储存相关数据，vue 内部会把所有的数据的变为 getter 和 setter；
-  _ 数组的变更检测
-  数组的下标没有设置为 getter 和 setter，所以不能通过更改数组下标的方式改变页面，因为 vue 并不能监听到下标的变化，即当你利用索引直接设置一个数组项时，和当你修改数组的长度时，Vue 不能检测数组的变动；
-  可以通过 Vue.set(vm.items, indexOfItem, newValue) 添加
-  vue 对一些方法进行了一层包装，这些方法会触发视图更新，push()pop()shift()unshift()splice()sort()reverse() \* 对象的变更检测
-  对象也不可以直接通过增加和删除属性来触发视图更新，因为普通属性不会变为 getter 和 setter
-  obj.foo = 12 ,
-  可以 Vue.set(vm.items, key, newValue) 添加
-  }
+  el: //选择器选定一个元素，该元素及其后代可以进行 vue 操作
+  data: {}
+  //储存相关数据，vue 内部会把所有的数据的变为 getter 和 setter；
+  //只有当实例被创建时就已经存在于 data 中的 property 才是响应式的.
   computed:{
-  计算属性，一个函数，只有函数的返回结果发生变化时才会重新运行渲染，自带缓存效果；当一个属性的值是现有的数据推导出来的可以用计算属性
-  默认都是 get 函数，也可以写 set 函数 set:f(){}
+    total:{
+      get:function(){}
+      set:function(){}
+  }
+  //NOTE: 计算属性，一个函数，只有函数的返回结果发生变化时才会重新运行渲染。自带缓存效果,当一个属性的值是现有的数据推导出来的可以用计算属性,计算属性基于他们的响应式依赖进行缓存。
+  // 默认只有 getter，也可以写 setter。
   }
   watch:{
-  帧听属性，监听 data 中数据的变动并执行相关操作
-  data:f(){}
+    price:function(){}
+    amount:function(){}
+  //帧听属性，监听并响应vue实例中数据的变动，相比计算属性更通用，不要滥用。如果需要在数据变化时执行异步或开销较大的操作时，watch最有用。
   }
-  methods{
+  methods:{
   method1:function(){}
   method2(){}
   }
-  template：html 代码
-  当一个实例里面有 template 属性时，初始化实例时会将 template 的值作为虚拟 dom 而忽略实际的 el 元素内容
+  template：//html 代码
+  //当一个实例里面有 template 属性时，初始化实例时会将 template 的值作为虚拟 dom 而忽略实际的 el 元素内容
   })
+  ```
+  - 数组的变更检测
+  数组的下标没有设置为 getter 和 setter，所以不能通过更改数组下标的方式改变页面，因为 vue 并不能监听到下标的变化，即当你利用索引直接设置一个数组项时，和当你修改数组的长度时，Vue 不能检测数组的变动；可以通过 `Vue.set(vm.items, indexOfItem, newValue)` 添加。
+  vue 对一些方法进行了一层包装，这些方法会触发视图更新:`push()pop()shift()unshift()splice()sort()reverse() `
+  - 对象的变更检测
+  对象也不可以直接通过增加和删除属性来触发视图更新，因为普通属性不会变为 getter 和 setter， 可以用 `Vue.set(vm.items, key, newValue)` 添加
+  }
 
-- 插值
 
-  - 文本和 js 表达式插值 {{value}}
-    <span>Message: {{ msg }}</span>
-    {{ message.split('').reverse().join('') }}
-    只能在两个 html 标签之间插值，不能插值在一个标签内
-
-  - html 插值 v-html 指令
-
-    <p v-html="rawHtml"></p>
-
-    p 标签的 innerhtml 会替换为 rawHtml 渲染的内容
-
-- 修饰符 修饰符 (modifier) 是以半角句号。指明的特殊后缀，用于指出一个指令应该以特殊方式绑定
+- 修饰符 
+修饰符 (modifier) 是以半角句号.指明的特殊后缀，用于指出一个指令应该以特殊方式绑定
 
   - 事件修饰符
     .stop => event.stopPropagation()
@@ -3703,17 +3730,18 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   - class 的绑定
     - 直接绑定字符串作为类名
     - 绑定到一个对象，对象里值为 true 的属性名为一个类名
-      v-bind:class="{ active: true, 'text-danger': false }" => class = active
-    - 绑定一个数组传给 v-bind:class，以应用一个 class 列表
-      v-bind:class="[activeClass, errorClass]", 判断规则和上面 2 中一样
+      `v-bind:class="{ active: 1+2===3, 'text-danger': false }" => class = active`
+      对象不必定义在模板里，可以在js里面,可以写在返回对象的computed属性上。
+    - 绑定一个数组传给 `v-bind:class`,以应用一个 class 列表。数组中可以套用对象语法。
+      `v-bind:class="[activeClass, errorClass]"`, 判断规则和上面 2 中一样
   - style 的绑定
-    - 绑定到字符串 ：style ="'color:red'"
-    - 绑定到一个对象，CSS 属性名可以用驼峰式或短横线分隔来命名
-      v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"
+    - 绑定到字符串 `:style ="'color:red'"`
+    - 绑定到一个对象,data里面可以写一个style对象。CSS 属性名可以用驼峰式或短横线分隔来命名
+      `v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"`
     - 绑定到数组
-      数组里面可以是字符串，可以是对象，但不能组合使用
+      数组里面可以写多个样式对象。
     - 多重值
-      :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex']
+      `:style="{ display: ['-webkit-box', '-ms-flexbox', 'flex']`
       只会渲染数组中最后一个被浏览器支持的值
 
 - key 属性的作用
