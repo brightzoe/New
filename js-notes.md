@@ -3654,14 +3654,9 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   </div>
   ```
   - v-model 
-  实现表单输入和应用状态之间的双向绑定。相当于添加一个属性和一个事件监听器`<input>`、`<textarea>` 及 `<select>`
-  可以双向绑定各种数据类型的值
-  ```html
-    <div id="app-6">
-      <p>{{ message }}</p>
-      <input v-model="message">
-    </div>
-  ```
+  FIXME 表单输入绑定 
+  实现表单输入和应用状态之间的双向绑定。相当于添加一个属性和一个事件监听器.
+  `<input>`、`<textarea>` 及 `<select>`  可以双向绑定各种数据类型的值.
   v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
   text 和 textarea 元素使用 value 属性和 input 事件；
   checkbox 和 radio 使用 checked 属性和 change 事件；
@@ -3698,7 +3693,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   ```
   - 数组的变更检测
   数组的下标没有设置为 getter 和 setter，所以不能通过更改数组下标的方式改变页面，因为 vue 并不能监听到下标的变化，即当你利用索引直接设置一个数组项时，和当你修改数组的长度时，Vue 不能检测数组的变动；可以通过 `Vue.set(vm.items, indexOfItem, newValue)` 添加。
-  vue 对一些方法进行了一层包装，这些方法会触发视图更新:`push()pop()shift()unshift()splice()sort()reverse() `
+  vue 对一些方法进行了一层包装，这些方法会触发视图更新:`push(),pop(),shift(),unshift(),splice(),sort(),reverse() `
   - 对象的变更检测
   对象也不可以直接通过增加和删除属性来触发视图更新，因为普通属性不会变为 getter 和 setter， 可以用 `Vue.set(vm.items, key, newValue)` 添加
   }
@@ -3718,12 +3713,14 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
     .enter;.tab;.delete ;.esc;.space;.up;.down;.left;.right
   - 系统修饰键
     .ctrl;.alt;.shift;.meta
+  - 鼠标按钮修饰符
+    .left;.right;.middle
   - .exact 修饰符
     @click.ctrl.exact 有且只有 Ctrl 被按下的时候才触发
   - 表单修饰符
-    - .lazy 在默认情况下，v-model 在每次 input 事件触发后将输入框的值与数据进行同步。可以添加 lazy 修饰符，从而转变为使用 change 事件进行同步
-    - .number 如果想自动将用户的输入值转为数值类型，可以给 v-model 添加 number 修饰符：
-    - .trim 如果要自动过滤用户输入的首尾空白字符，可以给 v-model 添加 trim 修饰符：
+    - .lazy 在默认情况下，v-model 在每次 input 事件触发后将输入框的值与数据进行同步。可以添加 lazy 修饰符，从而转变为使用 change 事件进行同步.v-model.lazy
+    - .number 如果想自动将用户的输入值转为数值类型，可以给 v-model 添加 number 修饰符.v-model.number
+    - .trim 如果要自动过滤用户输入的首尾空白字符，可以给 v-model 添加 trim 修饰符.v-model.trim
 
 - Class 与 Style 绑定
 
@@ -3745,9 +3742,10 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
       只会渲染数组中最后一个被浏览器支持的值
 
 - key 属性的作用
-  Vue 提供了一种方式来表达一个元素独一的身份；只需添加一个具有唯一值的 key 属性，虚拟 dom 在进行对比渲染时，key 值不相同的元素不会作对比， 保证了同一个元素渲染前后都只和自身对比；而不会因为元素位置的变化导致从头渲染；
+  Vue 提供了一种方式来表达一个元素独一的身份,识别节点的通用机制。只需添加一个具有唯一值的 key 属性，虚拟 dom 在进行对比渲染时，key 值不相同的元素不会作对比， 保证了同一个元素渲染前后都只和自身对比；而不会因为元素位置的变化导致从头渲染；
 
 - vue 初始化将 data 都变为 getter 和 setter 函数
+```js
   function observe(obj) {
   for(let prop in obj) {
   let val = obj[prop]
@@ -3768,7 +3766,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   }
   return obj
   }
-
+```
 - 异步更新队列
 
   - Vue 在更新 DOM 时是异步执行的，每次数据变更都会次发出渲染的信号
@@ -3779,9 +3777,9 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
 - 生命周期钩子 lifecycle hooks
 
   - 生命周期
-    Vue 实例从创建到销毁的过程，就是生命周期。也就是从开始创建、初始化数据、编译模板、挂载 Dom→ 渲染、更新 → 渲染、卸载等一系列过程
+    Vue 实例从创建到销毁的过程，就是生命周期。也就是从开始创建、初始化数据、编译模板、挂载 DOM → 渲染、更新 → 渲染、卸载等一系列过程
   - 钩子
-    钩子”就是在生命周期的某个阶段给你一个做某些处理的机会（执行一段 js 代码）
+    钩子就是在生命周期的某个阶段给你一个做某些处理的机会（执行一段 js 代码）
   - 流程
     - 创建一个 vue 实例 vm，new Vue()
     - 初始化事件和生命周期
@@ -3791,87 +3789,89 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
     - 初始化注入和校验
       - 检查代码正确性
       - 将 data 里面的每一个数据变为 getter 和 setter
-    - 执行钩子函数 create
+    - 执行钩子函数 **created**
     - 判断是否有 el 属性
-      - 没有就暂停周期等待调用 vm.\$mount(el) 函数，再执行下一步
+      - 没有就暂停周期等待调用 vm.$mount(el) 函数，再执行下一步
       - 有就直接执行下一步
     - 判断是否有 template 属性
       - 有模板就将模板编译到 render() 中渲染得到虚拟 dom（一个树状结构的对象）
       - 没有模板就将 el 元素的 outerHTML 作为模板执行上面的操作
     - 执行钩子函数 beforeMount
-    - 创建 vm.\$el 并替换 el 属性
+    - 创建 vm.$el 并替换 el 属性
       - 通过虚拟 dom 创建了一个真实的 dom 元素 el
       - el 之前是选择器一个字符串，现在替换为一个真正的 dom 元素
-    - 执行钩子函数 mounted
+    - 执行钩子函数 **mounted**
     - 挂载完毕
       - 当 data 被修改时，调用钩子函数 beforeUpdate
       - 虚拟 dom 重新渲染并更新页面
-      - 更新完毕执行钩子函数 updated
-    - 当调用 vm.\$destroy() 时
+      - 更新完毕执行钩子函数 **updated**
+    - 当调用 vm.$destroy() 时
       - 执行钩子函数 beforeDestroy
       - 解除绑定销毁组件以及事件监听器
       - 销毁完毕
-      - 执行钩子函数 destroy
+      - 执行钩子函数 **destroy**
 
 - 组件
-
+  可**复用**的Vue实例，组件名称当html标签使用。
+  与 new Vue 接收相同的选项，例如 data、computed、watch、methods 以及生命周期钩子等。仅有的例外是像 el 这样根实例特有的选项。
+  组件要先注册才能使用。两种注册类型：全局注册、局部注册。
   - 创建组件
-    Vue.component('组件名称，之后可以直接当做标签使用'，{
-    template:`模板内容`, 模板 html 的最外层必须要有且只有一个根元素包裹着所有的元素，最外层不能是多个兄弟元素并列
-    props:{
-    propA: Number, 限制值的类型
-    propB: [String, Number] 限制值多个可能的类型
-    propC: {
-    type: String, 类型为 String
-    required: true 必要属性，必须传值
+  全局注册组件：
+  ```js
+    Vue.component('组件名称，之后当做标签使用'，{
+    template:`模板内容` //模板 html 的最外层必须要有且只有一个根元素包裹着所有的元素，最外层不能是多个兄弟元素并列
+    props:{//组件的属性,可以直接用在html标签里面
+    count: Number//限制值的类型,也可以用数组[String, Number]
+    productName: {
+    type: String, //类型为 String
+    required: true, //必要属性，必须传值
+    default: 'product'
     }
-    propD: {
-    type: Number,
-    default: 100 默认值 100
-    }
-    propF: {
+    price: {
     validator: function (value) {
-    // 这个值必须匹配下列字符串中的一个
-    return ['success', 'warning', 'danger'].indexOf(value) !== -1
+    // 验证函数
+    return value>=0
     }
     }
-    通过 Prop 向子组件传递属性，属性值由组件标签上传递：bind 过来
-    单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行
+    //通过 Prop 向子组件传递属性，属性值由组件标签上传递：bind 过来
+    //单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行
     }
     data(){
     return obj
-    一个组件的 data 选项必须是一个函数，返回一个新的对象，因此每个实例可以维护一份被返回对象的独立的拷贝，每个组件之间的运行是独立的，数据不会共享
-    这个函数只在组件初始化时运行一遍，数据之后保存在 getter 和 setter 里
+    //一个组件的 data 须是一个函数，返回一个新的对象，因此每个实例可以维护一份被返回对象的独立的拷贝，每个组件之间的运行是独立的，数据不会共享
+    //这个函数只在组件初始化时运行一遍，数据之后保存在 getter 和 setter 里
     }
     methods:{
 
     }
+  ```
+  局部注册组件，'component-a'只能在父组件使用:
+  ```js
     components: {
     'component-a': {
     data(){},
     template:``
     methods:{}
     }
-    局部注册组件，'component-a'只能在父组件使用
+    
     }
     inheritAttrs: false
-    为组件标签添加属性会自动继承到组件模板的根元素上
-    你不希望组件的根元素继承特性，你可以在组件的选项中设置这个，但是不会影响 style 和 class 的绑定和继承；
-    \$attrs 可以收集父组件中的所有传过来的属性中除了那些在组件中没有通过 props 定义的
+    //为组件标签添加属性会自动继承到组件模板的根元素上。你不希望组件的根元素继承特性，你可以在组件的选项中设置这个，但是不会影响 style 和 class 的绑定和继承；
+    //$attrs 可以收集父组件中的所有传过来的属性中除了那些在组件中没有通过 props 定义的
     })
-
+  ```
   - 监听子组件事件
-
-    - 父组件监听自定义组件 v-on:event1
+    子组件使用事件抛出一个值。
+    - 父组件监听子组件  @click="func"
     - 子组件在某种情况下（比如自己触发了自己的事件）触发该自定义事件
-      如在点击时触发自定义事件 v-on:click="\$emit('event1' ,argument)
-    - emit 的第二个参数表示可以给父组件传递的参数，父组件可以通过 $event 接收这个参数，如果这个事件 event1 处理函数是一个方法，那么 $event 将会作为第一个参数传入这个方法
+      如在点击时触发自定义事件 v-on:click="$emit('event1' ,argument)
+    - emit 的第二个参数表示可以给父组件传递的参数，父组件可以通过 $event 接收这个参数.如果父组件的事件处理函数是一个方法，那么 $event 将会作为第一个参数传入这个方法
       v-on:event1='$event'
-        v-on:event1='fun'   methods:{fun($event){}}
+      v-on:event1='fun'   methods:{func($event){}}
 
   - 组件的数据传递
 
-    - 自上而下通过 prop 传递
+    - 自上而下通过 prop 传递，从父组件传到子组件，不能在子组件中修改prop。
     - 自下而上通过事件触发传递
     - 组件操作 prop 传递来的数据时，组件不要修改它，只读取，通过触发事件上级组件反馈，由上级组件操作数据；数据的拥有者是哪个组件，哪个组件才可以更改它；
       组件的层次过深时，组件树数据的传递太繁琐，建议将数据放到全局，每个组件直接修改全局数据，这样就不用传递数据
