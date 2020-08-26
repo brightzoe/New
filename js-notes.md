@@ -3818,7 +3818,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   - 创建组件
   全局注册组件：
   ```js
-    Vue.component('组件名称，之后当做标签使用'，{
+    Vue.component('组件名称，之后当做标签使用',{
     template:`模板内容` //模板 html 的最外层必须要有且只有一个根元素包裹着所有的元素，最外层不能是多个兄弟元素并列
     props:{//组件的属性,可以直接用在html标签里面
     count: Number//限制值的类型,也可以用数组[String, Number]
@@ -3935,20 +3935,20 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
     template: '#hello-world-template'
     })
 
-  - 强制更新 迫使 Vue 实例重新渲染。vm.\$forceUpdate()
+  - 强制更新 迫使 Vue 实例重新渲染。vm.$forceUpdate()
 
 - Vuex
 
   - Vuex 是一个专为 Vue.js 应用程序开发的数据管理模式。它采用集中式存储管理应用的所有组件的数据
 
   - 安装
-    除了通过 scrip 标签引用，其它方式引用要确保在开头调用了 Vue.use(Vuex)
+    除了通过 script 标签引用，其它方式引用要确保在开头调用了 Vue.use(Vuex)
 
   - 使用方法
 
     - 对于根组件
       var app5 = new Vue({
-      store:store, 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件，子组件可以通过 this.\$store 访问到根组件的 store 对象
+      store:store, 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件，子组件可以通过 this.$store 访问到根组件的 store 对象
       })
 
     - 创建一个仓库实例
