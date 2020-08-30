@@ -4171,7 +4171,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
 - 插值
   通过{}插值，里面可以是各种类型的值，可以是表达式但不能是语句
 
-- React 组件
+### React 组件
 
   - 组件名必须大写
   - 不能将通用表达式作为组件名，组件名必须是静态的，即使用组件时它是确定唯一的
@@ -4204,18 +4204,20 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   - 在异步函数(自己定义的函数)里面调用 setState 那么 state 的更新是同步的
   >什么时候是同步的？什么时候是异步的？为什么有时是同步的，有时是异步的？
     批量合并，效率更高。
-    
 
-- React 的特殊事件和属性写法
+
+### React 的特殊事件和属性写法
 
   - <label htmlFor =""> label 标签里面的 for 属性，因为 for 是 js 关键字
   - className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
   - style 属性只接收对象不接收字符串
+  - React 中，有一个命名规范，通常会将代表事件的监听 prop 命名为 on[Event]，将处理事件的监听方法命名为 handle[Event] 这样的格式。
   - onClick , onDoubleClick ,onChange 相关事件
   - React 里面的事件名和属性名都采用驼峰式
   - React 里面的 style 属性的值必须是一个对象 ，style ={对象{}}
   - React 里面的 onChange 事件不是光标移开后触发，而是输入的每时刻都会触发
   - key 和 ref 属性是组件的特殊属性，不在 props 上面
+
 
 - 组件标签可以写作自闭和标签，React 里面的自闭和标签必须要 /，如 input 标签
 
@@ -4273,7 +4275,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
     - 有 key 时
       新旧虚拟 dom 对比时，key 值相同的进行对比，减少对此次数，效率更高
 
-- React 的生命周期函数
+### React 的生命周期函数
 
   - 挂载阶段
     - constructor()
@@ -4307,11 +4309,11 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   - unsafe 类生命周期函数正是因为在某些情况下会和 React-Fiber 的异步机制发生冲突所以不推荐使用，可能会有 bug
   - render 之前的函数都必须是纯函数或者是 static 方法函数，render 之前的函数不能产生副作用，可能会和 React-Fiber 的异步机制发生冲突
 
-- 不要 UNSAFE\_ componentWillMount 在这个组件里面发生 AJAX 请求的原因
+- 不要 UNSAFE_ componentWillMount 在这个组件里面发生 AJAX 请求的原因
 
   - 这个函数后面会紧接着 render 函数，由于请求资源是一个异步过程，render 函数执行的时候资源没请求下来，没法更新 dom
   - 所以建议这类异步请求放到 componentDidMount 里面，放到后面可以减少 dom 挂载时间
-  - UNSAFE\_ componentWillMount 会紧接着 Construct 函数运行，官方建议不使用这个函数，里面其它的操作可以直接放到构造函数里面
+  - UNSAFE_ componentWillMount 会紧接着 Construct 函数运行，官方建议不使用这个函数，里面其它的操作可以直接放到构造函数里面
 
 - PropTypes
 
@@ -4360,7 +4362,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
     const ref = React.createRef();
     <FancyButton ref={ref}>Click me!</FancyButton>;
 
-- React 相关 api
+### React 相关 api
 
   - React.PureComponent
     和 React.component 的唯一区别是，他会自动调用 shouldComponentUpdate() 这个周期函数，以浅层对比 prop 和 state，如果相同组件就不会刷新，可提高性能，用于 class 组件
@@ -4508,7 +4510,7 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
   - 目的是将组件逻辑提取到一个函数，这个函数从而具有组件的一些功能，本质就是高阶函数
   - 自定义组件库 https://nikgraf.github.io/react-hooks/
 
-- react 路由
+### react 路由
 
   - 安装
 
