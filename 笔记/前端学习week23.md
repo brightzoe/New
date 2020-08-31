@@ -8,7 +8,7 @@ tags:
 mathjax: false
 ---
 
-​	本周主要在做vue的东西，多少是相通的，react之后再来整理	
+​	本周主要在做vue的东西，多少是相通的，react之后再来整理
 
 <!-- more -->
 
@@ -63,7 +63,7 @@ mathjax: false
 
 - 标签的ref属性传入函数时会在元素渲染完成后调用并传入参数为结点对象
 
-  - 现在的做法，构造器中创建一个`React.creatRef()`对象，将该对象传入ref属性，然后在该对象的current属性调用对应dom结点，需要多个ref就创建多个对象
+  - 现在的做法，构造器中创建一个`React.createRef()`对象，将该对象传入ref属性，然后在该对象的current属性调用对应dom结点，需要多个ref就创建多个对象
   - 当 `ref` 属性用于 HTML 元素时，构造函数中使用 `React.createRef()` 创建的 `ref` 接收底层 DOM 元素作为其 `current` 属性。
   - 当 `ref` 属性用于自定义 class 组件时，`ref` 对象接收组件的挂载实例作为其 `current` 属性。
   - **不能在函数组件上使用 ref 属性**，因为它们没有实例 (函数式组件在使用时是直接调用，class式组件是创建一个实例)，但是可以在函数组件内部的元素上使用
@@ -94,7 +94,7 @@ mathjax: false
     </MyContext.Consumer>
     ```
 
-  - 
+  -
 
 - SyntheticEvent，事件处理时传入处理机的事件对象其实都是在原生事件上包装过的合成事件，保留了一些原生的接口，主要是为了兼容问题，此外为了节省内存，同一个类型的事件触发可能会复用同一个合成事件对象，并且处理完成后会清空，所以尽量不要异步访问事件(譬如当使用`this.setState(state => {xxx: e.target.value})` 时)
 
@@ -133,7 +133,7 @@ mathjax: false
 - useEffect传入第二个数组参数跳过这个步骤时，注意内部函数的作用域，数组中要包含useEffect要使用的变量，这些变量改变时才执行，否则会执行最初作用域的函数(空数组表示只有挂载卸载时会执行)
   - useEffect在第一次渲染和每次更新后都会执行(相当于 componentDidMount  +  componentDidUpdate  但不会阻塞浏览器更新屏幕)
   - 注意useEffct是在渲染**后**和更新**后**才执行的
-- useCallback和useMemo的参数和useEffect是一致的，区别是只有useEffect才能处理副作用， useMemo返回缓存的变量 ， useCallback返回缓存的函数 
+- useCallback和useMemo的参数和useEffect是一致的，区别是只有useEffect才能处理副作用， useMemo返回缓存的变量 ， useCallback返回缓存的函数
   - useMemo和useCallback在渲染期间执行的意思是其返回值是直接参与渲染的，所以只能在其中写一些计算类的工作， 为未来并发渲染的考虑，在 render 时做 mutation 非常危险（因为最后一次 render 并不意味着是最新的 commit )
   - 函数组件的性能优化方式之一
   - 并不是解决创建函数造成的性能问题，第一个参数的函数每次更新还是会创建的，这两个函数真正目的在于缓存了inline函数的实例，若第二个参数数组中的值没变，返回的就是缓存的函数实例，这样再将这个返回结果传入元素的属性时就不是新的props，减少了re-render
