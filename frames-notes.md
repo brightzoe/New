@@ -20,130 +20,133 @@
 
     p 标签的内容 会替换为 rawHtml 渲染的内容，直接作为 html。
 
-- 指令，以 v- 为前缀
+### 指令，以 v- 为前缀
 
-  - v-bind
-    将某个属性绑定为一个变量 `<span v-bind:title="message">`
-    缩写`<span :title="message">`
-    动态参数：`<span :[title]="message">` 属性名也是表达式，避免大写字母
-  - v-on
-    添加事件监听器 `<button v-on:click="reverseMessage">反转消息</button>`
-    缩写 `<button @click="reverseMessage">反转消息</button>`
-    `<button @click="reverseMessage(idx,$event)">反转消息</button>`
+- v-bind
+  将某个属性绑定为一个变量 `<span v-bind:title="message">`
+  缩写`<span :title="message">`
+  动态参数：`<span :[title]="message">` 属性名也是表达式，避免大写字母
+- v-on
+  添加事件监听器 `<button v-on:click="reverseMessage">反转消息</button>`
+  缩写 `<button @click="reverseMessage">反转消息</button>`
+  `<button @click="reverseMessage(idx,$event)">反转消息</button>`
 
-    - 修饰符
-      `<form v-on:submit.prevent.stop="onSubmit">...</form>`
-      .prevent: event.preventDefault();
-      .stop:event.stopPropagation();
+  - 修饰符
+    `<form v-on:submit.prevent.stop="onSubmit">...</form>`
+    .prevent: event.preventDefault();
+    .stop:event.stopPropagation();
 
-  - v-if
-    判断一个元素是否显示，值为 true 时显示，false 不显示
-    `<p v-if="seen">现在你看到我了</p>`
-    `<p v-else>现在你看到另一个了</p>`
-    v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面，否则它将不会被识别,可以配合 template 元素实现分组渲染,不会被包在别的元素里面，如 div.
-    可以配合设置具有唯一值的 key 属性，来表达“两个元素完全独立，不要复用”的情况
-
-    ```html
-    <template v-if="ok">
-    	<h1>Title</h1>
-    	<p>Paragraph 1</p>
-    	<p>Paragraph 2</p>
-    </template>
-    ```
-
-  - v-show
-    和 v-if 用法一样，不同的是带有 v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS 属性 display, v-show 不支持 `<template>` 元素，也不支持 v-else.
-    > **v-if vs v-show**
-    > v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
-    > v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
-    > 相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
-    > 一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
-  - v-for
-    可以绑定数组的数据来渲染一个项目列表 ,需要配合使用 `(item, index) in items` 形式的特殊语法,index 不用时可以省略.
-    由于 vue 默认是就地更新每个元素，需要每项设置唯一的`key`,以便它能跟踪每个节点的身份，从而重用和重新排序现有元素.
+- v-if
+  判断一个元素是否显示，值为 true 时显示，false 不显示
+  `<p v-if="seen">现在你看到我了</p>`
+  `<p v-else>现在你看到另一个了</p>`
+  v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面，否则它将不会被识别,可以配合 template 元素实现分组渲染,不会被包在别的元素里面，如 div.
+  可以配合设置具有唯一值的 key 属性，来表达“两个元素完全独立，不要复用”的情况
 
   ```html
-  <li v-for="todo in todos" :key="todo.content">{{ todo.text }}</li>
+  <template v-if="ok">
+  	<h1>Title</h1>
+  	<p>Paragraph 1</p>
+  	<p>Paragraph 2</p>
+  </template>
   ```
 
-  也可以绑定对象的数据来渲染一个项目列表，可以传递 3 个参数，index 表示第几个，类似数组.
+- v-show
+  和 v-if 用法一样，不同的是带有 v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS 属性 display, v-show 不支持 `<template>` 元素，也不支持 v-else.
+  > **v-if vs v-show**
+  > v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
+  > v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+  > 相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+  > 一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
+- v-for
+  可以绑定数组的数据来渲染一个项目列表 ,需要配合使用 `(item, index) in items` 形式的特殊语法,index 不用时可以省略.
+  由于 vue 默认是就地更新每个元素，需要每项设置唯一的`key`,以便它能跟踪每个节点的身份，从而重用和重新排序现有元素.
 
-  ```html
-  <div v-for="(value, key, index) in object">
-  	{{ index }}. {{ key }}: {{ value }}
-  </div>
-  ```
+```html
+<li v-for="todo in todos" :key="todo.content">{{ todo.text }}</li>
+```
 
-  - v-model
-    FIXME 表单输入绑定
-    实现表单输入和应用状态之间的双向绑定。相当于添加一个属性和一个事件监听器.
-    `<input>`、`<textarea>` 及 `<select>` 可以双向绑定各种数据类型的值.
-    v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
-    text 和 textarea 元素使用 value 属性和 input 事件；
-    checkbox 和 radio 使用 checked 属性和 change 事件；
-    select 字段将 value 作为 属性和 change 作为事件。
+也可以绑定对象的数据来渲染一个项目列表，可以传递 3 个参数，index 表示第几个，类似数组.
 
-- 创建 vue 应用
-  除了数据 property,Vue 实例还暴露了一些实例 property 与方法。如`app.$data,app.$el,app.$watch`
+```html
+<div v-for="(value, key, index) in object">
+	{{ index }}. {{ key }}: {{ value }}
+</div>
+```
 
-  ```js
-  var app = new Vue({
-  el: //选择器选定一个元素，该元素及其后代可以进行 vue 操作
-  data: {}
-  //储存相关数据，vue 内部会把所有的数据的变为 getter 和 setter；
-  //只有当实例被创建时就已经存在于 data 中的 property 才是响应式的.
-  computed:{
-    total:{
-      get:function(){}
-      set:function(){}
+- v-model
+  FIXME 表单输入绑定
+  实现表单输入和应用状态之间的双向绑定。相当于添加一个属性和一个事件监听器.
+  `<input>`、`<textarea>` 及 `<select>` 可以双向绑定各种数据类型的值.
+  v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
+  text 和 textarea 元素使用 value 属性和 input 事件；
+  checkbox 和 radio 使用 checked 属性和 change 事件；
+  select 字段将 value 作为 属性和 change 作为事件。
+
+### 创建 vue 应用
+
+除了数据 property,Vue 实例还暴露了一些实例 property 与方法。如`app.$data,app.$el,app.$watch`
+
+```js
+var app = new Vue({
+el: //选择器选定一个元素，该元素及其后代可以进行 vue 操作
+data: {}
+//储存相关数据，vue 内部会把所有的数据的变为 getter 和 setter；
+//只有当实例被创建时就已经存在于 data 中的 property 才是响应式的.
+computed:{
+  total:{
+    get:function(){}
+    set:function(){}
+}
+//NOTE: 计算属性，一个函数，只有函数的返回结果发生变化时才会重新运行渲染。自带缓存效果,当一个属性的值是现有的数据推导出来的可以用计算属性,计算属性基于他们的响应式依赖进行缓存。
+// 默认只有 getter，也可以写 setter。
+}
+watch:{
+  price:function(){}
+  amount:function(){}
+//帧听属性，监听并响应vue实例中数据的变动，相比计算属性更通用，不要滥用。如果需要在数据变化时执行异步或开销较大的操作时，watch最有用。
+}
+methods:{
+method1:function(){}
+method2(){}
+}
+template：//html 代码
+//当一个实例里面有 template 属性时，初始化实例时会将 template 的值作为虚拟 dom 而忽略实际的 el 元素内容
+})
+```
+
+- 数组的变更检测
+  数组的下标没有设置为 getter 和 setter，所以不能通过更改数组下标的方式改变页面，因为 vue 并不能监听到下标的变化，即当你利用索引直接设置一个数组项时，和当你修改数组的长度时，Vue 不能检测数组的变动；可以通过 `Vue.set(vm.items, indexOfItem, newValue)` 添加。
+  vue 对一些方法进行了一层包装，这些方法会触发视图更新:`push(),pop(),shift(),unshift(),splice(),sort(),reverse() `
+- 对象的变更检测
+  对象也不可以直接通过增加和删除属性来触发视图更新，因为普通属性不会变为 getter 和 setter， 可以用 `Vue.set(vm.items, key, newValue)` 添加
   }
-  //NOTE: 计算属性，一个函数，只有函数的返回结果发生变化时才会重新运行渲染。自带缓存效果,当一个属性的值是现有的数据推导出来的可以用计算属性,计算属性基于他们的响应式依赖进行缓存。
-  // 默认只有 getter，也可以写 setter。
-  }
-  watch:{
-    price:function(){}
-    amount:function(){}
-  //帧听属性，监听并响应vue实例中数据的变动，相比计算属性更通用，不要滥用。如果需要在数据变化时执行异步或开销较大的操作时，watch最有用。
-  }
-  methods:{
-  method1:function(){}
-  method2(){}
-  }
-  template：//html 代码
-  //当一个实例里面有 template 属性时，初始化实例时会将 template 的值作为虚拟 dom 而忽略实际的 el 元素内容
-  })
-  ```
 
-  - 数组的变更检测
-    数组的下标没有设置为 getter 和 setter，所以不能通过更改数组下标的方式改变页面，因为 vue 并不能监听到下标的变化，即当你利用索引直接设置一个数组项时，和当你修改数组的长度时，Vue 不能检测数组的变动；可以通过 `Vue.set(vm.items, indexOfItem, newValue)` 添加。
-    vue 对一些方法进行了一层包装，这些方法会触发视图更新:`push(),pop(),shift(),unshift(),splice(),sort(),reverse() `
-  - 对象的变更检测
-    对象也不可以直接通过增加和删除属性来触发视图更新，因为普通属性不会变为 getter 和 setter， 可以用 `Vue.set(vm.items, key, newValue)` 添加
-    }
+### 修饰符
 
-- 修饰符
-  修饰符 (modifier) 是以半角句号.指明的特殊后缀，用于指出一个指令应该以特殊方式绑定
+修饰符 (modifier) 是以半角句号.指明的特殊后缀，用于指出一个指令应该以特殊方式绑定
 
-  - 事件修饰符
-    .stop => event.stopPropagation()
-    .prevent => event.preventDefault()
-    .capture => 添加事件监听器时使用事件捕获模式
-    .self => event.target 是当前元素自身时触发
-    .once => 事件将只会触发一次
-    .passive => 表示不阻止事件的默认行为
-    .sync=>父组件监听子组件并更新本地数据
-  - 按键修饰符
-    .enter;.tab;.delete ;.esc;.space;.up;.down;.left;.right
-  - 系统修饰键
-    .ctrl;.alt;.shift;.meta
-  - 鼠标按钮修饰符
-    .left;.right;.middle
-  - .exact 修饰符
-    @click.ctrl.exact 有且只有 Ctrl 被按下的时候才触发
-  - 表单修饰符
-    - .lazy 在默认情况下，v-model 在每次 input 事件触发后将输入框的值与数据进行同步。可以添加 lazy 修饰符，从而转变为使用 change 事件进行同步.v-model.lazy
-    - .number 如果想自动将用户的输入值转为数值类型，可以给 v-model 添加 number 修饰符.v-model.number
-    - .trim 如果要自动过滤用户输入的首尾空白字符，可以给 v-model 添加 trim 修饰符.v-model.trim
+- 事件修饰符
+  .stop => event.stopPropagation()
+  .prevent => event.preventDefault()
+  .capture => 添加事件监听器时使用事件捕获模式
+  .self => event.target 是当前元素自身时触发
+  .once => 事件将只会触发一次
+  .passive => 表示不阻止事件的默认行为
+  .sync=>父组件监听子组件并更新本地数据
+- 按键修饰符
+  .enter;.tab;.delete ;.esc;.space;.up;.down;.left;.right
+- 系统修饰键
+  .ctrl;.alt;.shift;.meta
+- 鼠标按钮修饰符
+  .left;.right;.middle
+- .exact 修饰符
+  @click.ctrl.exact 有且只有 Ctrl 被按下的时候才触发
+- 表单修饰符
+
+  - .lazy 在默认情况下，v-model 在每次 input 事件触发后将输入框的值与数据进行同步。可以添加 lazy 修饰符，从而转变为使用 change 事件进行同步.v-model.lazy
+  - .number 如果想自动将用户的输入值转为数值类型，可以给 v-model 添加 number 修饰符.v-model.number
+  - .trim 如果要自动过滤用户输入的首尾空白字符，可以给 v-model 添加 trim 修饰符.v-model.trim
 
 - Class 与 Style 绑定
 
@@ -199,135 +202,136 @@ function observe(obj) {
   - 在本轮事件循环的最后执行渲染
   - 防止了重复渲染，提高性能
 
-- 生命周期钩子 lifecycle hooks
+### 生命周期钩子 lifecycle hooks
 
-  - 生命周期
-    Vue 实例从创建到销毁的过程，就是生命周期。也就是从开始创建、初始化数据、编译模板、挂载 DOM → 渲染、更新 → 渲染、卸载等一系列过程
-  - 钩子
-    钩子就是在生命周期的某个阶段给你一个做某些处理的机会（执行一段 js 代码）
-  - 流程
-    - 创建一个 vue 实例 vm，new Vue()
-    - 初始化事件和生命周期
-      - 将 vm 转化为一个事件监听触发器，可以监听和触发事件；
-      - 初始化生命周期，为其添加了钩子函数
-    - 执行钩子函数 beforeCreate
-    - 初始化注入和校验
-      - 检查代码正确性
-      - 将 data 里面的每一个数据变为 getter 和 setter
-    - 执行钩子函数 **created**
-    - 判断是否有 el 属性
-      - 没有就暂停周期等待调用 vm.\$mount(el) 函数，再执行下一步
-      - 有就直接执行下一步
-    - 判断是否有 template 属性
-      - 有模板就将模板编译到 render() 中渲染得到虚拟 dom（一个树状结构的对象）
-      - 没有模板就将 el 元素的 outerHTML 作为模板执行上面的操作
-    - 执行钩子函数 beforeMount
-    - 创建 vm.\$el 并替换 el 属性
-      - 通过虚拟 dom 创建了一个真实的 dom 元素 el
-      - el 之前是选择器一个字符串，现在替换为一个真正的 dom 元素
-    - 执行钩子函数 **mounted**
-    - 挂载完毕
-      - 当 data 被修改时，调用钩子函数 beforeUpdate
-      - 虚拟 dom 重新渲染并更新页面
-      - 更新完毕执行钩子函数 **updated**
-    - 当调用 vm.\$destroy() 时
-      - 执行钩子函数 beforeDestroy
-      - 解除绑定销毁组件以及事件监听器
-      - 销毁完毕
-      - 执行钩子函数 **destroy**
+- 生命周期
+  Vue 实例从创建到销毁的过程，就是生命周期。也就是从开始创建、初始化数据、编译模板、挂载 DOM → 渲染、更新 → 渲染、卸载等一系列过程
+- 钩子
+  钩子就是在生命周期的某个阶段给你一个做某些处理的机会（执行一段 js 代码）
+- 流程
+  - 创建一个 vue 实例 vm，new Vue()
+  - 初始化事件和生命周期
+    - 将 vm 转化为一个事件监听触发器，可以监听和触发事件；
+    - 初始化生命周期，为其添加了钩子函数
+  - 执行钩子函数 beforeCreate
+  - 初始化注入和校验
+    - 检查代码正确性
+    - 将 data 里面的每一个数据变为 getter 和 setter
+  - 执行钩子函数 **created**
+  - 判断是否有 el 属性
+    - 没有就暂停周期等待调用 vm.\$mount(el) 函数，再执行下一步
+    - 有就直接执行下一步
+  - 判断是否有 template 属性
+    - 有模板就将模板编译到 render() 中渲染得到虚拟 dom（一个树状结构的对象）
+    - 没有模板就将 el 元素的 outerHTML 作为模板执行上面的操作
+  - 执行钩子函数 beforeMount
+  - 创建 vm.\$el 并替换 el 属性
+    - 通过虚拟 dom 创建了一个真实的 dom 元素 el
+    - el 之前是选择器一个字符串，现在替换为一个真正的 dom 元素
+  - 执行钩子函数 **mounted**
+  - 挂载完毕
+    - 当 data 被修改时，调用钩子函数 beforeUpdate
+    - 虚拟 dom 重新渲染并更新页面
+    - 更新完毕执行钩子函数 **updated**
+  - 当调用 vm.\$destroy() 时
+    - 执行钩子函数 beforeDestroy
+    - 解除绑定销毁组件以及事件监听器
+    - 销毁完毕
+    - 执行钩子函数 **destroy**
 
-- 组件
-  可**复用**的 Vue 实例，组件名称当 html 标签使用。
-  与 new Vue 接收相同的选项，例如 data、computed、watch、methods 以及生命周期钩子等。仅有的例外是像 el 这样根实例特有的选项。
-  组件要先注册才能使用。两种注册类型：全局注册、局部注册。
+### 组件
 
-  - 创建组件
-    全局注册组件：
+可**复用**的 Vue 实例，组件名称当 html 标签使用。
+与 new Vue 接收相同的选项，例如 data、computed、watch、methods 以及生命周期钩子等。仅有的例外是像 el 这样根实例特有的选项。
+组件要先注册才能使用。两种注册类型：全局注册、局部注册。
 
-  ```js
-    Vue.component('组件名称，之后当做标签使用',{
-    template:`模板内容` //模板 html 的最外层必须要有且只有一个根元素包裹着所有的元素，最外层不能是多个兄弟元素并列
-    props:{//组件的属性,可以直接用在html标签里面
-    count: Number//限制值的类型,也可以用数组[String, Number]
-    productName: {
-    type: String, //类型为 String
-    required: true, //必要属性，必须传值
-    default: 'product'
-    }
-    price: {
-    validator: function (value) {
-    // 验证函数
-    return value>=0
-    }
-    }
-    //通过 Prop 向子组件传递属性，属性值由组件标签上传递：bind 过来
-    //单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行
-    }
-    data(){
-    return obj
-    //一个组件的 data 须是一个函数，返回一个新的对象，因此每个实例可以维护一份被返回对象的独立的拷贝，每个组件之间的运行是独立的，数据不会共享
-    //这个函数只在组件初始化时运行一遍，数据之后保存在 getter 和 setter 里
-    }
-    methods:{
+- 创建组件
+  全局注册组件：
 
-    }
-  ```
+```js
+  Vue.component('组件名称，之后当做标签使用',{
+  template:`模板内容` //模板 html 的最外层必须要有且只有一个根元素包裹着所有的元素，最外层不能是多个兄弟元素并列
+  props:{//组件的属性,可以直接用在html标签里面
+  count: Number//限制值的类型,也可以用数组[String, Number]
+  productName: {
+  type: String, //类型为 String
+  required: true, //必要属性，必须传值
+  default: 'product'
+  }
+  price: {
+  validator: function (value) {
+  // 验证函数
+  return value>=0
+  }
+  }
+  //通过 Prop 向子组件传递属性，属性值由组件标签上传递：bind 过来
+  //单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行
+  }
+  data(){
+  return obj
+  //一个组件的 data 须是一个函数，返回一个新的对象，因此每个实例可以维护一份被返回对象的独立的拷贝，每个组件之间的运行是独立的，数据不会共享
+  //这个函数只在组件初始化时运行一遍，数据之后保存在 getter 和 setter 里
+  }
+  methods:{
 
-  局部注册组件，'component-a'只能在父组件使用:
+  }
+```
 
-  ```js
-    components: {
-    'component-a': {
-    data(){},
-    template:``
-    methods:{}
-    }
+局部注册组件，'component-a'只能在父组件使用:
 
-    }
-    inheritAttrs: false
-    //为组件标签添加属性会自动继承到组件模板的根元素上。你不希望组件的根元素继承特性，你可以在组件的选项中设置这个，但是不会影响 style 和 class 的绑定和继承；
-    //$attrs 可以收集父组件中的所有传过来的属性中除了那些在组件中没有通过 props 定义的
-    })
-  ```
+```js
+  components: {
+  'component-a': {
+  data(){},
+  template:``
+  methods:{}
+  }
 
-  - 监听子组件事件
-    子组件使用事件抛出一个值。
+  }
+  inheritAttrs: false
+  //为组件标签添加属性会自动继承到组件模板的根元素上。你不希望组件的根元素继承特性，你可以在组件的选项中设置这个，但是不会影响 style 和 class 的绑定和继承；
+  //$attrs 可以收集父组件中的所有传过来的属性中除了那些在组件中没有通过 props 定义的
+  })
+```
 
-    - 父组件监听子组件 @click="func"
-    - 子组件在某种情况下（比如自己触发了自己的事件）触发该自定义事件
-      如在点击时触发自定义事件 v-on:click="\$emit('event1' ,argument)
-    - emit 的第二个参数表示可以给父组件传递的参数，父组件可以通过 $event 接收这个参数.如果父组件的事件处理函数是一个方法，那么 $event 将会作为第一个参数传入这个方法
-      v-on:event1='$event'
+- 监听子组件事件
+  子组件使用事件抛出一个值。
+
+  - 父组件监听子组件 @click="func"
+  - 子组件在某种情况下（比如自己触发了自己的事件）触发该自定义事件
+    如在点击时触发自定义事件 v-on:click="\$emit('event1' ,argument)
+  - emit 的第二个参数表示可以给父组件传递的参数，父组件可以通过 $event 接收这个参数.如果父组件的事件处理函数是一个方法，那么 $event 将会作为第一个参数传入这个方法
+    v-on:event1='$event'
       v-on:event1='fun'   methods:{func($event){}}
 
-  - 组件的数据传递
+- 组件的数据传递
 
-    - 自上而下通过 prop 传递，从父组件传到子组件，不能在子组件中修改 prop。
-    - 自下而上通过事件触发传递
-    - 组件操作 prop 传递来的数据时，组件不要修改它，只读取，通过触发事件上级组件反馈，由上级组件操作数据；数据的拥有者是哪个组件，哪个组件才可以更改它；
-      组件的层次过深时，组件树数据的传递太繁琐，建议将数据放到全局，每个组件直接修改全局数据，这样就不用传递数据
-    - 两个并列的组件的交互方法：通过相同的父组件作中转操作
+  - 自上而下通过 prop 传递，从父组件传到子组件，不能在子组件中修改 prop。
+  - 自下而上通过事件触发传递
+  - 组件操作 prop 传递来的数据时，组件不要修改它，只读取，通过触发事件上级组件反馈，由上级组件操作数据；数据的拥有者是哪个组件，哪个组件才可以更改它；
+    组件的层次过深时，组件树数据的传递太繁琐，建议将数据放到全局，每个组件直接修改全局数据，这样就不用传递数据
+  - 两个并列的组件的交互方法：通过相同的父组件作中转操作
 
-  - 组件相关的命名
-    由于 html 的解析不区分大小写，会把所有大写字符解释为小写字符，再加上 vue 里面的各种命名没有统一，为防止错误，命名都采用 A-B-C 形式。
+- 组件相关的命名
+  由于 html 的解析不区分大小写，会把所有大写字符解释为小写字符，再加上 vue 里面的各种命名没有统一，为防止错误，命名都采用 A-B-C 形式。
 
-  - 组件的模块式导入和导出
-    和 ES6 规定的模块方式一样
-    import ComponentA from './ComponentA'
-    import ComponentC from './ComponentC'
+- 组件的模块式导入和导出
+  和 ES6 规定的模块方式一样
+  import ComponentA from './ComponentA'
+  import ComponentC from './ComponentC'
 
-    export default {
-    components: {
-    ComponentA,
-    ComponentC
-    },
-    // ...
-    }
+  export default {
+  components: {
+  ComponentA,
+  ComponentC
+  },
+  // ...
+  }
 
-  - 子元素：标签包裹在另外一个标签里面
-    子组件：一个组件里面的 template 用到了其他组件
+- 子元素：标签包裹在另外一个标签里面
+  子组件：一个组件里面的 template 用到了其他组件
 
-  - 插槽 slot
+### 插槽 slot
 
     - <slot></slot>写在组件的 template 里面，外部组件标签的 innerHtml 会替代<slot></slot>得到完整的 template。即组件标签的子元素会转化替换掉组件的子组件<slot></slot>
 
@@ -341,256 +345,258 @@ function observe(obj) {
 
       - <template v-slot:header> </template> 通过 template 元素使用该插槽，v-slot 只能添加在一个 <template>上 v-slot:header 可以缩写为#header
 
-  - 动态组件
+- 动态组件
 
-    - <keep-alive>缓存组件内容
-    - is 特性 用于动态组件且基于 DOM 内模板的限制来工作 接收 string | Object
-      <component v-bind:is="currentView"></component>可以通过 currentView 判断绑定的组件名
+  - <keep-alive>缓存组件内容
+  - is 特性 用于动态组件且基于 DOM 内模板的限制来工作 接收 string | Object
+    <component v-bind:is="currentView"></component>可以通过 currentView 判断绑定的组件名
 
-  - 异步组件
-    Vue.component('async-example', function (resolve, reject) {里面执行异步操作}
+- 异步组件
+  Vue.component('async-example', function (resolve, reject) {里面执行异步操作}
 
-  - 访问组件和元素
+- 访问组件和元素
 
-    - 访问根实例 vm.\$root
-    - 访问父级组件实例 vm.\$parent
-    - 访问子组件实例或子元素 通过 ref 特性 vm.\$refs
+  - 访问根实例 vm.\$root
+  - 访问父级组件实例 vm.\$parent
+  - 访问子组件实例或子元素 通过 ref 特性 vm.\$refs
 
-  - X-Template 模板的另外的定义方式
+- X-Template 模板的另外的定义方式
 
-    <script type="text/x-template" id="hello-world-template">
-      <p>Hello hello hello</p>
-    </script>
+  <script type="text/x-template" id="hello-world-template">
+    <p>Hello hello hello</p>
+  </script>
 
-    Vue.component('hello-world', {
-    template: '#hello-world-template'
+  Vue.component('hello-world', {
+  template: '#hello-world-template'
+  })
+
+- 强制更新 迫使 Vue 实例重新渲染。vm.\$forceUpdate()
+
+### Vuex
+
+- Vuex 是一个专为 Vue.js 应用程序开发的数据管理模式。它采用集中式存储管理应用的所有组件的数据
+
+- 安装
+  除了通过 script 标签引用，其它方式引用要确保在开头调用了 Vue.use(Vuex)
+
+- 使用方法
+
+  - 对于根组件
+    var app5 = new Vue({
+    store:store, 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件，子组件可以通过 this.\$store 访问到根组件的 store 对象
     })
 
-  - 强制更新 迫使 Vue 实例重新渲染。vm.\$forceUpdate()
+  - 创建一个仓库实例
+    var store = new Vuex.Store({
+    state:{
+    data:value state 里面储存数据
+    },
 
-- Vuex
+    mutations: {
+    increment (state) {
+    state.count++
+    }
+    更改 Vuex 的 store 中的状态的唯一方法是提交 mutation, 里面是一些数据操作的函数，子组件通过这些函数操作数据，函数第一个参数默认为 state
+    mutation 里面的函数必须是同步的
+    }
 
-  - Vuex 是一个专为 Vue.js 应用程序开发的数据管理模式。它采用集中式存储管理应用的所有组件的数据
+    action:{
+    increment (context) {
+    context.commit('increment')
+    }
+    action 作用是多次触发 mutation 里面的函数，而且可以是异步的；Action 函数接受一个与 store 实例具有相同方法和属性的 context 对象（理解时可以直接当做 store）
+    }
 
-  - 安装
-    除了通过 script 标签引用，其它方式引用要确保在开头调用了 Vue.use(Vuex)
+    getters: {
+    isAllSelected(state) {
+    return state.todos.every(it => it.done)
+    }
+    里面是一些 getter 函数，函数第一个参数默认为 state；就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
+    }
+    })
 
-  - 使用方法
-
-    - 对于根组件
-      var app5 = new Vue({
-      store:store, 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件，子组件可以通过 this.\$store 访问到根组件的 store 对象
-      })
-
-    - 创建一个仓库实例
-      var store = new Vuex.Store({
-      state:{
-      data:value state 里面储存数据
-      },
-
-      mutations: {
-      increment (state) {
-      state.count++
-      }
-      更改 Vuex 的 store 中的状态的唯一方法是提交 mutation, 里面是一些数据操作的函数，子组件通过这些函数操作数据，函数第一个参数默认为 state
-      mutation 里面的函数必须是同步的
-      }
-
-      action:{
-      increment (context) {
-      context.commit('increment')
-      }
-      action 作用是多次触发 mutation 里面的函数，而且可以是异步的；Action 函数接受一个与 store 实例具有相同方法和属性的 context 对象（理解时可以直接当做 store）
-      }
-
-      getters: {
-      isAllSelected(state) {
-      return state.todos.every(it => it.done)
-      }
-      里面是一些 getter 函数，函数第一个参数默认为 state；就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
-      }
-      })
-
-    - 对于子组件
-      Vue.component('todo-footer', {
-      methods:{
-      clearCompleted() {
-      this.$store.commit('clearCompleted',argument)
+  - 对于子组件
+    Vue.component('todo-footer', {
+    methods:{
+    clearCompleted() {
+    this.$store.commit('clearCompleted',argument)
             }可以通过 this.$store.commit 触发 store 实例 mutations 里面的数据变更函数
-      increment(){
-      this.$store.dispatch('increment',argument)
+    increment(){
+    this.$store.dispatch('increment',argument)
             }可以通过 this.$store.dispatch 触发 store 实例 action 里面的数据变更函数
-      },
-      computed：{
-      leftCount() {
-      return this.$store.getters.leftCount
+    },
+    computed：{
+    leftCount() {
+    return this.$store.getters.leftCount
             }可以通过 this.$store.getters 触发 store 实例 getters 里面的 getter 函数
-      },
-      })
+    },
+    })
 
-  - 模块
-    Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter const moduleA = { state: { ... }, mutations: { ... }, actions: { ... }, getters: { ... }}
-    const moduleB = {state: { ... },mutations: { ... },actions: { ... }}
-    const store = new Vuex.Store({modules: { a: moduleA, b: moduleB}})
+- 模块
+  Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter const moduleA = { state: { ... }, mutations: { ... }, actions: { ... }, getters: { ... }}
+  const moduleB = {state: { ... },mutations: { ... },actions: { ... }}
+  const store = new Vuex.Store({modules: { a: moduleA, b: moduleB}})
 
-- Vue Router
+### Vue Router
 
-  - 前端路由
-    页面本身不刷新，前端发送了请求，后端发回了数据，前端解析数据把数据渲染到前端对应的页面模板中。
-    Vue Router 默认是 Hash 模式的前端路由，通过#后面值的改变，渲染指定 DOM 位置的不同组件
+- 前端路由
+  页面本身不刷新，前端发送了请求，后端发回了数据，前端解析数据把数据渲染到前端对应的页面模板中。
+  Vue Router 默认是 Hash 模式的前端路由，通过#后面值的改变，渲染指定 DOM 位置的不同组件
 
-  - Vue Router 是 Vue.js 官方的路由管理器，用于构建单页面应用
+- Vue Router 是 Vue.js 官方的路由管理器，用于构建单页面应用
 
-  - 安装
-    除了通过 scrip 标签引用，其它方式引用要确保在开头调用了 Vue.use(VueRouter)，而且 Vue.js 需要先加载
+- 安装
+  除了通过 scrip 标签引用，其它方式引用要确保在开头调用了 Vue.use(VueRouter)，而且 Vue.js 需要先加载
 
-  - 使用方法
+- 使用方法
 
-    - 对于 HTML
+  - 对于 HTML
 
-      <div id="app">
-        <router-link to="/foo">Go to Foo</router-link>
-        <router-link to="/bar">Go to Bar</router-link>
-        <router-view></router-view>
-      </div>
+    <div id="app">
+      <router-link to="/foo">Go to Foo</router-link>
+      <router-link to="/bar">Go to Bar</router-link>
+      <router-view></router-view>
+    </div>
 
-      <router-link>表示组件，to 属性指定链接，会被渲染成一个 `<a>` 标签
-      <router-view></router-view> 路由匹配到的组件将渲染在这里
+    <router-link>表示组件，to 属性指定链接，会被渲染成一个 `<a>` 标签
+    <router-view></router-view> 路由匹配到的组件将渲染在这里
 
-    - 对于 router 对象
-      const router = new VueRouter({
-      routes: [{
-      path: "/a", 路由匹配到的路径
-      redirect: '/wechat' 路由匹配到该路径跳转另外路径
-      name："112" 命名路由用的，一般用不到
-      alias: '/b' 别名，用户访问 /b 时，URL 会保持为 /b，但是路由匹配则为 /a，就像用户访问 /a 一样；用得少
-      },
-      {
-      path: "/wechat", 路由匹配到的路径
-      component: wechat, 路由匹配到该路径就渲染这个组件
-      children：[{
-      path: 'man', 这个路径表示匹配到 /wechat/man 这个路径
-      components:safe,
-      这个属性用于路由的嵌套
-      }]
-      } ,
+  - 对于 router 对象
+    const router = new VueRouter({
+    routes: [{
+    path: "/a", 路由匹配到的路径
+    redirect: '/wechat' 路由匹配到该路径跳转另外路径
+    name："112" 命名路由用的，一般用不到
+    alias: '/b' 别名，用户访问 /b 时，URL 会保持为 /b，但是路由匹配则为 /a，就像用户访问 /a 一样；用得少
+    },
+    {
+    path: "/wechat", 路由匹配到的路径
+    component: wechat, 路由匹配到该路径就渲染这个组件
+    children：[{
+    path: 'man', 这个路径表示匹配到 /wechat/man 这个路径
+    components:safe,
+    这个属性用于路由的嵌套
+    }]
+    } ,
 
-    - 对于根组件
-      const app = new Vue({
-      router, 把 router 对象提供给 “router” 选项，这可以把 router 的实例注入所有的子组件，子组件可以通过 this.\$router 访问到根组件的 router 对象
-      el: "#app",
-      })
+  - 对于根组件
+    const app = new Vue({
+    router, 把 router 对象提供给 “router” 选项，这可以把 router 的实例注入所有的子组件，子组件可以通过 this.\$router 访问到根组件的 router 对象
+    el: "#app",
+    })
 
-    - 对于组件
-      let chat = {
-      template:`必要属性 <div> <div>你正在和{{$route.params.id}}聊天</div> <button @click="$router.go(-1)">返回</button> </div>`
-      }
+  - 对于组件
+    let chat = {
+    template:`必要属性 <div> <div>你正在和{{$route.params.id}}聊天</div> <button @click="$router.go(-1)">返回</button> </div>`
+    }
 
-  - 其它方法
+- 其它方法
 
-    - 路由对象 route
-      一个路由对象 (route object) 表示当前激活的路由的状态信息，路由对象是不可变的，每次成功的导航后都会产生一个新的对象。
-      访问方式：在组件内，即 this.$route；通过 watch 监控 $route ；全局 router.match(location) 的返回值
-    - 动态参数
-      {path: '/user/:id', component: User }
-      通过 id 来传递动态参数
-      /user/foo 和 /user/bar 都将映射到这个路由。参数储存在 this.$route.params 这个对象里，在组件里可以通过 this.$route.params.id 拿到参数；同时也有 $route.query 和 $route.hash 的 api
-    - 当使用路由参数时，例如从 /user/foo 导航到 /user/bar，原来的组件实例会被复用，组件的生命周期钩子不会再被调用；复用组件时，想对路由参数的变化作出响应的话，通过 watch 监控 $route 对象
+  - 路由对象 route
+    一个路由对象 (route object) 表示当前激活的路由的状态信息，路由对象是不可变的，每次成功的导航后都会产生一个新的对象。
+    访问方式：在组件内，即 this.$route；通过 watch 监控 $route ；全局 router.match(location) 的返回值
+  - 动态参数
+    {path: '/user/:id', component: User }
+    通过 id 来传递动态参数
+    /user/foo 和 /user/bar 都将映射到这个路由。参数储存在 this.$route.params 这个对象里，在组件里可以通过 this.$route.params.id 拿到参数；同时也有 $route.query 和 $route.hash 的 api
+  - 当使用路由参数时，例如从 /user/foo 导航到 /user/bar，原来的组件实例会被复用，组件的生命周期钩子不会再被调用；复用组件时，想对路由参数的变化作出响应的话，通过 watch 监控 $route 对象
       watch: {
       '$route' (to, from) {
-      // 对路由变化作出响应。..
-      }
+    // 对路由变化作出响应。..
+    }
 
-    - 通配符
-      path: '\*' 会匹配所有路径
-    - 编程式导航 效果和<router-link>一样，可直接在组件中调用
-      router.push('path') 会向 history 添加新记录
-      router.replace('path') 不会向 history 添加新记录
-      router.go(n) 在 history 记录中向前或者后退多少步
+  - 通配符
+    path: '\*' 会匹配所有路径
+  - 编程式导航 效果和<router-link>一样，可直接在组件中调用
+    router.push('path') 会向 history 添加新记录
+    router.replace('path') 不会向 history 添加新记录
+    router.go(n) 在 history 记录中向前或者后退多少步
 
-  - HTML5 History 模式
+- HTML5 History 模式
 
-    - vue-router 默认 hash 模式 ，即使用 URL 的 hash 来模拟一个完整的 URL，于是当 URL 改变时，页面不会重新加载。
-    - HTML History 模式就是除掉路径中的#号，使其看上去美观
-      http://localhost:3010/new-product/vue-app#/orders/paid/weifahuo
-      让以下地址返回的内容跟上面的地址返回一样的内容，同时注意相对路径
-      上方#标明了前端路由的路径，下方没有，所以需要在 router 里设置后端路由是从哪到哪，需要在服务端增加一个覆盖所有情况的候选资源
-      http://localhost:3010/new-product/vue-app/orders/paid/weifahuo
+  - vue-router 默认 hash 模式 ，即使用 URL 的 hash 来模拟一个完整的 URL，于是当 URL 改变时，页面不会重新加载。
+  - HTML History 模式就是除掉路径中的#号，使其看上去美观
+    http://localhost:3010/new-product/vue-app#/orders/paid/weifahuo
+    让以下地址返回的内容跟上面的地址返回一样的内容，同时注意相对路径
+    上方#标明了前端路由的路径，下方没有，所以需要在 router 里设置后端路由是从哪到哪，需要在服务端增加一个覆盖所有情况的候选资源
+    http://localhost:3010/new-product/vue-app/orders/paid/weifahuo
 
-- Vue CLI(command line interface)
+### Vue CLI(command line interface)
 
-  - runtime 版本和完整版本 vue 的区别
+- runtime 版本和完整版本 vue 的区别
 
-    - render 函数 接受三个参数，render（标签名，属性，子元素），根据传入信息将其转化为虚拟 dom
-    - vue.complile 是 vue 编译器，浏览器通过这个编译器将模板字符串转化为 render 函数
-    - 完整版 vue 有这个编译工具，runtime 版本没有，但是 runtime 版本会提前把模板字符串编译为 render 函数，这样就少了浏览器的编译过程，提升性能和效率
+  - render 函数 接受三个参数，render（标签名，属性，子元素），根据传入信息将其转化为虚拟 dom
+  - vue.complile 是 vue 编译器，浏览器通过这个编译器将模板字符串转化为 render 函数
+  - 完整版 vue 有这个编译工具，runtime 版本没有，但是 runtime 版本会提前把模板字符串编译为 render 函数，这样就少了浏览器的编译过程，提升性能和效率
 
-  - vue 相关文件和工具
-    bable：一个广泛使用的转码器，可以将 ES6 代码转为 ES5 代码，从而在现有环境执行；让旧版本的浏览器可以用最新的语法
-    stylus : 一种类似 scss 的语言，现在主流是 scss
-    vue-loader: web-pack 插件，编译器
-    ESLint：js 代码风格检查工具，目前流行的是 Airbn/standard/prettier
-    browserslist 查询每一款浏览器支持什么特性的工具
-    .editorconfig 编辑器配置文件
-    PostCSS 一个平台，可以安装各种 js 插件转换编译 CSS
-    package-lock 锁定安装时的包的版本号，并且需要上传到 git，以保证其他人在 npm install 时大家的依赖能保证一致
-    npm run XXX 是执行配置在 package.json 中的脚本
-    npm run build , 相当于运行 vue-cli-service build，会生成一个 dist 文件，里面是打包的可用于生产环境的包，之后把这些包放到 web 服务器里面的 static 文件夹里
-    umd Universal Module Definition 一些模块类型，umd 类型的会全局定义一个变量
+- vue 相关文件和工具
+  bable：一个广泛使用的转码器，可以将 ES6 代码转为 ES5 代码，从而在现有环境执行；让旧版本的浏览器可以用最新的语法
+  stylus : 一种类似 scss 的语言，现在主流是 scss
+  vue-loader: web-pack 插件，编译器
+  ESLint：js 代码风格检查工具，目前流行的是 Airbn/standard/prettier
+  browserslist 查询每一款浏览器支持什么特性的工具
+  .editorconfig 编辑器配置文件
+  PostCSS 一个平台，可以安装各种 js 插件转换编译 CSS
+  package-lock 锁定安装时的包的版本号，并且需要上传到 git，以保证其他人在 npm install 时大家的依赖能保证一致
+  npm run XXX 是执行配置在 package.json 中的脚本
+  npm run build , 相当于运行 vue-cli-service build，会生成一个 dist 文件，里面是打包的可用于生产环境的包，之后把这些包放到 web 服务器里面的 static 文件夹里
+  umd Universal Module Definition 一些模块类型，umd 类型的会全局定义一个变量
 
-  - .vue 文件的格式
+- .vue 文件的格式
 
-    - <template>模板内容，可以高亮</template>
+  - <template>模板内容，可以高亮</template>
 
-    - <style lang="scss" scoped> css 代码 </style> scoped 表示 css 只对这个组件生效
+  - <style lang="scss" scoped> css 代码 </style> scoped 表示 css 只对这个组件生效
 
-    - <script>js 代码</script>
+  - <script>js 代码</script>
 
-    - import 模块 / 组件 from path 导入模块
+  - import 模块 / 组件 from path 导入模块
 
-      - 这里可以用 @表示 src 文件的路径，比较方便
+    - 这里可以用 @表示 src 文件的路径，比较方便
 
-  - export default {components:{导入得到局部组件需要在这个里面赋值过来才能在 template 生效，一般组件名都大写}, 其它组件属性}
+- export default {components:{导入得到局部组件需要在这个里面赋值过来才能在 template 生效，一般组件名都大写}, 其它组件属性}
 
-  - 安装 npm install -g @vue/cli
+- 安装 npm install -g @vue/cli
 
-  - 单个文件快速原型开发
-    vue serve 文件名 vue serve index.vue
+- 单个文件快速原型开发
+  vue serve 文件名 vue serve index.vue
 
-  - 创建一个项目
+- 创建一个项目
 
-    - winpty vue.cmd create 项目名称 linux 环境下
-      vue create 项目名称 window 环境下
-    - 会生成一个项目文件夹，里面有以下信息
-      - git 相关
-      - public 网站用到的公开的文件，一般是图片和 html，基本不用动
-      - src 项目的源代码
-        - main.js 入口 js 文件
-        - App.vue 入口组件
-        - components 组件，会被 App.vue 引用
-        - views 视图，路由对应的组件文件放这里
-        - 路由，数据仓库，视图等
-        - asset 静态资源
-      - 一些配置文件
-        \*readme.md 告诉你这么开启这个项目的命令
-    - 相关文件配置好后，运行 npm run build , 它会把相关文件打包到 dist 文件里，之后吧 dist 文件里面的资源放到 static 文件里
+  - winpty vue.cmd create 项目名称 linux 环境下
+    vue create 项目名称 window 环境下
+  - 会生成一个项目文件夹，里面有以下信息
+    - git 相关
+    - public 网站用到的公开的文件，一般是图片和 html，基本不用动
+    - src 项目的源代码
+      - main.js 入口 js 文件
+      - App.vue 入口组件
+      - components 组件，会被 App.vue 引用
+      - views 视图，路由对应的组件文件放这里
+      - 路由，数据仓库，视图等
+      - asset 静态资源
+    - 一些配置文件
+      \*readme.md 告诉你这么开启这个项目的命令
+  - 相关文件配置好后，运行 npm run build , 它会把相关文件打包到 dist 文件里，之后吧 dist 文件里面的资源放到 static 文件里
 
 ## React
 
 - 三个引用
 
   - 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 bable 转化为了 React.createElement（标签名，属性，子元素）
-
   <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
 
   - 这个文件是用来实现真实 dom 的，全局创建一个 ReactDOM 变量
-
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
   - 这个 bable 文件是用来编译 react 代码的，如 JSX, 编译为 ES5 代码
-
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script type="text/babel">react代码</script>
+
+- JSX
+  - JavaScript 的语法扩展，一种标签语法
+    const element = <h1>Hello, world!</h1>，会调用 React.createElement（标签名，属性，子元素）构建虚拟 dom
+  - JSX 会移除行首尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格
 
 - ReactDOM.render(<TodoApp />，document.getElementById('root'))
   这个函数接收两个参数，将第一个参数虚拟 dom 编译到第二个参数 React 根元素里面
@@ -605,58 +611,96 @@ function observe(obj) {
 
 - 组件名必须大写
 - 不能将通用表达式作为组件名，组件名必须是静态的，即使用组件时它是确定唯一的
-- class 组件
+- 声明react组件不能修改自身的props，像纯函数一样保护他们的props.
 
 ```js
-  class Foo extends React.Component{
+//用class声明组件
+class Foo extends React.Component{
   constructor(props){
-  super(props) //用来引入 this，props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
-  this.state={ 用来记录数据状态
-  key：value
-  }
+    super(props) //用来引入 this.props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
+    this.state={ //用来记录数据状态
+      key：value
+    }
   }
   render(){
-  会返回一个虚拟 dom，就是组件模板
-  如 return (<div>{this.state.key}</div>) React 通过{}传递动态数据
+  //会返回一个虚拟 dom，就是组件模板
+    return (<div>{this.state.key}</div>) //React 通过{}传递动态数据
   }
   method = ()=>{
-  this.setState({}) /this.setState((state)=>{return {}})
-  React 只能通过 setState 设置数据状态才可以更改 dom, 相当于把新的 state 浅合并到旧的 state 里面，只更改新 state 传入的部分，其它数据保留；this.state 的指向从开始创建到更新一直没有改变，指向同一个对象，对象里面的数据发生改变
-  setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
-  } class fields 语法，相当于把这个方法传入到 construct 里面，并加上 this; 即 this.methods=()=>{}
+    this.setState({}) //or
+    this.setState((state)=>{return {}})
+    //setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
   }
+  //class fields 语法，相当于把这个方法传入到 constructor 里面，并加上 this; 即 this.method=()=>{}
+}
 
-  function Welcome(props) {
+//声明一个简单的函数组件，函数组件没有实例，也没有 ref 属性
+function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
-  } //创建一个简单的函数组件，函数组件没有实例，也没有 ref 属性
+}
 ```
+#### State
+- state是局部的（封装的），其他组件不能访问。
+  传递state(**单向数据流**):把state作为props向下传递到子组件中，子组件通过props接收,但无法知道它的来源。
+  ```js
+  function FormattedDate(props){
+    return <h2>it's {props.data.toLocaleTimeString()}</h2>
+  }
+  class FormattedDate extends React.Component{
+    render(){
+      return <h2>it's {this.props.data.toLocaleTimeString()}</h2>
+    }
+  }
+  ReactDOM.render(<FormattedDate date={this.state.date}/>,document.getElementById('root'))
+  ```
 
-- State 的更新可能是异步的，出于性能考虑，React 可能会把多个 setState() 调用合并成一个调用。
-
-  - 在同步函数(事件处理函数里)里面调用 setState 那么 state 的更新是异步的
-  - 在异步函数(自己定义的函数)里面调用 setState 那么 state 的更新是同步的
-    > 什么时候是同步的？什么时候是异步的？为什么有时是同步的，有时是异步的？
-    > 批量合并，效率更高。
+- 构造函数是唯一可以给this.state赋值的地方。**不要直接修改State，应该使用setState()。**
+  React 只能通过 setState 设置数据状态才可以更改 dom。
+  State的更新会被合并，只更改新 state 传入的部分，其它数据保留。
+  this.state 的指向从开始创建到更新一直没有改变，指向同一个对象，对象里面的数据发生改变。
+- State 的更新可能是异步的，出于性能考虑，React 可能会把多个 setState() 调用合并成一个调用。this.props与this.state可能会异步更新。
+  - 在同步函数(事件处理函数里)里面调用 setState 那么 state 的更新是异步的。
+  - 在异步函数(自己定义的函数)里面调用 setState 那么 state 的更新是同步的。
+  FIXME:state同步异步问题
+> 什么时候是同步的？什么时候是异步的？为什么有时是同步的，有时是异步的？
+> 批量合并，效率更高。
 
 ### React 的特殊事件和属性写法
-
+事件处理：
+- 事件命名camelCase:onClick,onDoubleClick,onChange
+  将代表事件的监听 prop 命名为 on[Event]，将处理事件的监听方法命名为 handle[Event] 这样的格式。
+- React事件是合成事件，与原生事件不完全相同。
+  不能通过返回false阻止默认行为，必须显式使用preventDefault()。
+FIXME: this怎么处理的？
+- 处理this的问题
+  ```js
+  class Foo extends React.Components{
+    //class fields语法
+    handleClick=()=>{
+      console.log(this)
+    }
+    render(){
+      return <button onClick={this.handleClick}></button>
+    }
+  }
+  或者：
+  class Foo extends React.Components{
+    handleClick(){
+      console.log(this)
+    }
+    render(){
+      //确保handleClick内的this被绑定。
+      return <button onClick={()=>this.handleClick()}></button>
+    }
+  }
+  ```
+  推荐第一种：class fields语法。第二种每次在渲染Foo时都会
 - <label htmlFor =""> label 标签里面的 for 属性，因为 for 是 js 关键字
 - className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
 - style 属性只接收对象不接收字符串
-- React 中，有一个命名规范，通常会将代表事件的监听 prop 命名为 on[Event]，将处理事件的监听方法命名为 handle[Event] 这样的格式。
-- onClick , onDoubleClick ,onChange 相关事件
-- React 里面的事件名和属性名都采用驼峰式
-- React 里面的 style 属性的值必须是一个对象 ，style ={对象{}}
-- React 里面的 onChange 事件不是光标移开后触发，而是输入的每时刻都会触发
+- React 里面的 style 属性的值必须是一个对象 ,style ={{color:red}}
 - key 和 ref 属性是组件的特殊属性，不在 props 上面
 
-- 组件标签可以写作自闭和标签，React 里面的自闭和标签必须要 /，如 input 标签
-
-- JSX
-
-  - JavaScript 的语法扩展，一种标签语法
-    const element = <h1>Hello, world!</h1>，会调用 React.createElement（标签名，属性，子元素）构建虚拟 dom
-  - JSX 会移除行首尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格
 
 - 表单
 
@@ -722,7 +766,7 @@ function observe(obj) {
 
 ### React 的生命周期函数
 
-- 挂载阶段
+- 挂载阶段(mount)
   - constructor()
     如果不初始化,state 或不进行方法绑定，则不需要构造函数
   - static getDerivedStateFromProps()
@@ -730,7 +774,7 @@ function observe(obj) {
   - render()
     class 组件中唯一必须实现的方法，会渲染出虚拟 dom
   - componentDidMount()
-    会在组件挂载后（插入 DOM 树中）立即调用，依赖于 DOM 节点的初始化应该放在这里。
+    会在组件挂载后（渲染到 DOM 中）立即调用，依赖于 DOM 节点的初始化应该放在这里。
 - 更新阶段
   - static getDerivedStateFromProps()
   - shouldComponentUpdate(nextProps, nextState)
@@ -740,8 +784,7 @@ function observe(obj) {
     在最近一次渲染输出（提交到 DOM 节点）之前调用，这个函数运行完真实 dom 会被渲染。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）, 不常用
   - componentDidUpdate(prevProps, prevState, snapshot)
     会在组件更新后会被立即，此时调用真实 dom 已经完成，可以直接对 dom 操作。首次渲染不会执行此方法
-- 卸载阶段
-
+- 卸载阶段(unmount)
   - componentWillUnmount()
     在组件卸载及销毁之前直接调用。在此方法中执行必要的清理操作
 
