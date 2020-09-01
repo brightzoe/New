@@ -607,11 +607,11 @@ function observe(obj) {
 - 插值
   通过{}插值，里面可以是各种类型的值，可以是表达式但不能是语句
 
-### React 组件
+### 组件
 
 - 组件名必须大写
 - 不能将通用表达式作为组件名，组件名必须是静态的，即使用组件时它是确定唯一的
-- 声明react组件不能修改自身的props，像纯函数一样保护他们的props.
+- 声明react组件不能修改自身的props/state，像纯函数一样保护他们的props/state.
 
 ```js
 //用class声明组件
@@ -619,7 +619,7 @@ class Foo extends React.Component{
   constructor(props){
     super(props) //用来引入 this.props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
     this.state={ //用来记录数据状态
-      key：value
+      data:lala
     }
   }
   render(){
@@ -631,7 +631,6 @@ class Foo extends React.Component{
     this.setState((state)=>{return {}})
     //setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
   }
-  //class fields 语法，相当于把这个方法传入到 constructor 里面，并加上 this; 即 this.method=()=>{}
 }
 
 //声明一个简单的函数组件，函数组件没有实例，也没有 ref 属性
@@ -639,7 +638,7 @@ function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
 }
 ```
-#### State
+### State
 - state是局部的（封装的），其他组件不能访问。
   传递state(**单向数据流**):把state作为props向下传递到子组件中，子组件通过props接收,但无法知道它的来源。
   ```js
@@ -665,13 +664,14 @@ function Welcome(props) {
 > 什么时候是同步的？什么时候是异步的？为什么有时是同步的，有时是异步的？
 > 批量合并，效率更高。
 
-### React 的特殊事件和属性写法
-事件处理：
+### 事件处理
+  事件处理：
 - 事件命名camelCase:onClick,onDoubleClick,onChange
   将代表事件的监听 prop 命名为 on[Event]，将处理事件的监听方法命名为 handle[Event] 这样的格式。
 - React事件是合成事件，与原生事件不完全相同。
   不能通过返回false阻止默认行为，必须显式使用preventDefault()。
 FIXME: this怎么处理的？
+  如果函数没有参数或者有参数e,在render里可以直接等于函数名字，否则需要在render里写箭头函数。
 - 处理this的问题
   ```js
   class Foo extends React.Components{
@@ -694,21 +694,33 @@ FIXME: this怎么处理的？
     }
   }
   ```
-  推荐第一种：class fields语法。第二种每次在渲染Foo时都会
+  推荐第一种：class fields语法。
+
+  第二种每次在渲染Foo时都会创建不同的回调函数。如果回调函数作为props传入子组件时，组件可能会进行额外的重新渲染。
+  fixme:回调函数作为props传入子组件，额外渲染？
+
+
+
 - <label htmlFor =""> label 标签里面的 for 属性，因为 for 是 js 关键字
 - className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
 - style 属性只接收对象不接收字符串
+- 条件渲染：用true&&expression 或者三目运算符?:
 - React 里面的 style 属性的值必须是一个对象 ,style ={{color:red}}
-- key 和 ref 属性是组件的特殊属性，不在 props 上面
+- key 和 ref 属性是组件的特殊属性，不在 props 上面，在props.key读不到！
+  fixme:为什么key是必须的？使用idx作为key的负面影响？
 
 
 - 表单
+  - textarea 文本内容通过value设置。select默认选项通过value设置。
+  - 表单onChange事件按键即触发，原生change事件(vue)在光标移开/回车才触发。
 
-  - 受控组件： 表单元素有 value 属性，这个时表单无法被修改
+  - 受控组件：表单元素有 value 属性，这个时表单无法被修改。
+    React组件里的state是唯一数据源，渲染表单的react组件还控制着用户输入过程中表单发生的操作。被react以这种方式控制取值的表单输入元素叫做”受控组件“。
   - 非受控组件
     - 不加上 value 属性
     - defaultValue 替代 value 属性
     - 加上 value 属性和 onChange 事件
+  - react forms api:formik
 
 - 组合和继承
   React 里面基本不用继承，只继承 React.Component, 更多是在一个组件里面使用另外的组件的组合

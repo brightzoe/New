@@ -1,16 +1,5 @@
----
-title: 前端学习week23
-date: 2019-10-20 20:50:41
-comments: true
-tags:
-- fromt-end
-- react
-mathjax: false
----
 
-​	本周主要在做vue的东西，多少是相通的，react之后再来整理
 
-<!-- more -->
 
 ### React
 
@@ -27,7 +16,7 @@ mathjax: false
 
 - props和state的区别：props是父级传给子组件的属性的值，通过`this.props.xxx`获取，且禁止修改。而state是组件的私有数据对象，可以调用`this.state.xxx`获取，只能通过`this.setState()`更新(可以直接赋值改变，但不会触发重新渲染)
 
-  - class式组件不需要用state时可以省略constructor，这是es6的class语法！！，相当于自动执行了`constuctor(...args) {super(...args)}`
+  - class式组件不需要用state时可以省略constructor，这是es6的class语法！！，相当于自动执行了`constructor(...args) {super(...args)}`
   - 函数式组件不能使用state，简洁，只接收一个props参数， 返回一个react元素
 
 - 组件中调用`this.setState()`每次改变时都会重新调用render，注意{}中表达式调用方法的**this**，可以利用箭头函数的this绑定特性，[class field]( https://2ality.com/2019/07/public-class-fields.html )
@@ -52,9 +41,8 @@ mathjax: false
   - style属性不能接字符串，只能传对象
   - 数字0依然会被渲染为0，其他的falsy会被忽略不会被渲染
 
-- 表单onChange事件按键即触发，原生change事件(vue)在光标移开/回车才触发
 
-- 特殊的propss属性
+- 特殊的props属性
 
   - children
     - 可以传递多种类型的值，会将写在A组件标签中间的元素都传入这个属性(中间可以不只一个根结点)，在A组件的定义中会渲染在`{props.children}`的位置，类似vue的插槽，但是不强制用children，可以用任意别的属性，然后在标签属性中传入react元素达到同样的效果
@@ -79,7 +67,6 @@ mathjax: false
   - `componentWillUpdate`
   - 原因是在异步渲染时会造成未预料的问题[update on async rendering]( https://zh-hans.reactjs.org/blog/2018/03/27/update-on-async-rendering.html )----fiber架构异步渲染使render之前的函数可能执行多次，若这些函数会产生副作用，则会产生bug
 
-- render method should be pure function of props & state
 
 - portals可以让组件中的元素渲染在组件的dom树之外的位置，但是react内的事件处理逻辑等还是在原来的组件中(比如冒泡)
 
@@ -103,7 +90,7 @@ mathjax: false
   - [immer]( https://immerjs.github.io/immer/docs/introduction )
   - 原理是将原对象转为一个不可变数据结构，当想要修改原对象时，会返回一个新的对象，只改变被改变的部分不变的值指向原来的引用
 
-- Reat.lazy()接收一个返回promise对象的函数，返回一个异步加载的组件`React.lazy(() => import('./OtherComponent'))`，
+- React.lazy()接收一个返回promise对象的函数，返回一个异步加载的组件`React.lazy(() => import('./OtherComponent'))`，
 
   - 这一步在vue中已经封装好了，在vue中可以直接使用`component = () => import('./OtherComponent')`作为异步组件
   - 这种用法是为了方便webpack做代码分割
@@ -112,7 +99,7 @@ mathjax: false
 
   - ```react
     <React.suspense fallback={<div>loading。。。<div>}>
-    	<LazyedComponent />  //这个子组件可以在子树中的任何位置，也可以有多个这样的组件
+    	<Lazied Component />  //这个子组件可以在子树中的任何位置，也可以有多个这样的组件
     </React.suspense>
     ```
 
@@ -132,7 +119,7 @@ mathjax: false
   - useReducer第一个参数为一个reducer函数第二个参数为初始值，执行useReducer返回的dispatch函数实际上就是执行这个reducer来修改state，值得注意的是这个dispatch是稳定的，不会在重新渲染时改变，事实上所有的hooks返回的内容都是稳定的
 - useEffect传入第二个数组参数跳过这个步骤时，注意内部函数的作用域，数组中要包含useEffect要使用的变量，这些变量改变时才执行，否则会执行最初作用域的函数(空数组表示只有挂载卸载时会执行)
   - useEffect在第一次渲染和每次更新后都会执行(相当于 componentDidMount  +  componentDidUpdate  但不会阻塞浏览器更新屏幕)
-  - 注意useEffct是在渲染**后**和更新**后**才执行的
+  - 注意useEffect是在渲染**后**和更新**后**才执行的
 - useCallback和useMemo的参数和useEffect是一致的，区别是只有useEffect才能处理副作用， useMemo返回缓存的变量 ， useCallback返回缓存的函数
   - useMemo和useCallback在渲染期间执行的意思是其返回值是直接参与渲染的，所以只能在其中写一些计算类的工作， 为未来并发渲染的考虑，在 render 时做 mutation 非常危险（因为最后一次 render 并不意味着是最新的 commit )
   - 函数组件的性能优化方式之一
