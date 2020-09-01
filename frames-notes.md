@@ -607,6 +607,14 @@ function observe(obj) {
 - 插值
   通过{}插值，里面可以是各种类型的值，可以是表达式但不能是语句
 
+- <label htmlFor =""> label 标签里面的 for 属性，因为 for 是 js 关键字
+- className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
+- style 属性只接收对象不接收字符串
+- 条件渲染：用true&&expression 或者三目运算符?:
+- React 里面的 style 属性的值必须是一个对象 ,style ={{color:red}}
+- key 和 ref 属性是组件的特殊属性，不在 props 上面，在props.key读不到！
+  fixme:为什么key是必须的？使用idx作为key的负面影响？
+
 ### 组件
 
 - 组件名必须大写
@@ -671,7 +679,7 @@ function Welcome(props) {
 - React事件是合成事件，与原生事件不完全相同。
   不能通过返回false阻止默认行为，必须显式使用preventDefault()。
 FIXME: this怎么处理的？
-  如果函数没有参数或者有参数e,在render里可以直接等于函数名字，否则需要在render里写箭头函数。
+  如果函数没有参数或者只有参数e,在render里可以直接等于函数名字，否则需要在render里写箭头函数。
 - 处理this的问题
   ```js
   class Foo extends React.Components{
@@ -700,17 +708,7 @@ FIXME: this怎么处理的？
   fixme:回调函数作为props传入子组件，额外渲染？
 
 
-
-- <label htmlFor =""> label 标签里面的 for 属性，因为 for 是 js 关键字
-- className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
-- style 属性只接收对象不接收字符串
-- 条件渲染：用true&&expression 或者三目运算符?:
-- React 里面的 style 属性的值必须是一个对象 ,style ={{color:red}}
-- key 和 ref 属性是组件的特殊属性，不在 props 上面，在props.key读不到！
-  fixme:为什么key是必须的？使用idx作为key的负面影响？
-
-
-- 表单
+### 表单
   - textarea 文本内容通过value设置。select默认选项通过value设置。
   - 表单onChange事件按键即触发，原生change事件(vue)在光标移开/回车才触发。
 
@@ -722,8 +720,10 @@ FIXME: this怎么处理的？
     - 加上 value 属性和 onChange 事件
   - react forms api:formik
 
-- 组合和继承
-  React 里面基本不用继承，只继承 React.Component, 更多是在一个组件里面使用另外的组件的组合
+### 组合和继承
+  React 里面基本不用继承，只继承 React.Component, 更多是在一个组件里面使用另外的组件的组合.
+  - props.name:  <Foo name="miao"/>标签里的属性，在Foo组件可以通过props.name的方式访问。
+  - props.children:<Foo>balabala</Foo>  children可以传递多种类型的值，会将写在Foo组件标签中间的元素都传入这个属性(中间可以不只一个根结点).
 
 - Fragments 一个组件返回多个并列子元素的方法
 
