@@ -31,15 +31,8 @@
 - `this.setState()`更新是异步的，微任务，回调可以接一个state参数，作为上个setState更新后的state(与this.state不是同一个对象！)，注意setState是回调形式的异步，不是promise，所以不能用await
 
 - JSX
-
-  - 其实只是`React.createElement()`的语法糖，所以组件标签类型可以是首字母大写的组件名称，可以是首字母大写的**变量**，可以用首字母大写的**对象点语法**引用，但不能是表达式，其他情况会当做原生标签的字符串传入`React.createElement()`
   - jsx返回的内容也只能有一个根结点
   - 不产生单独的作用域
-  - 标签属性不能用中划线，只能驼峰式
-  - 语法实际被编译成`React.createElement()`调用
-  - 时刻记住代码中写的是类html而不是真正的html，注意一些细节：属性名可以大写，自闭和标签一定要加斜杠等
-  - style属性不能接字符串，只能传对象
-  - 数字0依然会被渲染为0，其他的falsy会被忽略不会被渲染
 
 
 - 特殊的props属性
@@ -47,7 +40,6 @@
   - children
     - 可以传递多种类型的值，会将写在A组件标签中间的元素都传入这个属性(中间可以不只一个根结点)，在A组件的定义中会渲染在`{props.children}`的位置，类似vue的插槽，但是不强制用children，可以用任意别的属性，然后在标签属性中传入react元素达到同样的效果
     - 当组件标签中间是函数或字符串时，它就是对应的值
-  - 注意key/ref属性是单独处理的，并不在props里面
 
 - 标签的ref属性传入函数时会在元素渲染完成后调用并传入参数为结点对象
 
@@ -68,20 +60,7 @@
   - 原因是在异步渲染时会造成未预料的问题[update on async rendering]( https://zh-hans.reactjs.org/blog/2018/03/27/update-on-async-rendering.html )----fiber架构异步渲染使render之前的函数可能执行多次，若这些函数会产生副作用，则会产生bug
 
 
-- portals可以让组件中的元素渲染在组件的dom树之外的位置，但是react内的事件处理逻辑等还是在原来的组件中(比如冒泡)
 
-- context，需要在全局创建一个变量` xxxContext value= React.createContext(defaultValue); `，然后用`<xxxContext.Provider value="xxx">`包裹父组件，在需要使用这个值的class子组件中挂载`static contextType = xxxContent`，在通过`this.context`消费最近的value，并且可以在任何生命周期中访问到。
-
-  - 当子组件为函数组件时：
-
-  - ```jsx
-    <MyContext.Consumer>
-      {value => /* 基于 context 值进行渲染*/}
-        //value就是provider上的值
-    </MyContext.Consumer>
-    ```
-
-  -
 
 - SyntheticEvent，事件处理时传入处理机的事件对象其实都是在原生事件上包装过的合成事件，保留了一些原生的接口，主要是为了兼容问题，此外为了节省内存，同一个类型的事件触发可能会复用同一个合成事件对象，并且处理完成后会清空，所以尽量不要异步访问事件(譬如当使用`this.setState(state => {xxx: e.target.value})` 时)
 
@@ -90,18 +69,8 @@
   - [immer]( https://immerjs.github.io/immer/docs/introduction )
   - 原理是将原对象转为一个不可变数据结构，当想要修改原对象时，会返回一个新的对象，只改变被改变的部分不变的值指向原来的引用
 
-- React.lazy()接收一个返回promise对象的函数，返回一个异步加载的组件`React.lazy(() => import('./OtherComponent'))`，
 
-  - 这一步在vue中已经封装好了，在vue中可以直接使用`component = () => import('./OtherComponent')`作为异步组件
-  - 这种用法是为了方便webpack做代码分割
 
-- suspense  通过 React.lazy动态加载组件，用`React.lazy()`构造普通组件的高阶组件
-
-  - ```react
-    <React.suspense fallback={<div>loading。。。<div>}>
-    	<Lazied Component />  //这个子组件可以在子树中的任何位置，也可以有多个这样的组件
-    </React.suspense>
-    ```
 
   - suspense组件使用了错误边界
 

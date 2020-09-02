@@ -530,7 +530,7 @@ function observe(obj) {
   - 完整版 vue 有这个编译工具，runtime 版本没有，但是 runtime 版本会提前把模板字符串编译为 render 函数，这样就少了浏览器的编译过程，提升性能和效率
 
 - vue 相关文件和工具
-  bable：一个广泛使用的转码器，可以将 ES6 代码转为 ES5 代码，从而在现有环境执行；让旧版本的浏览器可以用最新的语法
+  babel：一个广泛使用的转码器，可以将 ES6 代码转为 ES5 代码，从而在现有环境执行；让旧版本的浏览器可以用最新的语法
   stylus : 一种类似 scss 的语言，现在主流是 scss
   vue-loader: web-pack 插件，编译器
   ESLint：js 代码风格检查工具，目前流行的是 Airbn/standard/prettier
@@ -576,29 +576,27 @@ function observe(obj) {
       - 路由，数据仓库，视图等
       - asset 静态资源
     - 一些配置文件
-      \*readme.md 告诉你这么开启这个项目的命令
+      readme.md 告诉你这么开启这个项目的命令
   - 相关文件配置好后，运行 npm run build , 它会把相关文件打包到 dist 文件里，之后吧 dist 文件里面的资源放到 static 文件里
 
 ## React
 
 - 三个引用
 
-  - 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 bable 转化为了 React.createElement（标签名，属性，子元素）
-  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  - 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 babel 转化为了 ` React.createElement()``<script src="https://unpkg.com/react@16/umd/react.development.js"></script> `
+  - 这个文件是用来实现真实 dom 的，全局创建一个 ReactDOM 变量`<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>`
+  - 这个 babel 文件是用来编译 react 代码的，如 JSX, 编译为 ES5 代码
+    ` <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>``<script type="text/babel">react代码</script> `
 
-  - 这个文件是用来实现真实 dom 的，全局创建一个 ReactDOM 变量
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+### JSX
+- JavaScript 的语法扩展，一种标签语法，是`React.createElement()`的语法糖
+  JSX: `<Btn>Hello, world!</Btn>`，会调用 `React.createElement(Btn,props,children)`构建虚拟 dom
+- JSX 标签，一定是首字母大写。可以是 **变量** ，可以用 **对象点语法(Foo.Abc)** 引用，但不能是表达式，其他情况会当做原生标签的字符串传入`React.createElement()`
+- JSX 会移除行首尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格
+- 子元素，或者根元素内部的文字等，可以通过`props.children`读到
+- `<label htmlFor ="">` label 标签里面的 for 属性，因为 for 是 js 关键字，JSX 里面要写作 htmlfor
 
-  - 这个 bable 文件是用来编译 react 代码的，如 JSX, 编译为 ES5 代码
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script type="text/babel">react代码</script>
-
-- JSX
-  - JavaScript 的语法扩展，一种标签语法
-    const element = <h1>Hello, world!</h1>，会调用 React.createElement（标签名，属性，子元素）构建虚拟 dom
-  - JSX 会移除行首尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格
-
-- ReactDOM.render(<TodoApp />，document.getElementById('root'))
+- `ReactDOM.render(<TodoApp />，document.getElementById('root'))`
   这个函数接收两个参数，将第一个参数虚拟 dom 编译到第二个参数 React 根元素里面
 
 - Source map
@@ -606,81 +604,98 @@ function observe(obj) {
 
 - 插值
   通过{}插值，里面可以是各种类型的值，可以是表达式但不能是语句
+- style 属性只接收对象不接收字符串,`style ={{color:red}}`
 
-- <label htmlFor =""> label 标签里面的 for 属性，因为 for 是 js 关键字
 - className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
-- style 属性只接收对象不接收字符串
-- 条件渲染：用true&&expression 或者三目运算符?:
-- React 里面的 style 属性的值必须是一个对象 ,style ={{color:red}}
-- key 和 ref 属性是组件的特殊属性，不在 props 上面，在props.key读不到！
-  fixme:为什么key是必须的？使用idx作为key的负面影响？
+- 条件渲染：用`true&&expression` 或者三目运算符?:
+- key 和 ref 属性是组件的特殊属性，不在 props 上面，在 props.key 读不到！
+  fixme:为什么 key 是必须的？使用 idx 作为 key 的负面影响？
 
 ### 组件
 
 - 组件名必须大写
 - 不能将通用表达式作为组件名，组件名必须是静态的，即使用组件时它是确定唯一的
-- 声明react组件不能修改自身的props/state，像纯函数一样保护他们的props/state.
+- 声明 react 组件不能修改自身的 props/state，像纯函数一样保护他们的 props/state.
 
 ```js
 //用class声明组件
-class Foo extends React.Component{
-  constructor(props){
-    super(props) //用来引入 this.props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
-    this.state={ //用来记录数据状态
-      data:lala
-    }
-  }
-  render(){
-  //会返回一个虚拟 dom，就是组件模板
-    return (<div>{this.state.key}</div>) //React 通过{}传递动态数据
-  }
-  method = ()=>{
-    this.setState({}) //or
-    this.setState((state)=>{return {}})
-    //setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
-  }
+class Foo extends React.Component {
+	constructor(props) {
+		super(props); //用来引入 this.props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
+		this.state = {
+			//用来记录数据状态
+			data: lala,
+		};
+	}
+	render() {
+		//会返回一个虚拟 dom，就是组件模板
+		return <div>{this.state.key}</div>; //React 通过{}传递动态数据
+	}
+	method = () => {
+		this.setState({}); //or
+		this.setState((state) => {
+			return {};
+		});
+		//setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
+	};
 }
 
 //声明一个简单的函数组件，函数组件没有实例，也没有 ref 属性
 function Welcome(props) {
-  return <h1>Hello, {props.name}</h1>;
+	return <h1>Hello, {props.name}</h1>;
 }
 ```
+
 ### State
-- state是局部的（封装的），其他组件不能访问。
-  传递state(**单向数据流**):把state作为props向下传递到子组件中，子组件通过props接收,但无法知道它的来源。
+
+- state 是局部的（封装的），其他组件不能访问。
+  传递 state(**单向数据流**):把 state 作为 props 向下传递到子组件中，子组件通过 props 接收,但无法知道它的来源。
+
   ```js
-  function FormattedDate(props){
-    return <h2>it's {props.data.toLocaleTimeString()}</h2>
+  function FormattedDate(props) {
+  	return <h2>it's {props.data.toLocaleTimeString()}</h2>;
   }
-  class FormattedDate extends React.Component{
-    render(){
-      return <h2>it's {this.props.data.toLocaleTimeString()}</h2>
-    }
+  class FormattedDate extends React.Component {
+  	render() {
+  		return <h2>it's {this.props.data.toLocaleTimeString()}</h2>;
+  	}
   }
-  ReactDOM.render(<FormattedDate date={this.state.date}/>,document.getElementById('root'))
+  ReactDOM.render(
+  	<FormattedDate date={this.state.date} />,
+  	document.getElementById('root')
+  );
   ```
 
-- 构造函数是唯一可以给this.state赋值的地方。**不要直接修改State，应该使用setState()。**
-  React 只能通过 setState 设置数据状态才可以更改 dom。
-  State的更新会被合并，只更改新 state 传入的部分，其它数据保留。
-  this.state 的指向从开始创建到更新一直没有改变，指向同一个对象，对象里面的数据发生改变。
-- State 的更新可能是异步的，出于性能考虑，React 可能会把多个 setState() 调用合并成一个调用。this.props与this.state可能会异步更新。
-  - 在同步函数(事件处理函数里)里面调用 setState 那么 state 的更新是异步的。
-  - 在异步函数(自己定义的函数)里面调用 setState 那么 state 的更新是同步的。
-  FIXME:state同步异步问题
-> 什么时候是同步的？什么时候是异步的？为什么有时是同步的，有时是异步的？
-> 批量合并，效率更高。
+- 构造函数是唯一可以给`this.state`赋值的地方。**不要直接修改 State，应该使用`setState()`。**
+  React 只能通过 `setState` 设置数据状态更新 state，state 改变了，该组件就会重新渲染。
+  State 的更新会被合并，只更改新 state 传入的部分，其它数据保留。`this.state` 的指向从开始创建到更新一直没有改变，指向同一个对象，对象里面的数据发生改变。
+- State 的更新可能是异步的，出于性能考虑，React 可能会把多个 setState() 调用合并成一个调用。
+  `this.props`与`this.state`可能会异步更新。在 React 中，`this.props` 和 `this.state` 都代表着已经被渲染了的值，即当前屏幕上显示的值。
+  - 在同步函数(事件处理函数里)里面调用 `setState` 那么 state 的更新是异步的，state 的批更新机制。
+  - 在异步函数(自己定义的函数)里面调用 `setState` 那么 state 的更新是同步的。
+    FIXME:state 同步异步问题
+    > **什么时候是同步的？什么时候是异步的？为什么有时是同步的，有时是异步的？**
+    > 在事件处理函数中，state 更新是异步的，在浏览器事件处理结束后批量合并，避免不必要的重新渲染，效率更高，提升性能。在很多情况下 React 使用 state 批更新机制。
+    > **那为什么不立即更新 state,而不重新渲染组件呢？**
+    > 保证 React 提供的对象（props,state）在内部状态和更新保持一致，确保他们是协调的很重要，如果不一致，出现问题很难定位。
+    > 异步渲染保证用户体验。
+    > **state 与 props 的区别是什么？**
+    > 共同点：都是对象，用来保存信息，可以控制组件的渲染输出。
+    > state 是存储在组件中的数据及状态，在组件内部由组件自己管理。（类似一个函数内声明的变量）
+    > props 是组件的属性，写在组件标签上的，通过 props 单向传递给组件。（类似于函数的形参）
 
 ### 事件处理
-  事件处理：
-- 事件命名camelCase:onClick,onDoubleClick,onChange
+
+事件处理：
+
+- 事件命名 camelCase:onClick,onDoubleClick,onChange
   将代表事件的监听 prop 命名为 on[Event]，将处理事件的监听方法命名为 handle[Event] 这样的格式。
-- React事件是合成事件，与原生事件不完全相同。
-  不能通过返回false阻止默认行为，必须显式使用preventDefault()。
-FIXME: this怎么处理的？
-  如果函数没有参数或者只有参数e,在render里可以直接等于函数名字，否则需要在render里写箭头函数。
-- 处理this的问题
+- React 事件是合成事件，与原生事件不完全相同。
+  不能通过返回 false 阻止默认行为，必须显式使用 preventDefault()。
+  FIXME: this 怎么处理的？
+  如果函数没有参数或者只有参数 e,在 render 里可以直接等于函数名字，否则需要在 render 里写箭头函数。
+- 处理 this 的问题
+
   ```js
   class Foo extends React.Components{
     //class fields语法
@@ -702,37 +717,49 @@ FIXME: this怎么处理的？
     }
   }
   ```
-  推荐第一种：class fields语法。
 
-  第二种每次在渲染Foo时都会创建不同的回调函数。如果回调函数作为props传入子组件时，组件可能会进行额外的重新渲染。
-  fixme:回调函数作为props传入子组件，额外渲染？
+  推荐第一种：class fields 语法。
 
+  第二种每次在渲染 Foo 时都会创建不同的回调函数。如果回调函数作为 props 传入子组件时，组件可能会进行额外的重新渲染。
+  fixme:回调函数作为 props 传入子组件，额外渲染？
 
 ### 表单
-  - textarea 文本内容通过value设置。select默认选项通过value设置。
-  - 表单onChange事件按键即触发，原生change事件(vue)在光标移开/回车才触发。
 
-  - 受控组件：表单元素有 value 属性，这个时表单无法被修改。
-    React组件里的state是唯一数据源，渲染表单的react组件还控制着用户输入过程中表单发生的操作。被react以这种方式控制取值的表单输入元素叫做”受控组件“。
-  - 非受控组件
-    - 不加上 value 属性
-    - defaultValue 替代 value 属性
-    - 加上 value 属性和 onChange 事件
-  - react forms api:formik
+- textarea 文本内容通过 value 设置。select 默认选项通过 value 设置。
+- 表单 onChange 事件按键即触发，原生 change 事件(vue)在光标移开/回车才触发。
+
+- 受控组件：表单元素有 value 属性，这个时表单无法被修改。
+  React 组件里的 state 是唯一数据源，渲染表单的 react 组件还控制着用户输入过程中表单发生的操作。被 react 以这种方式控制取值的表单输入元素叫做”受控组件“。
+- 非受控组件
+  - 不加上 value 属性
+  - defaultValue 替代 value 属性
+  - 加上 value 属性和 onChange 事件
+- react forms api:formik
 
 ### 组合和继承
-  React 里面基本不用继承，只继承 React.Component, 更多是在一个组件里面使用另外的组件的组合.
-  - props.name:  <Foo name="miao"/>标签里的属性，在Foo组件可以通过props.name的方式访问。
-  - props.children:<Foo>balabala</Foo>  children可以传递多种类型的值，会将写在Foo组件标签中间的元素都传入这个属性(中间可以不只一个根结点).
 
-- Fragments 一个组件返回多个并列子元素的方法
+React 里面基本不用继承，只继承 React.Component, 更多是在一个组件里面使用另外的组件的组合.
 
-  - render() {
-    return (
-    <React.Fragment><ChildA /><ChildB /><ChildC /></React.Fragment>
-    );
-    }
-  - 也可以用<> </> 或者 [] 代替 Fragments 组件实现组合，但是 Fragments 支持 key 元素
+- `props.name`: `<Foo name="miao"/>`标签里的属性，在 Foo 组件可以通过 props.name 的方式访问。
+- `props.children`: `<Foo>balabala</Foo>` children 可以传递多种类型的值，会将写在 Foo 组件标签中间的元素都传入这个属性(中间可以不只一个根结点).
+
+### Fragments
+
+一个组件返回多个并列子元素的方法。
+
+```js
+render() {
+  return (
+    <React.Fragment>
+    <ChildA />
+    <ChildB />
+    <ChildC />
+    </React.Fragment>
+  );
+}
+```
+
+- 也可以用`<>` `</>` 代替 Fragments 组件实现组合，但是 Fragments 支持 key 属性，目前也是唯一支持的属性。
 
 - Refs
 
@@ -797,6 +824,7 @@ FIXME: this怎么处理的？
   - componentDidUpdate(prevProps, prevState, snapshot)
     会在组件更新后会被立即，此时调用真实 dom 已经完成，可以直接对 dom 操作。首次渲染不会执行此方法
 - 卸载阶段(unmount)
+
   - componentWillUnmount()
     在组件卸载及销毁之前直接调用。在此方法中执行必要的清理操作
 
@@ -868,39 +896,44 @@ FIXME: this怎么处理的？
   - React.Children.map(children, function[(thisArg)])
   - React.Children.forEach(children, function[(thisArg)])
   - React.Children.count(children) 返回 children 中的组件总数量
+    todo:代码分割，webpack 打包
 
-- React.lazy 代码分割，优化性能 , 需要返回一个 promise，必须配合 React.Suspense 使用
-  const SomeComponent = React.lazy(() => import('./SomeComponent'))
+### 代码分割
 
-- React.Suspense
-
-  - 内部异步加载的函数会抛出一个 promise（这个异步函数会被包一层），Suspense 本身是个错误边界会获取到这个 promise
+- `React.lazy` 代码分割，优化性能, 需要返回一个 promise，必须配合 `React.Suspense` 使用。
+  通过 React.lazy 动态加载组件，用`React.lazy()`构造普通组件的高阶组件`const SomeComponent = React.lazy(() => import('./SomeComponent'))`
+- `React.Suspense`
+  - React.lazy()接收一个返回 promise 对象的函数，返回一个异步加载的组件，Suspense 本身是个**错误边界**会获取到这个 promise
   - 如果有这个资源的缓存就会同步返回数据，没有就运行 fallback 对应的组件，直到子元素资源加载完成替换为子元素
-    <React.Suspense fallback={<div>loading</div>}>
+  ```js
+  <React.suspense fallback={<div>loading<div>}>
+    <Lazied Component />  //这个子组件可以在子树中的任何位置，也可以有多个这样的组件
+  </React.suspense>
+  ```
+  - 这一步在 vue 中已经封装好了，在 vue 中可以直接使用`component = () => import('./OtherComponent')`作为异步组件
+  - 这种用法是为了方便 webpack 做代码分割
 
-  <div>
-    <SomeComponent />
-  </div>
+### Portals 门户网站
 
-  </React.Suspense>
+- Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案，常用于对话框、悬浮卡以及提示框
+- `ReactDOM.createPortal(child, container)`
+  child 是 React 子元素，container 是一个 DOM 元素，child 会渲染到容器里，而不是父类；使用在组件的 render 函数里
+- 除了在 dom 树中的位置，其他行为和普通的 react 子节点行为一致。 react 内的事件处理逻辑等还是在原来的组件中(比如冒泡)
+  fixme:事件处理逻辑按啥顺序，react 树还是啥 dom 树
 
-- Portals 门户网站
+### 高阶组件 HOC
 
-  - Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案，常用于对话框、悬浮卡以及提示框
-  - ReactDOM.createPortal(child, container)
-    child 是 React 子元素，container 是一个 DOM 元素，child 会渲染到容器里，而不是父类；使用在组件的 render 函数里
-  - 子元素冒泡时按照实际 dom 结构冒泡而不是直接冒泡到容器
+- 和高阶函数类似，高阶组件是参数为组件，返回值为新组件的函数。组件是将props转换为UI，而高阶组件是将组件转换为另一个组件。
+- 解决横切关注点问题。需要在一个地方定义一个逻辑，并在许多组件之间共享。HOC是纯函数，不修改传入的组件
+### 错误边界
 
-- 高阶组件
+- 错误边界是一种 React 组件，捕获并打印发生在其子组件树任何位置的 JavaScript 错误，并且它会渲染出备用 UI
+- 如果一个 class 组件中定义了 `static getDerivedStateFromError()` 或 `componentDidCatch()` 这两个生命周期方法中的任意一个（或两个）时，那么它就变成一个错误边界，然后直接当做常规组件用，形成一个错误墙，错误组件里面子组件的错误会被错误边界捕获。
+  - 类似在组件层面实现了一个 try catch 机制，让错误不会跑到外层。
+  - 只有 **class 组件**才可以成为错误边界组件。大多数情况只需要声明一次错误边界组件, 并在整个应用中使用它。也可以将单独的部件包装在错误边界以保护应用其他部分不崩溃。
+- 无法捕捉：**事件处理，异步，服务端渲染，自身错误**而非子组件的错误。
 
-  - 和高阶函数类似，高阶组件是参数为组件，返回值为新组件的函数
-
-- 错误边界
-
-  - 错误边界是一种 React 组件，捕获并打印发生在其子组件树任何位置的 JavaScript 错误，并且它会渲染出备用 UI
-  - 类似在组件层面实现了一个 try catch 机制，让错误不会跑到外层
-  - 事件处理，异步，自身错误而非子组件的错误无法捕捉
-  - 如果一个 class 组件中定义了 static getDerivedStateFromError() 或 componentDidCatch() 这两个生命周期方法中的任意一个（或两个）时，那么它就变成一个错误边界，然后直接当做常规组件用，形成一个错误墙，错误组件里面子组件的错误会被错误边界捕获
+  - 事件处理器不会在渲染期间触发，如果抛出异常，React 仍然知道需要在屏幕上显示什么。在事件处理器内部使用 try catch 语句。
 
 - 与第三方库协同
 
@@ -914,20 +947,22 @@ FIXME: this怎么处理的？
   - e.persist() 保留合成事件对象，事件结束之后不会清空，配合异步函数
     e.nativeEvent 访问原生浏览器对象
 
-- Context
+### Context
 
-  - 实现了自上而下跨组件传递数据，跨组件层级共享数据
-  - 使用方法
-    - 全局创建一个 context 实例
-      var MyUserContext = React.createContext(null) 里面的参数是默认值，一般填 null
-    - Context 实例对象上面有个 MyUserContext.Provider 组件开始向下传递数据，MyUserContext.Provider 组件内部可以接收数据，如果没有 value 属性就会传递默认值
-      <MyUserContext.Provider value={this.state.user}></MyUserContext.Provider>
-    - 内部接收数据方法
-      - 通过<MyUserContext.Consumer>接收，其内部是一个函数，参数为接收的 value, 返回需要渲染的 JSX 代码，而且可以多层嵌套
-        <MyUserContext.Consumer>{value=>{return JSX 代码}}</MyUserContext.Consumer>
-      - 通过子组件的静态属性把 context 实例赋值到 contextType 属性，然后再 JSX 中可以使用 this.context 访问到 value
-        static contextType = MyUserContext
-        this.context
+- 实现了自上而下跨组件传递数据，提供一种在组件之间共享某些数据，而不必显式地通过组件树逐级传递 props.
+  应用于在很多不同层级的组件间访问同样一些数据，但是会使组件复用性变差。慎用，有时可以用组件组合代替。
+- 使用方法
+
+  - 全局创建一个 context 实例 `var MyContext = React.createContext(defaultValue) `
+    用`<MyContext.Provider value="xxx">`包裹父组件，在需要使用这个值的 class 子组件中挂载`static contextType = MyContent`，在通过`this.context`消费最近的 value，并且可以在任何生命周期中访问到。
+  - 内部接收数据方法:`<MyContext.Consumer>`里接一个函数
+
+  ```js
+  <MyContext.Consumer>
+    {value => /* 基于 context 值进行渲染*/}
+      //value就是provider上的值
+  </MyContext.Consumer>
+  ```
 
 - 性能优化
 
@@ -1129,7 +1164,7 @@ FIXME: this怎么处理的？
 ## webpack
 
 - 打包
-- 将除 js 以外的其它资源也当成 require 的资源，如图片，css,json,svg，字体，他通过把这些非 js 资源转化为等价的 js 文件来实现；这个格式转换工具在 webpack 里面称为 loader, 即使是 js 文件也会经过 bable-loader 转换
+- 将除 js 以外的其它资源也当成 require 的资源，如图片，css,json,svg，字体，他通过把这些非 js 资源转化为等价的 js 文件来实现；这个格式转换工具在 webpack 里面称为 loader, 即使是 js 文件也会经过 babel-loader 转换
   比如对于图片而言，小资源转换为 base64，大资源转换资源地址；
   比如 sass-loader,css-loader,style-loader
 - plugin 在 webpack 则是对整体的打包结果进行处理的一种插件机制
