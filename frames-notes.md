@@ -643,7 +643,7 @@ class Foo extends React.Component {
 	};
 }
 
-//声明一个简单的函数组件，函数组件没有实例，也没有 ref 属性
+//声明一个简单的函数组件，函数组件没有实例，节省内存，也没有 ref 属性
 function Welcome(props) {
 	return <h1>Hello, {props.name}</h1>;
 }
@@ -1003,7 +1003,7 @@ const MyComponent = React.memo(function MyComponent(props) {
   - ES6 通用，ES5 退化通过 getter 和 setter 代理，但是不可以添加新的属性
 - 通过生命周期函数 `shouldComponentUpdate` 优化性能
 
-### hook
+### Hook
 
   - 为函数组件带来了 state 和类似生命周期函数的功能
   - state 不会合并，而是完全替代之前的 state，多利用展开运算符
@@ -1016,7 +1016,7 @@ const MyComponent = React.memo(function MyComponent(props) {
     - useState 函数，接收的参数会设置为 state 的初始值，返回一个数组 [state, 操作 state 的函数 setState]
       setState(value){state = value} setState 的函数大概是这样
       如 var [count, setCount] = useState(0)
-    - useEffect 函数，相当于一个生命周期函数 componentDidMount 或 componentDidUpdate，直接在函数组件内部使用 \*用法
+    - `useEffect()` 函数，相当于一个生命周期函数 `componentDidMount` 或 `componentDidUpdate`，直接在函数组件内部使用 \*用法
       useEffect(
       ()=>{
       第一个参数是一个函数，可以挂载 componentDidMount 或 componentDidUpdate 阶段需要的操作；
@@ -1031,12 +1031,11 @@ const MyComponent = React.memo(function MyComponent(props) {
 
     - useContext 函数 hook, 类似 class 组件里面的 Context 功能
       - 开始的用法和 class 组件一样，先在外部创建一个 context 实例
-        var ColorContext = React.createContext()
-        Context 实例对象上面有个 ColorContext.Provider 组件开始向下传递数据，用于组件内部
-        <ColorContext.Provider value={color}>
+        `var ColorContext = React.createContext()`
+        Context 实例对象上面有个 `ColorContext.Provider` 组件开始向下传递数据，用于组件内部
+        `<ColorContext.Provider value={color}>`
       - 接收数据方法
-        在后代组件中直接使用 useContext(Context 实例对象）接收数据
-        var color = useContext(ColorContext) 接收数据
+        在后代组件中直接使用 `var color = useContext(ColorContext) `接收数据
 
   - useCallback
 
