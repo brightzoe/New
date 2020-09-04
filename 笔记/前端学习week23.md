@@ -33,11 +33,7 @@
     - 可以传递多种类型的值，会将写在A组件标签中间的元素都传入这个属性(中间可以不只一个根结点)，在A组件的定义中会渲染在`{props.children}`的位置，类似vue的插槽，但是不强制用children，可以用任意别的属性，然后在标签属性中传入react元素达到同样的效果
     - 当组件标签中间是函数或字符串时，它就是对应的值
 
-- 标签的ref属性传入函数时会在元素渲染完成后调用并传入参数为结点对象
 
-  - 现在的做法，构造器中创建一个`React.createRef()`对象，将该对象传入ref属性，然后在该对象的current属性调用对应dom结点，需要多个ref就创建多个对象
-  - 当 `ref` 属性用于 HTML 元素时，构造函数中使用 `React.createRef()` 创建的 `ref` 接收底层 DOM 元素作为其 `current` 属性。
-  - 当 `ref` 属性用于自定义 class 组件时，`ref` 对象接收组件的挂载实例作为其 `current` 属性。
 
 
 
@@ -48,8 +44,6 @@
   - `componentWillReceiveProps`
   - `componentWillUpdate`
   - 原因是在异步渲染时会造成未预料的问题[update on async rendering]( https://zh-hans.reactjs.org/blog/2018/03/27/update-on-async-rendering.html )----fiber架构异步渲染使render之前的函数可能执行多次，若这些函数会产生副作用，则会产生bug
-
-
 
 
 - SyntheticEvent，事件处理时传入处理机的事件对象其实都是在原生事件上包装过的合成事件，保留了一些原生的接口，主要是为了兼容问题，此外为了节省内存，同一个类型的事件触发可能会复用同一个合成事件对象，并且处理完成后会清空，所以尽量不要异步访问事件(譬如当使用`this.setState(state => {xxx: e.target.value})` 时)

@@ -45,9 +45,9 @@
 
   ```html
   <template v-if="ok">
-  	<h1>Title</h1>
-  	<p>Paragraph 1</p>
-  	<p>Paragraph 2</p>
+    <h1>Title</h1>
+    <p>Paragraph 1</p>
+    <p>Paragraph 2</p>
   </template>
   ```
 
@@ -70,7 +70,7 @@
 
 ```html
 <div v-for="(value, key, index) in object">
-	{{ index }}. {{ key }}: {{ value }}
+  {{ index }}. {{ key }}: {{ value }}
 </div>
 ```
 
@@ -174,24 +174,24 @@ template：//html 代码
 
 ```js
 function observe(obj) {
-	for (let prop in obj) {
-		let val = obj[prop];
-		if (typeof val == 'object') {
-			val = observe(val);
-		}
-		Object.defineProperty(obj, prop, {
-			get: function () {
-				return val;
-			},
-			set: function (value) {
-				if (typeof value == 'object') {
-					value = observe(value);
-				}
-				val = value;
-			},
-		});
-	}
-	return obj;
+  for (let prop in obj) {
+    let val = obj[prop];
+    if (typeof val == 'object') {
+      val = observe(val);
+    }
+    Object.defineProperty(obj, prop, {
+      get: function () {
+        return val;
+      },
+      set: function (value) {
+        if (typeof value == 'object') {
+          value = observe(value);
+        }
+        val = value;
+      },
+    });
+  }
+  return obj;
 }
 ```
 
@@ -585,17 +585,19 @@ function observe(obj) {
 
   - 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 babel 转化为了 ` React.createElement()``<script src="https://unpkg.com/react@16/umd/react.development.js"></script> `
   - 这个文件是用来实现真实 dom 的，全局创建一个 ReactDOM 变量`<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>`
+    - `ReactDOM.render(<TodoApp />，document.getElementById('root'))`
+      这个函数接收两个参数，将第一个参数虚拟 dom 编译到第二个参数 React 根元素里面
   - 这个 babel 文件是用来编译 react 代码的，如 JSX, 编译为 ES5 代码
     ` <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>``<script type="text/babel">react代码</script> `
 
 - Source map
-  Source map 就是一个信息文件，里面储存着位置信息。也就是说，转换后的代码的每一个位置，所对应的转换前的位置。有了它，出错的时候，除错工具将直接显示原始代码，而不是转换后的代码。
+  Source map 就是一个信】息文件，里面储存着位置信息。也就是说，转换后的代码的每一个位置，所对应的转换前的位置。有了它，出错的时候，除错工具将直接显示原始代码，而不是转换后的代码。
 - 插值
   通过{}插值，里面可以是各种类型的值，可以是表达式但不能是语句
 - style 属性只接收对象不接收字符串,`style ={{color:red}}`
 
 - className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
-- 条件渲染：用`true&&expression` 或者三目运算符?:
+- 条件渲染：用`true && expression` 或者三目运算符 ? :
 - key 和 ref 属性是组件的特殊属性，不在 props 上面，在 props.key 读不到！
   fixme:为什么 key 是必须的？使用 idx 作为 key 的负面影响？diff 算法怎么比较？
   > key 要稳定，可预测，列表内唯一。react 的 render()方法会创建一颗由 react 元素组成的虚拟 dom 树，state/props 更新时，会重新 render 返回一颗不同的树。基于这两棵树的差别，有效率地更新 UI 以保证当前 UI 与最新的树保持同步。将生成的一棵树转换为另一棵树的 diff 算法比较复杂，key 同来匹配原有树上的子元素和最新树上的子元素。
@@ -603,16 +605,13 @@ function observe(obj) {
 
 ### JSX
 
-- JavaScript 的语法扩展，一种标签语法，是`React.createElement()`的语法糖
-  JSX: `<Btn>Hello, world!</Btn>`，会调用 `React.createElement(Btn,props,children)`构建虚拟 dom
-- JSX 标签，一定是首字母大写。可以是 **变量** ，可以用 **对象点语法(Foo.Abc)** 引用，但不能是表达式，其他情况会当做原生标签的字符串传入`React.createElement()`
-- JSX 会移除行首尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格
-- 子元素，或者根元素内部的文字等，可以通过`props.children`读到
-- `<label htmlFor ="">` label 标签里面的 for 属性，因为 for 是 js 关键字，JSX 里面要写作 htmlfor
-- jsx 返回的内容也只能有一个根结点
-- 不产生单独的作用域
-- `ReactDOM.render(<TodoApp />，document.getElementById('root'))`
-  这个函数接收两个参数，将第一个参数虚拟 dom 编译到第二个参数 React 根元素里面
+- JavaScript 的语法扩展，一种标签语法，是`React.createElement()`的语法糖。
+  JSX: `<Btn>Hello, world!</Btn>`，会调用 `React.createElement(Btn,props,children)`创建 React 元素。
+- JSX 自定义标签，一定是首字母大写。可以是 **变量** ，可以用 **对象点语法(Foo.Abc)** 引用，但不能是表达式，其他情况会当做原生标签的字符串传入`React.createElement()`。
+- 使用组件时，根元素内部的子元素或者文字等，可以在组件里通过`props.children`读到。
+- JSX 会移除行首，行尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格。
+- `<label htmlFor ="">` label 标签里面的 for 属性，因为 for 是 js 关键字，JSX 里面要写作 htmlfor。
+- jsx 返回的内容也只能有一个根结点，不产生单独的作用域。
 
 ### 组件
 
@@ -620,35 +619,56 @@ function observe(obj) {
 - 不能将通用表达式作为组件名，组件名必须是静态的，即使用组件时它是确定唯一的
 - 声明 react 组件不能修改自身的 props/state，像纯函数一样保护他们的 props/state.
 
-```js
-//用class声明组件
-class Foo extends React.Component {
-	constructor(props) {
-		super(props); //用来引入 this.props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
-		this.state = {
-			//用来记录数据状态
-			data: lala,
-		};
-	}
-	render() {
-		//会返回一个虚拟 dom，就是组件模板
-		return <div>{this.state.key}</div>; //React 通过{}传递动态数据
-	}
-	method = () => {
-		this.setState({}); //or
-		this.setState((state) => {
-			return {};
-		});
-		//setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
-	};
-}
+  ```js
+  //用class声明组件
+  class Foo extends React.Component {
+    constructor(props) {
+      super(props); //用来引入 this.props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
+      this.state = {
+        //用来记录数据状态
+        data: lala,
+      };
+    }
+    render() {
+      //会返回一个虚拟 dom，就是组件模板
+      return <div>{this.state.key}</div>; //React 通过{}传递动态数据
+    }
+    method = () => {
+      this.setState({}); //or
+      this.setState((state) => {
+        return {};
+      });
+      //setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
+    };
+  }
 
-//声明一个简单的函数组件，函数组件没有实例，节省内存，也没有 ref 属性
-function Welcome(props) {
-	return <h1>Hello, {props.name}</h1>;
-}
-```
+  //声明一个简单的函数组件，函数组件没有实例，节省内存，也没有 ref 属性
+  function Welcome(props) {
+    return <h1>Hello, {props.name}</h1>;
+  }
+  ```
 
+#### 高阶组件 HOC
+
+- 和高阶函数类似，高阶组件是参数为组件，返回值为新组件的函数。组件是将 props 转换为 UI，而高阶组件是将组件转换为另一个组件。
+- 需要在一个地方定义一个逻辑，并在许多组件之间共享。HOC 是纯函数，不修改传入的组件。
+- 需要给 HOC 定义一个 displayName。静态方法需要复制。ref 需要转发。
+  [高阶组件中转发 ref](https://zh-hans.reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components)
+  ```js
+  function logProps(Comp){
+    return class extends React.Components{
+      componentWillUpdate(){
+        console.log('hello')
+      }
+      render(){
+      //高阶函数传递props
+        return <Comp> {...this.props} </Comp>
+      }
+    }
+  }
+  let SuperComp = logProps(Comp)
+  SuperComp.displayName = 'Comp'
+  ```
 ### State
 
 - state 是局部的（封装的），其他组件不能访问。
@@ -656,16 +676,16 @@ function Welcome(props) {
 
   ```js
   function FormattedDate(props) {
-  	return <h2>it's {props.data.toLocaleTimeString()}</h2>;
+    return <h2>it's {props.data.toLocaleTimeString()}</h2>;
   }
   class FormattedDate extends React.Component {
-  	render() {
-  		return <h2>it's {this.props.data.toLocaleTimeString()}</h2>;
-  	}
+    render() {
+      return <h2>it's {this.props.data.toLocaleTimeString()}</h2>;
+    }
   }
   ReactDOM.render(
-  	<FormattedDate date={this.state.date} />,
-  	document.getElementById('root')
+    <FormattedDate date={this.state.date} />,
+    document.getElementById('root')
   );
   ```
 
@@ -726,7 +746,6 @@ function Welcome(props) {
   推荐第一种：class fields 语法。
 
   第二种每次在渲染 Foo 时都会创建不同的回调函数。如果回调函数作为 props 传入子组件时，组件可能会进行额外的重新渲染。
-  fixme:回调函数作为 props 传入子组件，额外渲染？
 
 ### 表单
 
@@ -736,17 +755,10 @@ function Welcome(props) {
 - 受控组件：表单元素有 value 属性，这个时表单无法被修改。
   React 组件里的 state 是唯一数据源，渲染表单的 react 组件还控制着用户输入过程中表单发生的操作。被 react 以这种方式控制取值的表单输入元素叫做”受控组件“。
 - 非受控组件
-  - 不加上 value 属性
-  - defaultValue 替代 value 属性
+  - 不加上 value 属性，defaultValue 替代 value 属性
   - 加上 value 属性和 onChange 事件
 - react forms api:formik
 
-### 组合和继承
-
-React 里面基本不用继承，只继承 React.Component, 更多是在一个组件里面使用另外的组件的组合.
-
-- `props.name`: `<Foo name="miao"/>`标签里的属性，在 Foo 组件可以通过 props.name 的方式访问。
-- `props.children`: `<Foo>balabala</Foo>` children 可以传递多种类型的值，会将写在 Foo 组件标签中间的元素都传入这个属性(中间可以不只一个根结点).
 
 ### Fragments
 
@@ -769,38 +781,84 @@ render() {
 ### Refs
 
 - 提供了父组件访问子组件或者子元素的唯一方法
-- **使用方法**，为子组件标签提供一个 ref 属性
-  - 方法一
-    - ref 属性值是一个字符串 `<input ref ='box'/>`，在父类方法里面通过 `this.refs.box` 就可以拿到 input 元素
-    - **不要用字符串形式的 ref**,因为 react 难以实现，性能低
-  - 方法二
-    - ref 属性值是一个函数 `<input ref ={ el => this.box = el } />`, 该子组件的实例默认为参数，并且把该实例挂载到父类的某个属性上面，然后父类通过该属性访问子组件，即 this.box 即可访问到
-    - 一般把 ref 的属性值函数定义为父类的一个方法，子组件引用该方法即可；如果不这样父类每次被渲染时，react 没法识别函数有没有更改，子组件都会生成一个函数，浪费性能；通过引入就可以不再重复渲染这个不变的函数
-    - 如果 ref 回调函数是以内联函数的方式定义的，在更新过程中它会被执行两次，第一次传入参数 null，然后第二次会传入参数 DOM 元素。这是因为在每次渲染时会创建一个新的函数实例，所以 React 清空旧的 ref 并且设置新的。
-  - **方法三**
-    - ref 属性值是一个对象，`<input ref ={ this.boxRef }/>`, 该子组件会把自己挂载在该对象的 current 属性上
-    - 在父类构造函数中创造一个 ref 对象； `this.boxRef = React.createRef() `,`React.createRef()` 会生成一个对象`{current：null}`。
-    - 使用的时候，子组件：`ref={this.boxRef}`,访问子组件：`this.boxRef.current`
-    - 这种方法由于这个对象绑定子组件后就没有变，以后每次渲染父类就不用再次创建了。现在最推荐的就是这种方法。
+
+#### 使用方法
+
+为子组件标签提供一个 ref 属性
+NOTE:refs 使用方法，优劣对比，区别
+
+- 方法一
+  - ref 属性值是一个字符串 `<input ref ='box'/>`，在父类方法里面通过 `this.refs.box` 就可以拿到 input 元素
+  - **不要用字符串形式的 ref**,因为 react 需要跟踪当前需要渲染的组件，拿到当前的 this,react 难以实现，性能低。render 属性，返回 react 元素，ref 的传递难以实现。
+  ```js
+  class DatePicker extends React.Component {
+    componentDidMount() {
+      console.log(this.refs.pickerField);
+    }
+    render() {
+      return <input ref="pickerField" type="text" />;
+    }
+  }
+  ```
+- 方法二
+  - ref 属性值是一个函数 `<input ref ={ el => this.box = el } />`, 该子组件的实例默认为参数，并且把该实例挂载到父类的某个属性上面，然后父类通过该属性访问子组件，即 this.box 即可访问到
+  - 一般把 ref 的属性值函数定义为父类的一个方法，子组件引用该方法即可；如果不这样父类每次被渲染时，react 没法识别函数有没有更改，子组件都会生成一个函数，浪费性能；通过引入就可以不再重复渲染这个不变的函数
+  - 如果 ref 回调函数是以内联函数的方式定义的，在更新过程中它会被执行两次，第一次传入参数 null，然后第二次会传入参数 DOM 元素。这是因为在每次渲染时会创建一个新的函数实例，所以 React 清空旧的 ref 并且设置新的。
+  ```js
+  class DatePicker extends React.Component {
+    setRef = (el) => {
+      console.log('running ref func');
+      this.refs.myDiv = el;
+    };
+    render() {
+      //子组件的ref是一个函数
+      return <input ref={this.setRef} type="text" />;
+    }
+  }
+  ```
+- **方法三**【最推荐的】
+  - 在父类构造函数中创造一个 ref 对象； `this.boxRef = React.createRef() `，需要多个 ref 就创建多个对象。
+  - 使用的时候，子组件：`ref={this.boxRef}`,访问子组件：`this.boxRef.current`
+  - 这种方法由于这个对象绑定子组件后就没有变，以后每次渲染父类就不用再次创建了。
+  - 当 `ref` 属性用于 HTML 元素时，`ref`对象接收底层 DOM 元素作为其 `current` 属性。
+  - 当 `ref` 属性用于自定义 class 组件时，`ref` 对象接收组件的实例作为其 `current` 属性。
+  ```js
+  class DatePicker extends React.Component {
+    constructor(props) {
+      super(props);
+      this.boxRef = React.createRef(); //,创建ref对象，生成{current：null}
+    }
+    handleOnClick = () => {
+      console.log(this.boxRef.current); //访问子组件
+    };
+    render() {
+      //在子组件使用，ref是一个对象，子组件会挂载在该对象的current属性上。
+      return (
+        <input ref={this.boxRef} type="text" onClick={this.handleOnClick} />
+      );
+    }
+  }
+  ```
 - **不能在函数组件上使用 ref 属性**，因为它们没有实例 (函数式组件在使用时是直接调用，class 式组件是创建一个实例)，但是可以在函数组件内部的元素上使用
 
 #### 转发 Refs
 
-- 使组件接收到的 ref 属性不指向自己，而是转发到组件内部的元素
-- 使用 `React.forwardRef()` 创建组件，该组件的 ref 属性会转发到内部
-- 相当于组件换了一个名字 abc 接收 ref 值，然后内部的元素 ref 属性接收 abc 属性转发来的 ref 值，`React.forwardRef()` 只是让组件继续可以使用 ref 属性
+- 使用 `React.forwardRef()` 创建组件，该组件的 ref 属性不指向自己，而是转发到组件内部的元素，`React.forwardRef()` 只是让组件继续可以使用 ref 属性。
 
-```js
-const FancyButton = React.forwardRef((props, ref) => (
-  <button ref={ref} className="FancyButton">
-  	{props.children}
-  </button>
-)); //接受一个渲染函数，其接收 props 和 ref 参数并返回一个 React 节点
-const ref = React.createRef();
-<FancyButton ref={ref}>Click me!</FancyButton>;
-```
+  ```js
+  //被forwardRef返回的ref不是特殊属性部分
+  //接受一个渲染函数作为参数，其接收 props 和 ref 参数并返回一个 React 节点
+  const FancyButton = React.forwardRef((props, ref) => (
+    <button ref={ref} className="FancyButton">
+      {props.children}
+    </button>
+  ));
+  const ref = React.createRef();
 
-### 协调
+  <FancyButton ref={ref}>Click me!</FancyButton>; //这个ref会传到里面去！
+  ```
+
+### 协调 reconciliation
 
 React 的 diff 函数，即前后虚拟 dom 对比方式
 
@@ -835,12 +893,29 @@ React 的 diff 函数，即前后虚拟 dom 对比方式
 
   - `componentWillUnmount()`
     在组件卸载及销毁之前直接调用。在此方法中执行必要的清理操作
-- 错误处理
-  - `static getDerivedStateFromError()`
-  - `componentDidCatch()`
+
+#### 错误处理
+  ```js
+  static getDerivedStateFromError()
+
+  componentDidCatch(e){
+    console.log(e)
+  }
+  ```
+
+- **错误边界**
+
+  - 错误边界是一种 React 组件，捕获并打印发生在其子组件树任何位置的 JavaScript 错误，并且它会渲染出备用 UI
+  - 如果一个 class 组件中定义了 `static getDerivedStateFromError()` 或 `componentDidCatch()` 这两个生命周期方法中的任意一个（或两个）时，那么它就变成一个错误边界，然后直接当做常规组件用，形成一个错误墙，错误组件里面子组件的错误会被错误边界捕获。
+    - 类似在组件层面实现了一个 try catch 机制，让错误不会跑到外层。
+    - 只有 **class 组件**才可以成为错误边界组件。大多数情况只需要声明一次错误边界组件, 并在整个应用中使用它。也可以将单独的部件包装在错误边界以保护应用其他部分不崩溃。
+  - 无法捕捉：**事件处理，异步，服务端渲染，自身错误**而非子组件的错误。
+
+    - 事件处理器不会在渲染期间触发，如果抛出异常，React 仍然知道需要在屏幕上显示什么。在事件处理器内部使用 try catch 语句。
 
 - 生命周期中有一类 unsafe 生命周期函数不建议使用原因
-  三个被标记为unsafe即将废弃的生命周期函数:xxx
+  三个被标记为 unsafe 即将废弃的生命周期函数:xxx
+
   - react 的架构或者渲染机制的改变带来的问题
   - React-Fiber 架构
     - 解决 dom 树过深同步渲染整个 dom 性能下降问题
@@ -854,79 +929,41 @@ React 的 diff 函数，即前后虚拟 dom 对比方式
   - 这个函数后面会紧接着 render 函数，由于请求资源是一个异步过程，render 函数执行的时候资源没请求下来，没法更新 dom
   - 所以建议这类异步请求放到 componentDidMount 里面，放到后面可以减少 dom 挂载时间
   - UNSAFE_componentWillMount 会紧接着 Construct 函数运行，官方建议不使用这个函数，里面其它的操作可以直接放到构造函数里面
+### 高级概念
+#### 组合和继承
 
-### PropTypes
+React 里面基本不用继承，只继承 React.Component, 更多是在一个组件里面使用另外的组件的组合.
 
-- 用来设定组件属性类型，有许多表达方式
+- `props.name`: `<Foo name="miao"/>`标签里的属性，在 Foo 组件可以通过 props.name 的方式访问。
+- `props.children`: `<Foo>balabala</Foo>` children 可以传递多种类型的值，会将写在 Foo 组件标签中间的元素都传入这个属性(中间可以不只一个根结点).
+#### Render Props 渲染属性
 
-- React 自带模块，直接引入 `import PropTypes from 'prop-types'`
-```js
- componentName.propTypes = {
-  propName:PropTypes.string/PropTypes.bool/PropTypes.func/PropTypes.object
-}
-MenuItem.propTypes = {
-  food: PropTypes.object.isRequired,
-  onUpdate: PropTypes.func,
-}
+- Render Props 是告知组件需要渲染什么内容的函数属性。组件接收一个属性 render, 属性值是一个函数，组件会把自己的数据传给这个函数作为参数,返回一个 JSX，函数的结果会被组件中的 render() 函数接收渲染为虚拟 DOM
+- 在组件内部的 render() 函数里通过 this.props.render 可以拿到这个函数，再接收自己的 state 数据就可以通过函数返回一段 JSX, 最后渲染；
 
-MenuItem.defaultProps = {
-  onUpdate: () => { },
-}
-```
-### Render Props 渲染属性
-
-- 其本质是一个属性,是一个函数，这个函数属性以组件的数据为参数得到一个 JSX 代码，组件的 render() 接收这个 jsx 渲染为虚拟 dom；所以这个属性可以是任何名字，业界通用叫做 render
-
-- 组件接收一个属性 render, 属性值是一个函数，组件会把自己的数据传给这个函数作为参数，函数的结果会被组件中的 render() 函数接收渲染
-
-- 在组件的 render() 函数里通过 this.props.render 可以拿到这个函数，再接收自己的 state 数据就可以通过函数返回一段 JSX, 最后渲染；
-
-- Render Props 是告知组件需要渲染什么内容的函数属性
-
-```js
-<DataProvider render={
-  (data) => <h1>Hello {data.target}</h1>
-  } />
-```
-
-### React 相关 api
-- React.Component
-  定义react组件的基类
-```js
-class Greeting extends React.Component {
-  render() {
-    return <h1>Hello, {this.props.name}</h1>;
+  ```js
+  function Repeat(props) {
+    let items = []
+    for (let i = 0; i < props.time; i++) {
+      items.push(props.render(i))
+    }
+    return <div>{items}</div>
   }
-}
-```
-- `React.PureComponent()`
-  和 React.component 的唯一区别是，他会自动调用 `shouldComponentUpdate()` 这个周期函数，以浅层对比 prop 和 state，如果相同组件就不会刷新，可提高性能，用于 class 组件
 
-- `React.memo()`
-  是高阶组件.和 `React.PureComponent()` 功能一样，是做性能优化的。不过它适用于函数组件 ，不适用于 class 组件；接收一个函数组件为参数，返回包装后的组件
-```js
-const MyComponent = React.memo(function MyComponent(props) {
-  /* 使用 props 渲染 */
-});
-```
-- `React.createElement()`
-  创建并返回指定类型的新 React 元素，此时还没有实例化，是对虚拟 dom 的描述，上面有 key,ref，props 这些属性，渲染之前会根据这些信息创造实例，实例会调用 render() 函数。使用JSX一般就不需要直接调用createElement.
+  ReactDOM.render(
+    <Repeat time={10} render={i => <div key={i}>this is {i}</div>} />
+    ,
+    document.getElementById('root')
+  );
+  ```
+#### 合成事件
 
-- `React.cloneElement()`
-  克隆 React 元素， 新的props 与原始元素的 props 浅层合并。新的子元素将取代现有的子元素，而来自原始元素的 key 和 ref 将被保留。
+- react 的事件是对浏览器的原生事件的跨浏览器包装，兼容所有浏览器，挂载 props 上
+- 事件对象会被重复使用（节约内存），事件结束之后事件对象会被清空，所以不能通过异步访问事件
+- e.persist() 保留合成事件对象，事件结束之后不会清空，配合异步函数
+  e.nativeEvent 访问原生浏览器对象
 
-- React.children 用来处理 this.props.children
-  - `React.Children.map(children, function[(thisArg)])`
-  - `React.Children.forEach(children, function[(thisArg)])`
-  - `React.Children.count(children)` 返回 children 中的组件总数量
-    todo:代码分割，webpack 打包
-### 合成事件
-
-  - react 的事件是对浏览器的原生事件的跨浏览器包装，兼容所有浏览器，挂载 props 上
-  - 事件对象会被重复使用（节约内存），事件结束之后事件对象会被清空，所以不能通过异步访问事件
-  - e.persist() 保留合成事件对象，事件结束之后不会清空，配合异步函数
-    e.nativeEvent 访问原生浏览器对象
-### 代码分割
+#### 代码分割
 
 - `React.lazy()` 接收一个返回 promise 对象的函数，必须配合 `React.Suspense` 使用,Suspense 本身是个**错误边界**会获取到这个 promise.
   通过 React.lazy 动态加载组件，用`React.lazy()`构造普通组件的高阶组件`const SomeComponent = React.lazy(() => import('./SomeComponent'))`
@@ -941,37 +978,48 @@ const MyComponent = React.memo(function MyComponent(props) {
   - 这一步在 vue 中已经封装好了，在 vue 中可以直接使用`component = () => import('./OtherComponent')`作为异步组件
   - 这种用法是为了方便 webpack 做代码分割
 
-### Portals 门户网站
+#### Portals 门户网站 传送门
 
 - Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案，常用于对话框、悬浮卡以及提示框
 - `ReactDOM.createPortal(child, container)`
   child 是 React 子元素，container 是一个 DOM 元素，child 会渲染到容器里，而不是父类；使用在组件的 render 函数里
-- 除了在 dom 树中的位置，其他行为和普通的 react 子节点行为一致。 react 内的事件处理逻辑等还是在原来的组件中(比如冒泡)
-  fixme:事件处理逻辑按啥顺序，react 树还是啥 dom 树
+- 除了在 dom 树中的位置，其他行为和普通的 react 子节点行为一致。 react 内的事件处理逻辑等还是在原来的react组件中(比如冒泡)
 
-### 高阶组件 HOC
 
-- 和高阶函数类似，高阶组件是参数为组件，返回值为新组件的函数。组件是将 props 转换为 UI，而高阶组件是将组件转换为另一个组件。
-- HOC 解决横切关注点问题。需要在一个地方定义一个逻辑，并在许多组件之间共享。HOC 是纯函数，不修改传入的组件。
-
-### 错误边界
-
-- 错误边界是一种 React 组件，捕获并打印发生在其子组件树任何位置的 JavaScript 错误，并且它会渲染出备用 UI
-- 如果一个 class 组件中定义了 `static getDerivedStateFromError()` 或 `componentDidCatch()` 这两个生命周期方法中的任意一个（或两个）时，那么它就变成一个错误边界，然后直接当做常规组件用，形成一个错误墙，错误组件里面子组件的错误会被错误边界捕获。
-  - 类似在组件层面实现了一个 try catch 机制，让错误不会跑到外层。
-  - 只有 **class 组件**才可以成为错误边界组件。大多数情况只需要声明一次错误边界组件, 并在整个应用中使用它。也可以将单独的部件包装在错误边界以保护应用其他部分不崩溃。
-- 无法捕捉：**事件处理，异步，服务端渲染，自身错误**而非子组件的错误。
-
-  - 事件处理器不会在渲染期间触发，如果抛出异常，React 仍然知道需要在屏幕上显示什么。在事件处理器内部使用 try catch 语句。
-
-### 与第三方库协同
+#### 与第三方库协同
 
 - 通过 ref 属性拿到第三方库要操作的元素
 - 在这个元素上面通过第三方库的事件机制触发组件本身的处理函数来更新 state
 
 
+#### 类型检查 PropTypes
 
-### Context
+- 用来设定组件属性类型，有许多表达方式
+
+- React 自带模块，直接引入 `import PropTypes from 'prop-types'`
+
+  ```js
+  componentName.propTypes = {
+    propName:
+      PropTypes.string /
+      PropTypes.bool /
+      PropTypes.func /
+      PropTypes.object.isRequired,
+  };
+
+  class Greeting extends React.Component {
+    static defaultProps = {
+      //默认 Prop 值
+      name: 'stranger',
+    };
+    render() {
+      return <div>Hello, {this.props.name}</div>;
+    }
+  }
+  ```
+
+
+#### Context
 
 - 实现了自上而下跨组件传递数据，提供一种在组件之间共享某些数据，而不必显式地通过组件树逐级传递 props.
   应用于在很多不同层级的组件间访问同样一些数据，但是会使组件复用性变差。慎用，有时可以用组件组合代替。
@@ -988,7 +1036,7 @@ const MyComponent = React.memo(function MyComponent(props) {
   </MyContext.Consumer>
   ```
 
-### 性能优化
+#### 性能优化
 
 - 结构共享，最大可能的共用已有数据，联想树状结构和指针思考，共用完全不变的子树
   - immer.js 一个实现结构共享的库 `<script src="https://unpkg.com/immer/dist/immer.umd.js"></script>`
@@ -1003,52 +1051,88 @@ const MyComponent = React.memo(function MyComponent(props) {
   - ES6 通用，ES5 退化通过 getter 和 setter 代理，但是不可以添加新的属性
 - 通过生命周期函数 `shouldComponentUpdate` 优化性能
 
+### React 相关 api
+
+- React.Component
+  定义 react 组件的基类
+  ```js
+  class Greeting extends React.Component {
+    render() {
+      return <h1>Hello, {this.props.name}</h1>;
+    }
+  }
+  ```
+- `React.PureComponent()`
+  和 React.component 的唯一区别是，他会自动调用 `shouldComponentUpdate()` 这个周期函数，以浅层对比 prop 和 state，如果相同组件就不会刷新，可提高性能，用于 class 组件
+
+- `React.memo()`
+  是高阶组件.和 `React.PureComponent()` 功能一样，是做性能优化的。不过它适用于函数组件 ，不适用于 class 组件；接收一个函数组件为参数，返回包装后的组件
+  ```js
+  const MyComponent = React.memo(function MyComponent(props) {
+    /* 使用 props 渲染 */
+  });
+  ```
+- `React.createElement()`
+  创建并返回指定类型的新 React 元素，此时还没有实例化，是对虚拟 dom 的描述，上面有 key,ref，props 这些属性，渲染之前会根据这些信息创造实例，实例会调用 render() 函数。使用 JSX 一般就不需要直接调用 createElement.
+
+- `React.cloneElement()`
+  克隆 React 元素， 新的 props 与原始元素的 props 浅层合并。新的子元素将取代现有的子元素，而来自原始元素的 key 和 ref 将被保留。
+
+- React.children 用来处理 this.props.children
+  - `React.Children.map(children, function[(thisArg)])`
+  - `React.Children.forEach(children, function[(thisArg)])`
+  - `React.Children.count(children)` 返回 children 中的组件总数量
+    todo:代码分割，webpack 打包
+
+
 ### Hook
 
-  - 为函数组件带来了 state 和类似生命周期函数的功能
-  - state 不会合并，而是完全替代之前的 state，多利用展开运算符
-  - 函数组件状态改变时整个组件都会重新刷新
-  - hook 函数在创造时，React 会根据他们在调用栈的顺序确认各自身份，所以 hook 函数的调用顺序在组件刷新时不能改变，根据调用顺序确定各个状态身份；
-  - 使用方法
+- 为函数组件带来了 state 和类似生命周期函数的功能
+- state 不会合并，而是完全替代之前的 state，多利用展开运算符
+- 函数组件状态改变时整个组件都会重新刷新
+- hook 函数在创造时，React 会根据他们在调用栈的顺序确认各自身份，所以 hook 函数的调用顺序在组件刷新时不能改变，根据调用顺序确定各个状态身份；
 
-    - 解构语法引入 hook 函数
-      var { useState, useEffect, useRef, useContext, useCallback, useMemo } = React
-    - useState 函数，接收的参数会设置为 state 的初始值，返回一个数组 [state, 操作 state 的函数 setState]
-      setState(value){state = value} setState 的函数大概是这样
-      如 var [count, setCount] = useState(0)
-    - `useEffect()` 函数，相当于一个生命周期函数 `componentDidMount` 或 `componentDidUpdate`，直接在函数组件内部使用 \*用法
-      useEffect(
-      ()=>{
-      第一个参数是一个函数，可以挂载 componentDidMount 或 componentDidUpdate 阶段需要的操作；
-      这个函数可以有一个返回值函数，返回值函数会在函数组件 componentWillUnmount 阶段运行，可有挂载一些解绑操作；
-      对于函数组件来讲，每次更新都会卸载再挂载；所以每次更新都会运行这个返回值函数
-      },【第二个可选参数是一个数组，当组件刷新时如果发现数组的内容和上一次一样，那么就不会运行这个 useEffect 函数，用于性能优化；要确保数组中包含了外部作用域中会随时间变化并且在 effect 中使用的变量，否则你的代码会引用到先前渲染中的旧变量，如果是空数组表示每次都是完全一样的内容，不运行】
-      )
+#### 使用方法
 
-      - 优点
-        - 绑定和解绑放在一起，可读性和操作性好
-        - 对于复杂的逻辑，可以写多组 useEffect() 函数，相关逻辑放到同一个 useEffect() 函数里面，逻辑分离
+- 解构语法引入 hook 函数
+  var { useState, useEffect, useRef, useContext, useCallback, useMemo } = React
+- useState 函数，接收的参数会设置为 state 的初始值，返回一个数组 [state, 操作 state 的函数 setState]
+  setState(value){state = value} setState 的函数大概是这样
+  如 var [count, setCount] = useState(0)
+- `useEffect()` 函数，相当于一个生命周期函数 `componentDidMount` 或 `componentDidUpdate`，直接在函数组件内部使用 \*用法
+  useEffect(
+  ()=>{
+  第一个参数是一个函数，可以挂载 componentDidMount 或 componentDidUpdate 阶段需要的操作；
+  这个函数可以有一个返回值函数，返回值函数会在函数组件 componentWillUnmount 阶段运行，可有挂载一些解绑操作；
+  对于函数组件来讲，每次更新都会卸载再挂载；所以每次更新都会运行这个返回值函数
+  },【第二个可选参数是一个数组，当组件刷新时如果发现数组的内容和上一次一样，那么就不会运行这个 useEffect 函数，用于性能优化；要确保数组中包含了外部作用域中会随时间变化并且在 effect 中使用的变量，否则你的代码会引用到先前渲染中的旧变量，如果是空数组表示每次都是完全一样的内容，不运行】
+  )
 
-    - useContext 函数 hook, 类似 class 组件里面的 Context 功能
-      - 开始的用法和 class 组件一样，先在外部创建一个 context 实例
-        `var ColorContext = React.createContext()`
-        Context 实例对象上面有个 `ColorContext.Provider` 组件开始向下传递数据，用于组件内部
-        `<ColorContext.Provider value={color}>`
-      - 接收数据方法
-        在后代组件中直接使用 `var color = useContext(ColorContext) `接收数据
+  - 优点
+    - 绑定和解绑放在一起，可读性和操作性好
+    - 对于复杂的逻辑，可以写多组 useEffect() 函数，相关逻辑放到同一个 useEffect() 函数里面，逻辑分离
 
-  - useCallback
+- useContext 函数 hook, 类似 class 组件里面的 Context 功能
 
-    - 函数组件每次更新都会重新运行，每次运行都会创建一个新的作用域，作用域里面的函数都会是新建的，如果子组件中用到了这些更新的函数，子组件每次都要更新，影响性能
-    - var f = useCallback(fun(){},[]) 第一个参数接一个函数，第二个参数接一个数组，当组件刷新时如果发现数组的内容和上一次一样时，就返回上次的函数，否则返回这次的函数
+  - 开始的用法和 class 组件一样，先在外部创建一个 context 实例
+    `var ColorContext = React.createContext()`
+    Context 实例对象上面有个 `ColorContext.Provider` 组件开始向下传递数据，用于组件内部
+    `<ColorContext.Provider value={color}>`
+  - 接收数据方法
+    在后代组件中直接使用 `var color = useContext(ColorContext) `接收数据
 
-  - useMemo
+- useCallback
 
-    - 和 useCallback 功能一样，不过写法不一样
-    - var f = useMemo(()=>fun(){},[])
+  - 函数组件每次更新都会重新运行，每次运行都会创建一个新的作用域，作用域里面的函数都会是新建的，如果子组件中用到了这些更新的函数，子组件每次都要更新，影响性能
+  - var f = useCallback(fun(){},[]) 第一个参数接一个函数，第二个参数接一个数组，当组件刷新时如果发现数组的内容和上一次一样时，就返回上次的函数，否则返回这次的函数
 
-  - useRef
-    和 class 组件里面的 React.createRef() 功能用法一样，useRef() 也会创建一个{current：null}对象；由于函数组件每次更新都会重新运行，每次运行都会创建一个新的作用域，作用域里面的函数都会是新建的；使用 React.createRef() 函数组件更新每次都会创建一个新的对象，占用内存；而 useRef 就是为了解决这个问题的，函数组件中使用 useRef() 返回的对象在函数组件刷新前后都是同一个对象
+- useMemo
+
+  - 和 useCallback 功能一样，不过写法不一样
+  - var f = useMemo(()=>fun(){},[])
+
+- useRef
+  和 class 组件里面的 React.createRef() 功能用法一样，useRef() 也会创建一个{current：null}对象；由于函数组件每次更新都会重新运行，每次运行都会创建一个新的作用域，作用域里面的函数都会是新建的；使用 React.createRef() 函数组件更新每次都会创建一个新的对象，占用内存；而 useRef 就是为了解决这个问题的，函数组件中使用 useRef() 返回的对象在函数组件刷新前后都是同一个对象
 
 - 自定义 hook
 

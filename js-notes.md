@@ -94,10 +94,9 @@ A：.gitignore 文件 [Templates in Github](https://github.com/github/gitignore)
 
 Q：fork 后修改，如何同步源的更新？
 A：`git remote add upstream <url>`配置上游仓库；
-`git remote -v`查看配置是否成功；
 `git fetch upstream`抓取上游仓库（所有分支）的更新；
-`git checkout master`切换到本地主分支；
-`git merge upstream/master`分支合并；
+`git rebase upstream/master`合并
+
 `git push (origin master)`推送到远程仓库
 
 ### 拓展链接
