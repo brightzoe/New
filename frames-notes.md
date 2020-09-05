@@ -585,13 +585,12 @@ function observe(obj) {
 
   - 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 babel 转化为了 ` React.createElement()``<script src="https://unpkg.com/react@16/umd/react.development.js"></script> `
   - 这个文件是用来实现真实 dom 的，全局创建一个 ReactDOM 变量`<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>`
-    - `ReactDOM.render(<TodoApp />，document.getElementById('root'))`
-      这个函数接收两个参数，将第一个参数虚拟 dom 编译到第二个参数 React 根元素里面
+
   - 这个 babel 文件是用来编译 react 代码的，如 JSX, 编译为 ES5 代码
     ` <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>``<script type="text/babel">react代码</script> `
 
 - Source map
-  Source map 就是一个信】息文件，里面储存着位置信息。也就是说，转换后的代码的每一个位置，所对应的转换前的位置。有了它，出错的时候，除错工具将直接显示原始代码，而不是转换后的代码。
+  Source map 就是一个信息文件，里面储存着位置信息。也就是说，转换后的代码的每一个位置，所对应的转换前的位置。有了它，出错的时候，除错工具将直接显示原始代码，而不是转换后的代码。
 - 插值
   通过{}插值，里面可以是各种类型的值，可以是表达式但不能是语句
 - style 属性只接收对象不接收字符串,`style ={{color:red}}`
@@ -610,7 +609,7 @@ function observe(obj) {
 - JSX 自定义标签，一定是首字母大写。可以是 **变量** ，可以用 **对象点语法(Foo.Abc)** 引用，但不能是表达式，其他情况会当做原生标签的字符串传入`React.createElement()`。
 - 使用组件时，根元素内部的子元素或者文字等，可以在组件里通过`props.children`读到。
 - JSX 会移除行首，行尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格。
-- `<label htmlFor ="">` label 标签里面的 for 属性，因为 for 是 js 关键字，JSX 里面要写作 htmlfor。
+- `<label htmlFor ="">` label 标签里面的 for 属性，因为 for 是 js 关键字，JSX 里面要写作 htmlfor,class要写作className.
 - jsx 返回的内容也只能有一个根结点，不产生单独的作用域。
 
 ### 组件
@@ -1053,6 +1052,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
 ### React 相关 api
 
+
 - React.Component
   定义 react 组件的基类
   ```js
@@ -1074,7 +1074,8 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
   ```
 - `React.createElement()`
   创建并返回指定类型的新 React 元素，此时还没有实例化，是对虚拟 dom 的描述，上面有 key,ref，props 这些属性，渲染之前会根据这些信息创造实例，实例会调用 render() 函数。使用 JSX 一般就不需要直接调用 createElement.
-
+- `ReactDOM.render(<TodoApp />，document.getElementById('root'))`
+  这个函数接收两个参数，将第一个参数虚拟 dom 编译到第二个参数 React 根元素里面
 - `React.cloneElement()`
   克隆 React 元素， 新的 props 与原始元素的 props 浅层合并。新的子元素将取代现有的子元素，而来自原始元素的 key 和 ref 将被保留。
 
