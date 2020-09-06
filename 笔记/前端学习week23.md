@@ -36,16 +36,6 @@
 
 
 
-
-- 三个被标记为unsafe即将废弃的生命周期函数
-
-  - `componentWillMount`
-    - 不建议在这一步调ajax等异步请求，因为render是紧随其后运行的，相当于在constructor中调用
-  - `componentWillReceiveProps`
-  - `componentWillUpdate`
-  - 原因是在异步渲染时会造成未预料的问题[update on async rendering]( https://zh-hans.reactjs.org/blog/2018/03/27/update-on-async-rendering.html )----fiber架构异步渲染使render之前的函数可能执行多次，若这些函数会产生副作用，则会产生bug
-
-
 - SyntheticEvent，事件处理时传入处理机的事件对象其实都是在原生事件上包装过的合成事件，保留了一些原生的接口，主要是为了兼容问题，此外为了节省内存，同一个类型的事件触发可能会复用同一个合成事件对象，并且处理完成后会清空，所以尽量不要异步访问事件(譬如当使用`this.setState(state => {xxx: e.target.value})` 时)
 
 - 不可变数据，便于在组件更新是比较前后的props和state(===即可)，节省空间，性能优化

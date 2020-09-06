@@ -25,7 +25,7 @@
 - v-bind
   将某个属性绑定为一个变量 `<span v-bind:title="message">`
   缩写`<span :title="message">`
-  动态参数：`<span :[title]="message">` 属性名也是表达式，避免大写字母
+  动态参数:`<span :[title]="message">` 属性名也是表达式，避免大写字母
 - v-on
   添加事件监听器 `<button v-on:click="reverseMessage">反转消息</button>`
   缩写 `<button @click="reverseMessage">反转消息</button>`
@@ -45,9 +45,9 @@
 
   ```html
   <template v-if="ok">
-    <h1>Title</h1>
-    <p>Paragraph 1</p>
-    <p>Paragraph 2</p>
+  	<h1>Title</h1>
+  	<p>Paragraph 1</p>
+  	<p>Paragraph 2</p>
   </template>
   ```
 
@@ -55,7 +55,7 @@
   和 v-if 用法一样，不同的是带有 v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS 属性 display, v-show 不支持 `<template>` 元素，也不支持 v-else.
   > **v-if vs v-show**
   > v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
-  > v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+  > v-if 也是惰性的:如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
   > 相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
   > 一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
 - v-for
@@ -70,7 +70,7 @@
 
 ```html
 <div v-for="(value, key, index) in object">
-  {{ index }}. {{ key }}: {{ value }}
+	{{ index }}. {{ key }}: {{ value }}
 </div>
 ```
 
@@ -78,7 +78,7 @@
   FIXME 表单输入绑定
   实现表单输入和应用状态之间的双向绑定。相当于添加一个属性和一个事件监听器.
   `<input>`、`<textarea>` 及 `<select>` 可以双向绑定各种数据类型的值.
-  v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
+  v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件:
   text 和 textarea 元素使用 value 属性和 input 事件；
   checkbox 和 radio 使用 checked 属性和 change 事件；
   select 字段将 value 作为 属性和 change 作为事件。
@@ -110,8 +110,8 @@ methods:{
 method1:function(){}
 method2(){}
 }
-template：//html 代码
-//当一个实例里面有 template 属性时，初始化实例时会将 template 的值作为虚拟 dom 而忽略实际的 el 元素内容
+template://html 代码
+//当一个实例里面有 template 属性时，初始化实例时会将 template 的值作为虚拟 DOM 而忽略实际的 el 元素内容
 })
 ```
 
@@ -168,30 +168,30 @@ template：//html 代码
       只会渲染数组中最后一个被浏览器支持的值
 
 - key 属性的作用
-  Vue 提供了一种方式来表达一个元素独一的身份,识别节点的通用机制。只需添加一个具有唯一值的 key 属性，虚拟 dom 在进行对比渲染时，key 值不相同的元素不会作对比， 保证了同一个元素渲染前后都只和自身对比；而不会因为元素位置的变化导致从头渲染；
+  Vue 提供了一种方式来表达一个元素独一的身份,识别节点的通用机制。只需添加一个具有唯一值的 key 属性，虚拟 DOM 在进行对比渲染时，key 值不相同的元素不会作对比， 保证了同一个元素渲染前后都只和自身对比；而不会因为元素位置的变化导致从头渲染；
 
 - vue 初始化将 data 都变为 getter 和 setter 函数
 
 ```js
 function observe(obj) {
-  for (let prop in obj) {
-    let val = obj[prop];
-    if (typeof val == 'object') {
-      val = observe(val);
-    }
-    Object.defineProperty(obj, prop, {
-      get: function () {
-        return val;
-      },
-      set: function (value) {
-        if (typeof value == 'object') {
-          value = observe(value);
-        }
-        val = value;
-      },
-    });
-  }
-  return obj;
+	for (let prop in obj) {
+		let val = obj[prop];
+		if (typeof val == 'object') {
+			val = observe(val);
+		}
+		Object.defineProperty(obj, prop, {
+			get: function () {
+				return val;
+			},
+			set: function (value) {
+				if (typeof value == 'object') {
+					value = observe(value);
+				}
+				val = value;
+			},
+		});
+	}
+	return obj;
 }
 ```
 
@@ -226,12 +226,12 @@ function observe(obj) {
     - 没有模板就将 el 元素的 outerHTML 作为模板执行上面的操作
   - 执行钩子函数 beforeMount
   - 创建 vm.\$el 并替换 el 属性
-    - 通过虚拟 dom 创建了一个真实的 dom 元素 el
-    - el 之前是选择器一个字符串，现在替换为一个真正的 dom 元素
+    - 通过虚拟 DOM 创建了一个真实的 DOM 元素 el
+    - el 之前是选择器一个字符串，现在替换为一个真正的 DOM 元素
   - 执行钩子函数 **mounted**
   - 挂载完毕
     - 当 data 被修改时，调用钩子函数 beforeUpdate
-    - 虚拟 dom 重新渲染并更新页面
+    - 虚拟 DOM 重新渲染并更新页面
     - 更新完毕执行钩子函数 **updated**
   - 当调用 vm.\$destroy() 时
     - 执行钩子函数 beforeDestroy
@@ -243,10 +243,10 @@ function observe(obj) {
 
 可**复用**的 Vue 实例，组件名称当 html 标签使用。
 与 new Vue 接收相同的选项，例如 data、computed、watch、methods 以及生命周期钩子等。仅有的例外是像 el 这样根实例特有的选项。
-组件要先注册才能使用。两种注册类型：全局注册、局部注册。
+组件要先注册才能使用。两种注册类型:全局注册、局部注册。
 
 - 创建组件
-  全局注册组件：
+  全局注册组件:
 
 ```js
   Vue.component('组件名称，之后当做标签使用',{
@@ -264,8 +264,8 @@ function observe(obj) {
   return value>=0
   }
   }
-  //通过 Prop 向子组件传递属性，属性值由组件标签上传递：bind 过来
-  //单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行
+  //通过 Prop 向子组件传递属性，属性值由组件标签上传递:bind 过来
+  //单向下行绑定:父级 prop 的更新会向下流动到子组件中，但是反过来则不行
   }
   data(){
   return obj
@@ -310,7 +310,7 @@ function observe(obj) {
   - 自下而上通过事件触发传递
   - 组件操作 prop 传递来的数据时，组件不要修改它，只读取，通过触发事件上级组件反馈，由上级组件操作数据；数据的拥有者是哪个组件，哪个组件才可以更改它；
     组件的层次过深时，组件树数据的传递太繁琐，建议将数据放到全局，每个组件直接修改全局数据，这样就不用传递数据
-  - 两个并列的组件的交互方法：通过相同的父组件作中转操作
+  - 两个并列的组件的交互方法:通过相同的父组件作中转操作
 
 - 组件相关的命名
   由于 html 的解析不区分大小写，会把所有大写字符解释为小写字符，再加上 vue 里面的各种命名没有统一，为防止错误，命名都采用 A-B-C 形式。
@@ -328,8 +328,8 @@ function observe(obj) {
   // ...
   }
 
-- 子元素：标签包裹在另外一个标签里面
-  子组件：一个组件里面的 template 用到了其他组件
+- 子元素:标签包裹在另外一个标签里面
+  子组件:一个组件里面的 template 用到了其他组件
 
 ### 插槽 slot
 
@@ -425,7 +425,7 @@ function observe(obj) {
     this.$store.dispatch('increment',argument)
             }可以通过 this.$store.dispatch 触发 store 实例 action 里面的数据变更函数
     },
-    computed：{
+    computed:{
     leftCount() {
     return this.$store.getters.leftCount
             }可以通过 this.$store.getters 触发 store 实例 getters 里面的 getter 函数
@@ -466,13 +466,13 @@ function observe(obj) {
     routes: [{
     path: "/a", 路由匹配到的路径
     redirect: '/wechat' 路由匹配到该路径跳转另外路径
-    name："112" 命名路由用的，一般用不到
+    name:"112" 命名路由用的，一般用不到
     alias: '/b' 别名，用户访问 /b 时，URL 会保持为 /b，但是路由匹配则为 /a，就像用户访问 /a 一样；用得少
     },
     {
     path: "/wechat", 路由匹配到的路径
     component: wechat, 路由匹配到该路径就渲染这个组件
-    children：[{
+    children:[{
     path: 'man', 这个路径表示匹配到 /wechat/man 这个路径
     components:safe,
     这个属性用于路由的嵌套
@@ -494,7 +494,7 @@ function observe(obj) {
 
   - 路由对象 route
     一个路由对象 (route object) 表示当前激活的路由的状态信息，路由对象是不可变的，每次成功的导航后都会产生一个新的对象。
-    访问方式：在组件内，即 this.$route；通过 watch 监控 $route ；全局 router.match(location) 的返回值
+    访问方式:在组件内，即 this.$route；通过 watch 监控 $route ；全局 router.match(location) 的返回值
   - 动态参数
     {path: '/user/:id', component: User }
     通过 id 来传递动态参数
@@ -525,15 +525,15 @@ function observe(obj) {
 
 - runtime 版本和完整版本 vue 的区别
 
-  - render 函数 接受三个参数，render（标签名，属性，子元素），根据传入信息将其转化为虚拟 dom
+  - render 函数 接受三个参数，render（标签名，属性，子元素），根据传入信息将其转化为虚拟 DOM
   - vue.complile 是 vue 编译器，浏览器通过这个编译器将模板字符串转化为 render 函数
   - 完整版 vue 有这个编译工具，runtime 版本没有，但是 runtime 版本会提前把模板字符串编译为 render 函数，这样就少了浏览器的编译过程，提升性能和效率
 
 - vue 相关文件和工具
-  babel：一个广泛使用的转码器，可以将 ES6 代码转为 ES5 代码，从而在现有环境执行；让旧版本的浏览器可以用最新的语法
+  babel:一个广泛使用的转码器，可以将 ES6 代码转为 ES5 代码，从而在现有环境执行；让旧版本的浏览器可以用最新的语法
   stylus : 一种类似 scss 的语言，现在主流是 scss
   vue-loader: web-pack 插件，编译器
-  ESLint：js 代码风格检查工具，目前流行的是 Airbn/standard/prettier
+  ESLint:js 代码风格检查工具，目前流行的是 Airbn/standard/prettier
   browserslist 查询每一款浏览器支持什么特性的工具
   .editorconfig 编辑器配置文件
   PostCSS 一个平台，可以安装各种 js 插件转换编译 CSS
@@ -596,10 +596,10 @@ function observe(obj) {
 - style 属性只接收对象不接收字符串,`style ={{color:red}}`
 
 - className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
-- 条件渲染：用`true && expression` 或者三目运算符 ? :
+- 条件渲染:用`true && expression` 或者三目运算符 ? :
 - key 和 ref 属性是组件的特殊属性，不在 props 上面，在 props.key 读不到！
   fixme:为什么 key 是必须的？使用 idx 作为 key 的负面影响？diff 算法怎么比较？
-  > key 要稳定，可预测，列表内唯一。react 的 render()方法会创建一颗由 react 元素组成的虚拟 dom 树，state/props 更新时，会重新 render 返回一颗不同的树。基于这两棵树的差别，有效率地更新 UI 以保证当前 UI 与最新的树保持同步。将生成的一棵树转换为另一棵树的 diff 算法比较复杂，key 同来匹配原有树上的子元素和最新树上的子元素。
+  > key 要稳定，可预测，列表内唯一。react 的 render()方法会创建一颗由 react 元素组成的虚拟 DOM 树，state/props 更新时，会重新 render 返回一颗不同的树。基于这两棵树的差别，有效率地更新 UI 以保证当前 UI 与最新的树保持同步。将生成的一棵树转换为另一棵树的 diff 算法比较复杂，key 同来匹配原有树上的子元素和最新树上的子元素。
   > 使用 index 作为 key 在元素不进行重新排序时比较合适。如果基于下标的组件进行了重新排序，修改顺序会修改当前的 key，导致非受控组件 state 相互篡改产生无法预期的变动。
 
 ### JSX
@@ -609,7 +609,7 @@ function observe(obj) {
 - JSX 自定义标签，一定是首字母大写。可以是 **变量** ，可以用 **对象点语法(Foo.Abc)** 引用，但不能是表达式，其他情况会当做原生标签的字符串传入`React.createElement()`。
 - 使用组件时，根元素内部的子元素或者文字等，可以在组件里通过`props.children`读到。
 - JSX 会移除行首，行尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格。
-- `<label htmlFor ="">` label 标签里面的 for 属性，因为 for 是 js 关键字，JSX 里面要写作 htmlfor,class要写作className.
+- `<label htmlFor ="">` label 标签里面的 for 属性，因为 for 是 js 关键字，JSX 里面要写作 htmlfor,class 要写作 className.
 - jsx 返回的内容也只能有一个根结点，不产生单独的作用域。
 
 ### 组件
@@ -621,29 +621,29 @@ function observe(obj) {
   ```js
   //用class声明组件
   class Foo extends React.Component {
-    constructor(props) {
-      super(props); //用来引入 this.props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
-      this.state = {
-        //用来记录数据状态
-        data: lala,
-      };
-    }
-    render() {
-      //会返回一个虚拟 dom，就是组件模板
-      return <div>{this.state.key}</div>; //React 通过{}传递动态数据
-    }
-    method = () => {
-      this.setState({}); //or
-      this.setState((state) => {
-        return {};
-      });
-      //setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
-    };
+  	constructor(props) {
+  		super(props); //用来引入 this.props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.children 可以直接拿到组件的子元素或者中间的插值
+  		this.state = {
+  			//用来记录数据状态
+  			data: lala,
+  		};
+  	}
+  	render() {
+  		//会返回一个虚拟 dom，就是组件模板
+  		return <div>{this.state.key}</div>; //React 通过{}传递动态数据
+  	}
+  	method = () => {
+  		this.setState({}); //or
+  		this.setState((state) => {
+  			return {};
+  		});
+  		//setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
+  	};
   }
 
   //声明一个简单的函数组件，函数组件没有实例，节省内存，也没有 ref 属性
   function Welcome(props) {
-    return <h1>Hello, {props.name}</h1>;
+  	return <h1>Hello, {props.name}</h1>;
   }
   ```
 
@@ -654,20 +654,21 @@ function observe(obj) {
 - 需要给 HOC 定义一个 displayName。静态方法需要复制。ref 需要转发。
   [高阶组件中转发 ref](https://zh-hans.reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components)
   ```js
-  function logProps(Comp){
-    return class extends React.Components{
-      componentWillUpdate(){
-        console.log('hello')
-      }
-      render(){
-      //高阶函数传递props
-        return <Comp> {...this.props} </Comp>
-      }
-    }
+  function logProps(Comp) {
+  	return class extends React.Components {
+  		componentWillUpdate() {
+  			console.log('hello');
+  		}
+  		render() {
+  			//高阶函数传递props
+  			return <Comp> {...this.props} </Comp>;
+  		}
+  	};
   }
-  let SuperComp = logProps(Comp)
-  SuperComp.displayName = 'Comp'
+  let SuperComp = logProps(Comp);
+  SuperComp.displayName = 'Comp';
   ```
+
 ### State
 
 - state 是局部的（封装的），其他组件不能访问。
@@ -675,16 +676,16 @@ function observe(obj) {
 
   ```js
   function FormattedDate(props) {
-    return <h2>it's {props.data.toLocaleTimeString()}</h2>;
+  	return <h2>it's {props.data.toLocaleTimeString()}</h2>;
   }
   class FormattedDate extends React.Component {
-    render() {
-      return <h2>it's {this.props.data.toLocaleTimeString()}</h2>;
-    }
+  	render() {
+  		return <h2>it's {this.props.data.toLocaleTimeString()}</h2>;
+  	}
   }
   ReactDOM.render(
-    <FormattedDate date={this.state.date} />,
-    document.getElementById('root')
+  	<FormattedDate date={this.state.date} />,
+  	document.getElementById('root')
   );
   ```
 
@@ -704,21 +705,22 @@ function observe(obj) {
     > 保证 React 提供的对象（props,state）在内部状态和更新保持一致，确保他们是协调的很重要，如果不一致，出现问题很难定位。
     > 异步渲染保证用户体验。
     > **state 与 props 的区别是什么？**
-    > 共同点：都是对象，用来保存信息，可以控制组件的渲染输出。
+    > 共同点:都是对象，用来保存信息，可以控制组件的渲染输出。
     > state 是存储在组件中的数据及状态，在组件内部由组件自己管理。（类似一个函数内声明的变量）
     > props 是组件的属性，写在组件标签上的，通过 props 单向传递给组件。（类似于函数的形参）
 
 ### 事件处理
 
-事件处理：
+事件处理:
 
 - 事件命名 camelCase:onClick,onDoubleClick,onChange
-  将代表事件的监听 prop 命名为 on[Event]，将处理事件的监听方法命名为 handle[Event] 这样的格式。
 - React 事件是合成事件，与原生事件不完全相同。
   不能通过返回 false 阻止默认行为，必须显式使用 preventDefault()。
-  FIXME: this 怎么处理的？
-  如果函数没有参数或者只有参数 e,在 render 里可以直接等于函数名字，否则需要在 render 里写箭头函数。
+
 - 处理 this 的问题
+  1. 在constructor里面把所有事件处理函数绑定this:`this.handleClick=this.handleClick.bind(this)`
+  2. 事件处理函数包一层箭头函数，指定this
+  3. 在 render 里写箭头函数,如果函数没有参数或者只有参数 e,在 render 里可以直接写函数名字.
 
   ```js
   class Foo extends React.Components{
@@ -730,7 +732,7 @@ function observe(obj) {
       return <button onClick={this.handleClick}></button>
     }
   }
-  或者：
+  或者:
   class Foo extends React.Components{
     handleClick(){
       console.log(this)
@@ -742,7 +744,7 @@ function observe(obj) {
   }
   ```
 
-  推荐第一种：class fields 语法。
+  推荐第一种:class fields 语法。
 
   第二种每次在渲染 Foo 时都会创建不同的回调函数。如果回调函数作为 props 传入子组件时，组件可能会进行额外的重新渲染。
 
@@ -751,13 +753,12 @@ function observe(obj) {
 - textarea 文本内容通过 value 设置。select 默认选项通过 value 设置。
 - 表单 onChange 事件按键即触发，原生 change 事件(vue)在光标移开/回车才触发。
 
-- 受控组件：表单元素有 value 属性，这个时表单无法被修改。
+- 受控组件:表单元素有 value 属性，这个时表单无法被修改。
   React 组件里的 state 是唯一数据源，渲染表单的 react 组件还控制着用户输入过程中表单发生的操作。被 react 以这种方式控制取值的表单输入元素叫做”受控组件“。
 - 非受控组件
   - 不加上 value 属性，defaultValue 替代 value 属性
   - 加上 value 属性和 onChange 事件
 - react forms api:formik
-
 
 ### Fragments
 
@@ -791,12 +792,12 @@ NOTE:refs 使用方法，优劣对比，区别
   - **不要用字符串形式的 ref**,因为 react 需要跟踪当前需要渲染的组件，拿到当前的 this,react 难以实现，性能低。render 属性，返回 react 元素，ref 的传递难以实现。
   ```js
   class DatePicker extends React.Component {
-    componentDidMount() {
-      console.log(this.refs.pickerField);
-    }
-    render() {
-      return <input ref="pickerField" type="text" />;
-    }
+  	componentDidMount() {
+  		console.log(this.refs.pickerField);
+  	}
+  	render() {
+  		return <input ref="pickerField" type="text" />;
+  	}
   }
   ```
 - 方法二
@@ -805,37 +806,37 @@ NOTE:refs 使用方法，优劣对比，区别
   - 如果 ref 回调函数是以内联函数的方式定义的，在更新过程中它会被执行两次，第一次传入参数 null，然后第二次会传入参数 DOM 元素。这是因为在每次渲染时会创建一个新的函数实例，所以 React 清空旧的 ref 并且设置新的。
   ```js
   class DatePicker extends React.Component {
-    setRef = (el) => {
-      console.log('running ref func');
-      this.refs.myDiv = el;
-    };
-    render() {
-      //子组件的ref是一个函数
-      return <input ref={this.setRef} type="text" />;
-    }
+  	setRef = (el) => {
+  		console.log('running ref func');
+  		this.refs.myDiv = el;
+  	};
+  	render() {
+  		//子组件的ref是一个函数
+  		return <input ref={this.setRef} type="text" />;
+  	}
   }
   ```
 - **方法三**【最推荐的】
   - 在父类构造函数中创造一个 ref 对象； `this.boxRef = React.createRef() `，需要多个 ref 就创建多个对象。
-  - 使用的时候，子组件：`ref={this.boxRef}`,访问子组件：`this.boxRef.current`
+  - 使用的时候，子组件:`ref={this.boxRef}`,访问子组件:`this.boxRef.current`
   - 这种方法由于这个对象绑定子组件后就没有变，以后每次渲染父类就不用再次创建了。
   - 当 `ref` 属性用于 HTML 元素时，`ref`对象接收底层 DOM 元素作为其 `current` 属性。
   - 当 `ref` 属性用于自定义 class 组件时，`ref` 对象接收组件的实例作为其 `current` 属性。
   ```js
   class DatePicker extends React.Component {
-    constructor(props) {
-      super(props);
-      this.boxRef = React.createRef(); //,创建ref对象，生成{current：null}
-    }
-    handleOnClick = () => {
-      console.log(this.boxRef.current); //访问子组件
-    };
-    render() {
-      //在子组件使用，ref是一个对象，子组件会挂载在该对象的current属性上。
-      return (
-        <input ref={this.boxRef} type="text" onClick={this.handleOnClick} />
-      );
-    }
+  	constructor(props) {
+  		super(props);
+  		this.boxRef = React.createRef(); //,创建ref对象，生成{current:null}
+  	}
+  	handleOnClick = () => {
+  		console.log(this.boxRef.current); //访问子组件
+  	};
+  	render() {
+  		//在子组件使用，ref是一个对象，子组件会挂载在该对象的current属性上。
+  		return (
+  			<input ref={this.boxRef} type="text" onClick={this.handleOnClick} />
+  		);
+  	}
   }
   ```
 - **不能在函数组件上使用 ref 属性**，因为它们没有实例 (函数式组件在使用时是直接调用，class 式组件是创建一个实例)，但是可以在函数组件内部的元素上使用
@@ -848,9 +849,9 @@ NOTE:refs 使用方法，优劣对比，区别
   //被forwardRef返回的ref不是特殊属性部分
   //接受一个渲染函数作为参数，其接收 props 和 ref 参数并返回一个 React 节点
   const FancyButton = React.forwardRef((props, ref) => (
-    <button ref={ref} className="FancyButton">
-      {props.children}
-    </button>
+  	<button ref={ref} className="FancyButton">
+  		{props.children}
+  	</button>
   ));
   const ref = React.createRef();
 
@@ -859,14 +860,14 @@ NOTE:refs 使用方法，优劣对比，区别
 
 ### 协调 reconciliation
 
-React 的 diff 函数，即前后虚拟 dom 对比方式
+React 的 diff 函数，即前后虚拟 DOM 对比方式
 
 - 对比方式
   - 无 key 时 效率为 O(n)
     - 首先根元素进行对比，根元素类型不同直接替换为新的，根元素类型一样就对比其属性，属性不同替换为新的；
     - 子元素按照顺序对比，方法和根元素一样
   - 有 key 时
-    新旧虚拟 dom 对比时，key 值相同的进行对比，减少对此次数，效率更高
+    新旧虚拟 DOM 对比时，key 值相同的进行对比，减少对此次数，效率更高
 
 ### React 的生命周期函数
 
@@ -876,31 +877,52 @@ React 的 diff 函数，即前后虚拟 dom 对比方式
   - `static getDerivedStateFromProps()`
     在初始挂载及后续更新时都会被调用。它应返回一个对象来更新 state， state 的值在任何时候都取决于 props, 如果返回 null 则不更新任何内容；不常用
   - `render()`
-    class 组件中唯一必须实现的方法，会渲染出虚拟 dom
+    class 组件中唯一必须实现的方法，会渲染出虚拟 DOM
   - `componentDidMount()`
     会在组件挂载后（渲染到 DOM 中）立即调用，依赖于 DOM 节点的初始化应该放在这里。
-- 更新阶段
-  - `static getDerivedStateFromProps()`
+
+- 更新阶段(update)
   - `shouldComponentUpdate(nextProps, nextState)`
     根据这个函数的返回值，判断 React 组件的输出是否受当前 state 或 props 更改的影响。默认行为（返回 true）是 state 每次发生变化组件都会重新渲染。此方法仅作为性能优化的方式而存在，可以人工控制下层组件是否更新，return false 后面的 render 就不会运行，不常用
   - `render()`
+    渲染虚拟DOM
   - `getSnapshotBeforeUpdate()`
-    在最近一次渲染输出（提交到 DOM 节点）之前调用，这个函数运行完真实 dom 会被渲染。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）, 不常用
+    在最近一次渲染输出（提交到 DOM 节点）之前调用，这个函数运行完真实 DOM 会被渲染。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）, 不常用
   - `componentDidUpdate(prevProps, prevState, snapshot)`
-    会在组件更新后会被立即，此时调用真实 dom 已经完成，可以直接对 dom 操作。首次渲染不会执行此方法
-- 卸载阶段(unmount)
+    会在组件更新后会被立即，此时调用真实 DOM 已经完成，可以直接对 DOM 操作。首次渲染不会执行此方法
 
+- 卸载阶段(unmount)
   - `componentWillUnmount()`
     在组件卸载及销毁之前直接调用。在此方法中执行必要的清理操作
 
-#### 错误处理
-  ```js
-  static getDerivedStateFromError()
+#### 三个被标记为 unsafe 即将废弃的生命周期函数:
 
-  componentDidCatch(e){
-    console.log(e)
-  }
-  ```
+- `componentWillMount`
+- `componentWillReceiveProps`
+- `componentWillUpdate`
+  不建议使用原因:
+
+  - react 的架构或者渲染机制的改变带来的问题
+  - React-Fiber 架构
+    - 解决 DOM 树过深同步渲染整个 DOM 性能下降问题
+    - 将 DOM 拆分渲染，分不同的时间片段异步渲染
+    - 由于异步的存在，可以根据用户行为灵活的调整 DOM
+  - React-Fiber 架构异步渲染使 render 之前的函数可能执行多次，若这些函数会产生副作用，则会产生 bug。render 之前的函数都必须是纯函数或者是 static 方法函数。
+
+- 不要 UNSAFE_componentWillMount 在这个组件里面发生 AJAX 请求的原因
+
+  - 这个函数后面会紧接着 render 函数，由于请求资源是一个异步过程，render 函数执行的时候资源没请求下来，没法更新 DOM
+  - 所以建议这类异步请求放到 componentDidMount 里面，放到后面可以减少 DOM 挂载时间，其他的操作可以直接放到构造函数里
+
+#### 错误处理
+
+```js
+static getDerivedStateFromError()
+
+componentDidCatch(e){
+  console.log(e)
+}
+```
 
 - **错误边界**
 
@@ -908,33 +930,19 @@ React 的 diff 函数，即前后虚拟 dom 对比方式
   - 如果一个 class 组件中定义了 `static getDerivedStateFromError()` 或 `componentDidCatch()` 这两个生命周期方法中的任意一个（或两个）时，那么它就变成一个错误边界，然后直接当做常规组件用，形成一个错误墙，错误组件里面子组件的错误会被错误边界捕获。
     - 类似在组件层面实现了一个 try catch 机制，让错误不会跑到外层。
     - 只有 **class 组件**才可以成为错误边界组件。大多数情况只需要声明一次错误边界组件, 并在整个应用中使用它。也可以将单独的部件包装在错误边界以保护应用其他部分不崩溃。
-  - 无法捕捉：**事件处理，异步，服务端渲染，自身错误**而非子组件的错误。
+  - 无法捕捉:**事件处理，异步，服务端渲染，自身错误**而非子组件的错误。
 
     - 事件处理器不会在渲染期间触发，如果抛出异常，React 仍然知道需要在屏幕上显示什么。在事件处理器内部使用 try catch 语句。
 
-- 生命周期中有一类 unsafe 生命周期函数不建议使用原因
-  三个被标记为 unsafe 即将废弃的生命周期函数:xxx
-
-  - react 的架构或者渲染机制的改变带来的问题
-  - React-Fiber 架构
-    - 解决 dom 树过深同步渲染整个 dom 性能下降问题
-    - 将 dom 拆分渲染，分不同的时间片段异步渲染
-    - 由于异步的存在，可以根据用户行为灵活的调整 dom
-  - unsafe 类生命周期函数正是因为在某些情况下会和 React-Fiber 的异步机制发生冲突所以不推荐使用，可能会有 bug
-  - render 之前的函数都必须是纯函数或者是 static 方法函数，render 之前的函数不能产生副作用，可能会和 React-Fiber 的异步机制发生冲突
-
-- 不要 UNSAFE_componentWillMount 在这个组件里面发生 AJAX 请求的原因
-
-  - 这个函数后面会紧接着 render 函数，由于请求资源是一个异步过程，render 函数执行的时候资源没请求下来，没法更新 dom
-  - 所以建议这类异步请求放到 componentDidMount 里面，放到后面可以减少 dom 挂载时间
-  - UNSAFE_componentWillMount 会紧接着 Construct 函数运行，官方建议不使用这个函数，里面其它的操作可以直接放到构造函数里面
 ### 高级概念
+
 #### 组合和继承
 
 React 里面基本不用继承，只继承 React.Component, 更多是在一个组件里面使用另外的组件的组合.
 
 - `props.name`: `<Foo name="miao"/>`标签里的属性，在 Foo 组件可以通过 props.name 的方式访问。
 - `props.children`: `<Foo>balabala</Foo>` children 可以传递多种类型的值，会将写在 Foo 组件标签中间的元素都传入这个属性(中间可以不只一个根结点).
+
 #### Render Props 渲染属性
 
 - Render Props 是告知组件需要渲染什么内容的函数属性。组件接收一个属性 render, 属性值是一个函数，组件会把自己的数据传给这个函数作为参数,返回一个 JSX，函数的结果会被组件中的 render() 函数接收渲染为虚拟 DOM
@@ -942,19 +950,19 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
   ```js
   function Repeat(props) {
-    let items = []
-    for (let i = 0; i < props.time; i++) {
-      items.push(props.render(i))
-    }
-    return <div>{items}</div>
+  	let items = [];
+  	for (let i = 0; i < props.time; i++) {
+  		items.push(props.render(i));
+  	}
+  	return <div>{items}</div>;
   }
 
   ReactDOM.render(
-    <Repeat time={10} render={i => <div key={i}>this is {i}</div>} />
-    ,
-    document.getElementById('root')
+  	<Repeat time={10} render={(i) => <div key={i}>this is {i}</div>} />,
+  	document.getElementById('root')
   );
   ```
+
 #### 合成事件
 
 - react 的事件是对浏览器的原生事件的跨浏览器包装，兼容所有浏览器，挂载 props 上
@@ -982,14 +990,12 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 - Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案，常用于对话框、悬浮卡以及提示框
 - `ReactDOM.createPortal(child, container)`
   child 是 React 子元素，container 是一个 DOM 元素，child 会渲染到容器里，而不是父类；使用在组件的 render 函数里
-- 除了在 dom 树中的位置，其他行为和普通的 react 子节点行为一致。 react 内的事件处理逻辑等还是在原来的react组件中(比如冒泡)
-
+- 除了在 DOM 树中的位置，其他行为和普通的 react 子节点行为一致。 react 内的事件处理逻辑等还是在原来的 react 组件中(比如冒泡)
 
 #### 与第三方库协同
 
 - 通过 ref 属性拿到第三方库要操作的元素
 - 在这个元素上面通过第三方库的事件机制触发组件本身的处理函数来更新 state
-
 
 #### 类型检查 PropTypes
 
@@ -999,24 +1005,23 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
   ```js
   componentName.propTypes = {
-    propName:
-      PropTypes.string /
-      PropTypes.bool /
-      PropTypes.func /
-      PropTypes.object.isRequired,
+  	propName:
+  		PropTypes.string /
+  		PropTypes.bool /
+  		PropTypes.func /
+  		PropTypes.object.isRequired,
   };
 
   class Greeting extends React.Component {
-    static defaultProps = {
-      //默认 Prop 值
-      name: 'stranger',
-    };
-    render() {
-      return <div>Hello, {this.props.name}</div>;
-    }
+  	static defaultProps = {
+  		//默认 Prop 值
+  		name: 'stranger',
+  	};
+  	render() {
+  		return <div>Hello, {this.props.name}</div>;
+  	}
   }
   ```
-
 
 #### Context
 
@@ -1052,14 +1057,13 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
 ### React 相关 api
 
-
 - React.Component
   定义 react 组件的基类
   ```js
   class Greeting extends React.Component {
-    render() {
-      return <h1>Hello, {this.props.name}</h1>;
-    }
+  	render() {
+  		return <h1>Hello, {this.props.name}</h1>;
+  	}
   }
   ```
 - `React.PureComponent()`
@@ -1069,13 +1073,13 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
   是高阶组件.和 `React.PureComponent()` 功能一样，是做性能优化的。不过它适用于函数组件 ，不适用于 class 组件；接收一个函数组件为参数，返回包装后的组件
   ```js
   const MyComponent = React.memo(function MyComponent(props) {
-    /* 使用 props 渲染 */
+  	/* 使用 props 渲染 */
   });
   ```
 - `React.createElement()`
-  创建并返回指定类型的新 React 元素，此时还没有实例化，是对虚拟 dom 的描述，上面有 key,ref，props 这些属性，渲染之前会根据这些信息创造实例，实例会调用 render() 函数。使用 JSX 一般就不需要直接调用 createElement.
+  创建并返回指定类型的新 React 元素，此时还没有实例化，是对虚拟 DOM 的描述，上面有 key,ref，props 这些属性，渲染之前会根据这些信息创造实例，实例会调用 render() 函数。使用 JSX 一般就不需要直接调用 createElement.
 - `ReactDOM.render(<TodoApp />，document.getElementById('root'))`
-  这个函数接收两个参数，将第一个参数虚拟 dom 编译到第二个参数 React 根元素里面
+  这个函数接收两个参数，将第一个参数虚拟 DOM 编译到第二个参数 React 根元素里面
 - `React.cloneElement()`
   克隆 React 元素， 新的 props 与原始元素的 props 浅层合并。新的子元素将取代现有的子元素，而来自原始元素的 key 和 ref 将被保留。
 
@@ -1084,7 +1088,6 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
   - `React.Children.forEach(children, function[(thisArg)])`
   - `React.Children.count(children)` 返回 children 中的组件总数量
     todo:代码分割，webpack 打包
-
 
 ### Hook
 
@@ -1133,7 +1136,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
   - var f = useMemo(()=>fun(){},[])
 
 - useRef
-  和 class 组件里面的 React.createRef() 功能用法一样，useRef() 也会创建一个{current：null}对象；由于函数组件每次更新都会重新运行，每次运行都会创建一个新的作用域，作用域里面的函数都会是新建的；使用 React.createRef() 函数组件更新每次都会创建一个新的对象，占用内存；而 useRef 就是为了解决这个问题的，函数组件中使用 useRef() 返回的对象在函数组件刷新前后都是同一个对象
+  和 class 组件里面的 React.createRef() 功能用法一样，useRef() 也会创建一个{current:null}对象；由于函数组件每次更新都会重新运行，每次运行都会创建一个新的作用域，作用域里面的函数都会是新建的；使用 React.createRef() 函数组件更新每次都会创建一个新的对象，占用内存；而 useRef 就是为了解决这个问题的，函数组件中使用 useRef() 返回的对象在函数组件刷新前后都是同一个对象
 
 - 自定义 hook
 
@@ -1151,15 +1154,15 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
 * 相关变量
 
-  - HashRouter：一个组件，包裹在所有路由的最外层，表示以 hash 模式进行地址导航
+  - HashRouter:一个组件，包裹在所有路由的最外层，表示以 hash 模式进行地址导航
   - BrowserRouter: H5 模式，一般不需要
   - Switch, 可选，表示按照顺序匹配内部的路由，只匹配满足条件的第一个
-  - Route： 导航组件 `<Route path="/users/:id" exact><Component/></Route>`
+  - Route: 导航组件 `<Route path="/users/:id" exact><Component/></Route>`
     - path 只能接完整路径，嵌套路由也是完整路径
     - exact 表示必须精确匹配路径，默认都是开头匹配就行，匹配成功就就加载中间的组件
     - 也可以通过 path 向内部组件参数
     - path 里面"\*"表示通配符，匹配所有路径
-  - link： 相当于一个 a 标签 `<Link to="/about">About</Link>`, 点击就导航到对应路由组件
+  - link: 相当于一个 a 标签 `<Link to="/about">About</Link>`, 点击就导航到对应路由组件
   - 路由里的不是由 `<Route path="">`过来的组件不能直接接受 path 传递来的参数，需要 withRouter 将组件包裹一层
     `var User = withRouter(function User(props) {})`
     接受到的属性 props 是个对象，有 history，location,match 几个属性，分别有相关的方法，可以通过 `props.match.params. 参数名 (id)` 拿到传递过来的参数

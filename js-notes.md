@@ -1,5 +1,3 @@
-
-
 # 常用命令行
 
 ## git 基础知识
@@ -31,7 +29,7 @@
 
 `git log (--online/--graph)` 查看提交日志；`git relog`查看所有的命令记录
 
-- `git reset --hard <commit—id>` 回退到某个版本。上一个版本：head^
+- `git reset --hard <commit—id>` 回退到某个版本。上一个版本:head^
 - `git reset` 既可以回退版本，也可以把暂存区的修改回退到工作区
 
 `git remote add origin git@github.com:brightzoe/learngit.git`本地仓库关联远程库
@@ -43,7 +41,7 @@
 `git branch` 查看分支；
 `git branch xx`创建分支
 `git checkout/switch <name>`切换分支
-`git checkout -b <name>`  or  `git switch -c <name> `创建并改切换分支
+`git checkout -b <name>` or `git switch -c <name> `创建并改切换分支
 `git merge <name>` 合并某分支到当前分支
 `git branch -d <name>`删除分支;强制删除把 d 改成 D
 
@@ -69,36 +67,37 @@
 
 ### Pull Request
 
-> 在哪些情况下可以直接使用 master branch 来提交 Pull Request：
->
+> 在哪些情况下可以直接使用 master branch 来提交 Pull Request:
 > - 你只想为主项目贡献某一处代码，贡献完自己的 repo 就可以扔的那种。
 > - 你打算为主项目长期贡献代码，而且希望追随原项目的主线开发，不保留自己的特性。
 > - 你打算为主项目长期贡献代码，默认 master branch 追随原项目主线，把自己的特性放到别的 branch 中。
 >
-> 在哪种情况下应该使用主题 branch 来提交 Pull Request：
->
-> - 想用 master branch 完全来做自己的开发。在这种情形下：会从上游库合并更新，但是这些 merge 本身的 commits 显然不> 可能作为返还到上游库的 Pull Request 的一部分。
+> 在哪种情况下应该使用主题 branch 来提交 Pull Request:
+> - 想用 master branch 完全来做自己的开发。在这种情形下:会从上游库合并更新，但是这些 merge 本身的 commits 显然不可能作为返还到上游库的 Pull Request 的一部分。
 > - 存在自己的（未被 merge 或者不想被 merge 到上游库的）commits。
->
+
 > 鉴于 Git 的分布式开发哲学，每一个库均可以看作是一个独立的项目，显然是后一种（为每一个新特性建立一个专门的主题 branch 来向主项目推送 Pull Request）的贡献方式更可取。
 
 ### 遇到的问题
 
-Q：以下两个地址有什么区别？之前一直不了解，都是混着用，一个不行就用另一个试试。
+Q:以下两个地址有什么区别？之前一直不了解，都是混着用，一个不行就用另一个试试。
 `git@github.com:brightzoe/learngit.git`
 `https://github.com/brightzoe/learngit.git`
-A：上述两个地址却有不同，虽然指向的是同一个远程仓库，但第二个用 https 方式连接，第一个是用 SSH 方式连接。区别在于对内容的安全管理。使用 https 方式，每次需要验证用户身份信息，添加 ssh-key 后用 ssh 方式则信任当前用户不用再输用户名和密码。没有设置 ssh 前默认用 https 方式，设置了 ssh 后可以更改为 remote 地址(`git remote set-url origin [url]`)，使用 ssh 方式连接,通过 ssh 协议的传输速度最快。具体添加 ssh 的方式不再赘述。
+A:上述两个地址却有不同，虽然指向的是同一个远程仓库，但第二个用 https 方式连接，第一个是用 SSH 方式连接。区别在于对内容的安全管理。使用 https 方式，每次需要验证用户身份信息，添加 ssh-key 后用 ssh 方式则信任当前用户不用再输用户名和密码。没有设置 ssh 前默认用 https 方式，设置了 ssh 后可以更改为 remote 地址(`git remote set-url origin [url]`)，使用 ssh 方式连接,通过 ssh 协议的传输速度最快。具体添加 ssh 的方式不再赘述。
 
-Q：忽略特殊文件比如明文密码？
-A：.gitignore 文件 [Templates in Github](https://github.com/github/gitignore)
+Q:忽略特殊文件比如明文密码？
+A:.gitignore 文件 [Templates in Github](https://github.com/github/gitignore)
 
-Q：fork 后修改，如何同步源的更新？
-A：`git remote add upstream <url>`配置上游仓库；
-`git fetch upstream`抓取上游仓库（所有分支）的更新；
-`git rebase upstream/master`合并
+Q:fork 后修改，如何同步源的更新？
+A:`git remote add upstream <url>`配置上游仓库；
+  `git fetch upstream`抓取上游仓库（所有分支）的更新；
+  `git rebase upstream/master`合并
+  `git push (origin master)`推送到远程仓库
+Q:git rebase与git merge的区别
+A:
 
-`git push (origin master)`推送到远程仓库
-
+Q:
+A；
 ### 拓展链接
 
 1. [Git Cheat Sheet](https://gitee.com/liaoxuefeng/learn-java/raw/master/teach/git-cheatsheet.pdf)
@@ -108,7 +107,6 @@ A：`git remote add upstream <url>`配置上游仓库；
 ### 暂时未理解的内容
 
 - bug 分支
-- rebase:整理 log
 
 ### Reference
 
@@ -122,62 +120,62 @@ A：`git remote add upstream <url>`配置上游仓库；
 - pwd 可以显示当前工作目录
 - echo abc > foo.txt（可输出编辑内容到文件）
 - echo def >> foo.txt 将命令的追加到文件
-  创建：mkdir
-  删除：rm
-  删除非空目录：rm -rf file 目录
-  移动：mv
-  复制：cp (复制目录：cp -r )
+  创建:mkdir
+  删除:rm
+  删除非空目录:rm -rf file 目录
+  移动:mv
+  复制:cp (复制目录:cp -r )
   显示当前目录下的文件 ls
   查看文件内容 cat, con cate nate
 
 ## vscode 的常用快捷键
 
-- 补齐 html5 模板：！ + tab 或 ! + enter
-- 一列光标：alt + shift 然后点击
-- 替换： CTRL + H
-- 删除当前行： CTRL + shift + K
-- 切换标签： CTRL + tab
+- 补齐 html5 模板:！ + tab 或 ! + enter
+- 一列光标:alt + shift 然后点击
+- 替换: CTRL + H
+- 删除当前行: CTRL + shift + K
+- 切换标签: CTRL + tab
 - 注释快捷键 ctrl+k+c / ctrl + /
-- 移动行：alt+up/down
-- 代码格式化：shift + alt +f
+- 移动行:alt+up/down
+- 代码格式化:shift + alt +f
 - HOME 调转到行头
 - end 调转到行尾
 - 显示 / 隐藏左侧目录栏 ctrl + b
-- 复制当前行：shift + alt +up/down
-- 删除当前行：shift + ctrl + k
-- 行增加缩进：ctrl + [
-- 行减少缩进：ctrl + ]
-- 删除行 ： ctrl + shift + d
-- 折叠代码： ctrl + k + 0-9 (0 是完全折叠）
-- 展开代码： ctrl + k + j （完全展开代码）
-- 快速回到顶部 ： ctrl + home
+- 复制当前行:shift + alt +up/down
+- 删除当前行:shift + ctrl + k
+- 行增加缩进:ctrl + [
+- 行减少缩进:ctrl + ]
+- 删除行 : ctrl + shift + d
+- 折叠代码: ctrl + k + 0-9 (0 是完全折叠）
+- 展开代码: ctrl + k + j （完全展开代码）
+- 快速回到顶部 : ctrl + home
 - 快速回到底部 : ctrl + end
-- 回到撤销之前：Ctrl +Y
-- 控制台终端显示与隐藏：ctrl + ~
-- 查找文件 / 安装 vs code 插件地址：ctrl + p
-- 字体放大 / 缩小：ctrl + ( + 或 - )
+- 回到撤销之前:Ctrl +Y
+- 控制台终端显示与隐藏:ctrl + ~
+- 查找文件 / 安装 vs code 插件地址:ctrl + p
+- 字体放大 / 缩小:ctrl + ( + 或 - )
 - 裁剪尾随空格 : ctrl + shift + x
 - 拆分编辑器 : ctrl + 1/2/3
 - 关闭编辑器窗口 : ctrl + w
 - 自动换行 : alt + z
-- 选中文字：shift + left / right / up / down
-- 快速切换主题：ctrl + k / ctrl + t
-- 格式化选定代码 ：ctrl + k / ctrl +f
+- 选中文字:shift + left / right / up / down
+- 快速切换主题:ctrl + k / ctrl + t
+- 格式化选定代码 :ctrl + k / ctrl +f
 
 ## windows 快捷键
 
-- 任务视图： win + tab
-- 切换程序： alt + tab
-- win 截图：win + shift + S
-- qq 截图：CTRL + alt + B
+- 任务视图: win + tab
+- 切换程序: alt + tab
+- win 截图:win + shift + S
+- qq 截图:CTRL + alt + B
 
 # JavaScript
 
-- 待学：
+- 待学:
   <深入了解计算机系统> 大名鼎鼎的 CSAPP
 
 WebPack 编译&打包&同步
-缩写：
+缩写:
 
 - e.g. for example（举例）
 - i.e. that is（即）
@@ -190,14 +188,14 @@ WebPack 编译&打包&同步
 最左是符号，然后十一位为指数
 
 - 指数范围-1023-1024, 指数部分使用原码存储，原码范围 0-2047,0 表示-1023
-- 指数不用补码：从左到右扫描即可比较大小。
+- 指数不用补码:从左到右扫描即可比较大小。
 - 浮点数不够精确则更多用于对比大小，提高大小比较效率
 - 程序中很少判断两个浮点数相等，更多判断他们的差的绝对值是否小于某个精度。小数部分最高精度 Number.EPSILON
   不存储底数的整数部分，因为底数的整数部分总是 1, 可以让二进制状态有效位数为 53 位
 - 有效位数 53 位，可以表达的最大精确数 2\*\*53-1 为 `Number.MAX_SAFE_INTEGER`. 大于这个范围的数是可以表示的，但不能保证精确，溢出的位会被截断
 - 整数部分使用的越多，小数部分有效位数越少。即数值越大，小数部分的精度越低。
 
-IEEE754 标准：二进制浮点顺运算标准
+IEEE754 标准:二进制浮点顺运算标准
 
 - 双精度浮点数使用 8 字节表示，指数部分 11bit, 底数 62bit
 - 单精度浮点数使用 4 字节表示，指数部分 8bit, 底数 23bit
@@ -205,8 +203,8 @@ IEEE754 标准：二进制浮点顺运算标准
 ### JS 的使用
 
 - js 的引入最好放在 html 里 body 的最后，这样会加快页面加载速度。
-- 控制台调试：debugger；/右键行号临时断点
-- 命名：
+- 控制台调试:debugger；/右键行号临时断点
+- 命名:
   fuzzy_little_turtle snake case
   FuzzyLittleTurtle capital case 构造函数
   fuzzyLittleTurtle camel case 驼峰式
@@ -240,10 +238,10 @@ IEEE754 标准：二进制浮点顺运算标准
 - \n 回车 \t Tab
 - 反引号后可出现明文回车
 
-自动类型转换：弱类型语言 js 强类型语言（python）
-变量指向的类型在程序运行时是否允许发生变化：动态类型（js）静态类型（c）
+自动类型转换:弱类型语言 js 强类型语言（python）
+变量指向的类型在程序运行时是否允许发生变化:动态类型（js）静态类型（c）
 
-### 类型转换：
+### 类型转换:
 
 - `parseInt()`//强制转换为数字
 - `Number()`或`+ "3"`
@@ -256,7 +254,7 @@ IEEE754 标准：二进制浮点顺运算标准
 比较 comparisons
 
 - `==` 相等，会进行类型转换再比较（隐含强制转换）
-- 比较方式：
+- 比较方式:
 
   - 针对原始类型，`a == 2`是比较值；
   - 针对函数，`ary == [0]`, 右边会创建新的变量，判断这两个数组是不是同一个。所以不能这样判断数组，可以拆开用 ary.length 与 ary[0] 比较
@@ -268,8 +266,8 @@ IEEE754 标准：二进制浮点顺运算标准
 - `NaN`跟自己也不相等
 - `isNaN`是否“不是一个数值”
 - `Number.isNaN`是否是 NaN 这个值
-- `undefined`与`null`：相等但不严格相等。
-  - `undefined`：已定义，未赋值，类型为 undefined
+- `undefined`与`null`:相等但不严格相等。
+  - `undefined`:已定义，未赋值，类型为 undefined
   - `null`: 未定义，类型为 object
 - `!name` ! 运算符会将值转换为布尔类型再取反
 
@@ -296,7 +294,7 @@ IEEE754 标准：二进制浮点顺运算标准
   - `** || ** || **`
     从左到右返回第一个为 true 的值
   - `true && "hello,foo"`
-    实际开发可以用于：满足前面条件，然后执行后面的。从前向后执行`
+    实际开发可以用于:满足前面条件，然后执行后面的。从前向后执行`
   - `false || "default"`
     判断是使用传过来的值，还是默认值`
 
@@ -385,9 +383,9 @@ https://wangdoc.com/javascript/operators/bit.html
 
 ### 作用域
 
-- 作用域：变量在某个范围内起作用，为了提高程序的可靠性，减少命名冲突
-- 全局作用域：在整个 js 文件起作用
-- 函数作用域：旨在函数内部起作用
+- 作用域:变量在某个范围内起作用，为了提高程序的可靠性，减少命名冲突
+- 全局作用域:在整个 js 文件起作用
+- 函数作用域:旨在函数内部起作用
 
 ### 异步
 
@@ -413,8 +411,8 @@ https://wangdoc.com/javascript/operators/bit.html
 
 ```js
 var greeting = (name) => {
-  //只有一个参数，参数的小括号可以省略；只有一行语句，后面大括号和“return”也可以省略
-  console.log("hello" + name);
+	//只有一个参数，参数的小括号可以省略；只有一行语句，后面大括号和“return”也可以省略
+	console.log('hello' + name);
 };
 ```
 
@@ -435,11 +433,11 @@ function (){//不指定参数的话，参数数量不固定，arguments 算是�
 
 ```js
 function squareSum(a, b) {
-  //求平方和
-  function square(a) {
-    return a * a;
-  }
-  return square(a) + square(b);
+	//求平方和
+	function square(a) {
+		return a * a;
+	}
+	return square(a) + square(b);
 }
 
 squareSum(3, 5);
@@ -450,7 +448,7 @@ squareSum(3, 5);
 ### 函数柯里化
 
 柯里化是将函数分解为一系列函数的过程，每个函数都只接收一个参数。
-作用：1. 参数复用；2. 提前返回；3. 延迟计算/运行。
+作用:1. 参数复用；2. 提前返回；3. 延迟计算/运行。
 
 ### 自执行函数
 
@@ -460,8 +458,8 @@ squareSum(3, 5);
 let num1 = 10;
 
 (function () {
-  let num1 = 20;
-  return num1;
+	let num1 = 20;
+	return num1;
 })();
 // => 20
 num1;
@@ -477,18 +475,18 @@ num1;
 ### 高阶函数
 
 操作其他函数，将其他函数作为参数或返回值。
-特点：
+特点:
 可以对某种特定的动作进行抽象。
 可以提高代码可读性/可维护性，容易避免错误。
 
 - 函数就是一个普通的值
-- 纯函数：一个函数的返回结果只依赖于它的参数，并且在执行过程里面没有副作用，我们就把这个函数叫做纯函数。 i.e. 靠谱的函数
+- 纯函数:一个函数的返回结果只依赖于它的参数，并且在执行过程里面没有副作用，我们就把这个函数叫做纯函数。 i.e. 靠谱的函数
 
 ```js
 function transparentWrapping(f) {
-  return function () {
-    return f.apply(null, arguments); //模拟调用，访问f()的所有参数
-  };
+	return function () {
+		return f.apply(null, arguments); //模拟调用，访问f()的所有参数
+	};
 }
 ```
 
@@ -499,26 +497,26 @@ function transparentWrapping(f) {
 ```js
 //自己实现一个foreach,可以模拟 break&&continue:
 function forEach(ary, action) {
-  for (var i = 0; i < ary.length; i++) {
-    var x = action(ary[i], i);
-    if (x === false) {
-      break;
-    }
-  }
-  return ary;
+	for (var i = 0; i < ary.length; i++) {
+		var x = action(ary[i], i);
+		if (x === false) {
+			break;
+		}
+	}
+	return ary;
 }
 
 var target = 3;
 var targetIndex = -1;
 debugger;
 forEach([1, 2, 3, 4], function (aryItem, idx) {
-  if (xx) {
-    return; //相当于continue
-  }
-  if (aryItem == target) {
-    targetIndex = idx;
-    return false; //相当于break
-  }
+	if (xx) {
+		return; //相当于continue
+	}
+	if (aryItem == target) {
+		targetIndex = idx;
+		return false; //相当于break
+	}
 });
 ```
 
@@ -528,23 +526,23 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
 
   ```js
   [3, 5, 2, 7, 8, 1, 4, 9].reduce(function (memo, value, index, array) {
-    //reduce 的本质,就是一个遍历,每次返回值存储到 memo
-    //根据每次里面的index值来分情况讨论
-    if (index == 1) {
-      return {
-        sum: memo + value,
-        max: Math.max(memo, value),
-        min: Math.min(memo, value),
-      };
-    }
-    memo.sum += value;
-    memo.max = Math.max(memo.max, value);
-    memo.min = Math.min(memo.min, value);
-    if (index == array.length - 1) {
-      //最后一次
-      return (memo.sum - memo.max - memo.min) / (array.length - 2);
-    }
-    return memo;
+  	//reduce 的本质,就是一个遍历,每次返回值存储到 memo
+  	//根据每次里面的index值来分情况讨论
+  	if (index == 1) {
+  		return {
+  			sum: memo + value,
+  			max: Math.max(memo, value),
+  			min: Math.min(memo, value),
+  		};
+  	}
+  	memo.sum += value;
+  	memo.max = Math.max(memo.max, value);
+  	memo.min = Math.min(memo.min, value);
+  	if (index == array.length - 1) {
+  		//最后一次
+  		return (memo.sum - memo.max - memo.min) / (array.length - 2);
+  	}
+  	return memo;
   }); //4.83
   ```
 
@@ -630,10 +628,10 @@ apply 方法:`func.apply(this,[arguments])`//传入一个特定的 this,然后�
 
 ```js
 var obj = {
-  val: 3,
-  f: function () {
-    return this.val;
-  },
+	val: 3,
+	f: function () {
+		return this.val;
+	},
 };
 ```
 
@@ -667,7 +665,7 @@ var map = new Map
 - 以方法的形式调用时，函数的 `this` 就是调用它的对象。如 `array.length`
 - 以纯函数形式调用时，`this` 是 `window f()`
 - 用 `new` 来调用 `this` 时，`this` 就是那个新建的对象。如构造函数；
-  修改 `this` 的指向：
+  修改 `this` 的指向:
 - 用 `call` 和 `apply` 调用时，`this` 是指定的那个对象。
   => `fn.call(obj,xx,xx,xx)` 后面是参数
   => `fn.apply(obj,[xx,xx,xx])` 参数以数组传入
@@ -685,13 +683,13 @@ var map = new Map
 - 一些属性和方法组合在一起构成的一个数据实体，用.访问
 - 给对象创建实例 `var zoe = new Person`;
 - 用户定义对象
-- 内建对象：数组/Math 对象/Date 对象
-- 宿主对象：浏览器提供的预定义对象 Form/Image/Element/Document 对象
+- 内建对象:数组/Math 对象/Date 对象
+- 宿主对象:浏览器提供的预定义对象 Form/Image/Element/Document 对象
   - `window` 对象，对应浏览器窗口本身，通常统称为 BOM
   - `document` 对象，处理网页内容
 - 对象的内容是可以修改的
 - 原始类型的数据不可更改-(number,string,bool)
-- 循环： `for (var prop in obj)`
+- 循环: `for (var prop in obj)`
 - `slice` 出来的数组是浅拷贝（shadow copy), 对应的有深拷贝
 - `isEqual` 是深对比，对比的是具体的内容是否一致；浅对比对比的是否是同一对象
 
@@ -740,27 +738,27 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
 
 ```js
 var pile = {
-  elements: ["eggshell", "orange peel", "worm"],
-  get height() {
-    return this.elements.length;
-  },
-  set height(value) {
-    console.log("Ignoring set height to", value);
-  },
+	elements: ['eggshell', 'orange peel', 'worm'],
+	get height() {
+		return this.elements.length;
+	},
+	set height(value) {
+		console.log('Ignoring set height to', value);
+	},
 };
 
 var o = { a: 0 };
 //现有对象上添加getter
-Object.defineProperty(o, "b", {
-  get: function () {
-    return this.a + 1;
-  },
+Object.defineProperty(o, 'b', {
+	get: function () {
+		return this.a + 1;
+	},
 });
 ```
 
 ### 类数组 arguments
 
-调用函数时，浏览器每次都会传递两个参数：
+调用函数时，浏览器每次都会传递两个参数:
 
 1. `this` 函数的上下文对象
 2. `arguments` 封装实参的对象
@@ -773,7 +771,7 @@ Object.defineProperty(o, "b", {
 ### JSON
 
 - 序列化数据(e.g. yaml)，方便传输数据，或者作为配置文件。
-  - 序列化：把一个东西在不损失信息量的前提下，转换为由连续字节表示的数据，比如字符串。
+  - 序列化:把一个东西在不损失信息量的前提下，转换为由连续字节表示的数据，比如字符串。
 - 看起来很像 JS 的数组和对象的表示方式，但有一些限制。
   所有 key 都要有双引号
   只允许使用简单的数据格式，不能有函数调用/绑定或涉及实际计算
@@ -797,7 +795,7 @@ NOTE:面向对象
 多个不同类型的对象拥有相同的一组接口（方法及方法的签名及属性）
 多态的代码:某段代码只期望对象们拥有这组接口即可正常工作,不期待对象的具体类型(什么构造函数构造出来的)
 
-> 函数的签名：函数的名称，参数类型与顺序，返回值类型的集合．
+> 函数的签名:函数的名称，参数类型与顺序，返回值类型的集合．
 
 ### 继承
 
@@ -821,7 +819,7 @@ NOTE:面向对象
 
 Domain Specific Language 领域特定语言
 
-- 创建方法：三种方式
+- 创建方法:三种方式
   - `var a = new RegExp('abc')` //string 里面需要转义
   - `var a = /abc/` //是啥就是啥 +g 全局匹配
   - `var a = new RegExp(String.fromCharCode(92,9297,98,99))`
@@ -835,8 +833,8 @@ Domain Specific Language 领域特定语言
 - . 匹配任意字符（除换行符外、n \r\n)
 - \u4f60 匹配 Unicode 码,如中文
 - [a-z] 匹配单个字符。
-- [] 里的东西：
-  - [^2357] ^在开头：取反，非 2357
+- [] 里的东西:
+  - [^2357] ^在开头:取反，非 2357
   - [^] : 任意符号
 - 可以用 | 分隔表示或:`str.match(/this|cons/g)`
 - ^在开头,表示匹配以什么开头的;\$在最后,表示匹配以什么结束的.
@@ -867,9 +865,9 @@ Domain Specific Language 领域特定语言
   - `/(\d){4}-(\d{2})-(\d{2})/.exec('today is 2020-04-14')`=> 如果一个分组进行了多次匹配，只保留最后一个匹配 (e.g. 第一个/d)（像一个变量一样，会更新值）
   - 如果一个分组没有匹配，数组对应位置返回 `undefined`
 
-- 为分组取名：`(?<name>)` （在旧的浏览器无法使用）
+- 为分组取名:`(?<name>)` （在旧的浏览器无法使用）
 
-  - `/（张）(?<名字>.+)/.exec('foo 张韶涵')`=> `groups: {名字："韶涵"}`
+  - `/（张）(?<名字>.+)/.exec('foo 张韶涵')`=> `groups: {名字:"韶涵"}`
 
 #### 常用的
 
@@ -885,7 +883,7 @@ Domain Specific Language 领域特定语言
 
 - 如果浏览器遇到格式不正确的 HTML，它会在形成 DOM 时自动更正它。
 - **适用于多种环境和多种程序设计语言的通用型 API**
-- 文档：节点树 node tree **文档中每个元素节点都是一个对象**最外层节点是 document，不是元素节点
+- 文档:节点树 node tree **文档中每个元素节点都是一个对象**最外层节点是 document，不是元素节点
 - DOM 节点是常规的 JavaScript 对象。它们使用基于原型的类进行继承。
   - 元素节点 DOM 的原子是元素节点
   - 文本节点 只包含文本的元素
@@ -953,13 +951,13 @@ Domain Specific Language 领域特定语言
 
 - `object.getAttribute('attribute')`
 - `object.setAttribute('attr','xxxx')` 设置或修改属性
-  `element.value = "the new value"`//这个与上面的一般是同步的，有些例外：value，zIndex
+  `element.value = "the new value"`//这个与上面的一般是同步的，有些例外:value，zIndex
 - `node.attributes/id/className/htmlFor/title/tabindex` 获取属性
 - `node.dataset.foo = 'xxx'` //操作元素的 data- 属性
 - `elem.add/remove/has`
 - `elem.classList` //实时的 class 的集合,`add()/remove()/toggle()`方法
 
-NOTE: HTML 特性：它们的名字是大小写不敏感的 getAttribute(),它们的值总是字符串类型的。DOM 属性是多类型的。 i.e. div.style,input.checked
+NOTE: HTML 特性:它们的名字是大小写不敏感的 getAttribute(),它们的值总是字符串类型的。DOM 属性是多类型的。 i.e. div.style,input.checked
 
 > 在这个语境下，Attribute:指 HTML 标签特性，Property:指 DOM 对象的属性
 > obj.setAttribute('xx','xxx')
@@ -1002,10 +1000,10 @@ window.innerWidth/Height 窗口内部宽高（css 像素）
 
 - 通过 DOM 属性分配，onclick 不能多次调用，新的调用会覆盖旧的 DOM 属性。
   i.e. button.onclick = sayThanks;
-  在 HTML 里面：<input type="button" id="button" onclick="sayThanks()">，读取 HTML，会创建一个处理函数，注意这个区别。
+  在 HTML 里面:<input type="button" id="button" onclick="sayThanks()">，读取 HTML，会创建一个处理函数，注意这个区别。
 - 分配事件处理程序，调用 addEventListener 允许多次添加。有些事件无法通过 DOM 属性进行分配，必须使用 addEventListener。 `element.addEvenListener（事件名，处理函数，option)`
   - options 可选
-    一个指定有关 listener 属性的可选参数对象。可用的选项如下：
+    一个指定有关 listener 属性的可选参数对象。可用的选项如下:
     capture: Boolean，表示 listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。
     once: Boolean，表示 listener 在添加之后最多只调用一次。如果是 true， listener 会在其被调用之后自动移除。
     passive: Boolean，设置为 true 时，表示 listener 永远不会调用 preventDefault()。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。
@@ -1013,24 +1011,24 @@ window.innerWidth/Height 窗口内部宽高（css 像素）
 - element.removeElementListener（事件名，处理函数） 移除处理器，注意移除的处理函数和之前添加的处理函数是同一个才可以移除，所有需要用一个变量记录函数指向.
   ```js
   function handler() {
-    alert("Thanks!");
+  	alert('Thanks!');
   }
-  input.addEventListener("click", handler);
-  input.removeEventListener("click", handler); //移除，需要添加同一个函数
+  input.addEventListener('click', handler);
+  input.removeEventListener('click', handler); //移除，需要添加同一个函数
   ```
 
-**event** 全局事件对象，浏览器同一时刻只有一个事件运行，event 的属性：
+**event** 全局事件对象，浏览器同一时刻只有一个事件运行，event 的属性:
 
-- event.type：事件类型，这里是 "click"。
-- event.currentTarget：“当前”处理事件的元素，与 this 相同，除非处理程序是一个箭头函数，或者它的 this 被绑定到了其他东西上，之后我们就可以从 event.currentTarget 获取元素了。
-- event.target：是引发事件的“目标”元素，引发事件的层级最深的元素，它在冒泡过程中不会发生变化。
-- event.which：针对键盘和鼠标事件，确定按的是哪个键
-- event.keyCode：记录哪个键被按下，返回对应的 unicode 码（大写字母）
-- event.key：记录哪个键被按下，返回对应的键（小写字母）
+- event.type:事件类型，这里是 "click"。
+- event.currentTarget:“当前”处理事件的元素，与 this 相同，除非处理程序是一个箭头函数，或者它的 this 被绑定到了其他东西上，之后我们就可以从 event.currentTarget 获取元素了。
+- event.target:是引发事件的“目标”元素，引发事件的层级最深的元素，它在冒泡过程中不会发生变化。
+- event.which:针对键盘和鼠标事件，确定按的是哪个键
+- event.keyCode:记录哪个键被按下，返回对应的 unicode 码（大写字母）
+- event.key:记录哪个键被按下，返回对应的键（小写字母）
 - event.Propagation 阻止事件传播到下一个元素（调用该元素上后面的事件处理器还是会执行）
 - event.ImmediatePropagation 阻止事件传播到下一个事件处理器（调用该元素上后面的事件处理器不会会执行）
 - event.deltaY 表示鼠标滚轮的滚动方向，小于 0 向上滚动
-- event.clientX / event.clientY：鼠标事件的指针的窗口相对坐标。
+- event.clientX / event.clientY:鼠标事件的指针的窗口相对坐标。
 
 ### 冒泡和捕获
 
@@ -1042,29 +1040,29 @@ window.innerWidth/Height 窗口内部宽高（css 像素）
 `event.stopImmediatePropagation()` 方法，可以用于停止冒泡，并阻止当前元素上的处理程序运行。使用该方法之后，其他处理程序就不会被执行。阻止事件向外扩散，但阻止当前元素对当前事件的后续函数的调用。
 
 ```js
-var btn = document.querySelector(".btn-in-a");
-var a = document.querySelector("a");
-btn.addEventListener("click", function (e) {
-  console.log("btn click");
-  e.stopPropagation(); //clg事件没有冒泡到a，但a仍然感觉到了被点击,仍然会触发a的行为(click)
-  e.preventDefault(); //阻止外面a的默认行为，跳转地址
+var btn = document.querySelector('.btn-in-a');
+var a = document.querySelector('a');
+btn.addEventListener('click', function (e) {
+	console.log('btn click');
+	e.stopPropagation(); //clg事件没有冒泡到a，但a仍然感觉到了被点击,仍然会触发a的行为(click)
+	e.preventDefault(); //阻止外面a的默认行为，跳转地址
 });
-a.addEventListener("click", function (e) {
-  console.log("a click");
+a.addEventListener('click', function (e) {
+	console.log('a click');
 });
 ```
 
 不要轻易阻止冒泡，否则可能出现负作用。
 **阻止浏览器行为**
-有两种方式来告诉浏览器我们不希望它执行默认行为：
+有两种方式来告诉浏览器我们不希望它执行默认行为:
 主流的方式是使用 event 对象。有一个 `event.preventDefault()` 方法。
 如果处理程序是使用 on<event>（而不是 addEventListener）分配的，那`return false` 也同样有效。
-**检查是否阻止了默认行为**：
+**检查是否阻止了默认行为**:
 `if (event.defaultPrevented) return;`
-**不会阻止默认行为**：
+**不会阻止默认行为**:
 `elem.addEventlistener("click",func,passive: true)`passive: true,将不会调用 e.preventDefault()，浏览器可以直接执行默认行为而不必等待函数的执行完。
 
-**浏览器默认行为**：
+**浏览器默认行为**:
 mousedown —— 开始选择（移动鼠标进行选择）。
 在 `<input type="checkbox">` 上的 click —— 选中/取消选中的 input。
 submit —— 点击 `<input type="submit">` 或者在表单字段中按下 Enter 键会触发该事件，之后浏览器将提交表单。
@@ -1075,25 +1073,25 @@ contextmenu —— 事件发生在鼠标右键单击时，触发的行为是显�
 
 事件处理的另一个阶段被称为“捕获（capturing）”。它很少被用在实际开发中，但有时是有用的。
 
-DOM 事件标准描述了事件传播的 3 个阶段：
+DOM 事件标准描述了事件传播的 3 个阶段:
 
 - 捕获阶段（Capturing phase）—— 事件（从 Window）向下走近元素,默认不触发。
 - 目标阶段（Target phase）—— 事件到达目标元素。
 - 冒泡阶段（Bubbling phase）—— 事件从元素上开始向外冒泡，默认触发。
-  传播路径：由捕获阶段到目标阶段，目标阶段里面的处理函数按照代码顺序执行，不区分捕获和冒泡，之后是冒泡阶段；传播过程中遇到没有时间处理器的元素会跳过该元素继续执行
+  传播路径:由捕获阶段到目标阶段，目标阶段里面的处理函数按照代码顺序执行，不区分捕获和冒泡，之后是冒泡阶段；传播过程中遇到没有时间处理器的元素会跳过该元素继续执行
 
 #### 事件委托
 
 在外部节点添加一个事件处理器，并根据 target 属性判断事件来源，这样可以把内部共用的事件绑定到外部.
 
-算法：
+算法:
 在容器（container）上放一个处理程序。
 在处理程序中 —— 检查源元素 event.target。
 如果事件发生在我们感兴趣的元素内，那么处理该事件。
-好处：
-简化初始化并节省内存：无需添加许多处理程序。
-更少的代码：添加或移除元素时，无需添加/移除处理程序。
-DOM 修改 ：我们可以使用 innerHTML 等，来批量添加/移除元素。
+好处:
+简化初始化并节省内存:无需添加许多处理程序。
+更少的代码:添加或移除元素时，无需添加/移除处理程序。
+DOM 修改 :我们可以使用 innerHTML 等，来批量添加/移除元素。
 
 ### 简单事件
 
@@ -1104,8 +1102,8 @@ mouseover/mouseout(现在用 mouseenter/mouseleave 来代替)
 
 > 快速移动鼠标可能会跳过中间元素。
 > 即使我们从父元素转到子元素时，也会触发 mouseover/out 事件。浏览器假定鼠标一次只会位于一个元素上 —— 最深的那个。
-> mouseenter/leave 事件在这方面不同：它们仅在鼠标进入和离开元素时才触发。并且它们不会冒泡。
-> mouseover/out 和 mouseenter/leave 事件还有一个附加属性：relatedTarget。这就是我们来自/到的元素，是对 target 的补充。
+> mouseenter/leave 事件在这方面不同:它们仅在鼠标进入和离开元素时才触发。并且它们不会冒泡。
+> mouseover/out 和 mouseenter/leave 事件还有一个附加属性:relatedTarget。这就是我们来自/到的元素，是对 target 的补充。
 > contextmenu（右击）
 > 尝试打开上下文菜单时触发。在最常见的情况下，此事件发生在鼠标右键被按下时。虽然，还有其他打开上下文菜单的方式，例如使用特殊的键盘键，所以它不完全是一个鼠标事件。
 > oncopy="alert('Copying forbidden!');return false"
@@ -1125,19 +1123,19 @@ dblclick
 在单个动作触发多个事件时，事件的顺序是固定的。
 mousedown → mouseup → click
 mousedown → mouseup → contextmenu
-识别复杂手势，触摸手势 框架：hammer.js
-**事件属性**：
-which：1/2/3 左中右键
-如果在事件期间按下了相应的键，则它们为 true：
-shiftKey：Shift
-altKey：Alt（或对于 Mac 是 Opt）
-ctrlKey：Ctrl
-metaKey：对于 Mac 是 Cmd
+识别复杂手势，触摸手势 框架:hammer.js
+**事件属性**:
+which:1/2/3 左中右键
+如果在事件期间按下了相应的键，则它们为 true:
+shiftKey:Shift
+altKey:Alt（或对于 Mac 是 Opt）
+ctrlKey:Ctrl
+metaKey:对于 Mac 是 Cmd
 
-**坐标：clientX/Y，pageX/Y**
-所有的鼠标事件都有两种形式的坐标：
-相对于窗口的坐标：clientX 和 clientY。
-相对于文档的坐标：pageX 和 pageY。
+**坐标:clientX/Y，pageX/Y**
+所有的鼠标事件都有两种形式的坐标:
+相对于窗口的坐标:clientX 和 clientY。
+相对于文档的坐标:pageX 和 pageY。
 
 ### 鼠标移动
 
@@ -1153,8 +1151,8 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
 ### 相关对象
 
 - navigator:主要是 navigator.userAgent——格式不完全统一，不好匹配
-- location：完整的 url 分解成不同的片段放在不同的属性中(包括完整的 url),可读可写入。
-  - port 端口，protocol 协议，origin 域/源：协议+域名+端口
+- location:完整的 url 分解成不同的片段放在不同的属性中(包括完整的 url),可读可写入。
+  - port 端口，protocol 协议，origin 域/源:协议+域名+端口
   - location.reload() 刷新，参数为 true 时一定从服务器重新获取，否则可能从缓存中加载.除了修改 hash，其余修改都会刷新页面。
   - location.assign('xxx') ===location.href ='xxx'===location ='xxx' 相当于打开了新页面并加入历史记录，可以前进后退
   - location.replace('xx') 当前地址直接换一个,无法前进后退
@@ -1214,51 +1212,51 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
 // 实现表单元素的序列化; jQuery('form').serialize
 
 function serialize(formNode) {
-  var res = "";
-  for (let i = 0; i < formNode.elements.length; i++) {
-    let element = formNode.elements[i];
-    if (element.name) {
-      let name = element.name;
-      let nodeName = element.nodeName;
-      if (nodeName == "INPUT") {
-        switch (element.type) {
-          case "radio":
-          case "checkbox":
-            if (element.checked) {
-              res += name + "=" + (element.value || "on");
-              if (i < formNode.elements.length - 1) {
-                res += "&";
-              }
-            }
-            break;
-          default:
-            res += name + "=" + (element.value || "on");
-            if (i < formNode.elements.length - 1) {
-              res += "&";
-            }
-        }
-      } else if (nodeName == "TEXTAREA") {
-        res += name + "=" + element.value;
-      } else if (nodeName == "SELECT") {
-        if (element.multiple) {
-          Array.from(element.options).forEach((option) => {
-            if (option.selected) {
-              res += name + "=" + element.value;
-              if (i < formNode.elements.length - 1) {
-                res += "&";
-              }
-            }
-          });
-        } else {
-          res += name + "=" + element.value;
-          if (i < form.elements.length - 1) {
-            res += "&";
-          }
-        }
-      }
-    }
-  }
-  return res;
+	var res = '';
+	for (let i = 0; i < formNode.elements.length; i++) {
+		let element = formNode.elements[i];
+		if (element.name) {
+			let name = element.name;
+			let nodeName = element.nodeName;
+			if (nodeName == 'INPUT') {
+				switch (element.type) {
+					case 'radio':
+					case 'checkbox':
+						if (element.checked) {
+							res += name + '=' + (element.value || 'on');
+							if (i < formNode.elements.length - 1) {
+								res += '&';
+							}
+						}
+						break;
+					default:
+						res += name + '=' + (element.value || 'on');
+						if (i < formNode.elements.length - 1) {
+							res += '&';
+						}
+				}
+			} else if (nodeName == 'TEXTAREA') {
+				res += name + '=' + element.value;
+			} else if (nodeName == 'SELECT') {
+				if (element.multiple) {
+					Array.from(element.options).forEach((option) => {
+						if (option.selected) {
+							res += name + '=' + element.value;
+							if (i < formNode.elements.length - 1) {
+								res += '&';
+							}
+						}
+					});
+				} else {
+					res += name + '=' + element.value;
+					if (i < form.elements.length - 1) {
+						res += '&';
+					}
+				}
+			}
+		}
+	}
+	return res;
 }
 ```
 
@@ -1268,24 +1266,24 @@ function serialize(formNode) {
 
   ```js
   function getFileContent(file, done) {
-    var reader = new FileReader();
-    reader.addEventListener("load", function () {
-      done(reader.result); //只有全部内容，没有名字
-    });
-    reader.readAsText(file);
+  	var reader = new FileReader();
+  	reader.addEventListener('load', function () {
+  		done(reader.result); //只有全部内容，没有名字
+  	});
+  	reader.readAsText(file);
   }
 
   function readFileAsText(file) {
-    return new Promise((resolve, reject) => {
-      var reader = new FileReader();
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-      reader.onerror = (e) => {
-        reject(new Error(e));
-      };
-      reader.readAsText(file);
-    });
+  	return new Promise((resolve, reject) => {
+  		var reader = new FileReader();
+  		reader.onload = () => {
+  			resolve(reader.result);
+  		};
+  		reader.onerror = (e) => {
+  			reject(new Error(e));
+  		};
+  		reader.readAsText(file);
+  	});
   }
   ```
 
@@ -1303,23 +1301,23 @@ function serialize(formNode) {
 - FormData 接口提供了一种表示表 location 单数据的键值对的构造方式，经过它的数据可以使用 XMLHttpRequest.send 方法送出
   ```js
   var formData = new FormData();
-  formData.append("username", "Groucho");
-  formData.append("accountnum", 123456);
+  formData.append('username', 'Groucho');
+  formData.append('accountnum', 123456);
   var request = new XMLHttpRequest();
-  request.open("POST", "http://foo.com/submitform.php");
+  request.open('POST', 'http://foo.com/submitform.php');
   request.send(formData);
   ```
 
 ## jQuery
 
-jQuery 现在式微：
+jQuery 现在式微:
 浏览器的兼容性变好了。
 框架的流行，不再需要人肉操作 DOM 了。
-jQuery 提供的各大方面的功能有各自专门的其他库来解决，而且解决得更好。常用函数：Lodash,ajax 封装：axios 等
-目前在维护的有三个版本：
+jQuery 提供的各大方面的功能有各自专门的其他库来解决，而且解决得更好。常用函数:Lodash,ajax 封装:axios 等
+目前在维护的有三个版本:
 1.x 版本，为了兼容一直以来的旧浏览器
 2.x 版本，不再支持 IE9 及以下的版本
-3.x 版本分两个系列：
+3.x 版本分两个系列:
 
 - 3.x 是 2.x 的正常升级
 - 3.x-compatible 是对 1.x 的升级
@@ -1332,14 +1330,14 @@ jQuery 提供的各大方面的功能有各自专门的其他库来解决，而�
 最左是符号，然后十一位为指数
 
 - 指数范围-1023-1024, 指数部分使用原码存储，原码范围 0-2047,0 表示-1023
-- 指数不用补码：从左到右扫描即可比较大小。
+- 指数不用补码:从左到右扫描即可比较大小。
 - 浮点数不够精确则更多用于对比大小，提高大小比较效率
 - 程序中很少判断两个浮点数相等，更多判断他们的差的绝对值是否小于某个精度。小数部分最高精度 Number.EPSILON
   不存储底数的整数部分，因为底数的整数部分总是 1, 可以让二进制状态有效位数为 53 位
 - 有效位数 53 位，可以表达的最大精确数 2\*\*53-1 为 `Number.MAX_SAFE_INTEGER`. 大于这个范围的数是可以表示的，但不能保证精确，溢出的位会被截断
 - 整数部分使用的越多，小数部分有效位数越少。即数值越大，小数部分的精度越低。
 
-IEEE754 标准：二进制浮点顺运算标准
+IEEE754 标准:二进制浮点顺运算标准
 
 - 双精度浮点数使用 8 字节表示，指数部分 11bit, 底数 62bit
 - 单精度浮点数使用 4 字节表示，指数部分 8bit, 底数 23bit
@@ -1348,17 +1346,17 @@ IEEE754 标准：二进制浮点顺运算标准
 
 ![客户端和服务器](https://cdn.jsdelivr.net/gh/brightzoe/img/20200105191449.png)
 
-- 网络连接：允许你在互联网上发送和接受数据。基本上和你家到商店的街道差不多
+- 网络连接:允许你在互联网上发送和接受数据。基本上和你家到商店的街道差不多
 - TCP/IP: 传输控制协议和因特网互连协议是定义数据如何传输的通信协议。这就像你去商店购物所使用的交通方式，比如汽车或自行车。
 - DNS: 域名系统服务器像是一本网站通讯录。浏览器需要找到存放你想要的网页的服务器，才能发送 HTTP 请求到正确的地方。就像你要知道商店的地址才能到达那。
 - HTTP: 超文本传输协议是一个定义客户端和服务器间交流的语言的协议（protocol ）。就像你下订单时所说的话一样。
-- 组成文件：一个网页由许多文件组成，就像商店里不同的商品一样。这些文件有两种类型：
+- 组成文件:一个网页由许多文件组成，就像商店里不同的商品一样。这些文件有两种类型:
   - 代码 : 网页大体由 HTML、CSS、JavaScript 组成，不过你会在后面看到不同的技术。
   - 资源 : 这是其他组成网页的东西的集合，比如图像、音乐、视频、Word 文档、PDF 文件。
 
 ### URL 网址
 
-- 格式： 协议：//主机地址+目录路径+参数
+- 格式: 协议://主机地址+目录路径+参数
 - 常用协议
   ![常用协议](https://cdn.jsdelivr.net/gh/brightzoe/img/xieyi.png)
 
@@ -1393,8 +1391,8 @@ IEEE754 标准：二进制浮点顺运算标准
 解析器包含在操作系统的 Socket 库(网络开发的一种标准库，其中包含的程序组件可以让其他的应用调用操作系统的网络功能)中。
 `nslookup www.baidu.com 8.8.8.8` 用指定的 DNS 服务器查询 IP 地址
 
-- 调用解析器：`gethostbyname("www.xx.xx")`
-- 计算机内部：控制流程转移 ![](https://i.loli.net/2020/07/07/AJBEzOsc7MYndhD.png)
+- 调用解析器:`gethostbyname("www.xx.xx")`
+- 计算机内部:控制流程转移 ![](https://i.loli.net/2020/07/07/AJBEzOsc7MYndhD.png)
 
 ### DNS 服务器
 
@@ -1407,15 +1405,15 @@ DNS 服务器的基本工作就是根据需要查询的域名和记录类型查�
   在最早设计 DNS 方案时，DNS 在互联网以外的其他网络中的应用也被考虑到了，而 Class 就是用来识别网络的信息。不过，如今除了互联网并没有其他的网络了，因此 Class 的值永远是代表互联网的 IN
 - 记录类型
   表示域名对应何种类型的记录。例如，当类型为 A 时，表示域名对应的是 IP 地址；当类型为 MX 时，表示域名对应的是邮件服务器。对于不同的记录类型，服务器向客户端返回的信息也会不同。TXT，可以确认域名所有权。AAAA,指向 IPv6 地址
-  类型：PTR,CNAME,NS,SOA...
+  类型:PTR,CNAME,NS,SOA...
 
 DNS 服务器上事先保存有前面这 3 种信息对应的记录数据，一个域名可以指定多个 IP
 DNS 服务器中的所有信息都是按照域名以分层次的结构来保存的。域名中右边的部分层级高。
 上级 DNS 服务器保管着所有下级 DNS 服务器的信息。
-com、jp：顶级域，上面还有一层：. 根域，一般省略，但真实存在，根域的 DNS 服务器信息保存在互联网所有 DNS 服务器中。
+com、jp:顶级域，上面还有一层:. 根域，一般省略，但真实存在，根域的 DNS 服务器信息保存在互联网所有 DNS 服务器中。
 DNS 服务器的缓存功能，加快服务器的响应。 ——>host:把域名和 IP 绑定,相应的对应关系
-DNS 污染：解析成错误的 IP——>可以通过修改 host 解决
-DDNS：动态 DNS ——>IP 变掉了，自动指向新 IP
+DNS 污染:解析成错误的 IP——>可以通过修改 host 解决
+DDNS:动态 DNS ——>IP 变掉了，自动指向新 IP
 
 ## IP 地址
 
@@ -1423,21 +1421,19 @@ IP 地址和现实中的地址一样，不能重复。
 局域网都是基于 TCP/IP 思路设计的。TCP/IP 的结构就是由一些小的子网，通过路由器连接起来组成一个大的网络。这里的子网可以理解为用集线器连接起来的几台计算机，我们将它看作一个单位，称为子网。将子网通过路由器连接起来，就形成了一个网络。
 ![TCP/IP的结构](https://i.loli.net/2020/07/08/LubEBqs8cdxnMY2.png)
 在 IP 地址的规则中，网络号和主机号连起来总共是 32 比特，8 比特为 1 组。利用子网掩码来区分网络号和主机号。
-IP 地址的表示方法：![IP 地址的表示方法](https://i.loli.net/2020/07/07/bJ7BuNd9Om6TlWe.png)
-子网掩码：转化为 2 进制，前面全 1，后面全 0,1 对应的 ip 地址部分是网络号，0 对应主机号；
+IP 地址的表示方法:![IP 地址的表示方法](https://i.loli.net/2020/07/07/bJ7BuNd9Om6TlWe.png)
+子网掩码:转化为 2 进制，前面全 1，后面全 0,1 对应的 ip 地址部分是网络号，0 对应主机号；
 同一个局域网里面的机器 IP 网络号相同；如 192.168.88.2/24 与 192.168.88.8/24
-网络地址：ip 地址与子网掩码做与运算，结果就是网络地址
+网络地址:ip 地址与子网掩码做与运算，结果就是网络地址
 
 **IP 地址**
 
-- 0.0.0.0 ：代表任意的 ip 地址，不能作为目的地址使用
+- 0.0.0.0 :代表任意的 ip 地址，不能作为目的地址使用
 - 127.x.x.x 以 127 开头的 ip 地址都指向本机
--
+- **IP 地址的主机号:**
 
-**IP 地址的主机号:**
-
-- 全 0：表示整个子网
-- 全 1：表示向子网上所有设备发送包，即“广播”
+- 全 0:表示整个子网
+- 全 1:表示向子网上所有设备发送包，即“广播”
 
 ## 委托协议栈向 Web 服务器发送消息
 
@@ -1448,9 +1444,9 @@ IP 地址的表示方法：![IP 地址的表示方法](https://i.loli.net/2020/0
 1. 调用 Socket 库中的 socket 程序组件创建套接字（创建套接字阶段）
 2. 将管道连接到服务器端的套接字上（连接阶段）调用 Socket 库中的名为 connect 的程序组件,需要指定描述符、服务器 IP 地址和端口号.
 
-- 描述符：应用程序用来识别套接字的机制
+- 描述符:应用程序用来识别套接字的机制
 - IP 地址:识别具体是哪个网络硬件
-- 端口号：用来识别具体的套接字。Web 是 80 号端口，电子邮件是 25 号端口，DNS 服务器 53 号端口，DHCP 是 67 号端口。是规定好的，默认的。
+- 端口号:用来识别具体的套接字。Web 是 80 号端口，电子邮件是 25 号端口，DNS 服务器 53 号端口，DHCP 是 67 号端口。是规定好的，默认的。
 
 3. 收发数据（通信阶段）
 4. 断开管道并删除套接字（断开阶段）
@@ -1474,7 +1470,7 @@ IP 地址的表示方法：![IP 地址的表示方法](https://i.loli.net/2020/0
 连接操作的第一步是在 TCP 模块处创建表示连接控制信息的头部.通过 TCP 头部中的发送方和接收方端口号可以找到要连接的套接字。
 SYN 比特表示连接，和 ACK 比特确认响应
 
-- 三次握手：三次成功的单向通信，才能确定双方都能收能发信息
+- 三次握手:三次成功的单向通信，才能确定双方都能收能发信息
 
 ### 收发数据
 
@@ -1484,8 +1480,8 @@ SYN 比特表示连接，和 ACK 比特确认响应
 - **如何判断发送时机？**
 
 1. 第一个判断要素是每个网络包能容纳的数据长度，MTU。
-   - MTU：一个网络包的最大长度，以太网中一般为 1500 字节。例外：vpn,ipv6 over ipv4
-   - MSS：除去头部之后，一个网络包所能容纳的 TCP 数据的最大长度
+   - MTU:一个网络包的最大长度，以太网中一般为 1500 字节。例外:vpn,ipv6 over ipv4
+   - MSS:除去头部之后，一个网络包所能容纳的 TCP 数据的最大长度
      ![](https://i.loli.net/2020/07/08/xyjnfm2w34Tp5SJ.png)
 2. 时间。协议栈内部有个计时器，当应用程序发送数据的频率不高的时候，如果每次都等到长度接近 MSS 时再发送，可能会因为等待时间太长而造成发送延迟。
 
@@ -1501,9 +1497,9 @@ SYN 比特表示连接，和 ACK 比特确认响应
 
 #### 错误补偿机制
 
-- 返回 ACK 号的等待时间——超时时间：当网络传输繁忙时就会发生拥塞，ACK 号的返回会变慢，等待时间需要稍长一点，但等待时间过长，包的重传会出现很大的延迟，所以等待时间不能设定为一个固定的值。TCP 采用**动态调整等待时间**的方法，根据 ACK 号返回所需的时间来判断。
+- 返回 ACK 号的等待时间——超时时间:当网络传输繁忙时就会发生拥塞，ACK 号的返回会变慢，等待时间需要稍长一点，但等待时间过长，包的重传会出现很大的延迟，所以等待时间不能设定为一个固定的值。TCP 采用**动态调整等待时间**的方法，根据 ACK 号返回所需的时间来判断。
 - 使用滑动窗口有效管理数据发送和 ACK 号。滑动窗口，就是在发送一个包之后，不等待 ACK 号返回，而是直接发送后续的一系列包。有可能出现发送报的频率超过接收方处理能力的情况， 数据将暂存到接收缓冲区中，能够接受的最大数据量称为窗口大小。
-- 提高收发数据的效率：返回 ACK 号和更新窗口合并。
+- 提高收发数据的效率:返回 ACK 号和更新窗口合并。
 
 #### 断开连接并删除套接字
 
@@ -1520,8 +1516,8 @@ TCP 模块在执行连接、收发、断开等各阶段操作时，都需要委�
 TCP 模块委托 IP 模块发送包，TCP 模块在数据块前面加上 TCP 头部，传递给 IP 模块。还需要指定通信对象的 IP 地址。
 IP 模块收到委托，添加 MAC 头部和 IP 头部，这样一个包就封装好了。
 
-- MAC 头部：用于以太网协议，包含 MAC 地址，包含将包传输至最近的路由器的所需的控制信息。
-- IP 头部：用于 IP 协议，包含 IP 地址，将包发往目的地所需的控制信息。
+- MAC 头部:用于以太网协议，包含 MAC 地址，包含将包传输至最近的路由器的所需的控制信息。
+- IP 头部:用于 IP 协议，包含 IP 地址，将包发往目的地所需的控制信息。
 
 封装好的包会交给网络硬件，比如以太网，无线局域网，网卡。传递给网络硬件的的网络包是 01 组成的数字信息。硬件将数字信号转换为电信号或光信号，并通过网线发出去，这些信号到达集线器，路由器等转发设备再一步步地送达接收方。
 接收返回的包和发送的过程正好是相反的。
@@ -1531,25 +1527,25 @@ IP 模块收到委托，添加 MAC 头部和 IP 头部，这样一个包就封�
 #### IP 模块具体工作过程
 
 1. **生成 IP 头部附加在 TCP 头部前面。**
-   - IP 包头：记录 ip 地址有关信息，本身储存在以太网帧负载里面
+   - IP 包头:记录 ip 地址有关信息，本身储存在以太网帧负载里面
      ![IP包头](https://i.loli.net/2020/07/09/38LdRKys6xp7tJq.png)
      发送方 IP 地址:需要通过路由表来判断发送使用的网卡，填写该网卡的 IP 地址。显示路由表`route print`
-   - 协议号：表示包的内容来自哪个模块。
-   - IP 分片：IP 有关数据大小（IP 总长度）大于以太网帧负载，需要分开传输后再重组
+   - 协议号:表示包的内容来自哪个模块。
+   - IP 分片:IP 有关数据大小（IP 总长度）大于以太网帧负载，需要分开传输后再重组
    - 生存时间（TTL）: IP 包头在网络中最多可以中转的次数，每遇到路由器中转一次减一，到 0 路由器就不传播扔掉该数据（路由会返回给发送者在哪一个路由器地址被扔掉(ICMP 协议)，利用该特性可以追踪路由(tracert baidu.com)，可以防止环状循环传播；(在传播过程中 TTL 和头部校验和会变化)
-   - ICMP 协议：每个路由回复数据传播状态所要用到的协议 Internet Control Message Protocol 互联网消息控制协议
+   - ICMP 协议:每个路由回复数据传播状态所要用到的协议 Internet Control Message Protocol 互联网消息控制协议
 2. **生成以太网用的 MAC 头部，包含接收方和发送方的 MAC 地址。**
    ![](https://i.loli.net/2020/07/09/tGrnb1akiwHWm3Y.png)
-   以太类型：类似 IP 头部的协议号，表示后面内容的类型。
-   接收方 MAC 地址：需要根据 IP 地址查询 MAC 地址。
+   以太类型:类似 IP 头部的协议号，表示后面内容的类型。
+   接收方 MAC 地址:需要根据 IP 地址查询 MAC 地址。
    > 通过 ARP 查询目标路由器的 MAC 地址。
-   > ARP 协议：address resolution protocol(地址解析协议), 通过广播获得 MAC 地址。将 ip 地址转化为 MAC 地址并记录对应关系，命令行 arp -a 可查看所有记录
-   > ARP 缓存：缓存查询过的 MAC 地址 显示 ARP 缓存`arp -a` 经过一段时间缓存会被删除。如果缓存还未删除出现通信异常，可以手动删除 ARP 缓存
+   > ARP 协议:address resolution protocol(地址解析协议), 通过广播获得 MAC 地址。将 ip 地址转化为 MAC 地址并记录对应关系，命令行 arp -a 可查看所有记录
+   > ARP 缓存:缓存查询过的 MAC 地址 显示 ARP 缓存`arp -a` 经过一段时间缓存会被删除。如果缓存还未删除出现通信异常，可以手动删除 ARP 缓存
 
 ### 以太网的基本知识
 
 以太网是为多台计算机能够自由且廉价地相互通信设计的通信技术(有线网)，本质就是一根网线，通过 MAC 头部进行通信，根据 MAC 地址来传输包。
-性质：根据 MAC 头部的三个字段，将包发送到接收方 MAC 地址，根据发送方 MAC 地址识别发送方，根据以太类型识别报的内容。（也适用于无线局域网）
+性质:根据 MAC 头部的三个字段，将包发送到接收方 MAC 地址，根据发送方 MAC 地址识别发送方，根据以太类型识别报的内容。（也适用于无线局域网）
 
 #### 以太网的包收发操作
 
@@ -1559,72 +1555,72 @@ IP 模块收到委托，添加 MAC 头部和 IP 头部，这样一个包就封�
 
 ![加工网络包的分工](https://i.loli.net/2020/07/09/KMGHfJSLo5yINEq.png)
 
-### 转发设备：
+### 转发设备:
 
-路由器：根据目标地址判断下一个路由器的位置——>按照 IP 规则
-集线器：在子网中将网络包传输到下一个路由——>按以太网规则
+路由器:根据目标地址判断下一个路由器的位置——>按照 IP 规则
+集线器:在子网中将网络包传输到下一个路由——>按以太网规则
 ![](https://i.loli.net/2020/07/09/GY9ybRQLwhJtDrn.png)
 
 #### 向集线器发送网络包
 
-两种发送信号的操作：
+两种发送信号的操作:
 
 1. 使用集线器的半双工模式
 2. 使用交换机的全双工模式
-   > 全双工：发送给和接收同时并行。半双工：某一时刻只能进行发送或接收一种操作
-   > 半双工：(PHU 模块)先判断网线中是否有其他设备发送的信号，避免信号碰撞。MAC 模块将数字信息转换为电信号(通用信号)，接下来 PHY(MAU)模块对 MAC 模块产生的信号再进行格式转换为在网线中传输的模式，通过网线发送出去。PHU 还需要监控接收线路中有没有信号进来。
+   > 全双工:发送给和接收同时并行。半双工:某一时刻只能进行发送或接收一种操作
+   > 半双工:(PHU 模块)先判断网线中是否有其他设备发送的信号，避免信号碰撞。MAC 模块将数字信息转换为电信号(通用信号)，接下来 PHY(MAU)模块对 MAC 模块产生的信号再进行格式转换为在网线中传输的模式，通过网线发送出去。PHU 还需要监控接收线路中有没有信号进来。
    > 发送信号的过程中，如果有其他设备同时发送信号，这些信号就会通过接收线路传进来。在使用集线器的半双工模式中，一旦发生这种情况，两组信号就会相互叠加，无法彼此区分出来，这就是所谓的信号碰撞。信号是没有意义的，因此发送操作会终止。为了通知其他设备当前线路已发生碰撞，还会发送一段时间的阻塞信号，然后所有的发送操作会全部停止。
 
 ## 计算机网络的结构
 
 计算机网络是拓扑结构，类似快递网络，主干道是图状结构，末端类似树状结构。
-计算机网络也是典型的分层结构：物理层，链路层，网络层，传输层，应用层。上层结构依赖于下层结构，其中的每一层只关注他本层和相连的两层。
+计算机网络也是典型的分层结构:物理层，链路层，网络层，传输层，应用层。上层结构依赖于下层结构，其中的每一层只关注他本层和相连的两层。
 
 ### 物理层
 
 - 设备间的物理连接，可以有线也可以无线。网线/光纤/WiFi/4G，正确地传递 01
-- 解决信号的调制与解调：转换数字信号和模拟信号
+- 解决信号的调制与解调:转换数字信号和模拟信号
 - 两个设备通信之前，在链路层需要进行信号的**时钟同步**。
-- 网卡：拥有 MAC 地址，使得用户可以通过网线或无线相互连接
-- 曼彻斯特编码：加倍信号跳变频率；同步时钟信号
+- 网卡:拥有 MAC 地址，使得用户可以通过网线或无线相互连接
+- 曼彻斯特编码:加倍信号跳变频率；同步时钟信号
 
 ### 链路层
 
 负责直接连接的设备间的通信，只关心直接连接的机器之间的以字节为单位的通信
 
-- 广播域：多台直接连接的设备组成一个广播域
-- 局域网：可以理解为同一交换机 / 令环牌 / 总线结构内部网络设备之间的网络
-  广播域/局域网的结构：
-  - 总线型结构：所有的网点和同一条总线连接 (一根总线，效率低)
-    - 集线器：信号放大
+- 广播域:多台直接连接的设备组成一个广播域
+- 局域网:可以理解为同一交换机 / 令环牌 / 总线结构内部网络设备之间的网络
+  广播域/局域网的结构:
+  - 总线型结构:所有的网点和同一条总线连接 (一根总线，效率低)
+    - 集线器:信号放大
     - 同一时刻只有一个设备进行数据传输
-    - 防止信号碰撞：载波侦听，多路访问协议；指数退避
-  - 令牌环：需要令牌，单向传输(效率低)
-  - **交换机：**一台机器，多个接口连接网络设备，可以识别每台连接的网络设备的 MAC 地址(Media Access Control)
+    - 防止信号碰撞:载波侦听，多路访问协议；指数退避
+  - 令牌环:需要令牌，单向传输(效率低)
+  - **交换机:**一台机器，多个接口连接网络设备，可以识别每台连接的网络设备的 MAC 地址(Media Access Control)
     - 典型的链路层设备
-    - 三层交换机：会识别 IP 地址等数据包里的三层包头来执行相关策略
-    - 网管交换机：一台网卡设置多个 ip,成为路由器的功能
+    - 三层交换机:会识别 IP 地址等数据包里的三层包头来执行相关策略
+    - 网管交换机:一台网卡设置多个 ip,成为路由器的功能
     - `ipconfig /all`查看网络配置
-- 以太网：有线网 以太网帧：链路层传播的数据包
-  - 前导码：对码，确认传播编码方式
-    帧开始符：表示帧的开始
-    MAC 目标地址 /MAC 源地址：MAC 地址设备出厂时就确认了；
-    负载：发送的具体数据，占有以太网帧大部分内存；MTU: 最大传输单元
-    冗余校验：核对负载数据的正确性
-    以太类型：协议类型（ARP/HTTP 等）
+- 以太网:有线网 以太网帧:链路层传播的数据包
+  - 前导码:对码，确认传播编码方式
+    帧开始符:表示帧的开始
+    MAC 目标地址 /MAC 源地址:MAC 地址设备出厂时就确认了；
+    负载:发送的具体数据，占有以太网帧大部分内存；MTU: 最大传输单元
+    冗余校验:核对负载数据的正确性
+    以太类型:协议类型（ARP/HTTP 等）
 - WiFi:
   - 载波侦听，多路访问
   - 多频段 2.4G 5G 频率不同 5G 频段更宽
-- VPN：
+- VPN:
   - 外面再包一层，MTU 会变小
   - 连上 VPN 会多一个 IP 地址，建立了一个虚拟的链接(虚拟网卡)，数据是加密的
 - 在这层，每个网卡拥有唯一一个 MAC 地址，只在局域网使用，但仍然是全球唯一。局域网内使用 MAC 地址，而不是 IP 地址
-- ARP 协议：address resolution protocol(地址解析协议), 通过广播将 IP 地址获得 MAC 地址。将 ip 地址转化为 MAC 地址并记录对应关系，命令行 `arp -a` 可查看所有记录 ping
-  ARP 缓存：缓存查询过的 MAC 地址
-  ARP 欺骗：假冒广播寻找的 IP 地址
-  ARP 风暴： 高频率发送 ARP 广播，占用网络资源
-  ping：在命令行输入 ping ip 地址，查看和目标地址在 IP 层面是否可以通信。(ICMP 协议)
-- DHCP 协议：(动态主机配置协议) 自动分配局域网里的 IP 地址
+- ARP 协议:address resolution protocol(地址解析协议), 通过广播将 IP 地址获得 MAC 地址。将 ip 地址转化为 MAC 地址并记录对应关系，命令行 `arp -a` 可查看所有记录 ping
+  ARP 缓存:缓存查询过的 MAC 地址
+  ARP 欺骗:假冒广播寻找的 IP 地址
+  ARP 风暴: 高频率发送 ARP 广播，占用网络资源
+  ping:在命令行输入 ping ip 地址，查看和目标地址在 IP 层面是否可以通信。(ICMP 协议)
+- DHCP 协议:(动态主机配置协议) 自动分配局域网里的 IP 地址
 
 ### 网络层(IP 层)
 
@@ -1633,27 +1629,27 @@ IP 模块收到委托，添加 MAC 头部和 IP 头部，这样一个包就封�
 - 两台机器发送数据时，先会根据 IP 地址确认是否在同一个局域网(同一局域网内 IP 地址的网络号相同。)
   - 如果在同一个子网，直接 ARP 广播通信。
   - 如果不在同一个局域网，会发给网关，进行多个网络点之间的中转和传输
-- 网关：路由器，局域网的出口，进行多个网络点之间的中转和传输。网关包成以太网帧，根据路由表传给其他网关。
-- 路由器：多个接口连接不同的子局域网，每个接口的 IP 地址（网关地址）不一样；与家用路由器不一样
+- 网关:路由器，局域网的出口，进行多个网络点之间的中转和传输。网关包成以太网帧，根据路由表传给其他网关。
+- 路由器:多个接口连接不同的子局域网，每个接口的 IP 地址（网关地址）不一样；与家用路由器不一样
   - 可以利用 IP 包头的 TTL，追踪路由(tracert baidu.com) `trace ip`
   - 可以用此定位 GFW 物理位置 mongol python
-- 路由表：网关发过来的 ip 地址会进入路由器内部的路由表，其指导后续的网络传播方向 ；
-- 家用路由器（NAT 路由器 Network address transition）： 和上面的路由器不一样；里面是一个路由器和一个交换机，相当于具有链路层和网络层功能。
+- 路由表:网关发过来的 ip 地址会进入路由器内部的路由表，其指导后续的网络传播方向 ；
+- 家用路由器（NAT 路由器 Network address transition）: 和上面的路由器不一样；里面是一个路由器和一个交换机，相当于具有链路层和网络层功能。
 - IPv4 IPv6——迁移期间共存，采用建隧道的方式交互
   - 过河，坐船
 - 瘦腰模型 通用协议，需要很稳定，类似于钱
   - 底层都实现 IP，上层都基于 IP 实现，而中间只有 IP
-- 延迟：转发导致的
+- 延迟:转发导致的
 - 带宽
 
 (
 
 - SNAT: NAT 路由器发出去的局域网地址转化为广域网地址
-- DNAT：发回来的广域网地址转化为 NAT 路由器的局域网地址
+- DNAT:发回来的广域网地址转化为 NAT 路由器的局域网地址
   根据设备端口的不同 NAT 路由器区分数据是由哪个局域网设备发送的，NAT 路由器会有一个端口映射表，每台网络设备每次都会映射得到一个独一端口；
   端口映射表有动态也有静态的，但是保证端口和内网设备的映射关系都是独一的；
 - NAT 级联，NAT 路由器连接 NAT 路由器，解决了 ip 地址不够用的问题；
-- ICMP 协议：每个路由回复数据传播状态所要用到的协议)
+- ICMP 协议:每个路由回复数据传播状态所要用到的协议)
 
 ### 传输层
 
@@ -1668,69 +1664,69 @@ IP 模块收到委托，添加 MAC 头部和 IP 头部，这样一个包就封�
 
 ```js
 //发送一个udp请求
-sock = dgram.createSocket("udp4"); //创建udp套接字
+sock = dgram.createSocket('udp4'); //创建udp套接字
 sock.bind(55555); //绑定一个特定端口
-sock.addMembership("224.3.3.3"); //加入频道，添加主播地址(224~239)
-sock.on("message", () => console.log(1));
+sock.addMembership('224.3.3.3'); //加入频道，添加主播地址(224~239)
+sock.on('message', () => console.log(1));
 0;
 ```
 
 - 不存在服务器 / 客户端一说，没有连接的概念。
 - 包裹在 ip 包 的数据里面；包括源端口 / 目的端口 / 长度 / 校验和 / 数据
 - 广播地址 255.255.255.255
-- 主播：加入频道，添加主播地址(224~239)
-- 缺点：不保证送达，数据包很小，不能保证按照发送顺序送达
-- 优点：低延迟，丢包也不重发；如游戏，电话语音
-- 模型： udp 仅在 ip 上加了端口，每个 udp 端口是对等的，任何一个 udp 端口也可以向任何其它的 udp 端口发消息，不局限于只能为某个端口发；
+- 主播:加入频道，添加主播地址(224~239)
+- 缺点:不保证送达，数据包很小，不能保证按照发送顺序送达
+- 优点:低延迟，丢包也不重发；如游戏，电话语音
+- 模型: udp 仅在 ip 上加了端口，每个 udp 端口是对等的，任何一个 udp 端口也可以向任何其它的 udp 端口发消息，不局限于只能为某个端口发；
 
 #### TCP
 
 - 传输控制协议（Transmission Control Protocol）是一种面向连接的、可靠的、基于字节流的传输层通信协议
 
   - 有序，且保证送达
-  - TCP 四元组：源 ip, 目的 ip，源端口，目的端口；确定网络中独一无二的连接
-  - 报错信息：ADDR_IN_USE/REFUSED/TIME_OUT
+  - TCP 四元组:源 ip, 目的 ip，源端口，目的端口；确定网络中独一无二的连接
+  - 报错信息:ADDR_IN_USE/REFUSED/TIME_OUT
 
   ```js
   //TCP 链接 -node运行
-  var net = require("net"); //加载tcp模块
+  var net = require('net'); //加载tcp模块
   var server = net.createServer(); //创建tcp服务对象
   var port = 5555;
   server.listen(port, () => {
-    //服务套接字监听port
-    console.log("listening on port", port); //监听成功后运行
+  	//服务套接字监听port
+  	console.log('listening on port', port); //监听成功后运行
   });
-  server.on("connection", (conn) => {
-    //有客户端连接成功时运行，conn表示该连接的对象
-    //server触发多次connection事件，conn触发多次data事件
-    console.log(conn.address(), "comes in");
-    conn.write("hello"); //向客户端发送数据
-    conn.on("data", (data) => {
-      //该连接发送上来数据时触发的事件
-      console.log(conn.address(), "says", data.toString());
-    });
+  server.on('connection', (conn) => {
+  	//有客户端连接成功时运行，conn表示该连接的对象
+  	//server触发多次connection事件，conn触发多次data事件
+  	console.log(conn.address(), 'comes in');
+  	conn.write('hello'); //向客户端发送数据
+  	conn.on('data', (data) => {
+  		//该连接发送上来数据时触发的事件
+  		console.log(conn.address(), 'says', data.toString());
+  	});
   });
 
-  conn = net.connect(5555, "10.3.3.3"); //客户端尝试建立tcp连接,连接特定IP的特定端口
-  connect.write("foo");
-  conn.on("data", (data) => {
-    //该连接发送上来数据时触发的事件
-    console.log(data.toString());
+  conn = net.connect(5555, '10.3.3.3'); //客户端尝试建立tcp连接,连接特定IP的特定端口
+  connect.write('foo');
+  conn.on('data', (data) => {
+  	//该连接发送上来数据时触发的事件
+  	console.log(data.toString());
   });
   conn.end(); //单边结束连接，可以收，不可以发。
   ```
 
   ![TCP 的头部格式](https://i.loli.net/2020/07/13/xSyqpjkKBiwU5as.png)
-  TCP 半开状态：即一侧关闭了连接，不再发送数据，但可以接收数据，直至对侧也关闭了连接；另一侧没有关闭连接，仍可以发送数据。
+  TCP 半开状态:即一侧关闭了连接，不再发送数据，但可以接收数据，直至对侧也关闭了连接；另一侧没有关闭连接，仍可以发送数据。
 
 - **滑动窗口机制**
 - 拥塞控制
-  - 慢启动 ：刚开始网速慢
-  - 和式增加：线性增加网速
-  - 积式减少：发生拥塞或者错误时网速指数减少
+  - 慢启动 :刚开始网速慢
+  - 和式增加:线性增加网速
+  - 积式减少:发生拥塞或者错误时网速指数减少
 - TCB:TCP 服务器和客户端连接时创造的内存片段
 
-  - bbr 算法：发送速率非常大，做到刚好不丢包的速率（传输中数据包的数量为带宽\*延迟）
+  - bbr 算法:发送速率非常大，做到刚好不丢包的速率（传输中数据包的数量为带宽\*延迟）
     时间戳
     TCP 时间戳用于“防止序列号回绕算法”，即防止序列号重复，时间戳不会重复，永远都是递增的
     选择确认（selective acknowledgment，SACK）
@@ -1763,18 +1759,18 @@ sock.on("message", () => console.log(1));
 ### 应用层
 
 - 在传输层的数据协议之上的另一种协议（软件以应用层的协议解析其它软件发来的数据）
-  - DNS：Domain Name System 将域名转化为 ip 地址的协议
+  - DNS:Domain Name System 将域名转化为 ip 地址的协议
     - 包裹在 UDP 的数据里
     - dhcp 服务器自动分配 DNS 地址，也可以自己填写；一般填写离自己最近的 DNS 服务器地址，速度更快；114.114.114.114/114.114.115.115
-    - DDNS ：动态 DNS,Dynamic Domain Name Server，动态域名服务，是把互联网域名指向可变 IP 地址的系统；DNS 只是提供了域名和 IP 地址之间的静态对应关系，当 IP 地址发生变化时，DNS 无法动态的更新域名和 IP 地址之间的对应关系，从而导致访问失败。
+    - DDNS :动态 DNS,Dynamic Domain Name Server，动态域名服务，是把互联网域名指向可变 IP 地址的系统；DNS 只是提供了域名和 IP 地址之间的静态对应关系，当 IP 地址发生变化时，DNS 无法动态的更新域名和 IP 地址之间的对应关系，从而导致访问失败。
     - 全球只有 13 台根域名服务器
-    - DNS 负载均衡：一个域名指向一组机器
+    - DNS 负载均衡:一个域名指向一组机器
   - dhcp 协议 动态主机配置协议（Dynamic host configuration protocol）
     - 局域网里面有 dhcp 服务器 ，它会告诉新来的网络设备一个配置信息（ip 地址，网关，dns 等信息），设备会自动设置这些信息然后可以访问网络
-    - ip 地址租期：dhcp 分配的 ip 地址有限，每个设备的 ip 地址都有一个租用时间，网络设备长时间未访问网络 dhcp 会收回 ip 地址，不过一般网络设备都会自动续期
+    - ip 地址租期:dhcp 分配的 ip 地址有限，每个设备的 ip 地址都有一个租用时间，网络设备长时间未访问网络 dhcp 会收回 ip 地址，不过一般网络设备都会自动续期
   - https: 由 HTTP 进行通信，但利用 SSL/TLS 来加密数据包 ,HTTP over TLS;
     - 首次通信需要一个第 3 方 CA 机构，防止有人中途冒充接对方
-    - CA 其有一对密钥（公钥 RP, 私钥 RS）认证过程如下：
+    - CA 其有一对密钥（公钥 RP, 私钥 RS）认证过程如下:
       - 其拿到发送方域名，公钥 P1, 再用自己的私钥 RS 对发送方数据进行电子签名，再将整个信息进行哈希处理，得到一个类型 MD5 值，电子证书发给接收方
       - 接收方确认 MD5 值无误后用 CA 机构的公钥解码得到发送方的域名和公钥，核对无误后即可以同意连接，后续双方就可以进行 TLS 加密通信
 
@@ -1854,7 +1850,7 @@ HTTP 响应头:
   > 因为如果某个服务器软件有漏洞，这么做相当于告诉别人服务器有漏洞
 
 - Expires 本资源的过期时间，在这个过期时间之前，浏览器重新使用这个资源时可以不发请求
-- Accept-Range：bytes 用来支持断点续传
+- Accept-Range:bytes 用来支持断点续传
 - Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin 设置浏览器发送 Referer 策略,只需要在 html（即页面）的响应头里设置
 - Transfer-Encoding: chunked 响应数据的传输方式，一段一段的发。
   > 当服务器无法预测响应体长度时使用。
@@ -1921,7 +1917,7 @@ HTTP 响应头:
   - 452 Unavailable For Legal Reasons 非法资源，政治原因不可展示
   - 301 Move Permanently 永久移动到新的地址，以后访问请求新地址；
   - 302 Moved Temporarily 暂时移动到新的地址，以后访问还是请求旧地址
-    - 以上 2 个要配合响应头 location：url 使用，表示跳转地址
+    - 以上 2 个要配合响应头 location:url 使用，表示跳转地址
   - 304 Not Modified 未更改
 
     - 协商缓存
@@ -1929,7 +1925,7 @@ HTTP 响应头:
       - If-None-Match（请求 /ETag（响应）: 一个哈希值，如果这个值和服务器储存的对应值一样，表示资源未更新，返回 304
     - 强缓存 和 304 没有关系，主要是用于减轻浏览器负担
       - Expires: 日期；资源未过期都会储存在浏览器里，不用去加载
-      - age ：时间；本次请求以后该资源可以强缓存在浏览器里的时间长度
+      - age :时间；本次请求以后该资源可以强缓存在浏览器里的时间长度
       - cache-control: 现在最常用的，可以在请求头里，也可以在响应头里，可以设置各种缓存，也可以设置为协商缓存；详细见 MDN
 
   - 501 Not implemented 未实现；此请求方法不被服务器支持且无法被处理。
@@ -1938,10 +1934,10 @@ HTTP 响应头:
 
 ### 跨域问题
 
-合理跨域：所要跨域请求的服务端资源的服务器以某种方式配合不同域的前端，如果服务端不配合，是不可以跨域的
-跨域：只要请求资源的协议，域名，端口有一个不同就叫做跨域
+合理跨域:所要跨域请求的服务端资源的服务器以某种方式配合不同域的前端，如果服务端不配合，是不可以跨域的
+跨域:只要请求资源的协议，域名，端口有一个不同就叫做跨域
 
-#### 最现代的方式：CORS
+#### 最现代的方式:CORS
 
 cross origin resource sharing 跨域资源共享
 一般由 XMLHttpRequest 发起的跨域 HTTP 请求需要 CORS 标准
@@ -1950,13 +1946,13 @@ cross origin resource sharing 跨域资源共享
   - 需预检的请求必须首先使用 OPTIONS 方法发起一个预检请求到服务器，以获知服务器是否允许该实际请求
   - 一些简单的方法不会有预检请求（get/head/post）, 因为不能破坏 Web 的兼容性。
 - 常用的 CORS 头
-  响应头：
+  响应头:
   Access-Control-Allow-Origin:url/\* 服务器允许的域
   Access-Control-Allow-Methods: POST, GET, OPTIONS 服务器允许使用这些方法
   Access-Control-Allow-Headers: X-PINGOTHER, Content-Type 服务器允许使用这些请求头
   Access-Control-Allow-Credientials:允许带上的凭据(cookie 头)
   Access-Control-max-age:60000 允许的有效期，有效期内不用再发预检请求，单位秒
-  请求头：
+  请求头:
   Access-Control-Request-Methods 请求期望带上的额外的头
   Access-Control-Request-Headers 请求期望使用的请求方法
   Origin:
@@ -1974,21 +1970,21 @@ cross origin resource sharing 跨域资源共享
 ```js
 //jsonp的简单实现
 function jsonp(url, callback) {
-  var functionName = "JSONP_CALLBACK_" + Math.random().toString(16).slice(2);
-  url = url + "&callback=" + functionName;
-  var script = document.createElement("script");
-  script.src = url;
-  document.body.append(script);
-  window[functionName] = callback;
-  script.onload = function () {
-    //执行完后把副作用删除
-    document.body.removeChild(script);
-    delete window[functionName];
-  };
+	var functionName = 'JSONP_CALLBACK_' + Math.random().toString(16).slice(2);
+	url = url + '&callback=' + functionName;
+	var script = document.createElement('script');
+	script.src = url;
+	document.body.append(script);
+	window[functionName] = callback;
+	script.onload = function () {
+		//执行完后把副作用删除
+		document.body.removeChild(script);
+		delete window[functionName];
+	};
 }
 
-jsonp("http://wthrcdn.etouch.cn/weather_mini?city=杭州", function (info) {
-  console.log(info);
+jsonp('http://wthrcdn.etouch.cn/weather_mini?city=杭州', function (info) {
+	console.log(info);
 });
 ```
 
@@ -2034,39 +2030,39 @@ xhr.getAllResponseHeaders(); //拿到请求头
 
 ```js
 function post(url, data, success) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", url);
-  xhr.addEventListener("load", (e) => {
-    success(JSON.parse(xhr.responseText));
-  });
-  xhr.send(data);
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', url);
+	xhr.addEventListener('load', (e) => {
+		success(JSON.parse(xhr.responseText));
+	});
+	xhr.send(data);
 }
 
 function get(url, callback) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("get", url);
-  xhr.onload = function () {
-    if (xhr.status < 400) {
-      //请求，响应正常结束
-      callback(JSON.parse(xhr.responseText));
-    } else {
-      // 网络 ok，响应为 4xx 或 5xx
-      callback(null, xhr);
-    }
-  };
-  xhr.onerror = function () {
-    // 请求没有发出去，连接都没有建立
-    callback(null, new Error("Network break"));
-  };
+	var xhr = new XMLHttpRequest();
+	xhr.open('get', url);
+	xhr.onload = function () {
+		if (xhr.status < 400) {
+			//请求，响应正常结束
+			callback(JSON.parse(xhr.responseText));
+		} else {
+			// 网络 ok，响应为 4xx 或 5xx
+			callback(null, xhr);
+		}
+	};
+	xhr.onerror = function () {
+		// 请求没有发出去，连接都没有建立
+		callback(null, new Error('Network break'));
+	};
 }
 xhr.send();
 
-get("http://www.xxx.com/a/b", function (data, error) {
-  if ((data = null)) {
-    //出错
-  } else {
-    //成功
-  }
+get('http://www.xxx.com/a/b', function (data, error) {
+	if ((data = null)) {
+		//出错
+	} else {
+		//成功
+	}
 });
 ```
 
@@ -2074,139 +2070,139 @@ get("http://www.xxx.com/a/b", function (data, error) {
 
 ```js
 function parallel(tasks, cb) {
-  //多个任务并行，全执行完调用callback
-  var count = 0;
-  for (let task of tasks) {
-    task(() => {
-      count++;
-      if (count == tasks.length) {
-        cb();
-      }
-    });
-  }
+	//多个任务并行，全执行完调用callback
+	var count = 0;
+	for (let task of tasks) {
+		task(() => {
+			count++;
+			if (count == tasks.length) {
+				cb();
+			}
+		});
+	}
 }
 
 function series(tasks, cb) {
-  //一个任务执行完才能执行下一个,全执行完执行callback
-  var i = 0;
-  startOneTask();
-  function startOneTask() {
-    if (i < tasks.length) {
-      tasks[i++](() => {
-        startOneTask();
-      });
-    } else {
-      cb();
-    }
-  }
+	//一个任务执行完才能执行下一个,全执行完执行callback
+	var i = 0;
+	startOneTask();
+	function startOneTask() {
+		if (i < tasks.length) {
+			tasks[i++](() => {
+				startOneTask();
+			});
+		} else {
+			cb();
+		}
+	}
 }
 
 function parallel(tasks, cb) {
-  parallelLimit(tasks, tasks.length, cb);
+	parallelLimit(tasks, tasks.length, cb);
 }
 function series(tasks, cb) {
-  parallelLimit(tasks, 1, cb);
+	parallelLimit(tasks, 1, cb);
 }
 function parallelLimit(tasks, limit, cb) {
-  //最多limit个任务同时运行
-  var i = 0;
-  var completedCount = 0;
-  for (var j = 0; j < limit; j++) {
-    one();
-  }
-  function one() {
-    if (i < tasks.length) {
-      //只能判断所有任务都启动了，不能判断都结束了，还得计数
-      tasks[i++](() => {
-        completedCount++;
-        if (completedCount == tasks.length) {
-          cb();
-        } else {
-          one();
-        }
-      });
-    }
-  }
+	//最多limit个任务同时运行
+	var i = 0;
+	var completedCount = 0;
+	for (var j = 0; j < limit; j++) {
+		one();
+	}
+	function one() {
+		if (i < tasks.length) {
+			//只能判断所有任务都启动了，不能判断都结束了，还得计数
+			tasks[i++](() => {
+				completedCount++;
+				if (completedCount == tasks.length) {
+					cb();
+				} else {
+					one();
+				}
+			});
+		}
+	}
 }
 
 asyncMap(
-  [1, 2, 3, 4],
-  function mapper(it, cb) {
-    setTimeout(() => cb(null, it * it));
-  }, //异步具有传染性
-  function (err, mapped) {
-    console.log(mapped);
-  }
+	[1, 2, 3, 4],
+	function mapper(it, cb) {
+		setTimeout(() => cb(null, it * it));
+	}, //异步具有传染性
+	function (err, mapped) {
+		console.log(mapped);
+	}
 );
 function asyncMap(ary, mapper, cb) {
-  //任务队列，但是必须提前准备好任务，不能临时加任务
-  var result = [];
-  var count = 0;
-  for (let i = 0; i < ary.length; i++) {
-    mapper(ary[i], function (err, value) {
-      result[i] = value;
-      count++;
-      if (count == ary.length) {
-        cb(null, result);
-      }
-    });
-  }
+	//任务队列，但是必须提前准备好任务，不能临时加任务
+	var result = [];
+	var count = 0;
+	for (let i = 0; i < ary.length; i++) {
+		mapper(ary[i], function (err, value) {
+			result[i] = value;
+			count++;
+			if (count == ary.length) {
+				cb(null, result);
+			}
+		});
+	}
 }
 
 asyncFilter(
-  [1, 2, 3, 4],
-  function test(it, cb) {
-    setTimeout(() => {
-      cb(null, it % 2 == 1);
-    }, 200);
-  },
-  function (err, filtered) {
-    console.log(filtered);
-  }
+	[1, 2, 3, 4],
+	function test(it, cb) {
+		setTimeout(() => {
+			cb(null, it % 2 == 1);
+		}, 200);
+	},
+	function (err, filtered) {
+		console.log(filtered);
+	}
 );
 
 function asyncFilter(ary, test, cb) {
-  var result = new Array(ary.length).fill(false);
-  var count = 0;
-  for (let i = 0; i < ary.length; i++) {
-    test(ary[i], function (err, pass) {
-      if (pass) {
-        result[i] = true; //通过测试的
-      }
-      count++;
-      if (count == ary.length) {
-        //调用完了
-        var filtered = ary.filter((_, idx) => result[idx]); //用result来过滤数组，相同坐标为true，是通过测试的
-        cb(null, filtered);
-      }
-    });
-  }
+	var result = new Array(ary.length).fill(false);
+	var count = 0;
+	for (let i = 0; i < ary.length; i++) {
+		test(ary[i], function (err, pass) {
+			if (pass) {
+				result[i] = true; //通过测试的
+			}
+			count++;
+			if (count == ary.length) {
+				//调用完了
+				var filtered = ary.filter((_, idx) => result[idx]); //用result来过滤数组，相同坐标为true，是通过测试的
+				cb(null, filtered);
+			}
+		});
+	}
 }
 
 class TaskQueue {
-  //jQuery任务队列实现，可以临时加任务
-  constructor() {
-    this.tasks = [];
-    this.hasTaskRunning = false;
-  }
-  next = () => {
-    //用箭头函数,这个this永远指向实例
-    if (this.tasks.length) {
-      let task = this.tasks.shift();
-      task(this.next);
-    } else {
-      this.hasTaskRunning = false;
-    }
-  };
-  addTask(task) {
-    if (this.hasTaskRunning) {
-      this.tasks.push(task);
-    } else {
-      this.hasTaskRunning = true;
-      task(this.next);
-    }
-    return this;
-  }
+	//jQuery任务队列实现，可以临时加任务
+	constructor() {
+		this.tasks = [];
+		this.hasTaskRunning = false;
+	}
+	next = () => {
+		//用箭头函数,这个this永远指向实例
+		if (this.tasks.length) {
+			let task = this.tasks.shift();
+			task(this.next);
+		} else {
+			this.hasTaskRunning = false;
+		}
+	};
+	addTask(task) {
+		if (this.hasTaskRunning) {
+			this.tasks.push(task);
+		} else {
+			this.hasTaskRunning = true;
+			task(this.next);
+		}
+		return this;
+	}
 }
 
 //jQuery的promise实现
@@ -2216,12 +2212,12 @@ dfd.resolve;
 dfd.reject;
 
 function dererred() {
-  var dfd = {};
-  dfd.promise = new Promise((resolve, reject) => {
-    dfd.resolve = resolve;
-    dfd.reject = reject;
-  });
-  return dfd;
+	var dfd = {};
+	dfd.promise = new Promise((resolve, reject) => {
+		dfd.resolve = resolve;
+		dfd.reject = reject;
+	});
+	return dfd;
 }
 ```
 
@@ -2268,126 +2264,126 @@ function dererred() {
 ```js
 //相关方法的实现及例子
 function getJSON(url) {
-  return new Promise((resolve, reject) => {
-    var xhr = new XMLHttpRequest();
-    xhr.open("get", url);
-    xhr.onload = () => {
-      if (xhr.status < 400) {
-        resolve(JSON.parse(xhr.responseText));
-      } else {
-        reject(JSON.parse(xhr.responseText));
-      }
-    };
-    xhr.onerror = (e) => reject(e);
-    xhr.send();
-  });
+	return new Promise((resolve, reject) => {
+		var xhr = new XMLHttpRequest();
+		xhr.open('get', url);
+		xhr.onload = () => {
+			if (xhr.status < 400) {
+				resolve(JSON.parse(xhr.responseText));
+			} else {
+				reject(JSON.parse(xhr.responseText));
+			}
+		};
+		xhr.onerror = (e) => reject(e);
+		xhr.send();
+	});
 }
 
 Promise.resolve = function (value) {
-  return new Promise((resolve) => {
-    resolve(value);
-  });
+	return new Promise((resolve) => {
+		resolve(value);
+	});
 };
 
 function sleep(time) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
+	return new Promise((resolve) => {
+		setTimeout(resolve, time);
+	});
 }
 
 Promise.resolve()
-  .then(() => {
-    console.log(1);
-    return sleep(1000);
-  })
-  .then(() => {
-    console.log(1);
-    return sleep(1000);
-  })
-  .then(() => {
-    console.log(1);
-    return sleep(1000);
-  })
-  .then(() => {
-    console.log(1);
-    return sleep(1000);
-  })
-  .then(() => {
-    console.log(1);
-    return sleep(1000);
-  });
+	.then(() => {
+		console.log(1);
+		return sleep(1000);
+	})
+	.then(() => {
+		console.log(1);
+		return sleep(1000);
+	})
+	.then(() => {
+		console.log(1);
+		return sleep(1000);
+	})
+	.then(() => {
+		console.log(1);
+		return sleep(1000);
+	})
+	.then(() => {
+		console.log(1);
+		return sleep(1000);
+	});
 
 Promise.all = function (promises) {
-  return new Promise((resolve, reject) => {
-    let result = new Array(promises.length);
-    if (promises.length) {
-      let count = 0;
-      for (let i = 0; i < promises.length; i++) {
-        let promise = promises[i];
-        Promise.resolve(promise).then(
-          //确保promise一定是promise，如果不是，把它转换成promise
-          (value) => {
-            result[i] = value;
-            count++;
-            if (count == promises.length) {
-              resolve(result);
-            }
-          },
-          (reason) => {
-            reject(reason);
-          }
-        );
-      }
-    } else {
-      resolve(result);
-    }
-  });
+	return new Promise((resolve, reject) => {
+		let result = new Array(promises.length);
+		if (promises.length) {
+			let count = 0;
+			for (let i = 0; i < promises.length; i++) {
+				let promise = promises[i];
+				Promise.resolve(promise).then(
+					//确保promise一定是promise，如果不是，把它转换成promise
+					(value) => {
+						result[i] = value;
+						count++;
+						if (count == promises.length) {
+							resolve(result);
+						}
+					},
+					(reason) => {
+						reject(reason);
+					}
+				);
+			}
+		} else {
+			resolve(result);
+		}
+	});
 };
 
 Promise.race = function (promises) {
-  return new Promise((resolve, reject) => {
-    for (let i = 0; i < promises.length; i++) {
-      Promise.resolve(promises[i]).then(resolve, reject);
-    }
-  });
+	return new Promise((resolve, reject) => {
+		for (let i = 0; i < promises.length; i++) {
+			Promise.resolve(promises[i]).then(resolve, reject);
+		}
+	});
 };
 
 Promise.allSettled = function (promises) {
-  return new Promise((resolve) => {
-    let result = [];
-    let count = 0;
-    if (promises.length) {
-      for (let i = 0; i < promises.length; i++) {
-        let promise = Promise.resolve(promises[i]);
-        promise.then(
-          (value) => {
-            result[i] = {
-              status: "fulfilled",
-              value,
-            };
-            count++;
-            if (count == promises.length) {
-              //确定resolve执行完毕
-              resolve(result);
-            }
-          },
-          (reason) => {
-            result[i] = {
-              status: "rejected",
-              reason,
-            };
-            count++;
-            if (count == promises.length) {
-              //确定rejected执行完毕
-              resolve(result);
-            }
-          }
-        );
-      }
-    } else {
-      resolve(result);
-    }
-  });
+	return new Promise((resolve) => {
+		let result = [];
+		let count = 0;
+		if (promises.length) {
+			for (let i = 0; i < promises.length; i++) {
+				let promise = Promise.resolve(promises[i]);
+				promise.then(
+					(value) => {
+						result[i] = {
+							status: 'fulfilled',
+							value,
+						};
+						count++;
+						if (count == promises.length) {
+							//确定resolve执行完毕
+							resolve(result);
+						}
+					},
+					(reason) => {
+						result[i] = {
+							status: 'rejected',
+							reason,
+						};
+						count++;
+						if (count == promises.length) {
+							//确定rejected执行完毕
+							resolve(result);
+						}
+					}
+				);
+			}
+		} else {
+			resolve(result);
+		}
+	});
 };
 ```
 
@@ -2397,18 +2393,18 @@ Promise.allSettled = function (promises) {
 ```js
 //并行加载，串行显示
 story.chapterUrls
-  .map((url) => getJson(url)) //先创建所有的promise,同时开始加载
-  .reduce((seq, chapterPromise) => {
-    return seq
-      .then(() => chapterPromise)
-      .then((chapter) => {
-        //确保显示顺序，前面的加载完才能显示后面的
-        addHtmlToPage(chapter.html);
-      });
-  }, Promise.resolve())
-  .then(() => {
-    removeLoading();
-  });
+	.map((url) => getJson(url)) //先创建所有的promise,同时开始加载
+	.reduce((seq, chapterPromise) => {
+		return seq
+			.then(() => chapterPromise)
+			.then((chapter) => {
+				//确保显示顺序，前面的加载完才能显示后面的
+				addHtmlToPage(chapter.html);
+			});
+	}, Promise.resolve())
+	.then(() => {
+		removeLoading();
+	});
 ```
 
 ## ES6
@@ -2420,10 +2416,10 @@ story.chapterUrls
 - 必要构成，1 个'\*'号和 yield 运算符
   ```js
   function* gen() {
-    a = yield 1;
-    b = yield 2;
-    c = yield 3;
-    d = yield 4;
+  	a = yield 1;
+  	b = yield 2;
+  	c = yield 3;
+  	d = yield 4;
   }
   var g1 = gen(); //gen 是生成器，g1 是迭代器
   g1.next(); //=>{value: 1, done: false} 此时函数暂停在第一个 = 号右边
@@ -2441,10 +2437,10 @@ story.chapterUrls
   还是按照顺序执行，遇到嵌套的生成器会进入生成器执行其代码，一步一步执行完该生成器后接着执行外面的代码，直到整个代码执行完毕
   ```js
   function* gen() {
-    a = yield 1;
-    b = yield* g2;
-    c = yield* g3;
-    d = yield 4;
+  	a = yield 1;
+  	b = yield* g2;
+  	c = yield* g3;
+  	d = yield 4;
   }
   ```
 - ... 展开预算符可以展开生成器得到一个迭代器 value 属性值的数组集合
@@ -2456,15 +2452,15 @@ story.chapterUrls
 
   ```js
   function forOf(generator, action) {
-    var iterator = generator.next();
-    while (!iterator.done) {
-      action(iterator.value);
-      if (!action(iterator.value)) {
-        generator.return;
-        break;
-      }
-      iterator = generator.next();
-    }
+  	var iterator = generator.next();
+  	while (!iterator.done) {
+  		action(iterator.value);
+  		if (!action(iterator.value)) {
+  			generator.return;
+  			break;
+  		}
+  		iterator = generator.next();
+  	}
   }
   ```
 
@@ -2473,32 +2469,32 @@ story.chapterUrls
 ```js
 //将基于callback的函数转换为返回promise的函数
 function promisify(cbFunc) {
-  return function (...args) {
-    return new Promise((resolve, reject) => {
-      cbFunction(...args, (err, data) => {
-        // data异步调用args后得到的结果
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    });
-  };
+	return function (...args) {
+		return new Promise((resolve, reject) => {
+			cbFunction(...args, (err, data) => {
+				// data异步调用args后得到的结果
+				if (err) {
+					reject(err);
+				} else {
+					resolve(data);
+				}
+			});
+		});
+	};
 }
 //将基于promise的函数转换为一个基于回调的函数
 function callbackify(promiseFunc) {
-  return function (...args) {
-    var cb = args.pop(); //取出回调函数
-    promiseFunc(...args).then(
-      (val) => {
-        cb(null, val);
-      },
-      (reason) => {
-        cb(reason);
-      }
-    );
-  };
+	return function (...args) {
+		var cb = args.pop(); //取出回调函数
+		promiseFunc(...args).then(
+			(val) => {
+				cb(null, val);
+			},
+			(reason) => {
+				cb(reason);
+			}
+		);
+	};
 }
 ```
 
@@ -2569,7 +2565,7 @@ function loadStory() {
 
 [async+await](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
 
-- async + 生成器函数 function {await ：promise 函数}
+- async + 生成器函数 function {await :promise 函数}
   async 函数就是将 Generator 函数的星号（\*）替换成 async，将 yield 替换成 await；async 函数对 Generator 函数的改进，配合 promise 使用，包装原理如上；并且 function() 返回一个 promise
 
 ```js
@@ -2598,15 +2594,15 @@ function loadStory() {
 - Symbol 也无法进行隐式类型转换，会报错——>a + 2 会报错.可以用 toString()进行类型转换
 - Symbol.for（可以理解位为 Symbol 取名）可共享的 Symbol,可以用来让不同的对象使用同一个 Symbol 属性
   `a = Symbol.for("aa");b = Symbol.for("aa")；a === b =>true`
-  读取：
+  读取:
 - Symbol.iterator
   Symbol.iterator 为每一个对象定义了默认的迭代器。该迭代器可以被 for...of 循环使用。
   ```js
   var myIterable = {};
   myIterable[Symbol.iterator] = function* () {
-    yield 1;
-    yield 2;
-    yield 3;
+  	yield 1;
+  	yield 2;
+  	yield 3;
   };
   [...myIterable]; // [1, 2, 3]
   ```
@@ -2638,7 +2634,7 @@ function loadStory() {
   这种方式比 eval 好的地方是<u>可以传递参数</u>
 
   ```js
-  var sum = new Function("a", "b", "return a + b");
+  var sum = new Function('a', 'b', 'return a + b');
   console.log(sum(2, 6));
   ```
 
@@ -2646,14 +2642,14 @@ function loadStory() {
 
   ```js
   var add = (function (a, b) {
-    return a + b;
+  	return a + b;
   })(1, 2);
   (function add(a, b) {
-    return a + b;
+  	return a + b;
   })(1, 2); //加（）将函数声明语句变成表达式，然后再调用
   ```
 
-  IIFE： immediately invoked function expression 立即执行函数表达式
+  IIFE: immediately invoked function expression 立即执行函数表达式
 
 - 常用的模块方案
 
@@ -2720,17 +2716,17 @@ AMD 和 CMD;
 CommonJS;
 ES Module
 
-Q：在 Node.js 中，require()加载模块是同步而非异步？
+Q:在 Node.js 中，require()加载模块是同步而非异步？
 
-A：CommonJS 标准是同步加载的。另一方面作为公共依赖的模块，自然要一步加载到位。
+A:CommonJS 标准是同步加载的。另一方面作为公共依赖的模块，自然要一步加载到位。
 
 由于模块的个数往往有限，且 Node 会自动缓存已经加载的模块，再加上访问的都是本地文件，产生的 IO 开销几乎可以忽略。另外，Node 程序运行在服务器端，很少遇到需要频繁重启服务的情况，那么就算在服务启动时在加载上花点时间（几秒）也没有什么影响。
 
 ```js
 //模块化
-var xx = require("chosen-js");
-import xxx, { funcName, funcName } from "url"; //前面是默认导出的，后面是有名字的
-import * as xx from "url";
+var xx = require('chosen-js');
+import xxx, { funcName, funcName } from 'url'; //前面是默认导出的，后面是有名字的
+import * as xx from 'url';
 //默认导入import name(随便起),以及非默认func from "xxx"
 //默认导出export default func;
 //具名导出 export func abc(){} /let/var/const
@@ -2739,103 +2735,103 @@ import * as xx from "url";
 //导入的script 的 type:module
 
 (function () {
-  function readFile(filename) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("get", filename, false); //同步，不行，要卡
-    xhr.send();
-    return xhr.responseText;
-  }
-  require.cache = {};
-  function require(filename) {
-    //路径问题？base自己
-    if (require.cache.hasOwnProperty(filename)) {
-      return require.cache[filename].exports;
-    }
-    var modFunc = new Function(
-      "require",
-      "module",
-      "exports",
-      readFile(filename)
-    );
-    var module = { exports: {} };
-    require.cache[filename] = module; //最终导出的是module.exports;引用类型，先放在缓存上，解决循环依赖的问题，可以防止爆栈；但是后续只能异步访问
-    modFunc(require, module, module.exports, readFile(filename));
-    return module.exports;
-  }
+	function readFile(filename) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('get', filename, false); //同步，不行，要卡
+		xhr.send();
+		return xhr.responseText;
+	}
+	require.cache = {};
+	function require(filename) {
+		//路径问题？base自己
+		if (require.cache.hasOwnProperty(filename)) {
+			return require.cache[filename].exports;
+		}
+		var modFunc = new Function(
+			'require',
+			'module',
+			'exports',
+			readFile(filename)
+		);
+		var module = { exports: {} };
+		require.cache[filename] = module; //最终导出的是module.exports;引用类型，先放在缓存上，解决循环依赖的问题，可以防止爆栈；但是后续只能异步访问
+		modFunc(require, module, module.exports, readFile(filename));
+		return module.exports;
+	}
 })();
 //异步
 (function () {
-  function readFile(filename) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("get", filename);
-    xhr.send();
-    return xhr.responseText;
-  }
-  require.cache = {};
-  window.require = require;
-  function require(filename) {
-    //路径问题？base自己
-    if (require.cache.hasOwnProperty(filename)) {
-      return require.cache[filename].exports;
-    }
-    var fileContent = readFile(filename);
-    var modFunc = new Function("require", "module", "exports", fileContent);
-    var module = { exports: {} };
-    require.cache[filename] = module; //最终导出的是module.exports;引用类型，先放在缓存上，解决循环依赖的问题，可以防止爆栈；但是后续只能异步访问
-    modFunc(require, module, module.exports, readFile(filename));
-    return module.exports;
-  }
+	function readFile(filename) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('get', filename);
+		xhr.send();
+		return xhr.responseText;
+	}
+	require.cache = {};
+	window.require = require;
+	function require(filename) {
+		//路径问题？base自己
+		if (require.cache.hasOwnProperty(filename)) {
+			return require.cache[filename].exports;
+		}
+		var fileContent = readFile(filename);
+		var modFunc = new Function('require', 'module', 'exports', fileContent);
+		var module = { exports: {} };
+		require.cache[filename] = module; //最终导出的是module.exports;引用类型，先放在缓存上，解决循环依赖的问题，可以防止爆栈；但是后续只能异步访问
+		modFunc(require, module, module.exports, readFile(filename));
+		return module.exports;
+	}
 })();
 function readFile(filename) {
-  return new Promise((resolve) => {
-    var xhr = new XMLHttpRequest();
-    xhr.open("get", filename);
-    xhr.onload = () => {
-      fileCache[filename] = xhr.responseText;
-      resolve(xhr.responseText);
-    };
-    xhr.send();
-  });
+	return new Promise((resolve) => {
+		var xhr = new XMLHttpRequest();
+		xhr.open('get', filename);
+		xhr.onload = () => {
+			fileCache[filename] = xhr.responseText;
+			resolve(xhr.responseText);
+		};
+		xhr.send();
+	});
 }
 //三个异步版本，async+promise+callback
 async function loadAllDeps(entryFile) {
-  var entryCode = await readFile(entryFile);
-  var deps = getAllDeps(entryCode);
-  await Promise.all(deps.map(loadAllDeps));
-  return;
+	var entryCode = await readFile(entryFile);
+	var deps = getAllDeps(entryCode);
+	await Promise.all(deps.map(loadAllDeps));
+	return;
 }
 
 function loadAllDeps(entryFile) {
-  readFile(entryFile).then((entryCode) => {
-    var deps = getAllDeps(entryCode);
-    return Promise.all(deps.map(loadAllDeps));
-  });
+	readFile(entryFile).then((entryCode) => {
+		var deps = getAllDeps(entryCode);
+		return Promise.all(deps.map(loadAllDeps));
+	});
 }
 
 function loadAllDeps(entryFile, cb) {
-  readFile(entryFile, (entryCode) => {
-    var deps = getAllDeps(entryCode);
-    if (deps.length) {
-      var count = 0;
-      for (var dep of deps) {
-        loadAllDeps(dep, () => {
-          count++;
-          if (count == deps.length) {
-            cb();
-          }
-        });
-      }
-    } else {
-      cb();
-    }
-  });
+	readFile(entryFile, (entryCode) => {
+		var deps = getAllDeps(entryCode);
+		if (deps.length) {
+			var count = 0;
+			for (var dep of deps) {
+				loadAllDeps(dep, () => {
+					count++;
+					if (count == deps.length) {
+						cb();
+					}
+				});
+			}
+		} else {
+			cb();
+		}
+	});
 }
 
 function loadAllDeps(entryFile) {
-  //同步版本
-  var entryCode = readFile(entryFile);
-  var deps = getAllDeps(entryCode);
-  deps.map(loadAllDeps);
+	//同步版本
+	var entryCode = readFile(entryFile);
+	var deps = getAllDeps(entryCode);
+	deps.map(loadAllDeps);
 }
 ```
 
@@ -2905,7 +2901,7 @@ function loadAllDeps(entryFile) {
 
   - nodemon xxx.js 以 nodemon 启动某 js 文件，文件修改时客户端同步更新
 
-  - `node xxx.js arguments` 给 xxx.js 传递参数 arguments：通过 process.argv 接收 arguments。process.argv 返回一个数组，第一项是 node 的运行路径，第二项是 xxx.js 文件路径，第三项开始是 arguments(process.argv[2])
+  - `node xxx.js arguments` 给 xxx.js 传递参数 arguments:通过 process.argv 接收 arguments。process.argv 返回一个数组，第一项是 node 的运行路径，第二项是 xxx.js 文件路径，第三项开始是 arguments(process.argv[2])
 
   - process 一个全局对象，每个 Node 进程都有独立的 process 对象，存储了当前进程的环境变量，也定义了一些事件。
 
@@ -2917,7 +2913,7 @@ function loadAllDeps(entryFile) {
 
     node 里面的 this:在 Node repl 环境中控制台的全局 this 和 global 可以看作是同一对象，脚本文件中的 this 指向 module.exports.
 
-    node 中的作用域：全局作用域，模块作用域，
+    node 中的作用域:全局作用域，模块作用域，
 
   - node.js 的调试
     `node --inspect[-brk][=ip端口号] script.js arguments node.js` 在指定地址端口调试
@@ -3054,11 +3050,11 @@ function loadAllDeps(entryFile) {
 
       - rs = fs.createReadStream(path) 创造从某个路径文件读取数据的可读流
 
-        事件：‘data’,’close’,’end’,’error’,’readable’
+        事件:‘data’,’close’,’end’,’error’,’readable’
 
       - ws = fs.createWriteStream(path) 创造向某个路径文件写入数据的可写流
 
-        事件：‘close’,’drain’,’error’,’finish’,’pipe’
+        事件:‘close’,’drain’,’error’,’finish’,’pipe’
 
       - ws.write(data) 可写流都有 write 方法，向目标 path 写入数据；可写流的 finish 事件，end 之后缓冲区里面的数据全部处理完了之后触发
 
@@ -3096,7 +3092,7 @@ function loadAllDeps(entryFile) {
     buffer.toString([encoding],[start],[end])把一个 buffer 对象转成字符串形式，默认采用 utf-8 编码并转换整个对象
 
   - TypedArray 描述一个底层的二进制数据缓存区的一个类似数组 (array-like) 视图，可以直接操作内存，性能非常快；
-    应用：canvas,B 站 flv.js；直接操作二进制字节流
+    应用:canvas,B 站 flv.js；直接操作二进制字节流
     https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
 - Child Process 子进程 require('child_process')
@@ -3147,9 +3143,9 @@ function loadAllDeps(entryFile) {
 
   ```js
   var e = new EventEmitter();
-  e.on("eventName", hander); //绑定事件
-  e.off("eventName", hander); //解绑事件
-  e.emit("eventName"); //触发事件
+  e.on('eventName', hander); //绑定事件
+  e.off('eventName', hander); //解绑事件
+  e.emit('eventName'); //触发事件
   console.log(e.eventNames()); //输出包含全部事件名称的数组
   ```
 
@@ -3214,20 +3210,19 @@ function loadAllDeps(entryFile) {
   -
   ```
 
+  - node 其它常用 npm 包
 
-    - node 其它常用 npm 包
-
-    - multer 文件上传 https://www.jianshu.com/p/93151c777caf
-    - sharp 图像处理库
-    - svg-captcha 生成验证码
-    - express-session 会话，存储你通过请求获取到的数据的地方。每一个访问你网站的用户都有一个唯一的 session，包括多次通信，保存到服务器
-      cookie 会储存 sessionId，由 sessionId 确认是不是同一个会话
-    - md5 加密算法
-    - Jimp 图像处理库
-      - pixelData = await Jimp.read('./pixelData.png') 得到这个位置的初始图片对象，图片对象是一个描述这个图片的数据对象
-      - pngBuffer = await pixelData.getBufferAsync(Jimp.MIME_PNG) 将图片对象转化为二进制字节流，储存在一段 buffer 里面
-      - var hexColor = Jimp.cssColorToHex(color) 将颜色解析为 16 进制，如 converts #FF00FF to 0xFF00FFFF
-      - pixelData.setPixelColor(hexColor, col, row) 设置图片对象某个像素点的颜色
+  - multer 文件上传 https://www.jianshu.com/p/93151c777caf
+  - sharp 图像处理库
+  - svg-captcha 生成验证码
+  - express-session 会话，存储你通过请求获取到的数据的地方。每一个访问你网站的用户都有一个唯一的 session，包括多次通信，保存到服务器
+    cookie 会储存 sessionId，由 sessionId 确认是不是同一个会话
+  - md5 加密算法
+  - Jimp 图像处理库
+    - pixelData = await Jimp.read('./pixelData.png') 得到这个位置的初始图片对象，图片对象是一个描述这个图片的数据对象
+    - pngBuffer = await pixelData.getBufferAsync(Jimp.MIME_PNG) 将图片对象转化为二进制字节流，储存在一段 buffer 里面
+    - var hexColor = Jimp.cssColorToHex(color) 将颜色解析为 16 进制，如 converts #FF00FF to 0xFF00FFFF
+    - pixelData.setPixelColor(hexColor, col, row) 设置图片对象某个像素点的颜色
 
 ### 事件循环
 
@@ -3253,48 +3248,47 @@ function loadAllDeps(entryFile) {
   └──┤ close callbacks │
   └───────────────────────────┘
 
-
-    - 进入 timers 阶段
-        检查 timer 队列是否有到期的 timer 回调，如果有，将到期的 timer 回调按照 timerId 升序执行。
-        检查是否有 process.nextTick 任务，如果有，全部执行。
-        检查是否有 microtask，如果有，全部执行。
-        退出该阶段。
-    - 进入 IO callbacks 阶段。
-        检查是否有 pending 的 I/O 回调。如果有，执行回调。如果没有，退出该阶段。
-        检查是否有 process.nextTick 任务，如果有，全部执行。
-        检查是否有 microtask，如果有，全部执行。
-        退出该阶段。
-    - 进入 idle，prepare 阶段：
-        这两个阶段与我们编程关系不大，暂且按下不表。
-    - 进入 poll 阶段
-      首先检查是否存在尚未完成的回调，如果存在，那么分两种情况。
-      第一种情况：
-        如果有可用回调（可用回调包含到期的定时器还有一些 IO 事件等），执行所有可用回调。
-        检查是否有 process.nextTick 回调，如果有，全部执行。
-        检查是否有 microtasks，如果有，全部执行。
-        退出该阶段。
-      第二种情况：
-        如果没有可用回调。
-        检查是否有 immediate 回调，如果有，退出 poll 阶段。如果没有，阻塞在此阶段，等待新的事件通知。
-      如果不存在尚未完成的回调，退出 poll 阶段。
-    - 进入 check 阶段。
-        如果有 immediate 回调，则执行所有 immediate 回调。
-        检查是否有 process.nextTick 回调，如果有，全部执行。
-        检查是否有 microtasks，如果有，全部执行。
-        退出 check 阶段
-    - 进入 closing 阶段。
-        如果有 immediate 回调，则执行所有 immediate 回调。
-        检查是否有 process.nextTick 回调，如果有，全部执行。
-        检查是否有 microtasks，如果有，全部执行。
-        退出 closing 阶段
+  - 进入 timers 阶段
+    检查 timer 队列是否有到期的 timer 回调，如果有，将到期的 timer 回调按照 timerId 升序执行。
+    检查是否有 process.nextTick 任务，如果有，全部执行。
+    检查是否有 microtask，如果有，全部执行。
+    退出该阶段。
+  - 进入 IO callbacks 阶段。
+    检查是否有 pending 的 I/O 回调。如果有，执行回调。如果没有，退出该阶段。
+    检查是否有 process.nextTick 任务，如果有，全部执行。
+    检查是否有 microtask，如果有，全部执行。
+    退出该阶段。
+  - 进入 idle，prepare 阶段:
+    这两个阶段与我们编程关系不大，暂且按下不表。
+  - 进入 poll 阶段
+    首先检查是否存在尚未完成的回调，如果存在，那么分两种情况。
+    第一种情况:
+    如果有可用回调（可用回调包含到期的定时器还有一些 IO 事件等），执行所有可用回调。
+    检查是否有 process.nextTick 回调，如果有，全部执行。
+    检查是否有 microtasks，如果有，全部执行。
+    退出该阶段。
+    第二种情况:
+    如果没有可用回调。
+    检查是否有 immediate 回调，如果有，退出 poll 阶段。如果没有，阻塞在此阶段，等待新的事件通知。
+    如果不存在尚未完成的回调，退出 poll 阶段。
+  - 进入 check 阶段。
+    如果有 immediate 回调，则执行所有 immediate 回调。
+    检查是否有 process.nextTick 回调，如果有，全部执行。
+    检查是否有 microtasks，如果有，全部执行。
+    退出 check 阶段
+  - 进入 closing 阶段。
+    如果有 immediate 回调，则执行所有 immediate 回调。
+    检查是否有 process.nextTick 回调，如果有，全部执行。
+    检查是否有 microtasks，如果有，全部执行。
+    退出 closing 阶段
 
 - 宏任务和微任务
-  - 宏任务：客户银行取号排队办理业务
-    微任务：每个客户又可以在柜台办理一些新的业务
+  - 宏任务:客户银行取号排队办理业务
+    微任务:每个客户又可以在柜台办理一些新的业务
   - 宏任务在执行的过程中，是可以添加一些微任务的；
     在当前的微任务没有执行完成时，是不会执行下一个宏任务的。
-  - 宏任务一般是：包括整体代码 script，setTimeout，setInterval、setImmediate。
-    微任务：原生 Promise 相关、process.nextTick
+  - 宏任务一般是:包括整体代码 script，setTimeout，setInterval、setImmediate。
+    微任务:原生 Promise 相关、process.nextTick
   - 微任务的递归调用会死循环，浏览器无法执行其它任务
 
 ## express
@@ -3424,7 +3418,7 @@ span 登录 与文字之间只能有一个空格
 
 ## 数据库
 
-数据库种类：
+数据库种类:
 
 1. 关系型数据库(SQLite,MySQL)
 2. 缓存型数据库(Redis,可以理解为超大型 Map)
@@ -3439,7 +3433,7 @@ span 登录 与文字之间只能有一个空格
   - 命令行运行 ./sqlite3 + 数据库名
 
   * 基本使用方法
-    命令行：
+    命令行:
     .header on --查看时显示头行
     .mode column --每列对应排齐查看
     .mode box
@@ -3558,8 +3552,8 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
         - 服务器可以给某个频道所有的客户端发送消息，常用聊天室
         - 客户端也可以给其它客户端发送消息
         - 加入和离开房间的功能
-      - 解析：自动编码为字符串，自动编码为其它数据类型
-      - 远程事件：客户端和服务器可以监听对方的事件，对方触发了事件，己方可以马上得到触发事件的数据，实现了无延时的双向通信
+      - 解析:自动编码为字符串，自动编码为其它数据类型
+      - 远程事件:客户端和服务器可以监听对方的事件，对方触发了事件，己方可以马上得到触发事件的数据，实现了无延时的双向通信
         io/socked.emit("event",{传递数据}) 服务器/客户端绑定事件
         io/socked.on("event",()=>{}) 服务器/客户端监听事件
         socket.join/leave（'some room'）加入或者离开房间
@@ -3569,12 +3563,11 @@ TCP 之上的协议，连接后不会断开，服务器端可以主动向客户�
 
 ### linux 服务器知识
 
-    * 虚拟空间：文件夹，只支持放静态文件
-      虚拟服务器 ： 文件夹，支持运行服务器端程序，如 node
-      vps ： 完全的机器，独立ip,0 到 65536 端口，可以重新装系统
-      云服务器： 支持弹性扩容的 vps
+    * 虚拟空间:文件夹，只支持放静态文件
+      虚拟服务器 : 文件夹，支持运行服务器端程序，如 node
+      vps : 完全的机器，独立ip,0 到 65536 端口，可以重新装系统
+      云服务器: 支持弹性扩容的 vps
     * https://www.digitalocean.com 购买 vps 服务器的网站
     * ssh  secure shell 是一种网络协议，用于计算机之间的加密远程登录
     * sftp 基于 ssh 协议的文件传输协议
     * apt linux 系统的应用商店，类似 npm
-
