@@ -85,28 +85,29 @@ Q:以下两个地址有什么区别？之前一直不了解，都是混着用，
 `https://github.com/brightzoe/learngit.git`
 A:上述两个地址却有不同，虽然指向的是同一个远程仓库，但第二个用 https 方式连接，第一个是用 SSH 方式连接。区别在于对内容的安全管理。使用 https 方式，每次需要验证用户身份信息，添加 ssh-key 后用 ssh 方式则信任当前用户不用再输用户名和密码。没有设置 ssh 前默认用 https 方式，设置了 ssh 后可以更改为 remote 地址(`git remote set-url origin [url]`)，使用 ssh 方式连接,通过 ssh 协议的传输速度最快。具体添加 ssh 的方式不再赘述。
 
-Q:忽略特殊文件比如明文密码？
-A:.gitignore 文件 [Templates in Github](https://github.com/github/gitignore)
+Q: 忽略特殊文件比如明文密码？
+A: .gitignore 文件 [Templates in Github](https://github.com/github/gitignore)
 
-Q:fork 后修改，如何同步源的更新？
-A:`git remote add upstream <url>`配置上游仓库；
+Q:  fork 后修改，如何同步源的更新？
+A:  `git remote add upstream <url>`配置上游仓库；
   `git fetch upstream`抓取上游仓库（所有分支）的更新；
   `git rebase upstream/master`合并
   `git push (origin master)`推送到远程仓库
-Q:git rebase与git merge的区别
-A:
+Q: git rebase与git merge的区别
+A:  git rebase的log记录更清晰，gitmerge会生成一条新的merge commit.
+![git rebase与git merge from stackoverflow](https://i.loli.net/2020/09/06/lGR3ByZYIw8Qfnt.png)
 
-Q:
-A；
+
+Q: git pull 与git fetch的区别
+A: git pull = git fetch +git merge
+![git流程图](https://i.loli.net/2020/09/06/iO3DlgQRjBXCrM2.png)
 ### 拓展链接
 
 1. [Git Cheat Sheet](https://gitee.com/liaoxuefeng/learn-java/raw/master/teach/git-cheatsheet.pdf)
 2. [Git 官网](https://git-scm.com/)
 3. [Learn Git Branching](https://learngitbranching.js.org/)
 
-### 暂时未理解的内容
 
-- bug 分支
 
 ### Reference
 
