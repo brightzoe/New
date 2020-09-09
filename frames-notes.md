@@ -594,16 +594,17 @@ function observe(obj) {
 - 插值
   通过{}插值，里面可以是各种类型的值，可以是表达式但不能是语句
 - style 属性只接收对象不接收字符串,`style ={{color:red}}`
-
 - className= "" 属性的类型 class 要写为 className，react 的 className 属性不能动态的添加值，可以用 npm 库的 classnames
 - 条件渲染:用`true && expression` 或者三目运算符 ? :
 - key 和 ref 属性是组件的特殊属性，不在 props 上面，在 props.key 读不到！
   fixme:为什么 key 是必须的？使用 idx 作为 key 的负面影响？diff 算法怎么比较？
   > key 要稳定，可预测，列表内唯一。react 的 render()方法会创建一颗由 react 元素组成的虚拟 DOM 树，state/props 更新时，会重新 render 返回一颗不同的树。基于这两棵树的差别，有效率地更新 UI 以保证当前 UI 与最新的树保持同步。将生成的一棵树转换为另一棵树的 diff 算法比较复杂，key 同来匹配原有树上的子元素和最新树上的子元素。
   > 使用 index 作为 key 在元素不进行重新排序时比较合适。如果基于下标的组件进行了重新排序，修改顺序会修改当前的 key，导致非受控组件 state 相互篡改产生无法预期的变动。
-
+  > 为什么用虚拟dom?对虚拟dom的理解？
+  dom结构+style结构=>render
+  虚拟dom目的：抽象出虚拟层,进行变化前后的比较，确定是不是需要更新，进行批量的操作，做最少的更新，减少重绘，重布局的次数，减少真实dom的操作，减少浏览器刷新次数。
 ### JSX
-
+#### 是什么？
 - JavaScript 的语法扩展，一种标签语法，是`React.createElement()`的语法糖。
   JSX: `<Btn>Hello, world!</Btn>`，会调用 `React.createElement(Btn,props,children)`创建 React 元素。
 - JSX 自定义标签，一定是首字母大写。可以是 **变量** ，可以用 **对象点语法(Foo.Abc)** 引用，但不能是表达式，其他情况会当做原生标签的字符串传入`React.createElement()`。
@@ -611,7 +612,9 @@ function observe(obj) {
 - JSX 会移除行首，行尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格。
 - `<label htmlFor ="">` label 标签里面的 for 属性，因为 for 是 js 关键字，JSX 里面要写作 htmlfor,class 要写作 className.
 - jsx 返回的内容也只能有一个根结点，不产生单独的作用域。
-
+#### 为什么用？
+- 执行速度快
+- 类型安全，比React.createElement容易写。避免写错
 ### 组件
 
 - 组件名必须大写
@@ -718,8 +721,9 @@ function observe(obj) {
   不能通过返回 false 阻止默认行为，必须显式使用 preventDefault()。
 
 - 处理 this 的问题
-  1. 在constructor里面把所有事件处理函数绑定this:`this.handleClick=this.handleClick.bind(this)`
-  2. 事件处理函数包一层箭头函数，指定this
+
+  1. 在 constructor 里面把所有事件处理函数绑定 this:`this.handleClick=this.handleClick.bind(this)`
+  2. 事件处理函数包一层箭头函数，指定 this
   3. 在 render 里写箭头函数,如果函数没有参数或者只有参数 e,在 render 里可以直接写函数名字.
 
   ```js
@@ -872,6 +876,7 @@ React 的 diff 函数，即前后虚拟 DOM 对比方式
 ### React 的生命周期函数
 
 - 挂载阶段(mount)
+
   - `constructor()`
     如果不初始化,state 或不进行方法绑定，则不需要构造函数
   - `static getDerivedStateFromProps()`
@@ -882,10 +887,11 @@ React 的 diff 函数，即前后虚拟 DOM 对比方式
     会在组件挂载后（渲染到 DOM 中）立即调用，依赖于 DOM 节点的初始化应该放在这里。
 
 - 更新阶段(update)
+
   - `shouldComponentUpdate(nextProps, nextState)`
     根据这个函数的返回值，判断 React 组件的输出是否受当前 state 或 props 更改的影响。默认行为（返回 true）是 state 每次发生变化组件都会重新渲染。此方法仅作为性能优化的方式而存在，可以人工控制下层组件是否更新，return false 后面的 render 就不会运行，不常用
   - `render()`
-    渲染虚拟DOM
+    渲染虚拟 DOM
   - `getSnapshotBeforeUpdate()`
     在最近一次渲染输出（提交到 DOM 节点）之前调用，这个函数运行完真实 DOM 会被渲染。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）, 不常用
   - `componentDidUpdate(prevProps, prevState, snapshot)`
@@ -939,6 +945,7 @@ componentDidCatch(e){
 #### 组合和继承
 
 React 里面基本不用继承，只继承 React.Component, 更多是在一个组件里面使用另外的组件的组合.
+组件内部访问组件的属性：
 
 - `props.name`: `<Foo name="miao"/>`标签里的属性，在 Foo 组件可以通过 props.name 的方式访问。
 - `props.children`: `<Foo>balabala</Foo>` children 可以传递多种类型的值，会将写在 Foo 组件标签中间的元素都传入这个属性(中间可以不只一个根结点).
@@ -950,6 +957,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
   ```js
   function Repeat(props) {
+  	//组件内部拿到组建的属性，通过props
   	let items = [];
   	for (let i = 0; i < props.time; i++) {
   		items.push(props.render(i));
@@ -1067,10 +1075,10 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
   }
   ```
 - `React.PureComponent()`
-  和 React.component 的唯一区别是，他会自动调用 `shouldComponentUpdate()` 这个周期函数，以浅层对比 prop 和 state，如果相同组件就不会刷新，可提高性能，用于 class 组件
+  和 React.component 的唯一区别是，他会自动调用 `shouldComponentUpdate()` 这个周期函数，以浅层对比 prop 和 state，如果相同组件就不会刷新，可提高性能，用于 class 组件。**提高组件复用率。**
 
 - `React.memo()`
-  是高阶组件.和 `React.PureComponent()` 功能一样，是做性能优化的。不过它适用于函数组件 ，不适用于 class 组件；接收一个函数组件为参数，返回包装后的组件
+  是高阶组件.和 `React.PureComponent()` 功能一样，是做性能优化的，不过它适用于函数组件。接收一个函数组件为参数，返回包装后的组件。**提高组件复用率。**
   ```js
   const MyComponent = React.memo(function MyComponent(props) {
   	/* 使用 props 渲染 */
@@ -1091,6 +1099,15 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
 ### Hook
 
+- state hook 状态
+- effect hook 作用
+- context hook 上下文
+
+<img src="https://i.loli.net/2020/09/07/NKScMLlz2WrFiqO.png" width='400' height='200'>
+<img src="https://i.loli.net/2020/09/07/vHraySP85QT143f.png" width='400' height='200'>
+<img src="https://i.loli.net/2020/09/07/utvLZARr28OCiDQ.png" width='400' height='200'>
+<img src="https://i.loli.net/2020/09/07/ZerXYmpVUw7SREQ.png" width='400' height='200'>
+
 - 为函数组件带来了 state 和类似生命周期函数的功能
 - state 不会合并，而是完全替代之前的 state，多利用展开运算符
 - 函数组件状态改变时整个组件都会重新刷新
@@ -1099,22 +1116,46 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 #### 使用方法
 
 - 解构语法引入 hook 函数
-  var { useState, useEffect, useRef, useContext, useCallback, useMemo } = React
-- useState 函数，接收的参数会设置为 state 的初始值，返回一个数组 [state, 操作 state 的函数 setState]
-  setState(value){state = value} setState 的函数大概是这样
-  如 var [count, setCount] = useState(0)
-- `useEffect()` 函数，相当于一个生命周期函数 `componentDidMount` 或 `componentDidUpdate`，直接在函数组件内部使用 \*用法
-  useEffect(
-  ()=>{
-  第一个参数是一个函数，可以挂载 componentDidMount 或 componentDidUpdate 阶段需要的操作；
-  这个函数可以有一个返回值函数，返回值函数会在函数组件 componentWillUnmount 阶段运行，可有挂载一些解绑操作；
-  对于函数组件来讲，每次更新都会卸载再挂载；所以每次更新都会运行这个返回值函数
-  },【第二个可选参数是一个数组，当组件刷新时如果发现数组的内容和上一次一样，那么就不会运行这个 useEffect 函数，用于性能优化；要确保数组中包含了外部作用域中会随时间变化并且在 effect 中使用的变量，否则你的代码会引用到先前渲染中的旧变量，如果是空数组表示每次都是完全一样的内容，不运行】
-  )
+  `var { useState, useEffect, useRef, useContext, useCallback, useMemo } = React`
+- `useState()` 函数，接收的参数会设置为 state 的初始值，返回一个数组 `[state,setState]`
+  ```js
+  export default () => {
+  const [count, setCount] = useState(()=>0)//useState接收函数或者初始值 useState(0)
+  return <div>
+    {count}
+    <button onClick={()=>setCount(x=>x+1)}>+1</button>
+  </div>
+  }
+  ```
 
+- `useEffect()` 函数，相当于一个生命周期函数 `componentDidMount()` 或 `componentDidUpdate()`，直接在函数组件内部使用
+  第一个参数是一个函数，可以挂载 `componentDidMount()` 或 `componentDidUpdate()` 阶段需要的操作；这个函数可以有一个返回值函数，返回值函数会在函数组件componentWillUnmount 阶段运行，可有挂载一些解绑操作；对于函数组件来讲，每次更新都会卸载再挂载；所以每次更新都会运行这个返回值函数。
+  第二个可选参数是一个数组，当组件刷新时如果发现数组的内容和上一次一样，那么就不会运行这个 useEffect 函数，用于性能优化；要确保数组中包含了外部作用域中会随时间变化并且在 effect 中使用的变量，否则你的代码会引用到先前渲染中的旧变量，如果是空数组表示每次都是完全一样的内容，不运行。
   - 优点
     - 绑定和解绑放在一起，可读性和操作性好
     - 对于复杂的逻辑，可以写多组 useEffect() 函数，相关逻辑放到同一个 useEffect() 函数里面，逻辑分离
+  ```js
+  //所有的生命周期都在useEffect里面
+  export default () => {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+      const I = setTimeout(() => {
+        setCount((x) => x + 1);
+      }, 1000);
+      return () => {
+        console.log('clear')
+        clearTimeout(I);
+      }; //回收
+    }, [Math.min(count, 5)]); //deps
+    console.log('render');
+    return (
+      <div>
+        <p>{count}</p>
+      </div>
+    );
+  };
+  ```
+
 
 - useContext 函数 hook, 类似 class 组件里面的 Context 功能
 
@@ -1146,114 +1187,154 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
 ### react 路由
 
-- 安装
+安装:
+`<script src = "https://unpkg.com/react-router-dom@4.3.0/umd/react-router-dom.js">`
+`npm install react-router-dom`
 
-  `<script src = "https://unpkg.com/react-router-dom@4.3.0/umd/react-router-dom.js">` / `npm install react-router-dom`
+- `import { HashRouter as Router,Switch,Route,Link,withRouter,Redirect,useParams,useHistory} from 'react-router-dom'` 引入变量
 
-* `var { BrowserRouter,HashRouter,Switch,Route,Link,withRouter} = ReactRouterDOM` 引入变量
+**相关变量:**
 
-* 相关变量
-
-  - HashRouter:一个组件，包裹在所有路由的最外层，表示以 hash 模式进行地址导航
-  - BrowserRouter: H5 模式，一般不需要
-  - Switch, 可选，表示按照顺序匹配内部的路由，只匹配满足条件的第一个
-  - Route: 导航组件 `<Route path="/users/:id" exact><Component/></Route>`
-    - path 只能接完整路径，嵌套路由也是完整路径
-    - exact 表示必须精确匹配路径，默认都是开头匹配就行，匹配成功就就加载中间的组件
-    - 也可以通过 path 向内部组件参数
-    - path 里面"\*"表示通配符，匹配所有路径
-  - link: 相当于一个 a 标签 `<Link to="/about">About</Link>`, 点击就导航到对应路由组件
-  - 路由里的不是由 `<Route path="">`过来的组件不能直接接受 path 传递来的参数，需要 withRouter 将组件包裹一层
-    `var User = withRouter(function User(props) {})`
-    接受到的属性 props 是个对象，有 history，location,match 几个属性，分别有相关的方法，可以通过 `props.match.params. 参数名 (id)` 拿到传递过来的参数
-
-* react 是按照业务逻辑书写，符合用法即可。
-  function App() {
-  return (
-  <HashRouter>
-
-  <div>
-  <nav>
-  <Link to="/users">Users</Link>
-  </nav>
-  <Switch>
-  <Route path="/users">
-  <Users />
-  </Route>
-  <Route path="/users" component={组件名Users}/>
-  </Switch>
-  </div>
-
-  </HashRouter>
-  )
+- HashRouter: 哈希路由，一个组件，包裹在所有路由的最外层，表示以 hash 模式进行地址导航
+- BrowserRouter: H5 模式，一般不需要
+- Switch, 可选，表示按照顺序匹配内部的路由，只匹配满足条件的第一个
+- Route: 导航组件 `<Route path="/users/:id" exact><Component/></Route>`
+  - path 只能接完整路径，嵌套路由也是完整路径
+  - exact 表示必须精确匹配路径，默认都是开头匹配就行，匹配成功就就加载中间的组件
+  - 也可以通过 path 向内部组件参数
+  - path 里面"\*"表示通配符，匹配所有路径
+- Link: 相当于一个 a 标签 `<Link to="/about">About</Link>`, 点击就导航到对应路由组件
+- 路由里的不是由 `<Route path="">`过来的组件不能直接接受 path 传递来的参数，需要 withRouter 将组件包裹一层。
+  `var User = withRouter(function User(props) {})` 接受到的属性 props 是个对象，有 history，location,match 几个属性，分别有相关的方法，可以通过 `props.match.params. 参数名 (id)` 拿到传递过来的参数
+  ```js
+  function IRouter() {
+  	return (
+  		<Router>
+  			<Switch>
+  				<Route path="/" exact component={App}></Route>
+  				<Route path="/login" exact component={Login}></Route>
+  				<Route path="/home" exact component={Home}>
+  					<Redirect to="/Login"></Redirect>//重定向
+  				</Route>
+  				<Route path="/detail/:id" component={Detail}>
+  					{' '}
+  				</Route>//动态路由
+  				<Route path="*" component={NoMatch}></Route>
+  			</Switch>
+  		</Router>
+  	);
   }
+  //有状态组件
+  class App extends React.Component {
+  	handleJump = () => {
+  		this.props.history.push('/login'); //有状态组件button点击跳转
+  	};
+  	render() {
+  		return (
+  			<div className="container">
+  				<h1>欢迎！</h1>
+  				<p>当前ID为：{this.props.match.params.id}</p>//获取id
+  				<Link to="/login">点击跳转到登录页面</Link>
+  				<br />
+  				<Link to="/home">点击跳转到主页面</Link>
+  				<br />
+  				<Button onClick={this.handleJump}>点击跳转到登录</Button>
+  			</div>
+  		);
+  	}
+  }
+  ```
 
-* Redux
+**路由 Hooks**
 
-  - 比较底层的封装，单项数据流，全局数据中心，实现了组件之间的数据和事件的传递
+- UseParams():是一个对象，包含相关参数
+- UseHistory():数组，跳转
+  ```js
+  export default function Detail() {
+  	const history = useHistory();
+  	const params = useParams();
+  	return (
+  		<div className="container">
+  			<p>this is detail.</p>
+  			<p>当前参数值为：{params.id}</p>
+  			<Button
+  				onClick={() => {
+  					history.push('/');
+  				}}
+  			>
+  				跳转首页
+  			</Button>
+  		</div>
+  	);
+  }
+  ```
 
-  - 仅支持同步函数，异步需要使用第三方插件（Redux-thunk）
+### Redux
 
-  - 用法
+- 比较底层的封装，单项数据流，全局数据中心，实现了组件之间的数据和事件的传递
 
-    - 引入<script src="https://unpkg.com/redux@4.0.4/dist/redux.js">
-    - 创造一个 store
-      - var store = Redux.createStore((state, action)=>{},state)
-      - 第一个参数是一个 reducer 函数，函数有 2 个参数，state 表示储存的数据，action 是一个对象，子组件里面通过 dispatch 函数来传递这个对象，这个 reducer 函数通过 action 的信息来触发对 state 的相关操作，返回一个新的 state
-      - 创建的 store 上面有两个常用的方法，dispatch 和 subscribe 方法
-        - dispatch, 传递给下层组件，下层组件利用这个方法操作 state 触发更新
-        - subscribe, 用来监听 state 变更
-          - var unSubscribe = store.subscribe(fun)
-          - 数据变更时 fun 会运行，这个 fun 不接参数，并返回一个函数 unSubscribe
-          - 调用 unSubscribe 就会把这次的监听函数 subscribe 解绑
-    - mutations
-      - 下层组件 dispatch 的 action 里面有操作类型信息，一般放到 action.type 属性上，reducer 会根据 action.type 来执行某种操作，当我们可以把这些操作集中放到全局定义的一个 mutations 属性上面，reducer 函数接收到 action 时先从 mutation 上面拿到函数，再操作 state
-        var store = Redux.createStore((state, action) => {
-        var mutation = mutations[action.type]
-        if (mutation) {
-        return mutation(state, action)
-        } else {
-        return state
-        }
-        }, state)
-      - 操作数据的方法可以配合 immer.js，优化性能而且更方便
+- 仅支持同步函数，异步需要使用第三方插件（Redux-thunk）
 
-  - 下层组件如何接入 store，需要第三方插件集成
+- 用法
 
-    - <script src="https://unpkg.com/react-redux@5.0.6/dist/react-redux.js">
-      var { Provider，connect} = ReactRedux
-
-
-    - 在根组件里面的最外层用 <Provider store={store}></Provider>包一层，下层组件就可以访问到 store 的 state 以及相关方法
-
-    - connect 函数的用法
-
-      - var NewComponent = connect(mapStateToProps,mapDispatchToProps)(Component)
-      - Component 表示一个子组件，可以是函数组件或者 class 组件
-      - mapStateToProps 函数，state=>{return {}}, 对 state 进行相关操作，返回一个对象 obj1
-      - mapDispatchToProps 函数，dispatch=>{return {deleteTodo: (idx) => dispatch({type: 'deleteTodo', idx})}}, 返回一个对象 obj2，对象属性是组件相关方法名称，属性值是一个函数，这个函数里面会 dispatch 相关 action 到 store 的 reducer 函数，触发组件更新；
-        obj1 和 obj2 都会合并到组件的 props 对象里面，这样组件可以通过 props.method 来 dispatch 相关方法到达交互目的
-      - NewComponent 新返回的组件，可以接受全局的 store 进行交互
-
-    - connect 函数的实现
-      var StoreContext = React.createContext()
-      function connect(mapState, mapDispatch) {
-      return function(WrapComp) {
-      return React.forwardRef(function Comp(props, ref) {
-      var store = useContext(StoreContext)
-      var [r, setR] = useState(0)
-      useEffect(() => {
-      return store.subscribe(() => {
-      setR(r + 1)
-      })
-      })
-      var state = mapState(store.getState())
-      var dispatchs = mapDispatch(store.dispatch)
-      var {children, ...props2} = props
-      return <WrapComp ref={ref} {...props2} {...state} {...dispatchs}>{children}</WrapComp>
-      })
+  - 引入<script src="https://unpkg.com/redux@4.0.4/dist/redux.js">
+  - 创造一个 store
+    - var store = Redux.createStore((state, action)=>{},state)
+    - 第一个参数是一个 reducer 函数，函数有 2 个参数，state 表示储存的数据，action 是一个对象，子组件里面通过 dispatch 函数来传递这个对象，这个 reducer 函数通过 action 的信息来触发对 state 的相关操作，返回一个新的 state
+    - 创建的 store 上面有两个常用的方法，dispatch 和 subscribe 方法
+      - dispatch, 传递给下层组件，下层组件利用这个方法操作 state 触发更新
+      - subscribe, 用来监听 state 变更
+        - var unSubscribe = store.subscribe(fun)
+        - 数据变更时 fun 会运行，这个 fun 不接参数，并返回一个函数 unSubscribe
+        - 调用 unSubscribe 就会把这次的监听函数 subscribe 解绑
+  - mutations
+    - 下层组件 dispatch 的 action 里面有操作类型信息，一般放到 action.type 属性上，reducer 会根据 action.type 来执行某种操作，当我们可以把这些操作集中放到全局定义的一个 mutations 属性上面，reducer 函数接收到 action 时先从 mutation 上面拿到函数，再操作 state
+      var store = Redux.createStore((state, action) => {
+      var mutation = mutations[action.type]
+      if (mutation) {
+      return mutation(state, action)
+      } else {
+      return state
       }
-      }
+      }, state)
+    - 操作数据的方法可以配合 immer.js，优化性能而且更方便
+
+- 下层组件如何接入 store，需要第三方插件集成
+
+  - <script src="https://unpkg.com/react-redux@5.0.6/dist/react-redux.js">
+    var { Provider，connect} = ReactRedux
+
+
+  - 在根组件里面的最外层用 <Provider store={store}></Provider>包一层，下层组件就可以访问到 store 的 state 以及相关方法
+
+  - connect 函数的用法
+
+    - var NewComponent = connect(mapStateToProps,mapDispatchToProps)(Component)
+    - Component 表示一个子组件，可以是函数组件或者 class 组件
+    - mapStateToProps 函数，state=>{return {}}, 对 state 进行相关操作，返回一个对象 obj1
+    - mapDispatchToProps 函数，dispatch=>{return {deleteTodo: (idx) => dispatch({type: 'deleteTodo', idx})}}, 返回一个对象 obj2，对象属性是组件相关方法名称，属性值是一个函数，这个函数里面会 dispatch 相关 action 到 store 的 reducer 函数，触发组件更新；
+      obj1 和 obj2 都会合并到组件的 props 对象里面，这样组件可以通过 props.method 来 dispatch 相关方法到达交互目的
+    - NewComponent 新返回的组件，可以接受全局的 store 进行交互
+
+  - connect 函数的实现
+    var StoreContext = React.createContext()
+    function connect(mapState, mapDispatch) {
+    return function(WrapComp) {
+    return React.forwardRef(function Comp(props, ref) {
+    var store = useContext(StoreContext)
+    var [r, setR] = useState(0)
+    useEffect(() => {
+    return store.subscribe(() => {
+    setR(r + 1)
+    })
+    })
+    var state = mapState(store.getState())
+    var dispatchs = mapDispatch(store.dispatch)
+    var {children, ...props2} = props
+    return <WrapComp ref={ref} {...props2} {...state} {...dispatchs}>{children}</WrapComp>
+    })
+    }
+    }
 
 - react 全家桶
 
