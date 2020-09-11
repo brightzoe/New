@@ -948,7 +948,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 组件内部访问组件的属性：
 
 - `props.name`: `<Foo name="miao"/>`标签里的属性，在 Foo 组件可以通过 props.name 的方式访问。
-- `props.children`: `<Foo>balabala</Foo>` children 可以传递多种类型的值，会将写在 Foo 组件标签中间的元素都传入这个属性(中间可以不只一个根结点).
+- `props.children`: `<Foo>balabala</Foo>` children 可以传递多种类型的值，会将写在 Foo 组件标签中间的元素都传入这个属性(中间可以不只一个根结点),是一个JSX
 
 #### Render Props 渲染属性
 
@@ -1277,7 +1277,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
 - 用法
 
-  - 引入<script src="https://unpkg.com/redux@4.0.4/dist/redux.js">
+  - 引入`<script src="https://unpkg.com/redux@4.0.4/dist/redux.js">`
   - 创造一个 store
     - var store = Redux.createStore((state, action)=>{},state)
     - 第一个参数是一个 reducer 函数，函数有 2 个参数，state 表示储存的数据，action 是一个对象，子组件里面通过 dispatch 函数来传递这个对象，这个 reducer 函数通过 action 的信息来触发对 state 的相关操作，返回一个新的 state
@@ -1301,15 +1301,15 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
 - 下层组件如何接入 store，需要第三方插件集成
 
-  - <script src="https://unpkg.com/react-redux@5.0.6/dist/react-redux.js">
+  - `<script src="https://unpkg.com/react-redux@5.0.6/dist/react-redux.js">`
     var { Provider，connect} = ReactRedux
 
 
-  - 在根组件里面的最外层用 <Provider store={store}></Provider>包一层，下层组件就可以访问到 store 的 state 以及相关方法
+  - 在根组件里面的最外层用 `<Provider store={store}></Provider>`包一层，下层组件就可以访问到 store 的 state 以及相关方法
 
   - connect 函数的用法
 
-    - var NewComponent = connect(mapStateToProps,mapDispatchToProps)(Component)
+    - `var NewComponent = connect(mapStateToProps,mapDispatchToProps)(Component)`
     - Component 表示一个子组件，可以是函数组件或者 class 组件
     - mapStateToProps 函数，state=>{return {}}, 对 state 进行相关操作，返回一个对象 obj1
     - mapDispatchToProps 函数，dispatch=>{return {deleteTodo: (idx) => dispatch({type: 'deleteTodo', idx})}}, 返回一个对象 obj2，对象属性是组件相关方法名称，属性值是一个函数，这个函数里面会 dispatch 相关 action 到 store 的 reducer 函数，触发组件更新；
@@ -1353,21 +1353,52 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
       readme.md 告诉你这么开启这个项目的命令
   - 相关文件配置好后，运行 npm run build , 它会根据 src 和 public 一起构建一个 build 文件，之后把 build 文件里面的资源放到后端的 static 静态文件夹里，这样就可以用后端的端口启动项目；这个 build 文件就是上线启动文件
 
+## TS
+- JS的超集。TS是一门静态类型语言：变量的类型在书写时确定，运行时不能改变。类似的语言：java,c,c++
+- 静态类型由于书写时就能确定所有变量的类型，带来的好处是编辑器及相关的工具链可以在程序编写时就给出一定的错误或者智能提示。
+- **泛型**
+  ```ts
+  var ary:Array<number> = [1,2,3]
+  var ary:number[]
+  class People extends Array {
+	  x: number;
+	  constructor(name: string, age: number) {
+		  super(age);
+		  this.x = 1;
+    }
+    /**
+     * 返回一个新的People对象。
+     */
+	  foo(a: string, b: number): People {
+		  return new People(a,b);
+	  }
+  }
+  ```
+- 允许为一份已经存在的 **由原生JS编写的代码** 增加一份类型声明文件。d.ts
+
+
+
 ## webpack
 
-- 打包
-- 将除 js 以外的其它资源也当成 require 的资源，如图片，css,json,svg，字体，他通过把这些非 js 资源转化为等价的 js 文件来实现；这个格式转换工具在 webpack 里面称为 loader, 即使是 js 文件也会经过 babel-loader 转换
-  比如对于图片而言，小资源转换为 base64，大资源转换资源地址；
-  比如 sass-loader,css-loader,style-loader
-- plugin 在 webpack 则是对整体的打包结果进行处理的一种插件机制
-  如压缩，混淆代码（安全保密），（webpack-jsuglify-plugin）
-  处理通用（vendor）模块的抽离（common-chunks-plugin）
-  自动生成入门 html 页面（webpack-html-plugin）
+- 打包  将代码从入口文件打包为一个单一文件
+- 转换  将不是js的文件通过loader转换为等价的js文件
 - 代码分割 code spliting
-  将一开始不需要用到的模块打包到另一个或多个文件中，在需要的时候（代码执行到对应的位置时）再加载
+  一般打包为一个单一的文件。 但是所有的业务逻辑和框架等打包到一个单一文件的话会很大。更主要的是，就算把所有功能都打包到一个文件中，也不是所有功能都会被使用。
+  比如网络应用，一次性下载所有功能的代码是不必要的。code spliting 用户在打开界面的时候，只加载基本功能/入口页面的功能，随着用户的交还是用户能更快打开入口页面。
 - 摇树优化 tree shaking
-  不需要用到的代码将不会进入到打包结果中，减少打包体积
-  此功能主要依赖 es module 语法，因为它提供静态分析（即不运行代码对代码进行分析）的可能性
+  不需要用到的代码将不会进入到打包结果中，减少打包体积。
+  此功能主要依赖 es module 语法，因为它提供静态分析（即不运行代码对代码进行分析，不会因为逻辑成立与否而引入或导出某个模块，import/export不会存在if里面）的可能性。其他方式书写的模块很难去做tree shaking分析。
+- **loader 与 plugin 的区别**
+  - loader:将除 js 以外的其它资源也当成 require 的资源，如图片，css,json,svg，字体，通过把这些非 js 资源转化为等价的 js 文件来实现；这个格式转换工具在 webpack 里面称为 loader, 即使是 js 文件也会经过 babel-loader 转换
+    比如对于图片而言，小资源转换为 base64，大资源转换资源地址；
+    比如 sass-loader,css-loader,style-loader,image-loader
+  - plugin: 在 webpack 则是对整体的打包结果进行处理的一种插件机制
+    webpack-jsuglify-plugin：如压缩，混淆代码（安全保密）
+    common-chunks-plugin：处理通用（vendor）模块的抽离,将第三方代码与自己写的代码分开打包，第三方代码的打包结果不容易发生变化。
+    webpack-html-plugin：自动生成入门 html 页面
+    MiniCssExtractPlugin：将所有css文件从依赖树中提取出来，放入单独的css文件而不打包在js里
+    GenerateSW：生成service worker
+    HotModuleReplacementPlugin：模块热重载：页面不重新加载的情况下，模块的新代码就能在浏览器生效。但并不是对所有的模块都能这么用，一般来说组件的代码，css的代码可以实现热重载。
 
 ## 其它框架知识
 
@@ -1375,6 +1406,6 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 - ssr 服务端渲染
   - 一次请求响应就拿到所有渲染数据,客户更快看到页面内容
   - 直接返回目标页面，不需要重新加载
-  - 方便 SEQ
+  - 方便 SEO
   - 需要后端配置
 - React Native 是用来开发移动应用。需要用到 React 概念
