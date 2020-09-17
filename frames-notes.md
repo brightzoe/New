@@ -893,7 +893,8 @@ React 的 diff 函数，即前后虚拟 DOM 对比方式
   - `render()`
     渲染虚拟 DOM
   - `getSnapshotBeforeUpdate()`
-    在最近一次渲染输出（提交到 DOM 节点）之前调用，这个函数运行完真实 DOM 会被渲染。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）, 不常用
+    在最近一次渲染输出（提交到 DOM 节点）之前调用，这个函数运行完真实 DOM 会被渲染。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）, 不常用.
+    有返回值，会传给didUpdate
   - `componentDidUpdate(prevProps, prevState, snapshot)`
     会在组件更新后会被立即，此时调用真实 DOM 已经完成，可以直接对 DOM 操作。首次渲染不会执行此方法
 
@@ -913,7 +914,7 @@ React 的 diff 函数，即前后虚拟 DOM 对比方式
     - 解决 DOM 树过深同步渲染整个 DOM 性能下降问题
     - 将 DOM 拆分渲染，分不同的时间片段异步渲染
     - 由于异步的存在，可以根据用户行为灵活的调整 DOM
-  - React-Fiber 架构异步渲染使 render 之前的函数可能执行多次，若这些函数会产生副作用，则会产生 bug。render 之前的函数都必须是纯函数或者是 static 方法函数。
+  - React-Fiber 架构异步渲染使 render 之前的函数可能执行多次，**若这些函数会产生副作用，则会产生 bug。render 之前的函数都必须是纯函数或者是 static 方法函数。**
 
 - 不要 UNSAFE_componentWillMount 在这个组件里面发生 AJAX 请求的原因
 
