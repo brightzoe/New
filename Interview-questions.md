@@ -56,14 +56,45 @@
 - z-index 用法
 - BFC 定义，触发条件
 - 响应式布局实现原理
+- src 和 href 有什么区别
+  一般 src 指向的资源一般会被加载到页面里使用的，如 img,iframe。href 属性指向的只是一个地址，一般不会加载,如 a 标签。
+  例外:link 引用 css
+- css 为啥放前面，script 放后面
+  css 的加载过程不阻塞页面 dom 的解析，script 的加载和运行都是会阻塞 dom 的解析的。
+  所以如果 script 放前面，加载的时候页面就会暂停解析，只能展示解析出来的部分。
+  另外，script 放后面，等他运行时，dom 也差不多了，不用 onload 或 ready 事件。
 
+- css 会阻塞页面的渲染嘛？
+  嵌入在页面的 css 会，外部加载的不会
+
+- margin 合并
+  相邻的两个常规流兄弟元素的垂直外边距会被折叠。
+  父子元素也会合并，但必须都是块元素，如果父元素触发了 BFC 则不会。
+  浮动元素和绝对顶外元素外边距不会折叠
+
+- MIME Type 常见的媒体类型
+  application/json
+  multipart/form-data
+  text/css
+  text/html
+  img/png
+  media/video
 TODO:色彩空间/rgb 色域？CMYK
 
 回流与重绘
 
 bootstrap 再熟悉一下
+## git
 
-## js 的理解
+- 平时用到哪些？
+  merge
+  rebase
+  push/pull
+  stash:
+  cherry-pick
+- git 删除上上一条 commit
+  rebase ：把当前分支拿下来，挂到别的地方去
+## JS
 
 - 在 html 里面,js 一般要写在 body 后面，因为 html 读取一行执行一行.遇到`<script>`先确认没有语法错误,然后执行 js。如果在前面引入 js , 浏览器会等待 js 加载完成才继续运行. 如果写在前面，可以加 `window.onload`, 代表页面加载完成再执行.
 - 行为，样式，结构三者分离 (js,css,html)
@@ -87,7 +118,7 @@ bootstrap 再熟悉一下
   禁止 with
   eval 不一样。
 - **传递参数**
-  js 中的变量分为原始类型和引用类型。调用变量，原始类型按值调用，引用类型按引用调用。
+  js 中的变量分为原始类型和引用类型。调用变量，复制，原始类型按值调用，引用类型按引用调用。
   在函数中传递参数，所有参数都是按值传递的。
   ```js
   //原始类型按值传递
@@ -104,7 +135,7 @@ bootstrap 再熟悉一下
   //对象也是按值传递的
   function setName(obj) {
   	obj.name = 'Nicholas';
-  	obj = new Object();//obj指向了新对象，已经不指向person了
+  	obj = new Object(); //obj指向了新对象，已经不指向person了
   	obj.name = 'Greg';
   }
   let person = new Object();
@@ -174,7 +205,7 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
 //前面都为true,才向后执行
 //The first 5 values are all truthy and get evaluated until it meets the first falsy value (null) which makes the expression false, so 2010 isn't evaluated anymore, and null gets returned as a result of the expression.
 
-````
+```
 
 ### 闭包
 
@@ -431,128 +462,6 @@ TODO: md5 计算器
 - 发布/订阅模式：事件监听与触发
 - MVVM Model→View→Model
 
-### Vue
-
-- 组件之间的传值方式
-- SPA,MPA,单页应用，多页应用
-
-### React
-
-- react propTypes 线上会移除吗
-  import PropType from 'prop-types'。会的，开发阶段的验证。
-- react 组件，class,function 声明，React.createClass 的区别
-  class 的声明方式
-  需要继承。
-  组件将创建组件实例。
-  可以有生命周期函数。
-  可以有状态。
-  function 声明
-  无需继承，
-  组件不是 new 出来的，没有实例。但 react 内部还是有表示该组件的对象。
-  没有生命周期函数，但有 hooks 来实现类似的功能。
-  以前没有状态，现在有状态，通过 useState 的 hook 实现。
-  可以用 hooks 函数，但 class 不行。
-  React.createClass
-  类似于 class 的形式，但不必过多关心 this 的问题.
-
-- 如果不在 react 中使用 constructor，组件的生命周期中可以调用到 props 吗
-  可以。不写等于默认以下：
-  ```js
-  class Foo extends React.Component {
-  	constructor(props) {
-  		super(props);
-  	}
-  }
-  ```
-- diff 算法
-
-- react 有哪些生命周期
-
-- unsafe,为什么 unsafe
-  Fiber 架构，有副作用，可能没有清除，在 render 之前有副作用。换成了静态方法
-
-- setState 的同步异步问题。
-  事件处理函数中是异步的，在 timer 里面是同步的。
-- 子组件怎么向父组件传信息
-  通过调用父组件传来的函数
-- 组件之间相互传值——父传子，子传父，兄弟之间
-  直接传属性或事件
-  触发事件
-  Context
-  全局事件中心
-  - 兄弟之间：
-    全局事件中心
-    状态提升，将数据提到公共祖先上，借由公共组件传递
-    redux
-- 子传父时 refs 如何使用
-  ref 拿到子组件的实例，然后调用其方法
-
-- react 里面函数为什么要进行 this 绑定？
-  class 声明的 react 组件，读取其中的方法时，this 会丢失。
-
-- react 原生事件和普通事件的区别？
-  react 里面事件对象是合成对象。
-  处理了一定的兼容性问题。
-  合成事件对象为了节省内存，不同事件也都是用的同一个对象，除非调用 e.persist(),他才能异步读到数据，否则异步是读不到数据的。
-
-- 高阶组件什么时候会用到
-  封装逻辑复用
-  redux connect
-
-- react 对真实 DOM 有哪些优化操作？
-  状态改变以后只会修改 dom 需要变化的部分。-diff 算法
-- react 性能优化
-  shouldComponentUpdate
-  不可变数据结构
-  结构共享
-  immer
-  对属性做浅对比，如果不变，就不刷新
-  PureComponent,React.memo
-
-**hooks**
-
-- hooks 和类组件的区别？
-
-- hooks 对函数组件带来了什么优势？
-  state，副作用
-  不同组件间的逻辑复用变得很容易。
-  将逻辑抽象成新的 hooks。
-  让相关的代码放在一起。
-
-- useEffect
-  什么时候运行，
-  清理函数
-
-**redux**
-
-- reducer-combine connect
-  Redux.combineReducers 把多个 reducer 函数合并成一个。
-- redux 原理和用法？使用方式，如何用 redux 处理异步代码，如何阻止子元素渲染
-  使用 redux 中间件
-  redux-thunk,redux-saga
-  阻止子元素渲染
-  shouldComponentUpdate
-  阻止子组件更新
-  被 redux connect 过的组件自动会在属性浅对比不变时不更新组件
-- 状态管理库，redux 的数据传输过程？从页面触发事件开始
-- react-router 跳转跟普通 a 链接有什么区别？
-  一个是前端路由，一个是后端路由。
-  前端路由只是切换组件树，而 a 链接加载新的页面。
-
-- 对 react 的理解？
-  跟什么组合成 react 全家桶
-- 对 redux 的理解？
-  redux 如果发异步请求，如何让数据流停在某个地方？
-- 遇到过的难搞的问题
-  hooks 的闭包陷阱
-  react-router 的 history 模式配置
-  副作用写错地方
-
-### antd
-
-- 用过哪些组件？form 表单怎么对数据进行验证？
-  form,input,button
-
 ### es6
 
 - 有哪些新特性？
@@ -570,38 +479,6 @@ TODO: md5 计算器
   symbol
   WeakMap
   在现在的 stage 4 里面有#可以实现。
-
-### git
-
-- 平时用到哪些？
-  merge
-  rebase
-  push/pull
-  stash:
-  cherry-pick
-- git 删除上上一条 commit
-  rebase ：把当前分支拿下来，挂到别的地方去
-
-### webpack
-
-- 是否了解？
-  什么作用?有没有配置过 webpack
-
-- src 和 href 有什么区别
-  一般 src 指向的资源一般会被加载到页面里使用的，如 img,iframe。href 属性指向的只是一个地址，一般不会加载,如 a 标签。
-  例外:link 引用 css
-- css 为啥放前面，script 放后面
-  css 的加载过程不阻塞页面 dom 的解析，script 的加载和运行都是会阻塞 dom 的解析的。
-  所以如果 script 放前面，加载的时候页面就会暂停解析，只能展示解析出来的部分。
-  另外，script 放后面，等他运行时，dom 也差不多了，不用 onload 或 ready 事件。
-
-- css 会阻塞页面的渲染嘛？
-  嵌入在页面的 css 会，外部加载的不会
-
-- margin 合并
-  相邻的两个常规流兄弟元素的垂直外边距会被折叠。
-  父子元素也会合并，但必须都是块元素，如果父元素触发了 BFC 则不会。
-  浮动元素和绝对顶外元素外边距不会折叠
 
 ### 跨域
 
@@ -647,8 +524,12 @@ TODO: md5 计算器
 ### 网络
 
 - https 加密原理？是对称加密还是非对称加密?
-  走在安全连接上的 http.握手的时非对称加密，握手完成以后是对称加密，非对称加密解密时间较久。
+  对称加密：加密与解密使用相同的密码。
+  非对称加密：用公钥加密，需要使用对应的私钥解密。
+  握手的时非对称加密，握手完成以后是对称加密，非对称加密解密时间较久。
+  TLS 协议：证书链，即信任链。
 - http 和 https 区别
+  走在安全连接上的 http.
 - **浏览器缓存。那些事强缓存，哪些是协商缓存？具体字段？**
   强缓存：
   Expires
@@ -662,10 +543,14 @@ TODO: md5 计算器
 - tcp 和 udp
   - tcp 对头阻塞
 - tcp 三次握手，四次挥手
-  三从成功
+  一次信息交换至少要建立三次成功的通信。
+  四次挥手，在特定情况下可以是三次。
+
 - 前端攻击有哪些？
   csrf,sql 注入,xss
 - 网络安全 xss、csrf（为什么 token 可以预防），怎么防范？
+  XSS:用户的输入被发到页面上，成为页面的代码并执行（留言留了 script 并可以执行了）
+  CSRF：跨站脚本攻击，一个页面借用了已经登陆的页面的 cookie 向该页面的服务器发送请求
 - http304 Not Modified
   304：协商缓存成功的状态码
   Not Modified：两方版本相同，不需要再发送了
@@ -678,6 +563,7 @@ TODO: md5 计算器
   POST /foo/bar HTTP/1.1
   Content-Type:application/json
   Content-Length:28
+- HTTP2
 
 - 强缓存与协商缓存
   强缓存：后续使用这个资源的时候就不发请求。
@@ -889,6 +775,165 @@ TODO: md5 计算器
   合并：把 script 标签的 js 文件按照 script 的顺序合并成一个。
   为什么：合并后可以有更好的压缩率，且传输的时候只需要一个 http 的请求，节省流量，更快，更省钱。
 
+### Vue
+
+- 组件之间的传值方式
+- SPA,MPA,单页应用，多页应用
+
+### React
+
+- react propTypes 线上会移除吗
+  import PropType from 'prop-types'。会的，开发阶段的验证。
+- react 组件，class,function 声明，React.createClass 的区别
+  **class 的声明方式**
+  需要继承。
+  组件将创建组件实例。
+  可以有生命周期函数。
+  可以有状态。
+  **function 声明**
+  无需继承，
+  组件不是 new 出来的，没有实例。但 react 内部还是有表示该组件的对象。
+  没有生命周期函数，但有 hooks 来实现类似的功能。
+  以前没有状态，现在有状态，通过 useState 的 hook 实现。
+  可以用 hooks 函数，但 class 不行。
+  **React.createClass**
+  类似于 class 的形式，但不必过多关心 this 的问题.
+
+- 如果不在 react 中使用 constructor，组件的生命周期中可以调用到 props 吗
+  可以。不写等于默认以下：
+  ```js
+  class Foo extends React.Component {
+  	constructor(props) {
+  		super(props);
+  	}
+  }
+  ```
+- diff 算法
+
+- react 有哪些生命周期？生命周期的调用过程
+
+- unsafe,为什么 unsafe
+  Fiber 架构，有副作用，可能没有清除，在 render 之前有副作用。换成了静态方法
+
+- setState 的同步异步问题。setState 之后发生了什么
+  事件处理函数中是异步的，在 timer 里面是同步的。
+- 子组件怎么向父组件传信息
+  通过调用父组件传来的函数
+- 组件之间相互传值——父传子，子传父，兄弟之间
+  直接传属性或事件
+  触发事件
+  Context
+  全局事件中心
+  - 兄弟之间：
+    全局事件中心
+    状态提升，将数据提到公共祖先上，借由公共组件传递
+    redux
+- 子传父时 refs 如何使用
+  ref 拿到子组件的实例，然后调用其方法
+
+- react 里面函数为什么要进行 this 绑定？
+  class 声明的 react 组件，读取其中的方法时，this 会丢失。
+- context 和 ref
+- react 原生事件和普通事件的区别？
+  react 里面事件对象是合成对象。
+  处理了一定的兼容性问题。
+  合成事件对象为了节省内存，不同事件也都是用的同一个对象，除非调用 e.persist(),他才能异步读到数据，否则异步是读不到数据的。
+- 受控组件和非受控组件的区别??
+  fixme:
+  受控组件有 value/checked 属性，一般需要 onChange 事件
+  非受控组件没有 value
+- 高阶组件什么时候会用到
+  封装逻辑复用
+  redux connect
+- 组件的封装
+  接收什么属性，有什么状态，渲染出什么结构
+- react 对真实 DOM 有哪些优化操作？
+  状态改变以后只会修改 dom 需要变化的部分。-diff 算法
+- react 性能优化
+  shouldComponentUpdate
+  不可变数据结构
+  结构共享
+  immer
+  对属性做浅对比，如果不变，就不刷新
+  PureComponent,React.memo
+- react 的坑点
+  hooks 的闭包陷阱/陈旧闭包，
+  副作用
+  不可变数据结构
+- **hash 路由和浏览器路由（history)的区别**
+  history 需要后端配置，使用 pushState/onpopstate 来实现
+  hash 路由不需要后端配置，使用 onhashchange 事件来实现
+
+#### **hooks**
+
+- hooks 和类组件的区别？
+
+- hooks 对函数组件带来了什么优势？
+  state，副作用
+  不同组件间的逻辑复用变得很容易。
+  将逻辑抽象成新的 hooks。
+  让相关的代码放在一起。
+
+- useEffect
+  什么时候运行，
+  清理函数
+
+#### **redux**
+
+- reducer-combine connect
+  Redux.combineReducers 把多个 reducer 函数合并成一个。
+- redux 原理和用法？使用方式，工作流程，如何用 redux 处理异步代码，如何阻止子元素渲染
+  使用 redux 中间件
+  redux-thunk,redux-saga
+  阻止子元素渲染
+  shouldComponentUpdate
+  阻止子组件更新
+  被 redux connect 过的组件自动会在属性浅对比不变时不更新组件
+- 状态管理库，redux 的数据传输过程？从页面触发事件开始
+- react-router 跳转跟普通 a 链接有什么区别？
+  一个是前端路由，一个是后端路由。
+  前端路由只是切换组件树，而 a 链接加载新的页面。
+
+- 对 react 的理解？
+  跟什么组合成 react 全家桶
+- 对 redux 的理解？
+  redux 如果发异步请求，如何让数据流停在某个地方？
+- 遇到过的难搞的问题
+  hooks 的闭包陷阱
+  react-router 的 history 模式配置
+  副作用写错地方
+
+### antd
+
+- 用过哪些组件？form 表单怎么对数据进行验证？
+  form,input,button
+
+### webpack
+
+- 是否了解？ 什么作用?
+  核心作用：打包
+  打包，转换，代码分割，摇树优化
+- 有没有配置过 webpack
+  具体的配置
+- 常见的 loader 和 plugin
+  loader:sass-loader,css-loader,style-loader,image-loader
+  plugin:common-chunks-plugin,webpack-html-plugin
+- loader 和 plugin 的区别
+  loader:把其他非 js 的资源也能通过 require 加载，比如 css，json，把这些非 js 的资源转化为等价的 js
+  plugin:对整体的打包结果进行处理的机制
+
+### babel
+
+- 作用和核心概念
+
+### TS
+
+- type 和 interface 的区别
+- 泛型是什么以及对应的应用场景
+  泛型:结构是有什么组成的 `Array<number>  Array<string>   Array<People>`
+- 一个对象的name属性为泛型该如何写
+
+
 ### 输出结果：
 
 ```js
@@ -964,7 +1009,7 @@ c.fun(2);
 c.fun(3);
 ```
 
-## 现场写代码
+### 手写代码
 
 - 实现对象属性不能更改
   Object.freeze() //浅层次冻结。递归遍历，如果属性是对象，继续冻结，实现深层次冻结。
@@ -972,7 +1017,7 @@ c.fun(3);
 - promise.all,promise.race 的实现
 - 编写 parseQueryString,把 url 参数解析为一个对象
   const url ='http://miao.com/index.html?studentId=111&classId=111'
-- 将数组扁平化，flat
+- 将数组扁平化，flattern
 - 点击排序，点击按照该行升序或降序排列
   ![](https://i.loli.net/2020/09/11/paRyC5imf3sKIXb.png)
 
@@ -1044,7 +1089,8 @@ c.fun(3);
   	// 请输入答案
   }
   ```
-
+- 手写遍历，层序遍历
+- 手写一个设计模式
 ## 算法：
 
 - 1000 杯水，一杯毒药，小白鼠试毒？（信息论）
@@ -1155,20 +1201,15 @@ boss 面
 
 ## 其他
 
-- MIME Type 常见的媒体类型
-  application/json
-  multipart/form-data
-  text/css
-  text/html
-  img/png
-  media/video
+- 接口 c nodejs
+
   TODO:
 
 - leetcode 2sum,4sum
 - 回溯，dp,
 - 正则 贪婪与非贪婪
 - 网络是怎么连接的？
-- 各种排序，快排，堆排序
+- 各种排序，快排，堆排序，各种排序算法的原理以及实现，手写
 - 多级排序，优先级最高的最后排。/lodash.sort
 - 浮点数不精确
 - event loop 任务执行顺序.宏任务，微任务.同步属于宏任务吗？
