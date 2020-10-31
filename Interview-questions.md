@@ -1,28 +1,10 @@
-## 在中英文混排，或者有符号的时候是否要加空格？
+## HTML
 
-间距要有，但不一定是空格。
-部分软件能自动呈现间距，那就不必加空格。
-绝大多数软件不能自动呈现间距，那就需要手动加空格。
-
-- 中文与西文混排时，不一定要有空格字符，但一定要有间距。-from zhihu 梁海
-- 在未来应该是一个排版问题，可以用程序把 plain text 生成符合条件的文档。
-- 在现阶段并没有一个统一的标准，只有个人习惯，基于提升可读性，还是需要手动加空格。
-- 加空格违反了内容与样式分离的原则，中英文间距属于样式的范畴，但空格是内容，是可被读取为字符的。
-  是简单的在不支持混排的环境中改善排版的方式，但一旦遇到支持的环境就弄巧成拙了。
-  加空格倒是很容易，不过再删除可就麻烦了，在网页上编辑好的一篇文章，加好了空格，看着很美观，但是复制粘贴到 Word 这样的软件中，中西文之间的距离就更大了，这个时候再想删除这些空格就费力气了。
-- 英文标点符号都要加空格。
-  事实上我喜欢加空格并不主要是因为好看问题——因为英文单词是用空格定界的，那我的理解就是，一个英文单词要和同一行里面之前和之后的单词（或者类似概念的东西）隔开，就需要有一个空格，不论这些内容是用何种文字书写。
-- 不使用空格，还有个重要原因，因为空白空格在不同浏览器之下的解析效果不一致。
-  有些宽，有些窄，尤其一些精确的版式处理时会比较麻烦。需要空格的地方全部使用 CSS 的 margin 定义解决，绝对的精确，所以我会尽量不使用空格。
-  实际产品中，工程师嵌入程序经常都会有空格导入，最近正在实践用 CSS 语句定义 word-spacing:-3px; 来缩减不必要的空格效果。-zhihu 千鸟
-
-## 如何画一个色彩空间/rgb 色域？CMYK
-
-TODO:色彩空间
-
-回流与重绘
-
-bootstrap 再熟悉一下
+- doctype 的作用
+  声明文档类型。如果没有，文档将在怪异模式渲染。
+  `<!doctype html>`
+- label 标签
+  给表单域增加可交互范围
 
 ## CSS
 
@@ -41,7 +23,12 @@ bootstrap 再熟悉一下
   实现一些装饰性的效果或交互的时候会用到
 - 盒模型
 - 实现一个固定宽高都为 200px 的 div 在页面中水平垂直居中（至少 3 种方式）
-- css 垂直居中
+- css 垂直，水平居中、
+  flex
+  定位
+  定位＋ transform
+  表格
+  行内加行高
 - absolute 是以什么为准进行位移？
 - **单行文本溢出（多的部分显示省略号）**
   ```css
@@ -70,13 +57,17 @@ bootstrap 再熟悉一下
 - BFC 定义，触发条件
 - 响应式布局实现原理
 
+TODO:色彩空间/rgb 色域？CMYK
+
+回流与重绘
+
+bootstrap 再熟悉一下
+
 ## js 的理解
 
 - 在 html 里面,js 一般要写在 body 后面，因为 html 读取一行执行一行.遇到`<script>`先确认没有语法错误,然后执行 js。如果在前面引入 js , 浏览器会等待 js 加载完成才继续运行. 如果写在前面，可以加 `window.onload`, 代表页面加载完成再执行.
 - 行为，样式，结构三者分离 (js,css,html)
-- this 当前发生事件的元素
-- 对象里
-- Object.keys(obj) //拿到自有属性
+- 对象里 Object.keys(obj) //拿到自有属性
 - var array = Array.prototype.slice.call(arrayLike,0) //把数组的方法添加到类数组上
 - 全局有的一些变量是不可改变类型 i.e.window.name 一定是字符串 ，var name = 0,window.name =="0"
 - window.top 不可改变值，不能 var top = XX
@@ -89,8 +80,37 @@ bootstrap 再熟悉一下
   "abc".foo()//里面的 this 是 String{abc},是"abc"的包装类型
   this.value0f() =>"abc"//拿到他的原始类型
 - 可选链 optional chaining a.?foo.?baz
-
-FIXME: 闭包,作用域,变量位置的访问问题
+- 严格模式与非严格模式
+  开启严格模式：`"use strict";`
+  严格模式下无法再意外创建全局变量。
+  严格模式下会引起静默失败，非严格模式静默不抛错，严格模式会抛错。
+  禁止 with
+  eval 不一样。
+- **传递参数**
+  js 中的变量分为原始类型和引用类型。调用变量，原始类型按值调用，引用类型按引用调用。
+  在函数中传递参数，所有参数都是按值传递的。
+  ```js
+  //原始类型按值传递
+  function addTen(num) {
+  	num += 10;
+  	return num;
+  }
+  let count = 20;
+  let result = addTen(count);
+  console.log(count); // 20，没有变化
+  console.log(result); // 30
+  ```
+  ```js
+  //对象也是按值传递的
+  function setName(obj) {
+  	obj.name = 'Nicholas';
+  	obj = new Object();//obj指向了新对象，已经不指向person了
+  	obj.name = 'Greg';
+  }
+  let person = new Object();
+  setName(person);
+  console.log(person.name); // "Nicholas"
+  ```
 
 ### 数组和字符串的常用操作
 
@@ -154,16 +174,7 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
 //前面都为true,才向后执行
 //The first 5 values are all truthy and get evaluated until it meets the first falsy value (null) which makes the expression false, so 2010 isn't evaluated anymore, and null gets returned as a result of the expression.
 
-```
-
-TODO: js 开发规范 文档注释标准 jsdoc
-
-https://jsdoc.app/index.html
-
-TODO: ES 标准中的相等比较算法 SameValue SameValueZero
-
-TODO: 箭头函数与普通函数的区别
-不能 new,this 来自词法作用域,不能用 call 设定 this
+````
 
 ### 闭包
 
@@ -206,9 +217,6 @@ TODO: 箭头函数与普通函数的区别
 
 ### question 0701 宇宙条 0715-14.36
 
-- this
-  在哪个函数里，怎么调用
-
 框架：
 
 - webpack 打包机制
@@ -233,74 +241,6 @@ TODO: 箭头函数与普通函数的区别
 - 是否了解过 element ui 栅格化布局实现原理
   grid
   bootstratp 的栅格化布局：flex/浮动加定位。
-
-### 输出结果：
-
-```js
-1.function func(a = {}) {
-console.log(a)
-}
-func(null)
-func(undefined) =>{}
-func(false)
-
-2.Function.prototype.a = () => alert('a');
-Object.prototype.b = () => alert('b');
-function A() {}
-const a = new A();
-
-a.a();
-a.b();
-
-3.var foo = {};
-var F = function(){};
-Object.prototype.a = 'value a';
-Function.prototype.b = 'value b';
-
-console.log(foo.a)
-console.log(foo.b)
-console.log(F.a)
-console.log(F.b)
-
-4.document.body.addEventListener('click', () => {
-Promise.resolve().then(()=>console.log(1));
-console.log(2)
-});
-document.body.addEventListener('click', () => {
-Promise.resolve().then(()=>console.log(3));
-console.log(4)
-});
-
-
-function test () {
-console.count('Promise Resolve');
-ret = Promise.resolve().then(test);
-return ret;
-}
-console.log(1);
-test();
-console.log(2);
-
-//作用域问题
-function fun(n, o) {
-	console.log(o);
-	return {
-		fun: function (m) {
-			return fun(m, n);
-		},
-	};
-}
-
-let a = fun(0);
-a.fun(1);
-a.fun(2);
-a.fun(3);
-
-let b = fun(0).fun(1).fun(2).fun(3);
-let c = fun(0).fun(1);
-c.fun(2)
-c.fun(3)
-```
 
 ### QUESTION 0710 网络
 
@@ -570,7 +510,8 @@ TODO: md5 计算器
   PureComponent,React.memo
 
 **hooks**
-- hooks和类组件的区别？
+
+- hooks 和类组件的区别？
 
 - hooks 对函数组件带来了什么优势？
   state，副作用
@@ -583,8 +524,9 @@ TODO: md5 计算器
   清理函数
 
 **redux**
+
 - reducer-combine connect
-  Redux.combineReducers 把多个reducer函数合并成一个。
+  Redux.combineReducers 把多个 reducer 函数合并成一个。
 - redux 原理和用法？使用方式，如何用 redux 处理异步代码，如何阻止子元素渲染
   使用 redux 中间件
   redux-thunk,redux-saga
@@ -611,10 +553,16 @@ TODO: md5 计算器
 - 用过哪些组件？form 表单怎么对数据进行验证？
   form,input,button
 
-### es6 的新特性？
+### es6
+
+- 有哪些新特性？
+  箭头函数，class,解构,symbol
 
 - 箭头函数与普通函数的区别？
   不能 new,this 来自词法作用域,不能用 call 设定 this
+- 解构，要注意些什么？
+  数组解构时前面要加分号
+  `;[a,b]=[1,2]`
 - class
   本质上还是原型链，只是为了更贴近面向对象的语言的语法
 - class 里面有没有私有变量？
@@ -709,19 +657,27 @@ TODO: md5 计算器
   协商缓存：
   Last-Modify/If-Modified-Since
   ETag/If-None-Match
-
+- ip 网络层，机器到机器
+- tcp 传输层，客户端与服务器模式的可靠通信信道，一个服务器可以接受多个客户端的连接。
 - tcp 和 udp
   - tcp 对头阻塞
 - tcp 三次握手，四次挥手
+  三从成功
 - 前端攻击有哪些？
   csrf,sql 注入,xss
 - 网络安全 xss、csrf（为什么 token 可以预防），怎么防范？
 - http304 Not Modified
   304：协商缓存成功的状态码
   Not Modified：两方版本相同，不需要再发送了
+- HTTP 模型
+  请求，响应模型
 - http get post 区别
   语义：获取，发送
   get 一般没有请求体，post 一般有请求体
+- post 请求请求字段和对应的值
+  POST /foo/bar HTTP/1.1
+  Content-Type:application/json
+  Content-Length:28
 
 - 强缓存与协商缓存
   强缓存：后续使用这个资源的时候就不发请求。
@@ -734,15 +690,19 @@ TODO: md5 计算器
 - 聊聊的浏览器存储方法
 - 如果请求数据成功，但数据未返回该怎么办？
 - 如何保证多次请求的顺序？
-  记录请求发起的时间点 
+  记录请求发起的时间点
 - **从输入 url 之后发生了什么？**
 
 ### DOM
 
+- 常用的 dom 方法
+  createElement()/appendChild()/getElement/removeChild()
 - 获取 DOM 的方法
   querySelector()/getElementById()/name/tagName/className
 - 都有哪些事件？
-
+- 如何获取页面元素坐标？
+  element.getBoundingClientRect()
+  element.getClientsRects()//行内元素折行时可能有多个方块
 - 深克隆 deepclone
   正则类，Date 类单独处理。
   对象/原始数据类型
@@ -769,6 +729,30 @@ TODO: md5 计算器
   			return res;
   		} else {
   			return obj;
+  		}
+  	}
+  }
+  ```
+
+- normalize 将连续的文本节点合并成一个
+  ```js
+  function normalize(node) {
+  	if (node.nodeType === document.ELEMENT_NODE) {
+  		var children = Array.from(node.childNodes);
+  		let text = '';
+  		for (let i = 0; i < children.length; i++) {
+  			if (children[i].nodeType === document.TEXT_NODE) {
+  				text += children[i].nodeValue;
+  				node.removeChild(children[i]);
+  			} else if (text) {
+  				var textNode = document.createTextNode(text);
+  				node.insertbefore(textNode, children[i]);
+  				text = '';
+  			}
+  		}
+  		if (text) {
+  			var textNode = document.createTextNode(text);
+  			node.append(textNode);
   		}
   	}
   }
@@ -815,7 +799,29 @@ TODO: md5 计算器
 ### promise
 
 - promise 的状态一共三种
+  resolve,reject,pending
 - promise 实现
+- promise.all,promise.race 的实现
+- promise 是如何解决回调嵌套的?如一个 promise 里嵌套另一个 promise
+
+  ```js
+  p.then((val) => {
+  	doSth().then((val) => {
+  		doSth().then((val) => {
+  			doSth();
+  		});
+  	});
+  });
+  //改写成
+  p.then((val) => {
+  	doSth();
+  })
+  	.then((val) => {
+  		doSth();
+  	})
+  	.then((val) => {});
+  ```
+
 - promise 在 es6 里有 finally 方法吗？
   没有。es9 里才有的，不接参数
 
@@ -856,7 +862,7 @@ TODO: md5 计算器
 
 ### this
 
-- this 的指向
+- **this 的指向**
   看是否是箭头函数
   this 处于哪个 function 声明的函数里面
   看这个函数是如何被调用的
@@ -883,8 +889,87 @@ TODO: md5 计算器
   合并：把 script 标签的 js 文件按照 script 的顺序合并成一个。
   为什么：合并后可以有更好的压缩率，且传输的时候只需要一个 http 的请求，节省流量，更快，更省钱。
 
+### 输出结果：
+
+```js
+console.log(['1', '2', '3'].map(parseInt)); //[1, NaN, NaN]
+```
+
+```js
+function func(a = {}) {
+console.log(a)
+}
+func(null)
+func(undefined) =>{}
+func(false)
+//
+```
+
+```js
+Function.prototype.a = () => alert('a');
+Object.prototype.b = () => alert('b');
+function A() {}
+const a = new A();
+
+a.a();
+a.b();
+//-----------------------------------------------------
+var foo = {};
+var F = function () {};
+Object.prototype.a = 'value a';
+Function.prototype.b = 'value b';
+
+console.log(foo.a);
+console.log(foo.b);
+console.log(F.a);
+console.log(F.b);
+//------------------------------------------------------
+document.body.addEventListener('click', () => {
+	Promise.resolve().then(() => console.log(1));
+	console.log(2);
+});
+document.body.addEventListener('click', () => {
+	Promise.resolve().then(() => console.log(3));
+	console.log(4);
+});
+//------------------------------------------------------
+
+function test() {
+	console.count('Promise Resolve');
+	ret = Promise.resolve().then(test);
+	return ret;
+}
+console.log(1);
+test();
+console.log(2);
+//--------------------------------------------------------
+//作用域问题
+function fun(n, o) {
+	console.log(o);
+	return {
+		fun: function (m) {
+			return fun(m, n);
+		},
+	};
+}
+
+let a = fun(0);
+a.fun(1);
+a.fun(2);
+a.fun(3);
+
+let b = fun(0).fun(1).fun(2).fun(3);
+let c = fun(0).fun(1);
+c.fun(2);
+c.fun(3);
+```
+
 ## 现场写代码
 
+- 实现对象属性不能更改
+  Object.freeze() //浅层次冻结。递归遍历，如果属性是对象，继续冻结，实现深层次冻结。
+- promise 实现
+- promise.all,promise.race 的实现
 - 编写 parseQueryString,把 url 参数解析为一个对象
   const url ='http://miao.com/index.html?studentId=111&classId=111'
 - 将数组扁平化，flat
@@ -989,7 +1074,6 @@ TODO: md5 计算器
 
 一面
 
-
 css 居中
 事件代理
 生成器函数
@@ -1069,7 +1153,16 @@ boss 面
   双向绑定
 - 布局，一个满屏的品字布局
 
-TODO:
+## 其他
+
+- MIME Type 常见的媒体类型
+  application/json
+  multipart/form-data
+  text/css
+  text/html
+  img/png
+  media/video
+  TODO:
 
 - leetcode 2sum,4sum
 - 回溯，dp,
@@ -1078,10 +1171,19 @@ TODO:
 - 各种排序，快排，堆排序
 - 多级排序，优先级最高的最后排。/lodash.sort
 - 浮点数不精确
-- event loop 任务执行顺序
-- 宏任务，微任务
-- 事件循环说一下？同步属于宏任务吗？
+- event loop 任务执行顺序.宏任务，微任务.同步属于宏任务吗？
 
 - 数据库 sql 查询的优化？
 
 - 项目实现的细节？遇到过的困难如何解决？
+
+NOTE:
+
+- 相等性判断，还是判断 true/false
+  ```js
+  [] == 0; //true
+  '' == 0; //true
+  if (0) {
+  	console.log('yes');
+  } //yes
+  ```
