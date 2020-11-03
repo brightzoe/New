@@ -79,11 +79,12 @@
   text/html
   img/png
   media/video
-TODO:色彩空间/rgb 色域？CMYK
+  TODO:色彩空间/rgb 色域？CMYK
 
 回流与重绘
 
 bootstrap 再熟悉一下
+
 ## git
 
 - 平时用到哪些？
@@ -94,10 +95,13 @@ bootstrap 再熟悉一下
   cherry-pick
 - git 删除上上一条 commit
   rebase ：把当前分支拿下来，挂到别的地方去
+
 ## JS
 
+- map 跟 forEach
+  map 有 return，forEach 没有
+  map 会新建数组，forEach 没有，只是迭代
 - 在 html 里面,js 一般要写在 body 后面，因为 html 读取一行执行一行.遇到`<script>`先确认没有语法错误,然后执行 js。如果在前面引入 js , 浏览器会等待 js 加载完成才继续运行. 如果写在前面，可以加 `window.onload`, 代表页面加载完成再执行.
-- 行为，样式，结构三者分离 (js,css,html)
 - 对象里 Object.keys(obj) //拿到自有属性
 - var array = Array.prototype.slice.call(arrayLike,0) //把数组的方法添加到类数组上
 - 全局有的一些变量是不可改变类型 i.e.window.name 一定是字符串 ，var name = 0,window.name =="0"
@@ -217,6 +221,7 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
 ### 原型与原型链
 
 - 对原型与原型链的概念以及理解。
+  原型链，对对象属性的访问。
   构造函数构造出来的实例以构造函数的原型属性为原型。
   函数才有 prototype,任何对象都有**proto**
 
@@ -228,23 +233,11 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
   都是引用
   堆内存：占用空间不确定：对象，长度不确定的数组
   栈内存：变量占用的空间。 函数调用的时候形成的调用栈，存储函数内部的变量
-- var、const、let 区别，变量提升、作用域
 - const 定义的变量真的不可改变吗？const obj = { a: 1, b: 2};obj.a = 2;
   本身不能变是：指向不能变，值可以变 。如果让值不能变：可以 freeze，浅层的。
 - 继承写法，es5、es6 继承区别
+  class 的一种，还有构造函数的一种。（书上）
   es6 的继承，super 之前不能访问 this
-
-- call、apply、bind 区别
-- forEach 和 map 的区别
-- 你会用哪种数据结构实现 Map 类？key 和 value 分别存在哪
-
-  - 数组，链表.哈希表
-  - 对象也可以，但对象本身就是映射，但不把他当映射使用
-    coreJS 的 map 就是 object 实现的。
-
-- 如何实现 setTimeout
-  浏览器自带的，原理可能是放在一个队列里面，调用
-- 做过哪些优化？遇到过难 debug 的情况？
 
 ### question 0701 宇宙条 0715-14.36
 
@@ -273,7 +266,7 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
   grid
   bootstratp 的栅格化布局：flex/浮动加定位。
 
-### QUESTION 0710 网络
+### QUESTION 网络
 
 - 0707
   查询计算机网络配置信息的命令是什么？
@@ -361,70 +354,11 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
   CA 机构是为什么事情签发证书？
   查询 RSA 加密演算法的过程并尝试自行演算。
 
-### QUESTION 0711
-
-以下代码输出结果是什么？
-
-```js
-//①
-function foo() {
-	a = 5;
-	console.log(window.a); //undefined,外面读不到
-	console.log(a); //5
-	var a = 10; //声明提前
-	console.log(a); //10
-}
-foo();
-
-//②
-function foo() {
-	a = 5;
-	console.log(window.a); //can't access
-	console.log(a); //can't access
-	let a = 10; //TDZ,声明前不能访问
-	console.log(a);
-}
-foo();
-
-//③
-function foo() {
-	let a = 5;
-	console.log(window.a);
-	console.log(a);
-	var a = 10; //不能重复声明
-	console.log(a);
-}
-foo();
-```
-
-下面这个 ul，如何点击每一列的时候 alert 其 index?
-
-```html
-<ul id="”test”">
-	<li>这是第一条</li>
-	<li>这是第二条</li>
-	<li>这是第三条</li>
-</ul>
-<script>
-	var ul = document.querySelector('#test');
-	ul.onclick = function (e) {
-		for (let i = 0; i < ul.children.length; i++)
-			if (e.target === ul.children[i]) {
-				alert(i + 1);
-			}
-	};
-</script>
-```
-
 ### QUESTION 0714
 
 TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加载第二张，依此类推
 //两张一起加载，在加载两张；可以很容易改变张数，比如三张一起拍摄
 //最多两张可以同时下载
-
-### 0716 路径化简，栈
-
-url 里的. ..
 
 ### 进程，线程
 
@@ -442,12 +376,7 @@ url 里的. ..
 [浏览器渲染页面的工作原理](https://developer.mozilla.org/zh-CN/docs/Web/Performance/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E9%A1%B5%E9%9D%A2%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86)
 整体渲染？逐步渲染？
 
-TODO: md5 计算器
-
-模块化：代码拆到不同文件
-组件化：自定义标签
-
-### 前端常见的设计模式：
+### 前端常见的设计模式
 
 - 单例模式：某种东西只有一份，不像其他类型一样有很多实例。如 Math 对象。
 - 观察者模式：由一方专门观察另一方的活动，在特定活动发生时通知第三方。如事件的监听与触发。
@@ -529,8 +458,8 @@ TODO: md5 计算器
   握手的时非对称加密，握手完成以后是对称加密，非对称加密解密时间较久。
   TLS 协议：证书链，即信任链。
 - http 和 https 区别
-  走在安全连接上的 http.
-- **浏览器缓存。那些事强缓存，哪些是协商缓存？具体字段？**
+  https:走在安全连接上的 http,传输过程是加密的。
+- **浏览器缓存。那些是强缓存，哪些是协商缓存？具体字段？**
   强缓存：
   Expires
   Cache-Control
@@ -542,6 +471,7 @@ TODO: md5 计算器
 - tcp 传输层，客户端与服务器模式的可靠通信信道，一个服务器可以接受多个客户端的连接。
 - tcp 和 udp
   - tcp 对头阻塞
+  - udp 快
 - tcp 三次握手，四次挥手
   一次信息交换至少要建立三次成功的通信。
   四次挥手，在特定情况下可以是三次。
@@ -775,6 +705,12 @@ TODO: md5 计算器
   合并：把 script 标签的 js 文件按照 script 的顺序合并成一个。
   为什么：合并后可以有更好的压缩率，且传输的时候只需要一个 http 的请求，节省流量，更快，更省钱。
 
+### 模块
+
+- 模块化和组件化的区别
+  模块化：代码拆到不同文件
+  组件化：自定义标签
+
 ### Vue
 
 - 组件之间的传值方式
@@ -930,11 +866,54 @@ TODO: md5 计算器
 
 - type 和 interface 的区别
 - 泛型是什么以及对应的应用场景
-  泛型:结构是有什么组成的 `Array<number>  Array<string>   Array<People>`
-- 一个对象的name属性为泛型该如何写
-
+  泛型:结构是有什么组成的 `Array<number> Array<string> Array<People>`
+- 一个对象的 name 属性为泛型该如何写
 
 ### 输出结果：
+
+```js
+//作用域
+//①
+function foo() {
+	a = 5;
+	console.log(window.a); //undefined,外面读不到
+	console.log(a); //5
+	var a = 10; //声明提前
+	console.log(a); //10
+}
+foo();
+
+//②
+function foo() {
+	a = 5;
+	console.log(window.a); //can't access
+	console.log(a); //can't access
+	let a = 10; //TDZ,声明前不能访问
+	console.log(a);
+}
+foo();
+
+//③
+function foo() {
+	let a = 5;
+	console.log(window.a);
+	console.log(a);
+	var a = 10; //不能重复声明
+	console.log(a);
+}
+foo();
+//④
+var name = 'a';
+function outter() {
+	var name = 'b';
+	function inner() {
+		console.log(name);
+		console.log(this.name);
+	}
+	inner();
+}
+outter();
+```
 
 ```js
 console.log(['1', '2', '3'].map(parseInt)); //[1, NaN, NaN]
@@ -942,23 +921,26 @@ console.log(['1', '2', '3'].map(parseInt)); //[1, NaN, NaN]
 
 ```js
 function func(a = {}) {
-console.log(a)
+	console.log(a);
 }
-func(null)
-func(undefined) =>{}
-func(false)
+func(null); //null
+func(undefined); //{}
+func(false); //false
 //
 ```
 
 ```js
-Function.prototype.a = () => alert('a');
+//原型链
+fixme: Function.prototype.a = () => alert('a');
 Object.prototype.b = () => alert('b');
 function A() {}
 const a = new A();
 
-a.a();
-a.b();
-//-----------------------------------------------------
+a.a(); //a.a is undefined
+a.b(); //b
+```
+
+```js
 var foo = {};
 var F = function () {};
 Object.prototype.a = 'value a';
@@ -968,7 +950,10 @@ console.log(foo.a);
 console.log(foo.b);
 console.log(F.a);
 console.log(F.b);
-//------------------------------------------------------
+```
+
+```js
+//promise
 document.body.addEventListener('click', () => {
 	Promise.resolve().then(() => console.log(1));
 	console.log(2);
@@ -977,8 +962,9 @@ document.body.addEventListener('click', () => {
 	Promise.resolve().then(() => console.log(3));
 	console.log(4);
 });
-//------------------------------------------------------
+```
 
+```js
 function test() {
 	console.count('Promise Resolve');
 	ret = Promise.resolve().then(test);
@@ -986,8 +972,9 @@ function test() {
 }
 console.log(1);
 test();
-console.log(2);
-//--------------------------------------------------------
+```
+
+```js
 //作用域问题
 function fun(n, o) {
 	console.log(o);
@@ -1011,6 +998,25 @@ c.fun(3);
 
 ### 手写代码
 
+- 下面这个 ul，如何点击每一列的时候 alert 其 index?
+
+  ```html
+  <ul id="”test”">
+  	<li>这是第一条</li>
+  	<li>这是第二条</li>
+  	<li>这是第三条</li>
+  </ul>
+  <script>
+  	var ul = document.querySelector('#test');
+  	ul.onclick = function (e) {
+  		for (let i = 0; i < ul.children.length; i++)
+  			if (e.target === ul.children[i]) {
+  				alert(i + 1);
+  			}
+  	};
+  </script>
+  ```
+
 - 实现对象属性不能更改
   Object.freeze() //浅层次冻结。递归遍历，如果属性是对象，继续冻结，实现深层次冻结。
 - promise 实现
@@ -1023,6 +1029,10 @@ c.fun(3);
 
   先识别当前处于什么状态，map 的思想，用数字做标识（群里有）
 
+- call、apply、bind 区别
+- 你会用哪种数据结构实现 Map 类？key 和 value 分别存在哪
+  - 数组，链表.哈希表
+  - 对象也可以，但对象本身就是映射，但不把他当映射使用
 - **节流防抖使用场景和原理。**
 - 描述一下防抖和节流，实现一下防抖函数
 
@@ -1089,8 +1099,10 @@ c.fun(3);
   	// 请输入答案
   }
   ```
+
 - 手写遍历，层序遍历
 - 手写一个设计模式
+
 ## 算法：
 
 - 1000 杯水，一杯毒药，小白鼠试毒？（信息论）
@@ -1191,10 +1203,6 @@ boss 面
   组件有子元素需要显示到组件内部，用 slot
 - 移动端适配处理
 
-- map 跟 forEach
-  map 有 return，forEach 没有
-  map 会新建数组，forEach 没有，只是迭代
-
 - MVVM 的理解
   双向绑定
 - 布局，一个满屏的品字布局
@@ -1205,6 +1213,7 @@ boss 面
 
   TODO:
 
+- md5 计算器
 - leetcode 2sum,4sum
 - 回溯，dp,
 - 正则 贪婪与非贪婪
@@ -1212,8 +1221,7 @@ boss 面
 - 各种排序，快排，堆排序，各种排序算法的原理以及实现，手写
 - 多级排序，优先级最高的最后排。/lodash.sort
 - 浮点数不精确
-- event loop 任务执行顺序.宏任务，微任务.同步属于宏任务吗？
-
+- 0716 路径化简，栈 url 里的. ..
 - 数据库 sql 查询的优化？
 
 - 项目实现的细节？遇到过的困难如何解决？
@@ -1228,3 +1236,15 @@ NOTE:
   	console.log('yes');
   } //yes
   ```
+
+## COMMUNICATION
+
+- 函数参数传递
+  js 中所有的参数传递都是值传递。
+  无论是原始数据类型还是引用数据类型。
+- var,let,const 的区别
+  var:es5 之前提出，用来做变量声明。有变量提升，作用域。
+  let:es6 提出，没有变量提升。在生命前使用，出现 TDZ。不能重复声明。
+  const:es5,声明常量。const 的指向不能变，但指向的东西可以变，可以增删属性。
+
+-
