@@ -272,9 +272,6 @@ IEEE754 标准:二进制浮点顺运算标准
   - `null`: 未定义，类型为 object
 - `!name` ! 运算符会将值转换为布尔类型再取反
 
-复合赋值
-
-- +=，-=，+=，/=
 
 ### 逻辑运算 logical operators
 
@@ -402,8 +399,8 @@ https://wangdoc.com/javascript/operators/bit.html
 - `confirm("shall we go shopping?");` 返回布尔值 T/F
 - `prompt("Enter passwords","passwords is");` 返回字符，前面是问题，后面是输入值的前缀。无法改变对话框的外观
 - 参数 / 作用域 全局/局部
-- let 的声明在之前是不能使用的 TDZ 暂时性死区 temper dead zone
-- **作用域/作用域链** let 块级作用域
+
+
 - 函数声明语句`function a (x)`
 - 函数表达式/匿名函数 `var a = function ()`
 - 函数声明会进行声明提升（declaration hoisting），而函数表达式不会。
@@ -588,12 +585,6 @@ throw:中断函数执行,抛出 exception 对象,exception 被传递到 try 语�
   let ary = Array(4) //创建一个长度为 4 的空数组
   let ary = new Array(3,4,5)
   let ary = Array.of(3,4,5)//可以创建只有一个元素的数组
-//改变数组
-  ary.length = 2     //随时可以被赋值，改变数组长度
-  ourArray.push(4)  //在后面追加元素
-  ourArray.pop()   //弹出最后一个字符并储存；只从尾部进出，形成栈
-  ary.shift()     //弹出第一个元素
-  ary.unshift()  //在前面添加元素
   ary.splice(start_index,length,...new_elements)//删除或替换现有元素或者原地添加新的元素来修改数组,并以数组形式返回被修改的内容。此方法会改变原数组。
   ary(10).fill(0)//全部填满 XX
   ary.join()/ary.contact()
@@ -613,7 +604,7 @@ throw:中断函数执行,抛出 exception 对象,exception 被传递到 try 语�
 - `value[0]`
   value['joe'] //[]用于有空格的字符串或者变量
 - . 后面的直接使用作为属性，[] 里面的会被求值。
-- delete obj.attr
+- `delete obj.attr`
 - 包含函数的属性称为某个值的方法 method
 
 ### 方法
@@ -679,7 +670,7 @@ var map = new Map
   `this` 指向调用的对象与函数声明的位置无关，只与调用位置有关，如果在调用位置还使用声明位置的 `this`，`this` 会丢失；
   解决方法通过 `bind` 绑定 `this` 或者通过箭头函数。箭头函数的 `this` ，总是继承外层函数的对象，在定义时就确定，与调用无关。
 
-### dom 对象
+### 对象
 
 - 一些属性和方法组合在一起构成的一个数据实体，用.访问
 - 给对象创建实例 `var zoe = new Person`;
