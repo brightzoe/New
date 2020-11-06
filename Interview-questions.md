@@ -182,7 +182,7 @@ bootstrap 再熟悉一下
    //但不完全可靠，用 Person.call()/apply()也可以得到 Person 的实例。
 2. 当调用函数的 Construct 方法时，new.target 被赋值给构造函数名(===Person).不是通过构造函数调用，new.target===undefined。
    //很可靠。在函数外使用 new.target 是语法错误。
-3. 用 class 声明的函数必须被 new 调用，不然会报错，就规定了这一种方法。                                                                                                                  
+3. 用 class 声明的函数必须被 new 调用，不然会报错，就规定了这一种方法。
 
 ### 逻辑操作符 || &&
 
@@ -225,19 +225,34 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
   构造函数构造出来的实例以构造函数的原型属性为原型。
   函数才有 prototype,任何对象都有**proto**
 
+  ```js
+  //原型链
+  fixme: Function.prototype.a = () => alert('a');
+  Object.prototype.b = () => alert('b');
+  function A() {}
+  const a = new A();
+
+  a.a(); //a.a is undefined
+  //a.a();a.__proto__.a();a.__proto__.__proto__.a()
+  a.b(); //b
+  ```
+
+  ```js
+  //原型链
+  var foo = {};
+  var F = function () {};
+  Object.prototype.a = 'value a';
+  Function.prototype.b = 'value b';
+
+  console.log(foo.a); //value a
+  console.log(foo.b); //undefined
+  console.log(F.a); //value a
+  console.log(F.b); //value b
+  ```
+
 ### 作用域与作用域链的理解
 
 作用域本身会存在嵌套，一个作用域可能存在在另一个作用域的里面。函数如果存在在一个作用域里面，他对变量的访问会一层一层向外找对应的变量，找得到就使用，找不到就报错。
-
-- 基本数据类型和引用数据类型的区别，堆内存、栈内存
-  都是引用
-  堆内存：占用空间不确定：对象，长度不确定的数组
-  栈内存：变量占用的空间。 函数调用的时候形成的调用栈，存储函数内部的变量
-- const 定义的变量真的不可改变吗？const obj = { a: 1, b: 2};obj.a = 2;
-  本身不能变是：指向不能变，值可以变 。如果让值不能变：可以 freeze，浅层的。
-- 继承写法，es5、es6 继承区别
-  class 的一种，还有构造函数的一种。（书上）
-  es6 的继承，super 之前不能访问 this
 
 ### question 0701 宇宙条 0715-14.36
 
@@ -408,6 +423,9 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
   symbol
   WeakMap
   在现在的 stage 4 里面有#可以实现。
+- 继承写法，es5、es6 继承区别
+  写法：class 的一种，还有构造函数的一种。（书上）
+  es6 的继承，super 之前不能访问 this
 
 ### 跨域
 
@@ -519,36 +537,6 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
 - 如何获取页面元素坐标？
   element.getBoundingClientRect()
   element.getClientsRects()//行内元素折行时可能有多个方块
-- 深克隆 deepclone
-  正则类，Date 类单独处理。
-  对象/原始数据类型
-  带环/不带环，用 map 防止循环引用
-  如果不用 map 用数组也可以，重点是建立映射。
-  或者给已经复制过的对象创建一个特殊的属性，做标记。
-
-  ```js
-  //如果带环，需要缓存，确认当前对象是否复制过，如果复制过，就直接指向它。用map防止循环引用
-
-  function cloneDeep(obj) {
-  	let cache = new Map(); //由原对象映射到其复制品
-  	return clone(obj);
-  	function clone(obj) {
-  		if (cache.has(obj)) {
-  			return cache.get(obj);
-  		}
-  		if (obj && typeof obj === 'object') {
-  			let res = {};
-  			cache.set(obj, res);
-  			for (let key in obj) {
-  				res[key] = clone(obj);
-  			}
-  			return res;
-  		} else {
-  			return obj;
-  		}
-  	}
-  }
-  ```
 
 - normalize 将连续的文本节点合并成一个
   ```js
@@ -930,29 +918,6 @@ func(false); //false
 ```
 
 ```js
-//原型链
-fixme: Function.prototype.a = () => alert('a');
-Object.prototype.b = () => alert('b');
-function A() {}
-const a = new A();
-
-a.a(); //a.a is undefined
-a.b(); //b
-```
-
-```js
-var foo = {};
-var F = function () {};
-Object.prototype.a = 'value a';
-Function.prototype.b = 'value b';
-
-console.log(foo.a);
-console.log(foo.b);
-console.log(F.a);
-console.log(F.b);
-```
-
-```js
 //promise
 document.body.addEventListener('click', () => {
 	Promise.resolve().then(() => console.log(1));
@@ -1031,10 +996,10 @@ c.fun(3);
 
 - call、apply、bind 区别
 - 你会用哪种数据结构实现 Map 类？key 和 value 分别存在哪
-  - 数组，链表.哈希表
+  - 数组,链表,哈希表
   - 对象也可以，但对象本身就是映射，但不把他当映射使用
 - **节流防抖使用场景和原理。**
-- 描述一下防抖和节流，实现一下防抖函数
+- 描述一下防抖和节流，实现一下防抖函数，节流函数。
 
 - es5 实现继承
 - 实现 JSON.stringify，有缩进
@@ -1084,6 +1049,37 @@ c.fun(3);
   }
   ```
 
+- 深克隆 deepclone
+  正则类，Date 类单独处理。
+  对象/原始数据类型：递归复制一份。
+  带环/不带环，用 map 防止循环引用
+  如果不用 map 用数组也可以，重点是建立映射。
+  或者给已经复制过的对象创建一个特殊的属性，做标记。
+
+  ```js
+  //如果带环，需要缓存，确认当前对象是否复制过，如果复制过，就直接指向它。用map防止循环引用
+
+  function cloneDeep(obj) {
+  	let cache = new Map(); //由原对象映射到其复制品
+  	return clone(obj);
+  	function clone(obj) {
+  		if (cache.has(obj)) {
+  			return cache.get(obj);
+  		}
+  		if (obj && typeof obj === 'object') {
+  			let res = {};
+  			cache.set(obj, res);
+  			for (let key in obj) {
+  				res[key] = clone(obj);
+  			}
+  			return res;
+  		} else {
+  			return obj;
+  		}
+  	}
+  }
+  ```
+
 - 给一棵二叉树 和 一个值，检查二叉树中的是否存在一条路径，这条路径上所有节点的值加起来等于给的那个初始值。例如，对于下面的二叉树，如果初始值是 22，那么存在一条路径 5->4->11->2，打印出该路径。
   5
   / \
@@ -1095,6 +1091,7 @@ c.fun(3);
   请实现如下这个函数:
 
   ```js
+  //leecode112
   function hasPathSum(root, sum) {
   	// 请输入答案
   }
@@ -1209,6 +1206,9 @@ boss 面
 
 ## 其他
 
+- 堆内存、栈内存
+  堆内存：占用空间不确定：对象，长度不确定的数组
+  栈内存：变量占用的空间。 函数调用的时候形成的调用栈，存储函数内部的局部变量。
 - 接口 c nodejs
 
   TODO:
@@ -1242,7 +1242,7 @@ NOTE:
 - 函数参数传递
   js 中所有的参数传递都是值传递。
   无论是原始数据类型还是引用数据类型。
-- var,let,const 的区别
+- **var,let,const 的区别**
   var:es5 之前提出，用来做变量声明。有变量提升，作用域。
   let:es6 提出，没有变量提升。在生命前使用，出现 TDZ。不能重复声明。
   const:es5,声明常量。const 的指向不能变，但指向的东西可以变，可以增删属性。
