@@ -3363,6 +3363,12 @@ $ npm install express-generator
 ```
 
 **cookie**
+- 可以理解为一个key/val映射,但api是字符串形式
+- 设置/增加cookie:`document.cookie="key=val;Expires=Date.toGMTString()"`
+- 删除一个cookie:`document.cookie="key=;Expires=过去的一个时间"`
+- 获取cookie(只能一次性获取所有cookie):`document.cookie`
+
+
 
 ### express 默认的模板引擎 Pug
 

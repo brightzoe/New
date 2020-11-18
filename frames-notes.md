@@ -600,11 +600,14 @@ function observe(obj) {
   fixme:为什么 key 是必须的？使用 idx 作为 key 的负面影响？diff 算法怎么比较？
   > key 要稳定，可预测，列表内唯一。react 的 render()方法会创建一颗由 react 元素组成的虚拟 DOM 树，state/props 更新时，会重新 render 返回一颗不同的树。基于这两棵树的差别，有效率地更新 UI 以保证当前 UI 与最新的树保持同步。将生成的一棵树转换为另一棵树的 diff 算法比较复杂，key 同来匹配原有树上的子元素和最新树上的子元素。
   > 使用 index 作为 key 在元素不进行重新排序时比较合适。如果基于下标的组件进行了重新排序，修改顺序会修改当前的 key，导致非受控组件 state 相互篡改产生无法预期的变动。
-  > 为什么用虚拟dom?对虚拟dom的理解？
-  dom结构+style结构=>render
-  虚拟dom目的：抽象出虚拟层,进行变化前后的比较，确定是不是需要更新，进行批量的操作，做最少的更新，减少重绘，重布局的次数，减少真实dom的操作，减少浏览器刷新次数。
+  > 为什么用虚拟 dom?对虚拟 dom 的理解？
+  > dom 结构+style 结构=>render
+  > 虚拟 dom 目的：抽象出虚拟层,进行变化前后的比较，确定是不是需要更新，进行批量的操作，做最少的更新，减少重绘，重布局的次数，减少真实 dom 的操作，减少浏览器刷新次数。
+
 ### JSX
+
 #### 是什么？
+
 - JavaScript 的语法扩展，一种标签语法，是`React.createElement()`的语法糖。
   JSX: `<Btn>Hello, world!</Btn>`，会调用 `React.createElement(Btn,props,children)`创建 React 元素。
 - JSX 自定义标签，一定是首字母大写。可以是 **变量** ，可以用 **对象点语法(Foo.Abc)** 引用，但不能是表达式，其他情况会当做原生标签的字符串传入`React.createElement()`。
@@ -612,9 +615,12 @@ function observe(obj) {
 - JSX 会移除行首，行尾的空格以及空行。与标签相邻的空行均会被删除，文本字符串之间的新行会被压缩为一个空格。
 - `<label htmlFor ="">` label 标签里面的 for 属性，因为 for 是 js 关键字，JSX 里面要写作 htmlfor,class 要写作 className.
 - jsx 返回的内容也只能有一个根结点，不产生单独的作用域。
+
 #### 为什么用？
+
 - 执行速度快
-- 类型安全，比React.createElement容易写。避免写错
+- 类型安全，比 React.createElement 容易写。避免写错
+
 ### 组件
 
 - 组件名必须大写
@@ -894,7 +900,7 @@ React 的 diff 函数，即前后虚拟 DOM 对比方式
     渲染虚拟 DOM
   - `getSnapshotBeforeUpdate()`
     在最近一次渲染输出（提交到 DOM 节点）之前调用，这个函数运行完真实 DOM 会被渲染。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）, 不常用.
-    有返回值，会传给didUpdate
+    有返回值，会传给 didUpdate
   - `componentDidUpdate(prevProps, prevState, snapshot)`
     会在组件更新后会被立即，此时调用真实 DOM 已经完成，可以直接对 DOM 操作。首次渲染不会执行此方法
 
@@ -949,7 +955,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 组件内部访问组件的属性：
 
 - `props.name`: `<Foo name="miao"/>`标签里的属性，在 Foo 组件可以通过 props.name 的方式访问。
-- `props.children`: `<Foo>balabala</Foo>` children 可以传递多种类型的值，会将写在 Foo 组件标签中间的元素都传入这个属性(中间可以不只一个根结点),是一个JSX
+- `props.children`: `<Foo>balabala</Foo>` children 可以传递多种类型的值，会将写在 Foo 组件标签中间的元素都传入这个属性(中间可以不只一个根结点),是一个 JSX
 
 #### Render Props 渲染属性
 
@@ -1119,44 +1125,48 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 - 解构语法引入 hook 函数
   `var { useState, useEffect, useRef, useContext, useCallback, useMemo } = React`
 - `useState()` 函数，接收的参数会设置为 state 的初始值，返回一个数组 `[state,setState]`
-  ```js
-  export default () => {
-  const [count, setCount] = useState(()=>0)//useState接收函数或者初始值 useState(0)
-  return <div>
-    {count}
-    <button onClick={()=>setCount(x=>x+1)}>+1</button>
-  </div>
-  }
-  ```
 
-- `useEffect()` 函数，相当于一个生命周期函数 `componentDidMount()` 或 `componentDidUpdate()`，直接在函数组件内部使用
-  第一个参数是一个函数，可以挂载 `componentDidMount()` 或 `componentDidUpdate()` 阶段需要的操作；这个函数可以有一个返回值函数，返回值函数会在函数组件componentWillUnmount 阶段运行，可有挂载一些解绑操作；对于函数组件来讲，每次更新都会卸载再挂载；所以每次更新都会运行这个返回值函数。
-  第二个可选参数是一个数组，当组件刷新时如果发现数组的内容和上一次一样，那么就不会运行这个 useEffect 函数，用于性能优化；要确保数组中包含了外部作用域中会随时间变化并且在 effect 中使用的变量，否则你的代码会引用到先前渲染中的旧变量，如果是空数组表示每次都是完全一样的内容，不运行。
-  - 优点
-    - 绑定和解绑放在一起，可读性和操作性好
-    - 对于复杂的逻辑，可以写多组 useEffect() 函数，相关逻辑放到同一个 useEffect() 函数里面，逻辑分离
   ```js
-  //所有的生命周期都在useEffect里面
   export default () => {
-    const [count, setCount] = useState(0);
-    useEffect(() => {
-      const I = setTimeout(() => {
-        setCount((x) => x + 1);
-      }, 1000);
-      return () => {
-        console.log('clear')
-        clearTimeout(I);
-      }; //回收
-    }, [Math.min(count, 5)]); //deps
-    console.log('render');
-    return (
-      <div>
-        <p>{count}</p>
-      </div>
-    );
+  	const [count, setCount] = useState(() => 0); //useState接收函数或者初始值 useState(0)
+  	return (
+  		<div>
+  			{count}
+  			<button onClick={() => setCount((x) => x + 1)}>+1</button>
+  		</div>
+  	);
   };
   ```
 
+- `useEffect()` 函数，相当于一个生命周期函数 `componentDidMount()` 或 `componentDidUpdate()`，直接在函数组件内部使用
+  第一个参数是一个函数，可以挂载 `componentDidMount()` 或 `componentDidUpdate()` 阶段需要的操作；这个函数可以有一个返回值函数，返回值函数会在函数组件 componentWillUnmount 阶段运行，可有挂载一些解绑操作；对于函数组件来讲，每次更新都会卸载再挂载；所以每次更新都会运行这个返回值函数。
+  第二个可选参数是一个数组，当组件刷新时如果发现数组的内容和上一次一样，那么就不会运行这个 useEffect 函数，用于性能优化；要确保数组中包含了外部作用域中会随时间变化并且在 effect 中使用的变量，否则你的代码会引用到先前渲染中的旧变量，如果是空数组表示每次都是完全一样的内容，不运行。
+
+  - 优点
+    - 绑定和解绑放在一起，可读性和操作性好
+    - 对于复杂的逻辑，可以写多组 useEffect() 函数，相关逻辑放到同一个 useEffect() 函数里面，逻辑分离
+
+  ```js
+  //所有的生命周期都在useEffect里面
+  export default () => {
+  	const [count, setCount] = useState(0);
+  	useEffect(() => {
+  		const I = setTimeout(() => {
+  			setCount((x) => x + 1);
+  		}, 1000);
+  		return () => {
+  			console.log('clear');
+  			clearTimeout(I);
+  		}; //回收
+  	}, [Math.min(count, 5)]); //deps
+  	console.log('render');
+  	return (
+  		<div>
+  			<p>{count}</p>
+  		</div>
+  	);
+  };
+  ```
 
 - useContext 函数 hook, 类似 class 组件里面的 Context 功能
 
@@ -1170,12 +1180,12 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 - useCallback
 
   - 函数组件每次更新都会重新运行，每次运行都会创建一个新的作用域，作用域里面的函数都会是新建的，如果子组件中用到了这些更新的函数，子组件每次都要更新，影响性能
-  - var f = useCallback(fun(){},[]) 第一个参数接一个函数，第二个参数接一个数组，当组件刷新时如果发现数组的内容和上一次一样时，就返回上次的函数，否则返回这次的函数
+  - `var f = useCallback(fun(){},[])` 第一个参数接一个函数，第二个参数接一个数组，当组件刷新时如果发现数组的内容和上一次一样时，就返回上次的函数，否则返回这次的函数
 
 - useMemo
 
   - 和 useCallback 功能一样，不过写法不一样
-  - var f = useMemo(()=>fun(){},[])
+  - `var f = useMemo(()=>fun(){},[])`
 
 - useRef
   和 class 组件里面的 React.createRef() 功能用法一样，useRef() 也会创建一个{current:null}对象；由于函数组件每次更新都会重新运行，每次运行都会创建一个新的作用域，作用域里面的函数都会是新建的；使用 React.createRef() 函数组件更新每次都会创建一个新的对象，占用内存；而 useRef 就是为了解决这个问题的，函数组件中使用 useRef() 返回的对象在函数组件刷新前后都是同一个对象
@@ -1280,31 +1290,32 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
   - 引入`<script src="https://unpkg.com/redux@4.0.4/dist/redux.js">`
   - 创造一个 store
-    - var store = Redux.createStore((state, action)=>{},state)
+    - `var store = Redux.createStore((state, action)=>{},state)`
     - 第一个参数是一个 reducer 函数，函数有 2 个参数，state 表示储存的数据，action 是一个对象，子组件里面通过 dispatch 函数来传递这个对象，这个 reducer 函数通过 action 的信息来触发对 state 的相关操作，返回一个新的 state
     - 创建的 store 上面有两个常用的方法，dispatch 和 subscribe 方法
       - dispatch, 传递给下层组件，下层组件利用这个方法操作 state 触发更新
       - subscribe, 用来监听 state 变更
-        - var unSubscribe = store.subscribe(fun)
+        - `var unSubscribe = store.subscribe(fun)`
         - 数据变更时 fun 会运行，这个 fun 不接参数，并返回一个函数 unSubscribe
         - 调用 unSubscribe 就会把这次的监听函数 subscribe 解绑
   - mutations
     - 下层组件 dispatch 的 action 里面有操作类型信息，一般放到 action.type 属性上，reducer 会根据 action.type 来执行某种操作，当我们可以把这些操作集中放到全局定义的一个 mutations 属性上面，reducer 函数接收到 action 时先从 mutation 上面拿到函数，再操作 state
+      ```js
       var store = Redux.createStore((state, action) => {
-      var mutation = mutations[action.type]
-      if (mutation) {
-      return mutation(state, action)
-      } else {
-      return state
-      }
-      }, state)
+      	var mutation = mutations[action.type];
+      	if (mutation) {
+      		return mutation(state, action);
+      	} else {
+      		return state;
+      	}
+      }, state);
+      ```
     - 操作数据的方法可以配合 immer.js，优化性能而且更方便
 
 - 下层组件如何接入 store，需要第三方插件集成
 
   - `<script src="https://unpkg.com/react-redux@5.0.6/dist/react-redux.js">`
-    var { Provider，connect} = ReactRedux
-
+    `var { Provider，connect} = ReactRedux`
 
   - 在根组件里面的最外层用 `<Provider store={store}></Provider>`包一层，下层组件就可以访问到 store 的 state 以及相关方法
 
@@ -1313,29 +1324,35 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
     - `var NewComponent = connect(mapStateToProps,mapDispatchToProps)(Component)`
     - Component 表示一个子组件，可以是函数组件或者 class 组件
     - mapStateToProps 函数，state=>{return {}}, 对 state 进行相关操作，返回一个对象 obj1
-    - mapDispatchToProps 函数，dispatch=>{return {deleteTodo: (idx) => dispatch({type: 'deleteTodo', idx})}}, 返回一个对象 obj2，对象属性是组件相关方法名称，属性值是一个函数，这个函数里面会 dispatch 相关 action 到 store 的 reducer 函数，触发组件更新；
+    - mapDispatchToProps 函数，`dispatch=>{return {deleteTodo: (idx) => dispatch({type: 'deleteTodo', idx})}}`, 返回一个对象 obj2，对象属性是组件相关方法名称，属性值是一个函数，这个函数里面会 dispatch 相关 action 到 store 的 reducer 函数，触发组件更新；
       obj1 和 obj2 都会合并到组件的 props 对象里面，这样组件可以通过 props.method 来 dispatch 相关方法到达交互目的
     - NewComponent 新返回的组件，可以接受全局的 store 进行交互
 
   - connect 函数的实现
-    var StoreContext = React.createContext()
+    ```js
+    var StoreContext = React.createContext();
     function connect(mapState, mapDispatch) {
-    return function(WrapComp) {
-    return React.forwardRef(function Comp(props, ref) {
-    var store = useContext(StoreContext)
-    var [r, setR] = useState(0)
-    useEffect(() => {
-    return store.subscribe(() => {
-    setR(r + 1)
-    })
-    })
-    var state = mapState(store.getState())
-    var dispatchs = mapDispatch(store.dispatch)
-    var {children, ...props2} = props
-    return <WrapComp ref={ref} {...props2} {...state} {...dispatchs}>{children}</WrapComp>
-    })
+    	return function (WrapComp) {
+    		return React.forwardRef(function Comp(props, ref) {
+    			var store = useContext(StoreContext);
+    			var [r, setR] = useState(0);
+    			useEffect(() => {
+    				return store.subscribe(() => {
+    					setR(r + 1);
+    				});
+    			});
+    			var state = mapState(store.getState());
+    			var dispatchs = mapDispatch(store.dispatch);
+    			var { children, ...props2 } = props;
+    			return (
+    				<WrapComp ref={ref} {...props2} {...state} {...dispatchs}>
+    					{children}
+    				</WrapComp>
+    			);
+    		});
+    	};
     }
-    }
+    ```
 
 - react 全家桶
 
@@ -1355,53 +1372,54 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
   - 相关文件配置好后，运行 npm run build , 它会根据 src 和 public 一起构建一个 build 文件，之后把 build 文件里面的资源放到后端的 static 静态文件夹里，这样就可以用后端的端口启动项目；这个 build 文件就是上线启动文件
 
 ## TS
-- JS的超集。TS是一门静态类型语言：变量的类型在书写时确定，运行时不能改变。类似的语言：java,c,c++
+
+- JS 的超集。TS 是一门静态类型语言：变量的类型在书写时确定，运行时不能改变。类似的语言：java,c,c++
 - 静态类型由于书写时就能确定所有变量的类型，带来的好处是编辑器及相关的工具链可以在程序编写时就给出一定的错误或者智能提示。
 - **泛型**
   ```ts
-  var ary:Array<number> = [1,2,3]
-  var ary:number[]
+  var ary: Array<number> = [1, 2, 3];
+  var ary: number[];
   class People extends Array {
-	  x: number;
-	  constructor(name: string, age: number) {
-		  super(age);
-		  this.x = 1;
-    }
-    /**
-     * 返回一个新的People对象。
-     */
-	  foo(a: string, b: number): People {
-		  return new People(a,b);
-	  }
+  	x: number;
+  	constructor(name: string, age: number) {
+  		super(age);
+  		this.x = 1;
+  	}
+  	/**
+  	 * 返回一个新的People对象。
+  	 */
+  	foo(a: string, b: number): People {
+  		return new People(a, b);
+  	}
   }
   ```
-- 允许为一份已经存在的 **由原生JS编写的代码** 增加一份类型声明文件。d.ts
-
+- 允许为一份已经存在的 **由原生 JS 编写的代码** 增加一份类型声明文件。d.ts
 
 ## node
-- node包
+
+- node 包
 
 ## webpack
 
-- 打包  将代码从入口文件打包为一个单一文件
-- 转换  将不是js的文件通过loader转换为等价的js文件
+- 打包 将代码从入口文件打包为一个单一文件
+- 转换 将不是 js 的文件通过 loader 转换为等价的 js 文件
 - 代码分割 code spliting
   一般打包为一个单一的文件。 但是所有的业务逻辑和框架等打包到一个单一文件的话会很大。更主要的是，就算把所有功能都打包到一个文件中，也不是所有功能都会被使用。
   比如网络应用，一次性下载所有功能的代码是不必要的。code spliting 用户在打开界面的时候，只加载基本功能/入口页面的功能，随着用户的交还是用户能更快打开入口页面。
 - 摇树优化 tree shaking
   不需要用到的代码将不会进入到打包结果中，减少打包体积。
-  此功能主要依赖 es module 语法，因为它提供静态分析（即不运行代码对代码进行分析，不会因为逻辑成立与否而引入或导出某个模块，import/export不会存在if里面）的可能性。其他方式书写的模块很难去做tree shaking分析。
+  此功能主要依赖 es module 语法，因为它提供静态分析（即不运行代码对代码进行分析，不会因为逻辑成立与否而引入或导出某个模块，import/export 不会存在 if 里面）的可能性。其他方式书写的模块很难去做 tree shaking 分析。
 - **loader 与 plugin 的区别**
   - loader:将除 js 以外的其它资源也当成 require 的资源，如图片，css,json,svg，字体，通过把这些非 js 资源转化为等价的 js 文件来实现；这个格式转换工具在 webpack 里面称为 loader, 即使是 js 文件也会经过 babel-loader 转换
     比如对于图片而言，小资源转换为 base64，大资源转换资源地址；
-    比如 sass-loader,css-loader,style-loader,image-loader
+    比如 `sass-loader`,`css-loader`,`style-loader`,`image-loader`
   - plugin: 在 webpack 则是对整体的打包结果进行处理的一种插件机制
-    webpack-jsuglify-plugin：如压缩，混淆代码（安全保密）
-    common-chunks-plugin：处理通用（vendor）模块的抽离,将第三方代码与自己写的代码分开打包，第三方代码的打包结果不容易发生变化。
-    webpack-html-plugin：自动生成入门 html 页面
-    MiniCssExtractPlugin：将所有css文件从依赖树中提取出来，放入单独的css文件而不打包在js里
-    GenerateSW：生成service worker
-    HotModuleReplacementPlugin：模块热重载：页面不重新加载的情况下，模块的新代码就能在浏览器生效。但并不是对所有的模块都能这么用，一般来说组件的代码，css的代码可以实现热重载。
+    `webpack-jsuglify-plugin`：如压缩，混淆代码（安全保密）
+    `common-chunks-plugin`：处理通用（vendor）模块的抽离,将第三方代码与自己写的代码分开打包，第三方代码的打包结果不容易发生变化。
+    `webpack-html-plugin`：自动生成入门 html 页面
+    `MiniCssExtractPlugin`：将所有 css 文件从依赖树中提取出来，放入单独的 css 文件而不打包在 js 里
+    `GenerateSW`：生成 service worker
+    `HotModuleReplacementPlugin`：模块热重载：页面不重新加载的情况下，模块的新代码就能在浏览器生效。但并不是对所有的模块都能这么用，一般来说组件的代码，css 的代码可以实现热重载。
 
 ## 其它框架知识
 
