@@ -68,11 +68,13 @@
 ### Pull Request
 
 > 在哪些情况下可以直接使用 master branch 来提交 Pull Request:
+>
 > - 你只想为主项目贡献某一处代码，贡献完自己的 repo 就可以扔的那种。
 > - 你打算为主项目长期贡献代码，而且希望追随原项目的主线开发，不保留自己的特性。
 > - 你打算为主项目长期贡献代码，默认 master branch 追随原项目主线，把自己的特性放到别的 branch 中。
 >
 > 在哪种情况下应该使用主题 branch 来提交 Pull Request:
+>
 > - 想用 master branch 完全来做自己的开发。在这种情形下:会从上游库合并更新，但是这些 merge 本身的 commits 显然不可能作为返还到上游库的 Pull Request 的一部分。
 > - 存在自己的（未被 merge 或者不想被 merge 到上游库的）commits。
 
@@ -88,26 +90,24 @@ A:上述两个地址却有不同，虽然指向的是同一个远程仓库，但
 Q: 忽略特殊文件比如明文密码？
 A: .gitignore 文件 [Templates in Github](https://github.com/github/gitignore)
 
-Q:  fork 后修改，如何同步源的更新？
-A:  `git remote add upstream <url>`配置上游仓库；
-  `git fetch upstream`抓取上游仓库（所有分支）的更新；
-  `git rebase upstream/master`合并
-  `git push (origin master)`推送到远程仓库
-Q: git rebase与git merge的区别
-A:  git rebase的log记录更清晰，gitmerge会生成一条新的merge commit.
+Q: fork 后修改，如何同步源的更新？
+A: `git remote add upstream <url>`配置上游仓库；
+`git fetch upstream`抓取上游仓库（所有分支）的更新；
+`git rebase upstream/master`合并
+`git push (origin master)`推送到远程仓库
+Q: git rebase 与 git merge 的区别
+A: git rebase 的 log 记录更清晰，gitmerge 会生成一条新的 merge commit.
 ![git rebase与git merge from stackoverflow](https://i.loli.net/2020/09/06/lGR3ByZYIw8Qfnt.png)
 
-
-Q: git pull 与git fetch的区别
+Q: git pull 与 git fetch 的区别
 A: git pull = git fetch +git merge
 ![git流程图](https://i.loli.net/2020/09/06/iO3DlgQRjBXCrM2.png)
+
 ### 拓展链接
 
 1. [Git Cheat Sheet](https://gitee.com/liaoxuefeng/learn-java/raw/master/teach/git-cheatsheet.pdf)
 2. [Git 官网](https://git-scm.com/)
 3. [Learn Git Branching](https://learngitbranching.js.org/)
-
-
 
 ### Reference
 
@@ -272,7 +272,6 @@ IEEE754 标准:二进制浮点顺运算标准
   - `null`: 未定义，类型为 object
 - `!name` ! 运算符会将值转换为布尔类型再取反
 
-
 ### 逻辑运算 logical operators
 
 - && 和
@@ -399,7 +398,6 @@ https://wangdoc.com/javascript/operators/bit.html
 - `confirm("shall we go shopping?");` 返回布尔值 T/F
 - `prompt("Enter passwords","passwords is");` 返回字符，前面是问题，后面是输入值的前缀。无法改变对话框的外观
 - 参数 / 作用域 全局/局部
-
 
 - 函数声明语句`function a (x)`
 - 函数表达式/匿名函数 `var a = function ()`
@@ -3363,12 +3361,11 @@ $ npm install express-generator
 ```
 
 **cookie**
-- 可以理解为一个key/val映射,但api是字符串形式
-- 设置/增加cookie:`document.cookie="key=val;Expires=Date.toGMTString()"`
-- 删除一个cookie:`document.cookie="key=;Expires=过去的一个时间"`
-- 获取cookie(只能一次性获取所有cookie):`document.cookie`
 
-
+- 可以理解为一个 key/val 映射,但 api 是字符串形式
+- 设置/增加 cookie:`document.cookie="key=val;Expires=Date.toGMTString()"`
+- 删除一个 cookie:`document.cookie="key=;Expires=过去的一个时间"`
+- 获取 cookie(只能一次性获取所有 cookie):`document.cookie`
 
 ### express 默认的模板引擎 Pug
 
@@ -3424,8 +3421,7 @@ span 登录 与文字之间只能有一个空格
 4. 日志数据库(HBase)
 
 - SQL 结构化查询语言（Structured Query Language）
-
-- sqlite 一个数据库相当于一个 excel 文件，可以有多个 sheet
+  sqlite 一个数据库相当于一个 excel 文件，可以有多个 sheet
 
   - 先下载其到项目文件
   - 命令行运行 ./sqlite3 + 数据库名
@@ -3434,7 +3430,7 @@ span 登录 与文字之间只能有一个空格
     命令行:
     .header on --查看时显示头行
     .mode column --每列对应排齐查看
-    .mode box
+    .mode box --表格形式显示
     .schema --查看所有表
     .table --查看所有已创建的表单
 
@@ -3461,11 +3457,11 @@ CREATE TABLE users(
   SELECT * FROM table WHERE condition;
   --更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
   UPDATE table_name SET column1 = value1,... WHERE condition;
-  UPDATE foods SET status="off" WHERE id=1;
+  UPDATE foods SET status = "off" WHERE id = 1;
 
   SELECT * FROM table ORDER BY column1, column2, ... ASC|DESC;
   --表单指定列按照升序 / 降序排列
-  SELECT * FROM table WHERE name IS NUll;
+  SELECT * FROM table WHERE name IS NULL;
   --NULL 在数据库里面表示该位置是空值
   SELECT * FROM table HAVING COUNT(user)<5
   --与where的区别:对聚合结果进行筛选
@@ -3500,8 +3496,8 @@ CREATE TABLE users(
     `LEFT JOIN` 返回左表的所有记录，以及匹配的记录
     `RIGHT JOIN` 返回右表的所有记录，以及匹配的记录
     `FULL JOIN` 全连接，返回所有的排列组合记录
-    `a join b where a.id = b.id`
-    `a join b on a.id = b.id`
+    `a JOIN b WHERE a.id = b.id`
+    `a JOIN b ON a.id = b.id`
 
 - 项目使用 sqlite 的方法
 
