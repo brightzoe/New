@@ -3399,15 +3399,17 @@ span 登录 与文字之间只能有一个空格
   express 里面的 next 放到最后，而 koa 可以放到中间
 - 没有任何中间件，全部需要第三方库加载进来，基本只有 use 方法
 - 洋葱模型，如果涉及到互相调用，后进先出,因为 next 函数的异步机制，后面的中间键执行完后执行前面 next 函数后面的内容
-- const Koa = require('koa)
-  const app = new Koa() 实例需要用 new 调用
-  app.use((async ctx,next)=>{
-  ctx.method
-  ctx.cookie.id
-  await next()
-  ctx.body
-  ctx 是 app 的上下文，context;对象包括 req 和 res，它会自动根据上下文判断是 req 还是 res,直接代理这 2 个对象
+- ```js
+  const Koa = require('koa)
+  const app = new Koa() //实例需要用 new 调用
+  app.use((async ctx,next)=>{ //必须异步
+    ctx.method
+    ctx.cookie.id
+    await next()
+    ctx.body
+    //ctx 是 app 的上下文，context;对象包括 req 和 res，它会自动根据上下文判断是 req 还是 res,直接代理这 2 个对象
   })
+  ```
 - 方便记录一个请求所需要的时间
 - egg.js 基于 koa 再封装了一层的框架
 
