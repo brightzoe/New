@@ -1430,3 +1430,35 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
   - 方便 SEO
   - 需要后端配置
 - React Native 是用来开发移动应用。需要用到 React 概念
+
+## Linux
+### 服务器配置
+
+```sh
+#连接ec2实例
+ssh -i ec2ssh.pem ubuntu@ec2-54-180-117-236.ap-northeast-2.compute.amazonaws.com
+
+#用域名访问
+ssh ubuntu@7.brightzoe.xyz
+
+#装软件
+(sudo) apt install nodejs
+
+# Using Ubuntu，更新node
+curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+#切换到root账户
+sudo -i
+
+#vim命令 修改js
+vi a.js
+i #insert
+esc #退出insert
+:q #退出
+:wq #保存并退出
+
+#任务管理器
+htop
+
+```
