@@ -1438,11 +1438,17 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 #连接ec2实例
 ssh -i ec2ssh.pem ubuntu@ec2-54-180-117-236.ap-northeast-2.compute.amazonaws.com
 
+#网络组
+ssh/http/https # aws设置
+
 #用域名访问
-ssh ubuntu@7.brightzoe.xyz
+ssh -i ec2ssh2.pem ubuntu@7.brightzoe.xyz
 
 #装软件
 (sudo) apt install nodejs
+
+# zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Using Ubuntu，更新node
 curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
@@ -1460,5 +1466,32 @@ esc #退出insert
 
 #任务管理器
 htop
+
+# win /linux 传文件/复制文件
+scp -P 1007 xx.txt root@7.brightzoe.xyz:~
+     #端口
+
+
+
+
+# ssl 证书
+curl https://get.acme.sh | sh
+
+#ssl证书 验证域名  acme.sh
+acme.sh --issue --standalone -d 7.brightzoe.xyz
+
+#设置https
+const https = require('https')
+const fs = require('fs')
+
+
+https.createServer({
+  key:fs.readFileSync('/root/.acme.sh/7.brightzoe.xyz/7.brightzoe.xyz.key'),
+  cert:fs.readFileSync('/root/.acme.sh/7.brightzoe.xyz/7.brightzoe.xyz.cer'),
+},(req,res)=>{
+  res.end('hello')
+}).listen(443,()=>{
+  console.log(443)
+})
 
 ```
