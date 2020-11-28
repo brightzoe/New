@@ -1206,7 +1206,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
 **相关变量:**
 
-- HashRouter: 哈希路由，一个组件，包裹在所有路由的最外层，表示以 hash 模式进行地址导航
+- HashRouter: 哈希路由，一个组件，包裹在所有路由的最外层，表示以 hash 模式进行地址导航,**#形式的**
 - BrowserRouter: H5 模式，一般不需要
 - Switch, 可选，表示按照顺序匹配内部的路由，只匹配满足条件的第一个
 - Route: 导航组件 `<Route path="/users/:id" exact><Component/></Route>`
@@ -1354,12 +1354,12 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
     }
     ```
 
-- react 全家桶
-
-  - 创建一个项目全家桶
-    npm create-react-app 项目名称
-    npx 表示下载完成之后直接运行
-  - npm/yard run start 本地运行代码
+### react 全家桶
+- npm i -g create-react-app/yarn add -g cra
+- 创建一个项目全家桶
+  npm create-react-app 项目名称
+  npx 表示下载完成之后直接运行
+- npm/yard run start 本地运行代码
   - 会生成一个项目文件夹，里面有以下信息
     - git 相关
     - public 网站用到的公开的文件，一般是图片和 html，基本不用动
@@ -1369,8 +1369,14 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
       - 自己写 store 以及相关组件
     - 一些配置文件
       readme.md 告诉你这么开启这个项目的命令
-  - 相关文件配置好后，运行 npm run build , 它会根据 src 和 public 一起构建一个 build 文件，之后把 build 文件里面的资源放到后端的 static 静态文件夹里，这样就可以用后端的端口启动项目；这个 build 文件就是上线启动文件
+- 相关文件配置好后，运行 npm run build , 它会根据 src 和 public 一起构建一个 build 文件，之后把 build 文件里面的资源放到后端的 static 静态文件夹里，这样就可以用后端的端口启动项目；这个 build 文件就是上线启动文件
+```js
+//vote
+yarn add node-sass/antd/react-router-dom -S
 
+
+
+```
 ## TS
 
 - JS 的超集。TS 是一门静态类型语言：变量的类型在书写时确定，运行时不能改变。类似的语言：java,c,c++
