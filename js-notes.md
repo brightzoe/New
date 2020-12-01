@@ -3513,36 +3513,44 @@ CREATE TABLE users(
     `db.run('SQL 操作')` 操作数据库
     `db.get('SQL 操作')` 返回从数据库查找到的数据，只能拿一条,得到一个对象
 
-## websocked 协议
+## 客户端和服务器端常用的通信方式
 
-TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
+### HTTP 的轮询
+  Web 客户端与服务器之间基于 Ajax（http）的常用通信方式，分为短连接与长轮询。
 
-- 长轮询
+- 短连接：客户端和服务器每进行一次 HTTP 操作，就建立一次连接，任务结束就中断连接。AJAX轮询
 
-  - 由于基于 http 协议的服务器不能主动向客户端发送消息（响应式），如果服务器有没有指定客户端的数据要发往指定客户端，需要指定客户端发来请求才能发送，这样会造成延时
-  - 长轮询是指客户端发送一个请求到服务端，这条连接会在一段时间类不会断开
-    - 这段时间内服务器拿到了客户端想要的数据会基于这条连接立即把数据发送给客户端
-    - 这段时间内服务器没有拿到数据，连接断开，之后客户端再次发送同样的连接
+- 长轮询：客户端像传统轮询一样从服务器请求数据。然而，如果服务器没有可以立即返回给客户端的数据，则不会立刻返回一个空结果，而是保持这个请求等待数据到来（或者恰当的超时：小于 ajax 的超时时间），之后将数据作为结果返回给客户端。
 
-  * node 服务器不支持 ws 协议，需要安装 npm i ws,通过监听 http 的 upgrade 事件
-  * 开始客户端发送 http 请求，询问服务器是否接收 websocked 协议，服务器同意就可以升级为 websocked 协议
-  * 数据以消息为单位
-  * TCP 传输的是二进制字节流，而 websocked 是将字节流按照需要分为一份一份的，每一份都是完整的消息片段
-  * 缺点容易断线，兼容性不好，建议使用 socked.io
+### webSocket通信协议
+  TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
+  ws协议使用http协议进行握手,tcp连接建立之后先发http报文进行协议升级的协商,服务器同意就可以升级为 websocked 协议
+  ws服务一般集成在http服务器上,接管node http server 的upgrade事件
 
-  * Connection:Upgrade ；Upgrade:websocket
-    http 请求带上这 2 个主要的请求头告知服务器请求升级为 websocked 协议，服务器同意后 TCP 连接就不会中断
+- 只能发字符串或二进制数据,要发对象的话,只能自行序列化后发送,收到数据后也要自行反序列化
+- 容易断线,不支持断线重连,兼容性不好
+- TCP 传输的是二进制字节流，而 websocket 是将字节流按照需要分为一份一份的，每一份都是完整的消息片段
 
-  - socked.io 对 websocked 的更高级的一层封装
+- `Connection:Upgrade;Upgrade:websocket`
+  http 请求带上这 2 个主要的请求头告知服务器请求升级为 websocked 协议，服务器同意后 TCP 连接就不会中断
 
-    - 使用方法
+#### socked.io 对 websocked 的更高级的一层封装
+  可以支持自动降级,在低版本浏览器上降级为长轮询
+  自动帮你序列化与反序列化
+  断线自动重连
+  将ws抽象成了基于事件
+
+  - 使用方法
+    ```js
       npm i socked.io
       var app = require('express')();
-      var http = require('http').createServer(app);
-      var io = require('socket.io')(http);/var io = require('socket.io').attach(http)
-    - 前端使用安装 socked.io-client
-      或者通过页面加载<script src="/socket.io/socket.io.js"></script>
-    - 优点
+      var server = require('http').createServer(app);
+      var io = require('socket.io')(server);
+      var io = require('socket.io').attach(server)
+    ```
+  - 前端使用安装 socked.io-client
+    或者通过页面加载<script src="/socket.io/socket.io.js"></script>
+  - 优点
 
       - 房间
         - 服务器可以给某个频道所有的客户端发送消息，常用聊天室
