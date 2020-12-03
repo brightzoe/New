@@ -1461,7 +1461,7 @@ ssh -i ec2ssh.pem ubuntu@ec2-54-180-117-236.ap-northeast-2.compute.amazonaws.com
 ssh/http/https # aws设置
 
 #用域名访问
-ssh -i e://ec2ssh2.pem root@vote.brightzoe.xyz
+root: ssh -i ~/ec2ssh2.pem root@vote.brightzoe.xyz
 
 #装软件
  apt install nodejs
