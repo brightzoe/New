@@ -302,7 +302,7 @@ function observe(obj) {
     如在点击时触发自定义事件 v-on:click="\$emit('event1' ,argument)
   - emit 的第二个参数表示可以给父组件传递的参数，父组件可以通过 $event 接收这个参数.如果父组件的事件处理函数是一个方法，那么 $event 将会作为第一个参数传入这个方法
     v-on:event1='$event'
-      v-on:event1='fun'   methods:{func($event){}}
+    v-on:event1='fun' methods:{func($event){}}
 
 - 组件的数据传递
 
@@ -1355,6 +1355,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
     ```
 
 ### react 全家桶
+
 - npm i -g create-react-app/yarn add -g cra
 - 创建一个项目全家桶
   npm create-react-app 项目名称
@@ -1370,6 +1371,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
     - 一些配置文件
       readme.md 告诉你这么开启这个项目的命令
 - 相关文件配置好后，运行 npm run build , 它会根据 src 和 public 一起构建一个 build 文件，之后把 build 文件里面的资源放到后端的 static 静态文件夹里，这样就可以用后端的端口启动项目；这个 build 文件就是上线启动文件
+
 ```js
 //vote
 yarn add node-sass/antd/react-router-dom -S
@@ -1377,6 +1379,7 @@ yarn add node-sass/antd/react-router-dom -S
 
 
 ```
+
 ## TS
 
 - JS 的超集。TS 是一门静态类型语言：变量的类型在书写时确定，运行时不能改变。类似的语言：java,c,c++
@@ -1438,9 +1441,19 @@ yarn add node-sass/antd/react-router-dom -S
 - React Native 是用来开发移动应用。需要用到 React 概念
 
 ## Linux
+
 ### 服务器配置
 
 ```sh
+#重启
+reboot
+
+#AWS 更改为 root 登陆:
+sudo -i
+vim /etc/ssh/sshd_config
+PemitRootLogin #改成yes保存
+cp /home/admin/.ssh/authorized_keys /root/.ssh/authorized_keys
+
 #连接ec2实例
 ssh -i ec2ssh.pem ubuntu@ec2-54-180-117-236.ap-northeast-2.compute.amazonaws.com
 
@@ -1448,10 +1461,10 @@ ssh -i ec2ssh.pem ubuntu@ec2-54-180-117-236.ap-northeast-2.compute.amazonaws.com
 ssh/http/https # aws设置
 
 #用域名访问
-ssh -i ec2ssh2.pem ubuntu@7.brightzoe.xyz
+ssh -i e://ec2ssh2.pem root@vote.brightzoe.xyz
 
 #装软件
-(sudo) apt install nodejs
+ apt install nodejs
 
 # zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -1459,9 +1472,6 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 # Using Ubuntu，更新node
 curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
-
-#切换到root账户
-sudo -i
 
 #vim命令 修改js
 vi a.js
@@ -1478,13 +1488,11 @@ scp -P 1007 xx.txt root@7.brightzoe.xyz:~
      #端口
 
 
-
-
 # ssl 证书
 curl https://get.acme.sh | sh
 
 #ssl证书 验证域名  acme.sh
-acme.sh --issue --standalone -d 7.brightzoe.xyz
+acme.sh --issue --standalone -d vote.brightzoe.xyz
 
 #设置https
 const https = require('https')
@@ -1494,10 +1502,31 @@ const fs = require('fs')
 https.createServer({
   key:fs.readFileSync('/root/.acme.sh/7.brightzoe.xyz/7.brightzoe.xyz.key'),
   cert:fs.readFileSync('/root/.acme.sh/7.brightzoe.xyz/7.brightzoe.xyz.cer'),
+  app
 },(req,res)=>{
   res.end('hello')
 }).listen(443,()=>{
   console.log(443)
 })
 
+
+
+
 ```
+
+- pm2 介绍
+
+  - nodejs 的进程管理工具
+
+    - 其实不只可以管理 node 的程序，任何 linux 上的进程都可以
+
+    ```bash
+    pm2 start xx.js -- args for xx.js   #重启机器后就没有了
+    pm2 show/stop/restart id
+    pm2 save #save后,再重启机器不会丢失
+    pm2 resurrect #重启进程
+    pm2 startup #配置为开机自启动 pm2 unstartup
+
+    ```
+
+fixme: github push 的时候总是忽略一些文件夹,注意有没有传上去
