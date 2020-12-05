@@ -1236,7 +1236,7 @@ boss 面
     收到信息的时候读取这个映射,发送相应信息到客户端.
   - app页面,初始userinfo设置为了null.viewvote中需要userinfo才展示相应的页面,有的时候没拿到userinfo,一定几率会报错.
 
-//alert换成合适的弹窗,找model
+//antd uploader 上传不是和其他数据一起上传的,是先进服务器
 
 
 NOTE:
