@@ -1452,7 +1452,7 @@ reboot
 sudo -i
 vim /etc/ssh/sshd_config
 PemitRootLogin #改成yes保存
-cp /home/admin/.ssh/authorized_keys /root/.ssh/authorized_keys
+cp /home/ubuntu/.ssh/authorized_keys /root/.ssh/authorized_keys
 
 #连接ec2实例
 ssh -i ec2ssh.pem ubuntu@ec2-54-180-117-236.ap-northeast-2.compute.amazonaws.com
@@ -1464,7 +1464,7 @@ ssh/http/https # aws设置
 root: ssh -i ~/ec2ssh2.pem root@vote.brightzoe.xyz
 
 #装软件
- apt install nodejs
+ apt install zsh/nodejs/pm2
 
 # zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
