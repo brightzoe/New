@@ -1461,7 +1461,7 @@ ssh -i ec2ssh.pem ubuntu@ec2-54-180-117-236.ap-northeast-2.compute.amazonaws.com
 ssh/http/https # aws设置
 
 #用域名访问
-root: ssh -i ~/ec2ssh2.pem root@vote.brightzoe.xyz
+root: ssh -i ~/ec2ssh2.pem root@vote.brightzoe.top
 
 #装软件
  apt install zsh/nodejs/pm2
@@ -1484,7 +1484,7 @@ esc #退出insert
 htop
 
 # win /linux 传文件/复制文件
-scp -P 1007 xx.txt root@7.brightzoe.xyz:~
+scp -P 1007 xx.txt root@vote.brightzoe.top:~
      #端口
 
 
@@ -1492,7 +1492,7 @@ scp -P 1007 xx.txt root@7.brightzoe.xyz:~
 curl https://get.acme.sh | sh
 
 #ssl证书 验证域名  acme.sh
-acme.sh --issue --standalone -d vote.brightzoe.xyz
+acme.sh --issue --standalone -d vote.brightzoe.top
 
 #设置https
 const https = require('https')
@@ -1529,4 +1529,5 @@ https.createServer({
 
     ```
 
-fixme: github push 的时候总是忽略一些文件夹,注意有没有传上去
+fixme: github push 的时候总是忽略一些文件夹,注意有没有传上去;
+有时忽略的文件也会意外的加入版本控制里面,都要注意.
