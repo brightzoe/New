@@ -1263,3 +1263,45 @@ NOTE:
 -
 lodash     防抖节流
 leetcode
+
+
+- 原型链的理解
+- 哪几种继承方式
+- 对闭包的理解
+- 选择器优先级
+- 浏览器的渲染过程
+- 浏览器缓存
+  强缓存 协商缓存
+- 本地缓存
+  localstorage,sessionstorage,cookie的区别
+- 跨域问题
+- https的原理
+  走在安全协议上的http
+- get/post的区别
+  get:请求,读取
+  post:提交
+- http 2.0
+- html 适配,自适应
+  媒体查询
+  rem
+- XSS 网络安全
+- webSocket
+  长链接.区别于轮询.
+- DOM事件
+  监听
+- 事件流分哪些阶段
+- HTTP状态码
+  2xx
+  3xx
+  4xx
+  5xx
+- 页面优化加载
+- antd 按需调用
+- react-router使用
+- 数据多，不卡顿 requestAnimationFrame() createdocumentfragment()
+
+
+
+
+
+
