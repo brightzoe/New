@@ -493,11 +493,11 @@
 
 ## 其他
 
-- name 只有一些标签可以使用，可重复。可配合 target 使用，使新网页的地址为 name 的父标签（eg <iframe name="sfds"> <a target="sfds">
+- name 只有一些标签可以使用，可重复。可配合 target 使用，使新网页的地址为 name 的父标签（eg `<iframe name="sfds"> <a target="sfds">`)
 
 - 无 `doctype` 声明的页面元素的盒子模型是 border box
 
-- 给 html 元素设置宽高百分比，是相对于视口而言的。如 900\*1080 的视口，height:100% 时高度就是 1080，视口大小改变，html 宽高随之改变
+- 给 html 元素设置宽高百分比，是相对于视口而言的。如 900*1080 的视口，height:100% 时高度就是 1080，视口大小改变，html 宽高随之改变
 - body 是一个特殊的元素，不能通过 overflow：hidden 达到 BFC 效果。
 - html 或 body 如果设置了背景颜色，那么这个颜色会覆盖整个窗口（无论设置的 html 或 body 元素的区域有多大），区域外的颜色优先和 html 的一致，如果 html 没有设置背景颜色，则区域外的颜色和 body 一致
 - <template> 模板元素 浏览器会加载其内容但不会显示，我们可以读取其 innerHtml 和 content 属性，也能配合框架使用
@@ -1072,7 +1072,7 @@ background-color 会充满 content,padding,border.
 - 边框合并：如果一个包含块高度为 auto, 没有 border,padding, 且只有块级子元素，其默认高度为最高块级子元素的外边框边界到最低块级子元素外边框，也就是说不包含子元素上下的 margin, 子元素 margin 会成为包含块 margin
 
 - 边框不合并：但是如果包含块有 padding 或 border, 则包含子元素上下的 margin, 是从最高子元素的上外边距边界到最低子元素下外边距边界的距离。如果子元素 margin 为负，包含块高度越来越小，但最低为 0, 不会为负值。
-  
+
 - 在 CSS 中，两个或多个毗邻（父子元素或兄弟元素）的普通流中的块元素垂直方向上的 margin 会发生叠加。这种方式形成的外边距即可称为外边距叠加 (collapsed margin)。
   两个盒子相邻，两个正 margin 重合，取其中最大的 margin 为合并后共用的 margin.
   两个盒子相邻，两个负 margin 重合，取其中绝对值最大的 margin 为合并后共用的 margin.
@@ -1108,7 +1108,7 @@ display:（改变元素显示）
 inline-block: 看他自身位置认为是行内元素；看里面的布局，内容认为自己在块元素里。里面有内容时，基线是内容最后一行的基线；无内容时，将 margin-box 底部作为基线。
 inline-block 元素触发 BFC
 
-## BFC 
+## BFC
 Block Format Context 块级格式化上下文
 自身形成一个布局单元：布局此元素内部时不用考虑其外部，可以理解为完全隔离的独立容器，容器里面的元素不会在布局上影响到外面的元素
 - 在常规流和 float 里面有效，不能包着脱离常规流的定位元素

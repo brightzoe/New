@@ -30,6 +30,7 @@
   表格
   行内加行高
 - absolute 是以什么为准进行位移？
+  父元素的padding
 - **单行文本溢出（多的部分显示省略号）**
   ```css
   overflow: hidden;
@@ -55,6 +56,7 @@
   rem 等比例布局 还是 手机电脑等都正常显示(media query)。
 - z-index 用法
 - BFC 定义，触发条件
+  块级格式化上下文，内部形成一个独立的布局单元，不受外界元素的影响
 - 响应式布局实现原理
 - src 和 href 有什么区别
   一般 src 指向的资源一般会被加载到页面里使用的，如 img,iframe。href 属性指向的只是一个地址，一般不会加载,如 a 标签。
@@ -1299,9 +1301,116 @@ leetcode
 - antd 按需调用
 - react-router使用
 - 数据多，不卡顿 requestAnimationFrame() createdocumentfragment()
+---------------------------------
+**重点**
+
+- 进程和线程的区别？js的单线程，如何处理异步，node
+  - 进程间通信的方式
+- 从输入url到页面渲染经历了什么？
+  DNS解析-》html语法分析词法分析-》css解析=》 合成图层、合成线程调用光栅化线程池，生成位图后浏览器进程间通信过程，显卡缓存与显示器的关系
+
+   DNS查询：浏览器缓存-本地缓存-公网DNS查询
+- 浏览器渲染过程？
+
+- 重绘和回流
+  怎么优化？
+
+- 缓存 浏览器缓存、本地缓存 读取缓存的方式
+  cache-control字段？
+  强缓存和协商缓存的顺序
+  cookie的字段：domain/path/httpOnly/sameSite/
+  - last-modified etag
+    cache-control与last-modified区别
+
+- es6语法？？？
+  - class
+  - 箭头函数、普通函数的区别
+  - let/const/var 怎么样，有哪些优化？
+
+  - weakmap和map的区别
+    弱引用，前者对gc更友好
+
+- new的原理
+
+- deepclone
+- 数组去重、如何优化
+  改变数组，不改变数组：splice,substring
+- flatten
+- map,foreach,reduce
+- 闭包陷阱，
+- eventloop
+  宏任务-微任务-ui渲染
+  - requestanimationframe在eventloop的位置？
+
+- tcp三次握手
+  面向连接的，可靠的，基于字节流的传输层协议。
+  udp 面向无连接的传输层协议。
+- https的加密
+  对称加密，非对称加密
+  - 如何握手？
+  - 如何保证数据是否被篡改？签名，签名的原理
+  - 哈希摘要算法
+
+- 跨域
+  都有哪些方法？
+  fetch、xhr区别
 
 
+- 服务器渲染ssr
+- 浏览器渲染
 
 
+- 模块化
+  commonjs，ESModule
+  - amd和ESModule的区别？
+  ESModule对于tree-shaking有什么优势？
+
+- react
+  - diff算法
+  - react与vue的不同
+  - 对react的理解
+
+  - 生命周期
 
 
+  - 相关的api
+    react.memo
+    memorize
+  - react闭包陷阱？
+    useReducer
+
+  - 双向绑定
+  - 受控组件与非受控组件的区别
+
+  - 前端路由，都有什么区别
+    - hashrouter
+
+  - redux
+
+- 对babel的了解
+
+
+- webpack
+  优化手段：打包时间方面，预编译、缓存、缩小构建目标，说了大概十个插件，然后打包体积上，JS 和 CSS 的Tree-Shaking 怎么配置
+  - loader与plugin
+
+- 项目遇到的挑战，解决方案？
+  websocket  怎么样
+  广播
+  
+- 性能优化
+  懒加载
+  react.lazy()  错误边界
+
+- 对工程化的理解
+  代码、编译、压缩、规范、人、团队协作、统一产出标准
+
+- dom和bom的相关的对象
+  element与node的区别？
+
+- 职业规划
+
+- 您做的业务中遇到哪些挑战？有什么解决思路？
+
+
+- 手写排序 快排

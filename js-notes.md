@@ -1147,7 +1147,7 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
   - location.assign('xxx') ===location.href ='xxx'===location ='xxx' 相当于打开了新页面并加入历史记录，可以前进后退
   - location.replace('xx') 当前地址直接换一个,无法前进后退
   - hash 指的是#号及后面的部分对应页面内 id,HTTP 请求没有这部分。hash change 事件就是监测 hash 值的变化，必须绑定至 window 对象
-- **history:**实际是一个栈，前进后退会在栈中游走
+- **history:** 实际是一个栈，前进后退会在栈中游走
   - history.go() history.forward()/back()——>popstate 事件
   - history.state 储存当前页面的 state 对象
   - pushState(data,title,url)
@@ -1368,7 +1368,7 @@ IEEE754 标准:二进制浮点顺运算标准
 
 ## HTTP 协议
 
-[HTTP](##HTTP)
+[HTTP](#HTTP)
 
 ## DNS 解析
 
@@ -3516,16 +3516,18 @@ CREATE TABLE users(
 ## 客户端和服务器端常用的通信方式
 
 ### HTTP 的轮询
-  Web 客户端与服务器之间基于 Ajax（http）的常用通信方式，分为短连接与长轮询。
 
-- 短连接：客户端和服务器每进行一次 HTTP 操作，就建立一次连接，任务结束就中断连接。AJAX轮询
+Web 客户端与服务器之间基于 Ajax（http）的常用通信方式，分为短连接与长轮询。
+
+- 短连接：客户端和服务器每进行一次 HTTP 操作，就建立一次连接，任务结束就中断连接。AJAX 轮询
 
 - 长轮询：客户端像传统轮询一样从服务器请求数据。然而，如果服务器没有可以立即返回给客户端的数据，则不会立刻返回一个空结果，而是保持这个请求等待数据到来（或者恰当的超时：小于 ajax 的超时时间），之后将数据作为结果返回给客户端。
 
-### webSocket通信协议
-  TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
-  ws协议使用http协议进行握手,tcp连接建立之后先发http报文进行协议升级的协商,服务器同意就可以升级为 websocked 协议
-  ws服务一般集成在http服务器上,接管node http server 的upgrade事件
+### webSocket 通信协议
+
+TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
+ws 协议使用 http 协议进行握手,tcp 连接建立之后先发 http 报文进行协议升级的协商,服务器同意就可以升级为 websocked 协议
+ws 服务一般集成在 http 服务器上,接管 node http server 的 upgrade 事件
 
 - 只能发字符串或二进制数据,要发对象的话,只能自行序列化后发送,收到数据后也要自行反序列化
 - 容易断线,不支持断线重连,兼容性不好
@@ -3535,35 +3537,36 @@ CREATE TABLE users(
   http 请求带上这 2 个主要的请求头告知服务器请求升级为 websocked 协议，服务器同意后 TCP 连接就不会中断
 
 #### socked.io 对 websocked 的更高级的一层封装
-  可以支持自动降级,在低版本浏览器上降级为长轮询
-  自动帮你序列化与反序列化
-  断线自动重连
-  将ws抽象成了基于事件
 
-  - 使用方法
-    ```js
-      npm i socked.io
-      var app = require('express')();
-      var server = require('http').createServer(app);
-      var io = require('socket.io')(server);
-      var io = require('socket.io').attach(server)
-    ```
-  - 前端使用安装 socked.io-client
-    或者通过页面加载<script src="/socket.io/socket.io.js"></script>
-  - 优点
+可以支持自动降级,在低版本浏览器上降级为长轮询
+自动帮你序列化与反序列化
+断线自动重连
+将 ws 抽象成了基于事件
 
-      - 房间
-        - 服务器可以给某个频道所有的客户端发送消息，常用聊天室
-        - 客户端也可以给其它客户端发送消息
-        - 加入和离开房间的功能
-      - 解析:自动编码为字符串，自动编码为其它数据类型
-      - 远程事件:客户端和服务器可以监听对方的事件，对方触发了事件，己方可以马上得到触发事件的数据，实现了无延时的双向通信
-        io/socked.emit("event",{传递数据}) 服务器/客户端绑定事件
-        io/socked.on("event",()=>{}) 服务器/客户端监听事件
-        socket.join/leave（'some room'）加入或者离开房间
-      - 发送的参数数据可以同时有字符串和二进制字节流，而 websocket 不能混合发送
+- 使用方法
+  ```js
+    npm i socked.io
+    var app = require('express')();
+    var server = require('http').createServer(app);
+    var io = require('socket.io')(server);
+    var io = require('socket.io').attach(server)
+  ```
+- 前端使用安装 socked.io-client
+  或者通过页面加载<script src="/socket.io/socket.io.js"></script>
+- 优点
 
-    - socket.handshake.query 可以拿到 query 部分的参数
+  - 房间
+    - 服务器可以给某个频道所有的客户端发送消息，常用聊天室
+    - 客户端也可以给其它客户端发送消息
+    - 加入和离开房间的功能
+  - 解析:自动编码为字符串，自动编码为其它数据类型
+  - 远程事件:客户端和服务器可以监听对方的事件，对方触发了事件，己方可以马上得到触发事件的数据，实现了无延时的双向通信
+    io/socked.emit("event",{传递数据}) 服务器/客户端绑定事件
+    io/socked.on("event",()=>{}) 服务器/客户端监听事件
+    socket.join/leave（'some room'）加入或者离开房间
+  - 发送的参数数据可以同时有字符串和二进制字节流，而 websocket 不能混合发送
+
+  - socket.handshake.query 可以拿到 query 部分的参数
 
 ### linux 服务器知识
 
