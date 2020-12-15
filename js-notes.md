@@ -1890,7 +1890,7 @@ HTTP 响应头:
   > unsafe-inline 内联的，没写就不能加载`<div onclick="alert(2)"></div>`
 
   style-src github.githubassets.com;
-  样式能够加载来自哪里的 <div style="color:red";
+  样式能够加载来自哪里的 `<div style="color:red">`
 
   worker-src github.com/socket-worker.js gist.github.com/socket-worker.js
   worker 的代码能够加载来自哪里的
@@ -1937,7 +1937,7 @@ cross origin resource sharing 跨域资源共享
   - 一些简单的方法不会有预检请求（get/head/post）, 因为不能破坏 Web 的兼容性。
 - 常用的 CORS 头
   响应头:
-  Access-Control-Allow-Origin:url/\* 服务器允许的域
+  Access-Control-Allow-Origin:url/* 服务器允许的域
   Access-Control-Allow-Methods: POST, GET, OPTIONS 服务器允许使用这些方法
   Access-Control-Allow-Headers: X-PINGOTHER, Content-Type 服务器允许使用这些请求头
   Access-Control-Allow-Credientials:允许带上的凭据(cookie 头)
