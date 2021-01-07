@@ -1525,7 +1525,7 @@ https.createServer({
     pm2 show/stop/restart id
     pm2 save #save后,再重启机器不会丢失
     pm2 resurrect #重启进程
-    pm2 startup #配置为开机自启动 pm2 unstartup 
+    pm2 startup #配置为开机自启动 pm2 unstartup
 
     ```
 

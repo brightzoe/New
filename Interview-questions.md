@@ -30,7 +30,7 @@
   表格
   行内加行高
 - absolute 是以什么为准进行位移？
-  父元素的padding
+  父元素的 padding
 - **单行文本溢出（多的部分显示省略号）**
   ```css
   overflow: hidden;
@@ -471,7 +471,8 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
   proxy 可以拦截对一个对象的所有操作(读写，调用，判断)
 
 ### 网络
-- http为什么是无状态的?
+
+- http 为什么是无状态的?
   协议自身只有一个来回,来不及记录状态.
 - https 加密原理？是对称加密还是非对称加密?
   对称加密：加密与解密使用相同的密码。
@@ -501,11 +502,11 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
   csrf,sql 注入,xss
 - 网络安全 xss、csrf（为什么 token 可以预防），怎么防范？
   - XSS:用户的输入被发到页面上，成为页面的代码并执行（留言留了 script 并可以执行了，数据被发往另一个站点。
-    - 防范：让他不能把数据发往其他服务器。使用CSP(内容安全策略),在HTTP请求头里设置，样式只能从哪里加载，图片只能来源于哪里，限制页面加载js的来源。cookie:httponly
-  - SQL注入：用户的输入被拼接在了sql语句
-    - 数据库使用占位符，sql不使用拼接方式
+    - 防范：让他不能把数据发往其他服务器。使用 CSP(内容安全策略),在 HTTP 请求头里设置，样式只能从哪里加载，图片只能来源于哪里，限制页面加载 js 的来源。cookie:httponly
+  - SQL 注入：用户的输入被拼接在了 sql 语句
+    - 数据库使用占位符，sql 不使用拼接方式
   - CSRF：跨站脚本攻击，一个页面借用了已经登陆的页面的 cookie 向该页面的服务器发送请求。伪造一些操作
-    - 防范：验证请求由哪个页面发出，验证referrer；使用 CSRF token;cookie的SameSite属性
+    - 防范：验证请求由哪个页面发出，验证 referrer；使用 CSRF token;cookie 的 SameSite 属性
 - http304 Not Modified
   304：协商缓存成功的状态码
   Not Modified：两方版本相同，不需要再发送了
@@ -1233,13 +1234,12 @@ boss 面
 
 - 项目实现的细节？遇到过的困难如何解决？
   遇到的问题:
-  fixme:bbs项目,做登陆之后跳转,为提升用户体验,登陆后跳转到登陆前浏览的页面,否则跳转到首页.结果总是跳转到注册的页面.在做好功能后没有进行测试,找问题所在找了好久.在network里面找到问题了吗?
-  - vote中,ws更新实时投票信息,显示不出来.需要建立一个映射,存储voteid与websocket间的对应.
+  fixme:bbs 项目,做登陆之后跳转,为提升用户体验,登陆后跳转到登陆前浏览的页面,否则跳转到首页.结果总是跳转到注册的页面.在做好功能后没有进行测试,找问题所在找了好久.在 network 里面找到问题了吗?
+  - vote 中,ws 更新实时投票信息,显示不出来.需要建立一个映射,存储 voteid 与 websocket 间的对应.
     收到信息的时候读取这个映射,发送相应信息到客户端.
-  - app页面,初始userinfo设置为了null.viewvote中需要userinfo才展示相应的页面,有的时候没拿到userinfo,一定几率会报错.
+  - app 页面,初始 userinfo 设置为了 null.viewvote 中需要 userinfo 才展示相应的页面,有的时候没拿到 userinfo,一定几率会报错.
 
 //antd uploader 上传不是和其他数据一起上传的,是先进服务器
-
 
 NOTE:
 
@@ -1262,10 +1262,8 @@ NOTE:
   let:es6 提出，没有变量提升。在声明前使用，出现 TDZ。不能重复声明。
   const:es5,声明常量。const 的指向不能变，但指向的东西可以变，可以增删属性。
 
--
-lodash     防抖节流
-leetcode
-
+- lodash 防抖节流
+  leetcode
 
 - 原型链的理解
 - 哪几种继承方式
@@ -1275,11 +1273,11 @@ leetcode
 - 浏览器缓存
   强缓存 协商缓存
 - 本地缓存
-  localstorage,sessionstorage,cookie的区别
+  localstorage,sessionstorage,cookie 的区别
 - 跨域问题
-- https的原理
-  走在安全协议上的http
-- get/post的区别
+- https 的原理
+  走在安全协议上的 http
+- get/post 的区别
   get:请求,读取
   post:提交
 - http 2.0
@@ -1289,48 +1287,53 @@ leetcode
 - XSS 网络安全
 - webSocket
   长链接.区别于轮询.
-- DOM事件
+- DOM 事件
   监听
 - 事件流分哪些阶段
-- HTTP状态码
+- HTTP 状态码
   2xx
   3xx
   4xx
   5xx
 - 页面优化加载
 - antd 按需调用
-- react-router使用
+- react-router 使用
 - 数据多，不卡顿 requestAnimationFrame() createdocumentfragment()
----------------------------------
+
+---
+
 **重点**
 
-- 进程和线程的区别？js的单线程，如何处理异步，node
+- 进程和线程的区别？js 的单线程，如何处理异步，node
   - 进程间通信的方式
-- 从输入url到页面渲染经历了什么？
-  DNS解析-》html语法分析词法分析-》css解析=》 合成图层、合成线程调用光栅化线程池，生成位图后浏览器进程间通信过程，显卡缓存与显示器的关系
+- 从输入 url 到页面渲染经历了什么？
+  DNS 解析-》html 语法分析词法分析-》css 解析=》 合成图层、合成线程调用光栅化线程池，生成位图后浏览器进程间通信过程，显卡缓存与显示器的关系
 
-   DNS查询：浏览器缓存-本地缓存-公网DNS查询
+  DNS 查询：浏览器缓存-本地缓存-公网 DNS 查询
+
 - 浏览器渲染过程？
 
 - 重绘和回流
   怎么优化？
 
 - 缓存 浏览器缓存、本地缓存 读取缓存的方式
-  cache-control字段？
+  cache-control 字段？
   强缓存和协商缓存的顺序
-  cookie的字段：domain/path/httpOnly/sameSite/
-  - last-modified etag
-    cache-control与last-modified区别
+  cookie 的字段：domain/path/httpOnly/sameSite/
 
-- es6语法？？？
+  - last-modified etag
+    cache-control 与 last-modified 区别
+
+- es6 语法？？？
+
   - class
   - 箭头函数、普通函数的区别
   - let/const/var 怎么样，有哪些优化？
 
-  - weakmap和map的区别
-    弱引用，前者对gc更友好
+  - weakmap 和 map 的区别
+    弱引用，前者对 gc 更友好
 
-- new的原理
+- new 的原理
 
 - deepclone
 - 数组去重、如何优化
@@ -1339,78 +1342,79 @@ leetcode
 - map,foreach,reduce
 - 闭包陷阱，
 - eventloop
-  宏任务-微任务-ui渲染
-  - requestanimationframe在eventloop的位置？
+  宏任务-微任务-ui 渲染
 
-- tcp三次握手
+  - requestanimationframe 在 eventloop 的位置？
+
+- tcp 三次握手
   面向连接的，可靠的，基于字节流的传输层协议。
   udp 面向无连接的传输层协议。
-- https的加密
+- https 的加密
   对称加密，非对称加密
+
   - 如何握手？
   - 如何保证数据是否被篡改？签名，签名的原理
   - 哈希摘要算法
 
 - 跨域
   都有哪些方法？
-  fetch、xhr区别
+  fetch、xhr 区别
 
-
-- 服务器渲染ssr
+- 服务器渲染 ssr
 - 浏览器渲染
-
 
 - 模块化
   commonjs，ESModule
-  - amd和ESModule的区别？
-  ESModule对于tree-shaking有什么优势？
+
+  - amd 和 ESModule 的区别？
+    ESModule 对于 tree-shaking 有什么优势？
 
 - react
-  - diff算法
-  - react与vue的不同
-  - 对react的理解
+
+  - diff 算法
+  - react 与 vue 的不同
+  - 对 react 的理解
 
   - 生命周期
 
-
-  - 相关的api
+  - 相关的 api
     react.memo
     memorize
-  - react闭包陷阱？
+  - react 闭包陷阱？
     useReducer
 
   - 双向绑定
   - 受控组件与非受控组件的区别
 
   - 前端路由，都有什么区别
+
     - hashrouter
 
   - redux
 
-- 对babel的了解
-
+- 对 babel 的了解
 
 - webpack
-  优化手段：打包时间方面，预编译、缓存、缩小构建目标，说了大概十个插件，然后打包体积上，JS 和 CSS 的Tree-Shaking 怎么配置
-  - loader与plugin
+  优化手段：打包时间方面，预编译、缓存、缩小构建目标，说了大概十个插件，然后打包体积上，JS 和 CSS 的 Tree-Shaking 怎么配置
+
+  - loader 与 plugin
 
 - 项目遇到的挑战，解决方案？
-  websocket  怎么样
+  websocket 怎么样
   广播
 
 - 性能优化
   懒加载
-  react.lazy()  错误边界
+  react.lazy() 错误边界
 
 - 对工程化的理解
   代码、编译、压缩、规范、人、团队协作、统一产出标准
 
-- dom和bom的相关的对象
-  element与node的区别？
+- dom 和 bom 的相关的对象
+  element 与 node 的区别？
 
 - 职业规划
 
 - 您做的业务中遇到哪些挑战？有什么解决思路？
-
 
 - 手写排序 快排

@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <!-- 让浏览器以最新的标准来解析这个页面，写在最前面 -->
 <html>
-  <head></head>
-  <body></body>
+	<head></head>
+	<body></body>
 </html>
 ```
 
@@ -13,35 +13,35 @@
 
 ```html
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width" />
-  <title>html-notes</title>
-  <!-- 标题 -->
-  <link rel="icon" href="https://pbihub.cn/assets/images/logo.png" />
-  <!--页面图标-->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>html-notes</title>
+	<!-- 标题 -->
+	<link rel="icon" href="https://pbihub.cn/assets/images/logo.png" />
+	<!--页面图标-->
 
-  <meta name="viewport" content="width=500" />
-  <!-- 页面以多宽尺寸渲染 -->
-  <base href="https://www.baidu.com/abc/" target="页面中所有链接的打开位置" />
+	<meta name="viewport" content="width=500" />
+	<!-- 页面以多宽尺寸渲染 -->
+	<base href="https://www.baidu.com/abc/" target="页面中所有链接的打开位置" />
 
-  <link rel="stylesheet" href="xx.css" media="print" />
-  <style>
-    @import "a.css" <!--必须出现在文件头，路径是相对于这句代码所在的 css 文件
-        --> p, a {
-      border: 3px dotted greenyellow;
-    }
-  </style>
+	<link rel="stylesheet" href="xx.css" media="print" />
+	<style>
+		@import 'a.css' <!--必须出现在文件头，路径是相对于这句代码所在的 css 文件
+				--> p, a {
+			border: 3px dotted greenyellow;
+		}
+	</style>
 </head>
 ```
 
 ```html
 <body
-  link="aqua"
-  alink="grey"
-  vlink="red"
-  bgcolor="yellow"
-  background="http://www.baidu.com/logo.png"
-  leftmargin="10%"
+	link="aqua"
+	alink="grey"
+	vlink="red"
+	bgcolor="yellow"
+	background="http://www.baidu.com/logo.png"
+	leftmargin="10%"
 ></body>
 <!-- 内联样式，设置一些简单的格式 -->
 ```
@@ -62,9 +62,9 @@
 
 ```html
 <hgroup style="border: 5px solid: red">
-  <!-- 可以在标签设置一些简单样式 -->
-  <h1>一级标题</h1>
-  <h2>二级标题</h2>
+	<!-- 可以在标签设置一些简单样式 -->
+	<h1>一级标题</h1>
+	<h2>二级标题</h2>
 </hgroup>
 ```
 
@@ -92,30 +92,30 @@
 
 ```html
 <img
-  title="一个标题"
-  src="https://drscdn.500px.org/photo/174778125/m%3D1170_k%3D1/2841ccf2a3720e8e794a6a6930f6ff2c"
-  width="400"
-  usemap="#imgmap"
-  alt=""
+	title="一个标题"
+	src="https://drscdn.500px.org/photo/174778125/m%3D1170_k%3D1/2841ccf2a3720e8e794a6a6930f6ff2c"
+	width="400"
+	usemap="#imgmap"
+	alt=""
 />
 <map name="imgmap" id="imgmap">
-  <area
-    shape="cirlce"
-    coords="0,0,400"
-    href="https://www.mi.com/"
-    target="_blank"
-    alt=""
-    title="111"
-  />
-  <area
-    shape="rect"
-    coords="0,0,110,260"
-    href="https://www.mi.com/"
-    target="_blank"
-    alt=""
-    title="11"
-  />
-  <area shape="poly" coords="" href="" alt="" />
+	<area
+		shape="cirlce"
+		coords="0,0,400"
+		href="https://www.mi.com/"
+		target="_blank"
+		alt=""
+		title="111"
+	/>
+	<area
+		shape="rect"
+		coords="0,0,110,260"
+		href="https://www.mi.com/"
+		target="_blank"
+		alt=""
+		title="11"
+	/>
+	<area shape="poly" coords="" href="" alt="" />
 </map>
 ```
 
@@ -181,23 +181,23 @@
 
 ```html
 <ul>
-  <li>西瓜</li>
-  <li>苹果</li>
+	<li>西瓜</li>
+	<li>苹果</li>
 </ul>
 
 <ol>
-  <li>西瓜</li>
-  <li>苹果</li>
+	<li>西瓜</li>
+	<li>苹果</li>
 </ol>
 
 <dl>
-  <dt>老师</dt>
-  <dd>谢然</dd>
+	<dt>老师</dt>
+	<dd>谢然</dd>
 
-  <dt>学生</dt>
-  <dd>张三</dd>
-  <dd>李四</dd>
-  <dd>王五</dd>
+	<dt>学生</dt>
+	<dd>张三</dd>
+	<dd>李四</dd>
+	<dd>王五</dd>
 </dl>
 ```
 
@@ -222,27 +222,30 @@
 <input type="range" min="1" max="500" step="20" />
 <!-- 默认 0-100, 但可以通过下面设置范围，范围随意设置，和跨度 -->
 <input
-  type="radio"
-  disabled
-  required
-  maxlength
-  minlength
-  placeholder
-  autofocus
-  tabindex
-  checked
-  name=""
+	type="radio"
+	disabled
+	required
+	maxlength
+	minlength
+	placeholder
+	autofocus
+	tabindex
+	checked
+	name=""
 />
 <!-- name 很重要，表单提交时为这个域 formcontrol 的名字 -->
 <!-- 在 radio 和 checkbox 阵列里，name 相同的元素被分在一组里 -->
 <button type="reset/button/submit" disabled></button>
 ```
-设置禁用button的属性：
+
+设置禁用 button 的属性：
+
 ```css
 [disabled],:disabled{
   curso r:not-allowed
 }
 ```
+
 `<button type="reset/button/submit"></button>`与`<input type="button" >`的区别：
 
 - input 的 button 只能在按钮上显示纯文字，非闭合标签无法嵌套
@@ -263,17 +266,17 @@
 
 ```html
 <select name="city">
-  <option selected hidden disabled>请选择</option>
-  <option value="0571">一个三</option>
-  <option value="0571">四个六</option>
-  <optgroup label="一线">
-    <option value="0571">杭州</option>
-    <option value="0571">湖州</option>
-  </optgroup>
-  <optgroup label="十八线">
-    <option value="0571">马家沟</option>
-    <option value="0571">曼哈屯</option>
-  </optgroup>
+	<option selected hidden disabled>请选择</option>
+	<option value="0571">一个三</option>
+	<option value="0571">四个六</option>
+	<optgroup label="一线">
+		<option value="0571">杭州</option>
+		<option value="0571">湖州</option>
+	</optgroup>
+	<optgroup label="十八线">
+		<option value="0571">马家沟</option>
+		<option value="0571">曼哈屯</option>
+	</optgroup>
 </select>
 ```
 
@@ -281,9 +284,9 @@
 
 ```html
 <fieldset>
-  <legend>Title</legend>
-  <input type="radio" id="radio" /> <label for="radio">Click me</label>
-  <textarea name="" id="" cols="30" rows="10"></textarea>
+	<legend>Title</legend>
+	<input type="radio" id="radio" /> <label for="radio">Click me</label>
+	<textarea name="" id="" cols="30" rows="10"></textarea>
 </fieldset>
 ```
 
@@ -291,14 +294,14 @@
 
 ```html
 <form action="http://www.baidu.com/s" target="_blank">
-  请输入：<input type="text" name="wd" value="" /> <br />
-  <!-- name: 文本框的名字 -->
-  <input type="submit" value="百度一下" />
+	请输入：<input type="text" name="wd" value="" /> <br />
+	<!-- name: 文本框的名字 -->
+	<input type="submit" value="百度一下" />
 </form>
 
 <form action="http://www.www.google.com/search" target="_blank">
-  请输入：<input type="text" name="q" value="" /> <br />
-  <input type="submit" value="google 一下" />
+	请输入：<input type="text" name="q" value="" /> <br />
+	<input type="submit" value="google 一下" />
 </form>
 ```
 
@@ -308,50 +311,50 @@
 
 ```html
 <table border="1" cellspacing="0" width="300px" height="150px">
-  <!-- 不考虑打印可以省略 thead,tfoot,tbody -->
-  <!-- 可以有多个 tbody -->
-  <caption>
-    成绩单
-  </caption>
-  <col bgcolor="magenta" width="120px" />
-  <colgroup bgcolor="green">
-    <col bgcolor="red" />
-    <col />
-  </colgroup>
-  <!--第几个 col 就是第几列，还有 colgroup-->
-  <!--回想：group:hgroup,optgroup,colgroup,fieldgroup,ul,ol-->
-  <thead>
-    <tr>
-      <!--行，table row-->
-      <th>name</th>
-      <th>number</th>
-      <th id="score">score</th>
-      <!--id, 后面的 headers 与其形成对应关系-->
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>皮蛋</th>
-      <td>2</td>
-      <!--支持跨行及跨列，但不能跨过 thead,tbody,tfoot-->
-      <td>20</td>
-      <td headers="score stu1">100</td>
-    </tr>
-    <tr>
-      <th>小米</th>
-      <td>222</td>
-      <td>333</td>
-    </tr>
-  </tbody>
+	<!-- 不考虑打印可以省略 thead,tfoot,tbody -->
+	<!-- 可以有多个 tbody -->
+	<caption>
+		成绩单
+	</caption>
+	<col bgcolor="magenta" width="120px" />
+	<colgroup bgcolor="green">
+		<col bgcolor="red" />
+		<col />
+	</colgroup>
+	<!--第几个 col 就是第几列，还有 colgroup-->
+	<!--回想：group:hgroup,optgroup,colgroup,fieldgroup,ul,ol-->
+	<thead>
+		<tr>
+			<!--行，table row-->
+			<th>name</th>
+			<th>number</th>
+			<th id="score">score</th>
+			<!--id, 后面的 headers 与其形成对应关系-->
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th>皮蛋</th>
+			<td>2</td>
+			<!--支持跨行及跨列，但不能跨过 thead,tbody,tfoot-->
+			<td>20</td>
+			<td headers="score stu1">100</td>
+		</tr>
+		<tr>
+			<th>小米</th>
+			<td>222</td>
+			<td>333</td>
+		</tr>
+	</tbody>
 
-  <tfoot>
-    <tr>
-      <th>豆豆</th>
-      <th>222</th>
-      <th>333</th>
-      <th>555</th>
-    </tr>
-  </tfoot>
+	<tfoot>
+		<tr>
+			<th>豆豆</th>
+			<th>222</th>
+			<th>333</th>
+			<th>555</th>
+		</tr>
+	</tfoot>
 </table>
 ```
 
@@ -359,40 +362,40 @@
 
 ```html
 <table border="1">
-  <tr>
-    <td>1</td>
-    <td>2</td>
-    <td>3</td>
-    <td>4</td>
-    <td>5</td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td rowspan="3">2</td>
-    <td colspan="2">3</td>
-    <td>4</td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>2</td>
-    <td rowspan="3">3</td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>2</td>
-    <td>3</td>
-  </tr>
-  <tr>
-    <td colspan="3">1</td>
-    <td>2</td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>2</td>
-    <td>3</td>
-    <td>4</td>
-    <td>5</td>
-  </tr>
+	<tr>
+		<td>1</td>
+		<td>2</td>
+		<td>3</td>
+		<td>4</td>
+		<td>5</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td rowspan="3">2</td>
+		<td colspan="2">3</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>2</td>
+		<td rowspan="3">3</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>2</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td colspan="3">1</td>
+		<td>2</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>2</td>
+		<td>3</td>
+		<td>4</td>
+		<td>5</td>
+	</tr>
 </table>
 ```
 
@@ -404,8 +407,8 @@
 
 ```html
 <iframe src="https://www.baidu.com/" name="百度" frameborder="1">
-  <p>您的浏览器不支持 iframe, 请升级浏览器</p>
-  <!--fallback: 不支持此标签的退化内容-->
+	<p>您的浏览器不支持 iframe, 请升级浏览器</p>
+	<!--fallback: 不支持此标签的退化内容-->
 </iframe>
 ```
 
@@ -416,16 +419,16 @@
 
 ```html
 <canvas>
-  <p>no supported</p>
+	<p>no supported</p>
 </canvas>
 
 <script>
-  var a = 8;
+	var a = 8;
 </script>
 <noscript>your browser dont support javascript!</noscript>
 
 <iframe src="" frameborder="0">
-  <p>no supported</p>
+	<p>no supported</p>
 </iframe>
 ```
 
@@ -433,16 +436,16 @@
 
 ```html
 <header>
-  <nav></nav>
+	<nav></nav>
 </header>
 
 <template></template>
 <table></table>
 
 <article>
-  <section></section>
-  <aside></aside>
-  <textarea></textarea>
+	<section></section>
+	<aside></aside>
+	<textarea></textarea>
 </article>
 ```
 
@@ -455,10 +458,10 @@
 <video src="a.mp4" controls></video>
 
 <video autoplay loop preload controls>
-  <source src="a.mp4" />
-  <source src="a.m3u8" />
-  <source src="a.webm" />
-  您的浏览器不支持 video
+	<source src="a.mp4" />
+	<source src="a.m3u8" />
+	<source src="a.webm" />
+	您的浏览器不支持 video
 </video>
 
 <audio src=""></audio>
@@ -497,7 +500,7 @@
 
 - 无 `doctype` 声明的页面元素的盒子模型是 border box
 
-- 给 html 元素设置宽高百分比，是相对于视口而言的。如 900*1080 的视口，height:100% 时高度就是 1080，视口大小改变，html 宽高随之改变
+- 给 html 元素设置宽高百分比，是相对于视口而言的。如 900\*1080 的视口，height:100% 时高度就是 1080，视口大小改变，html 宽高随之改变
 - body 是一个特殊的元素，不能通过 overflow：hidden 达到 BFC 效果。
 - html 或 body 如果设置了背景颜色，那么这个颜色会覆盖整个窗口（无论设置的 html 或 body 元素的区域有多大），区域外的颜色优先和 html 的一致，如果 html 没有设置背景颜色，则区域外的颜色和 body 一致
 - <template> 模板元素 浏览器会加载其内容但不会显示，我们可以读取其 innerHtml 和 content 属性，也能配合框架使用
@@ -521,64 +524,64 @@ HTML 可以控制的样式太少
 ```css
 /*元素选择器*/
 p {
-  font: 16px;
+	font: 16px;
 }
 /* 选择器名大小写敏感 */
 
 /*属性选择器*/
 [title] {
-  color: red;
+	color: red;
 }
 
-[title="hello"] {
-  color: red;
+[title='hello'] {
+	color: red;
 }
 
 /* 属性以指定内容开头 */
-[title^="woo"] {
-  color: red;
+[title^='woo'] {
+	color: red;
 }
 
 /* 属性以指定内容结束 */
-[title$="ooo"] {
-  color: red;
+[title$='ooo'] {
+	color: red;
 }
 
 /* 属性包含指定元素 */
-[title*="ooq"] {
-  color: red;
+[title*='ooq'] {
+	color: red;
 }
 
 /* 包含一个完整单词 */
-[title~="our"] {
-  color: red;
+[title~='our'] {
+	color: red;
 }
 
 /* 以下相同 */
-[class~="bar"] {
+[class~='bar'] {
 }
 
 .bar {
 }
 
 /* 类名以特定内容开头 */
-[class^="fa-"],
-[class*=" fa-"] {
-  text-decoration: underline;
+[class^='fa-'],
+[class*=' fa-'] {
+	text-decoration: underline;
 }
 
 /* 类名以特定内容结尾 */
-[class$="-ui"],
-[class*="-ui "] {
-  text-decoration: line-through;
+[class$='-ui'],
+[class*='-ui '] {
+	text-decoration: line-through;
 }
 
 /* 属性前缀选择器（选择 lang 为 zh 或以 zh 开头的元素） */
-[lang|="zh"] {
+[lang|='zh'] {
 }
 
 /* 忽略大小写，后面加个 i, ignore */
-[href$=".pdf"i] {
+[href$='.pdf'i] {
 }
 
 /* 复合选择器 */
@@ -591,17 +594,17 @@ p.class1.class2 {
 
 /* 子元素选择器：选择子元素，但里面的元素会继承 */
 a > span {
-  border: 2px solid;
+	border: 2px solid;
 }
 
 /* 选择 a 里面的所有 span 元素 */
 a span {
-  border: 1px solid;
+	border: 1px solid;
 }
 
 /* a 里面的 span 的里面的 span */
 a span span {
-  border: 1px solid;
+	border: 1px solid;
 }
 
 /* 邻接选择器；只能向后选*/
@@ -617,55 +620,55 @@ div ul > li ~ li {
 }
 
 .a.b.c {
-  /* 同时有 a,
+	/* 同时有 a,
   b,
   c 类名的元素 */
 }
 
 .a .b .c {
-  /* 类名为 a 的元素里面的类名为 b 的元素里面的类名为 c 的元素 */
+	/* 类名为 a 的元素里面的类名为 b 的元素里面的类名为 c 的元素 */
 }
 
 .a,
 .b,
 .c {
-  /* 类名为 a 或 b 或 c 的元素 */
+	/* 类名为 a 或 b 或 c 的元素 */
 }
 
 /* 伪类选择器 */
 /* 状态伪类 */
 :link {
-  /* 未被访问过的有 href 属性的 a 标签 */
+	/* 未被访问过的有 href 属性的 a 标签 */
 }
 
 :visited {
-  /* 访问过的标签；
+	/* 访问过的标签；
   只能设置颜色，
   隐私安全原因 */
 }
 
 :active {
-  /* 被激活的元素，
+	/* 被激活的元素，
   鼠标按下的 */
 }
 
 :hover {
-  /* 鼠标放上去的元素 */
+	/* 鼠标放上去的元素 */
 }
 
 /* 书写顺序：LV HA */
 
 :focus {
-  /* 光标放上去，
+	/* 光标放上去，
   被聚焦的元素 */
 }
 
 :first-child {
-  /* 匹配所有某父元素的第一个子元素 */
+	/* 匹配所有某父元素的第一个子元素 */
 }
 
 p:first-child {
-  /* 选择作为第一个子节点的 p 元素，
+	/* 选择作为第一个子节点的 p 元素，
   而不是 p 的第一个子节点 */
 }
 
@@ -673,17 +676,17 @@ p:first-child {
 }
 
 :nth-child(2n + 1) {
-  /* 选中第奇数个元素，
+	/* 选中第奇数个元素，
   可以设置一些规则 */
 }
 
 ul li:nth-child(n + 3):nth-last-child(n + 2) {
-  /* ul 里面的 li 且正数第三个到倒数第二个 加了空格就是里面的，
+	/* ul 里面的 li 且正数第三个到倒数第二个 加了空格就是里面的，
   注意空格 */
 }
 
 :nth-child(odd/even) {
-  /* 选择奇偶数 */
+	/* 选择奇偶数 */
 }
 
 :nth-of-type(2) {
@@ -692,29 +695,29 @@ ul li:nth-child(n + 3):nth-last-child(n + 2) {
 
 /* 选择器取反 */
 ul :not(p) {
-  /* ul 里面不是 p 的元素 */
+	/* ul 里面不是 p 的元素 */
 }
 
 ul :not(.foo) {
-  /* 里面只能用单个选择器，
+	/* 里面只能用单个选择器，
   不能用层级 */
 }
 
 ul :not(p):not(.foo) {
-  /* 可以用多个：not() 组成复合选择器 */
+	/* 可以用多个：not() 组成复合选择器 */
 }
 
 :root {
-  /* 选择文件的根元素 */
+	/* 选择文件的根元素 */
 }
 
 :empty {
-  /* 选择空元素，
+	/* 选择空元素，
   包括自闭合标签 */
 }
 
 :target {
-  /* 选中当前 id 值为#后面的元素的内容；
+	/* 选中当前 id 值为#后面的元素的内容；
   也就是目标元素的内容 */
 }
 
@@ -749,6 +752,7 @@ ul :not(p):not(.foo) {
 - 0.0.0.0 通配符：\*
 - 继承：没有优先级，比 [\*] 的有限级还要小
 - 优先级一样的话，按出现的顺序排列，后出现的优先级更高
+
   - 所以是 link visited focus hover active
   - :link:hover /0 0 2 0/
   - 不过在这几个伪类上分别写完全不同的属性时，顺序就不重要了
@@ -912,9 +916,9 @@ document. documentElement.clientWidth/Height
 
 ```html
 <link
-  href="https://fonts.googleapis.com/css?family=Lobster"
-  rel="stylesheet"
-  type="text/css"
+	href="https://fonts.googleapis.com/css?family=Lobster"
+	rel="stylesheet"
+	type="text/css"
 />
 ```
 
@@ -1043,7 +1047,7 @@ background-color 会充满 content,padding,border.
 从外到内：margin-box,border-box,padding-box,content-box
 默认情况：width,height 设置为 content-box, 可以用 box-sizing 可改变为 border-box
 
-包含块：一个元素的布局上下文。由最近的块级祖先框/表单元格/行内块元素框的内容边界content-box构成。
+包含块：一个元素的布局上下文。由最近的块级祖先框/表单元格/行内块元素框的内容边界 content-box 构成。
 
 正常流：从上到下/从左到右显示。没有定位，没有浮动，不是 flex 元素，这个元素就在正常流里面。
 
@@ -1053,12 +1057,13 @@ background-color 会充满 content,padding,border.
   两个 margin 为 auto: 两边 auto 计算成一样的正值；如无法都为正，则左为 0, 右为负值
   一个 margin 为 auto,width 为 auto: 相当于为 auto 的 margin 为 0
 
-- 三个 auto: 相当于左右 margin 为 0,width为auto.
+- 三个 auto: 相当于左右 margin 为 0,width 为 auto.
 
 - 零个 auto: 过分受限，重置右 margin
 
 **块元素垂直格式化**：(date:11-26)
 如果一个块级元素的高度是百分数，这个值是包含块高度的百分数。如果没有显式声明包含块的高度，子元素的百分比高度无效；如果用百分数表示 margin 或 padding, 值是包含块宽度的百分数。
+
 - content box（文本盒子，没有文本时其尺寸为 0）
 
 - 一个块元素没有内容时，默认 margin padding border content 都为 0。width 的默认值为 auto，margin 和 padding 一般默认为 0；
@@ -1079,20 +1084,20 @@ background-color 会充满 content,padding,border.
   两个盒子相邻，两个正负 margin 重合，取正负相加的值为合并后共用的 margin.
   创建 BFC 和通过对父元素建立 border，padding，或者间隔可以使外边距不合并；
   水平方向 margin 不会合并，左右 margin 会紧挨着排列；
+
 ## **行内布局**
 
-匿名文本：未包含在行内元素的字符串，在块内，不在行内，继承父元素line-height。空格的大小和字体一致，字体为 0 时没有空格。
+匿名文本：未包含在行内元素的字符串，在块内，不在行内，继承父元素 line-height。空格的大小和字体一致，字体为 0 时没有空格。
 em 框：字符框，字号确定了 em 框高度。
 内容区：在非替换元素中，就是 em 框串起来的框。替换元素中，是元素固有高度加上外边距，边框，内边距。
 行间距：line-height - font-size, 只用于非替换元素。
-行内框：对于非替换元素，就是行高，line-height框。替换元素，是 margin-box。仅与行高有关。
+行内框：对于非替换元素，就是行高，line-height 框。替换元素，是 margin-box。仅与行高有关。
 行框：包裹住该行出现的行内框的最高点和最低点的最小框。上下行框紧紧挨着形成布局，如果父元素是块元素，行框撑起了父元素的高度。行框和 line-height 和 vertical-align 有关。
 line height 框：假想概念，高度为行高，内容区和其共用一条居中线。
-  - 包含块行高等于其高度，其内部文本和 inline 元素垂直居中；
-  - 当 line-height 的值为数字或者百分比时，表示用字体的大小乘以数字或者百分比
-  - 行高默认继承，行高有可能小于 font-size, 导致文本超出行框，两行字重叠。行高确定了行框的最小值。
 
-
+- 包含块行高等于其高度，其内部文本和 inline 元素垂直居中；
+- 当 line-height 的值为数字或者百分比时，表示用字体的大小乘以数字或者百分比
+- 行高默认继承，行高有可能小于 font-size, 导致文本超出行框，两行字重叠。行高确定了行框的最小值。
 
 **行内格式化**：
 vertical-align:指定行内元素（inline）或表格单元格（table-cell）元素的垂直对齐方式。
@@ -1109,8 +1114,10 @@ inline-block: 看他自身位置认为是行内元素；看里面的布局，内
 inline-block 元素触发 BFC
 
 ## BFC
+
 Block Format Context 块级格式化上下文
 自身形成一个布局单元：布局此元素内部时不用考虑其外部，可以理解为完全隔离的独立容器，容器里面的元素不会在布局上影响到外面的元素
+
 - 在常规流和 float 里面有效，不能包着脱离常规流的定位元素
 - 常规流块元素没有边框和内边距时，包裹着子元素的 border-box，父子元素的 margin 会合并。而触发了 BFC 的元素，父元素无论如何都会包裹着其子元素的 margin-box，父子元素的 margin 也不会合并
 - 下列方式会触发 BFC：
@@ -1127,7 +1134,9 @@ Block Format Context 块级格式化上下文
   网格元素（display 为 grid 或 inline-grid 元素的直接子元素）
   多列容器（元素的 column-count 或 column-width 不为 auto，包括 column-count 为 1）
   column-span 为 all 的元素始终会创建一个新的 BFC，即使该元素没有包裹在一个多列容器中（标准变更，Chrome bug）。
+
 ## 定位布局
+
 定位指的是 margin box 定位到对象的 padding box
 position:
 
@@ -1238,7 +1247,7 @@ background: linear-gradient(35deg, #CCFFFF,#FFCCCC);
 
 ```css
 div:hover {
-  transform: scale(1.1) skewX(24deg);
+	transform: scale(1.1) skewX(24deg);
 }
 ```
 
@@ -1249,7 +1258,7 @@ div:hover {
 
   ```css
   @font-face {
-    font-family: YH;
-    src: local("Microsoft Yahei"), url("xxx.ttf");
+  	font-family: YH;
+  	src: local('Microsoft Yahei'), url('xxx.ttf');
   }
   ```

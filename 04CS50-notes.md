@@ -2,7 +2,7 @@
 
 ## Git
 
-`git clone  <url>` git add to a  stage area 
+`git clone <url>` git add to a stage area
 `git add <filename>`
 `git commit -m "maggage"`
 `git status`
