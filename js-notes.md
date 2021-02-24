@@ -38,13 +38,15 @@
 
 ### 分支
 
-`git branch` 查看分支；
+`git branch` 查看分支
 `git branch xx`创建分支
 `git checkout/switch <name>`切换分支
 `git checkout -b <name>` or `git switch -c <name> `创建并改切换分支
-`git merge <name>` 合并某分支到当前分支
+`git checkout -b <branchName> <remoteBranchName>` 拉远程一个新分支下来（本地创建新分支，并给他设定远程分支）
 `git branch -d <name>`删除分支;强制删除把 d 改成 D
+`git branch --set-upstream-to=origin/branchName branchName ` 建立本地分支和远程分支的关联
 
+`git merge <name>` 合并某分支到当前分支
 通常，合并分支时，如果可能，Git 会用 Fast forward 模式，但这种模式下，删除分支后，会丢掉分支信息。
 如果要强制禁用 Fast forward 模式，Git 就会在 merge 时生成一个新的 commit，这样，从分支历史上就可以看出分支信息。
 
@@ -53,7 +55,6 @@
 ![分支策略 来源廖雪峰的博客](https://cdn.jsdelivr.net/gh/brightzoe/img/20191229195951.png)
 
 `git pull` 抓取远程分支的新提交
-`git branch --set-upstream branch-name origin/branch-name` 建立本地分支和远程分支的关联
 
 ### 标签
 
@@ -128,7 +129,26 @@ A: git pull = git fetch +git merge
   复制:cp (复制目录:cp -r )
   显示当前目录下的文件 ls
   查看文件内容 cat, con cate nate
+- cd change directory
+  - cd 相对路径（相对于当前工作目录）
+    - ../ 表示当前文件夹的父文件夹 （中合路径中的上一个文件夹）anv/.. =0
+    - ./ 表示当前文件夹，可忽略
+  - cd 绝对路径，, 以 / 开头； （cd - 上一个文件夹）
+  - 补充：
+    - 路径
+    - 相对路径 以 / 开头
+    - 绝对路径 以 // 开头
+- sudo /super user do 超级管理员
+- touch a.txt 创建（空）文件
+- time command 计算某命令的运行时间
+- date 显示时间和日期
+- //scp
+- //ping ip 测试与目标 ip 的连通性 (ping baidu.com)
+### vi 编辑器
 
+- esc 从编辑模式返回常规模式
+- i 常规模式下进入编辑模式
+- :wq 常规模式下输入
 ## vscode 的常用快捷键
 
 - 补齐 html5 模板:！ + tab 或 ! + enter
@@ -156,12 +176,12 @@ A: git pull = git fetch +git merge
 - 查找文件 / 安装 vs code 插件地址:ctrl + p
 - 字体放大 / 缩小:ctrl + ( + 或 - )
 - 裁剪尾随空格 : ctrl + shift + x
-- 拆分编辑器 : ctrl + 1/2/3
-- 关闭编辑器窗口 : ctrl + w
 - 自动换行 : alt + z
 - 选中文字:shift + left / right / up / down
-- 快速切换主题:ctrl + k / ctrl + t
-- 格式化选定代码 :ctrl + k / ctrl +f
+- 在单词之间移动光标: Ctrl + 左右方向键
+- 全局搜索代码: Ctrl + Shift + F
+- 全局搜索文件名: Ctrl + P
+- 查看组件/方法都在哪里调用了：Shift + Alt +F12
 
 ## windows 快捷键
 
@@ -169,6 +189,7 @@ A: git pull = git fetch +git merge
 - 切换程序: alt + tab
 - win 截图:win + shift + S
 - qq 截图:CTRL + alt + B
+- wx 截图: ALT + A
 
 # JavaScript
 
@@ -407,8 +428,8 @@ https://wangdoc.com/javascript/operators/bit.html
 
 ```js
 var greeting = (name) => {
-	//只有一个参数，参数的小括号可以省略；只有一行语句，后面大括号和“return”也可以省略
-	console.log('hello' + name);
+  //只有一个参数，参数的小括号可以省略；只有一行语句，后面大括号和“return”也可以省略
+  console.log("hello" + name);
 };
 ```
 
@@ -429,11 +450,11 @@ function (){//不指定参数的话，参数数量不固定，arguments 算是�
 
 ```js
 function squareSum(a, b) {
-	//求平方和
-	function square(a) {
-		return a * a;
-	}
-	return square(a) + square(b);
+  //求平方和
+  function square(a) {
+    return a * a;
+  }
+  return square(a) + square(b);
 }
 
 squareSum(3, 5);
@@ -454,8 +475,8 @@ squareSum(3, 5);
 let num1 = 10;
 
 (function () {
-	let num1 = 20;
-	return num1;
+  let num1 = 20;
+  return num1;
 })();
 // => 20
 num1;
@@ -480,9 +501,9 @@ num1;
 
 ```js
 function transparentWrapping(f) {
-	return function () {
-		return f.apply(null, arguments); //模拟调用，访问f()的所有参数
-	};
+  return function () {
+    return f.apply(null, arguments); //模拟调用，访问f()的所有参数
+  };
 }
 ```
 
@@ -493,26 +514,26 @@ function transparentWrapping(f) {
 ```js
 //自己实现一个foreach,可以模拟 break&&continue:
 function forEach(ary, action) {
-	for (var i = 0; i < ary.length; i++) {
-		var x = action(ary[i], i);
-		if (x === false) {
-			break;
-		}
-	}
-	return ary;
+  for (var i = 0; i < ary.length; i++) {
+    var x = action(ary[i], i);
+    if (x === false) {
+      break;
+    }
+  }
+  return ary;
 }
 
 var target = 3;
 var targetIndex = -1;
 debugger;
 forEach([1, 2, 3, 4], function (aryItem, idx) {
-	if (xx) {
-		return; //相当于continue
-	}
-	if (aryItem == target) {
-		targetIndex = idx;
-		return false; //相当于break
-	}
+  if (xx) {
+    return; //相当于continue
+  }
+  if (aryItem == target) {
+    targetIndex = idx;
+    return false; //相当于break
+  }
 });
 ```
 
@@ -522,23 +543,23 @@ forEach([1, 2, 3, 4], function (aryItem, idx) {
 
   ```js
   [3, 5, 2, 7, 8, 1, 4, 9].reduce(function (memo, value, index, array) {
-  	//reduce 的本质,就是一个遍历,每次返回值存储到 memo
-  	//根据每次里面的index值来分情况讨论
-  	if (index == 1) {
-  		return {
-  			sum: memo + value,
-  			max: Math.max(memo, value),
-  			min: Math.min(memo, value),
-  		};
-  	}
-  	memo.sum += value;
-  	memo.max = Math.max(memo.max, value);
-  	memo.min = Math.min(memo.min, value);
-  	if (index == array.length - 1) {
-  		//最后一次
-  		return (memo.sum - memo.max - memo.min) / (array.length - 2);
-  	}
-  	return memo;
+    //reduce 的本质,就是一个遍历,每次返回值存储到 memo
+    //根据每次里面的index值来分情况讨论
+    if (index == 1) {
+      return {
+        sum: memo + value,
+        max: Math.max(memo, value),
+        min: Math.min(memo, value),
+      };
+    }
+    memo.sum += value;
+    memo.max = Math.max(memo.max, value);
+    memo.min = Math.min(memo.min, value);
+    if (index == array.length - 1) {
+      //最后一次
+      return (memo.sum - memo.max - memo.min) / (array.length - 2);
+    }
+    return memo;
   }); //4.83
   ```
 
@@ -618,10 +639,10 @@ apply 方法:`func.apply(this,[arguments])`//传入一个特定的 this,然后�
 
 ```js
 var obj = {
-	val: 3,
-	f: function () {
-		return this.val;
-	},
+  val: 3,
+  f: function () {
+    return this.val;
+  },
 };
 ```
 
@@ -728,21 +749,21 @@ JavaScript 对象原型的关系是一种树形结构，整个树形结构的根
 
 ```js
 var pile = {
-	elements: ['eggshell', 'orange peel', 'worm'],
-	get height() {
-		return this.elements.length;
-	},
-	set height(value) {
-		console.log('Ignoring set height to', value);
-	},
+  elements: ["eggshell", "orange peel", "worm"],
+  get height() {
+    return this.elements.length;
+  },
+  set height(value) {
+    console.log("Ignoring set height to", value);
+  },
 };
 
 var o = { a: 0 };
 //现有对象上添加getter
-Object.defineProperty(o, 'b', {
-	get: function () {
-		return this.a + 1;
-	},
+Object.defineProperty(o, "b", {
+  get: function () {
+    return this.a + 1;
+  },
 });
 ```
 
@@ -1001,10 +1022,10 @@ window.innerWidth/Height 窗口内部宽高（css 像素）
 - element.removeElementListener（事件名，处理函数） 移除处理器，注意移除的处理函数和之前添加的处理函数是同一个才可以移除，所有需要用一个变量记录函数指向.
   ```js
   function handler() {
-  	alert('Thanks!');
+    alert("Thanks!");
   }
-  input.addEventListener('click', handler);
-  input.removeEventListener('click', handler); //移除，需要添加同一个函数
+  input.addEventListener("click", handler);
+  input.removeEventListener("click", handler); //移除，需要添加同一个函数
   ```
 
 **event** 全局事件对象，浏览器同一时刻只有一个事件运行，event 的属性:
@@ -1030,15 +1051,15 @@ window.innerWidth/Height 窗口内部宽高（css 像素）
 `event.stopImmediatePropagation()` 方法，可以用于停止冒泡，并阻止当前元素上的处理程序运行。使用该方法之后，其他处理程序就不会被执行。阻止事件向外扩散，但阻止当前元素对当前事件的后续函数的调用。
 
 ```js
-var btn = document.querySelector('.btn-in-a');
-var a = document.querySelector('a');
-btn.addEventListener('click', function (e) {
-	console.log('btn click');
-	e.stopPropagation(); //clg事件没有冒泡到a，但a仍然感觉到了被点击,仍然会触发a的行为(click)
-	e.preventDefault(); //阻止外面a的默认行为，跳转地址
+var btn = document.querySelector(".btn-in-a");
+var a = document.querySelector("a");
+btn.addEventListener("click", function (e) {
+  console.log("btn click");
+  e.stopPropagation(); //clg事件没有冒泡到a，但a仍然感觉到了被点击,仍然会触发a的行为(click)
+  e.preventDefault(); //阻止外面a的默认行为，跳转地址
 });
-a.addEventListener('click', function (e) {
-	console.log('a click');
+a.addEventListener("click", function (e) {
+  console.log("a click");
 });
 ```
 
@@ -1202,51 +1223,51 @@ BOM 浏览器对象模型，设置浏览器的属性,浏览器提供的用于处
 // 实现表单元素的序列化; jQuery('form').serialize
 
 function serialize(formNode) {
-	var res = '';
-	for (let i = 0; i < formNode.elements.length; i++) {
-		let element = formNode.elements[i];
-		if (element.name) {
-			let name = element.name;
-			let nodeName = element.nodeName;
-			if (nodeName == 'INPUT') {
-				switch (element.type) {
-					case 'radio':
-					case 'checkbox':
-						if (element.checked) {
-							res += name + '=' + (element.value || 'on');
-							if (i < formNode.elements.length - 1) {
-								res += '&';
-							}
-						}
-						break;
-					default:
-						res += name + '=' + (element.value || 'on');
-						if (i < formNode.elements.length - 1) {
-							res += '&';
-						}
-				}
-			} else if (nodeName == 'TEXTAREA') {
-				res += name + '=' + element.value;
-			} else if (nodeName == 'SELECT') {
-				if (element.multiple) {
-					Array.from(element.options).forEach((option) => {
-						if (option.selected) {
-							res += name + '=' + element.value;
-							if (i < formNode.elements.length - 1) {
-								res += '&';
-							}
-						}
-					});
-				} else {
-					res += name + '=' + element.value;
-					if (i < form.elements.length - 1) {
-						res += '&';
-					}
-				}
-			}
-		}
-	}
-	return res;
+  var res = "";
+  for (let i = 0; i < formNode.elements.length; i++) {
+    let element = formNode.elements[i];
+    if (element.name) {
+      let name = element.name;
+      let nodeName = element.nodeName;
+      if (nodeName == "INPUT") {
+        switch (element.type) {
+          case "radio":
+          case "checkbox":
+            if (element.checked) {
+              res += name + "=" + (element.value || "on");
+              if (i < formNode.elements.length - 1) {
+                res += "&";
+              }
+            }
+            break;
+          default:
+            res += name + "=" + (element.value || "on");
+            if (i < formNode.elements.length - 1) {
+              res += "&";
+            }
+        }
+      } else if (nodeName == "TEXTAREA") {
+        res += name + "=" + element.value;
+      } else if (nodeName == "SELECT") {
+        if (element.multiple) {
+          Array.from(element.options).forEach((option) => {
+            if (option.selected) {
+              res += name + "=" + element.value;
+              if (i < formNode.elements.length - 1) {
+                res += "&";
+              }
+            }
+          });
+        } else {
+          res += name + "=" + element.value;
+          if (i < form.elements.length - 1) {
+            res += "&";
+          }
+        }
+      }
+    }
+  }
+  return res;
 }
 ```
 
@@ -1256,24 +1277,24 @@ function serialize(formNode) {
 
   ```js
   function getFileContent(file, done) {
-  	var reader = new FileReader();
-  	reader.addEventListener('load', function () {
-  		done(reader.result); //只有全部内容，没有名字
-  	});
-  	reader.readAsText(file);
+    var reader = new FileReader();
+    reader.addEventListener("load", function () {
+      done(reader.result); //只有全部内容，没有名字
+    });
+    reader.readAsText(file);
   }
 
   function readFileAsText(file) {
-  	return new Promise((resolve, reject) => {
-  		var reader = new FileReader();
-  		reader.onload = () => {
-  			resolve(reader.result);
-  		};
-  		reader.onerror = (e) => {
-  			reject(new Error(e));
-  		};
-  		reader.readAsText(file);
-  	});
+    return new Promise((resolve, reject) => {
+      var reader = new FileReader();
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = (e) => {
+        reject(new Error(e));
+      };
+      reader.readAsText(file);
+    });
   }
   ```
 
@@ -1291,10 +1312,10 @@ function serialize(formNode) {
 - FormData 接口提供了一种表示表 location 单数据的键值对的构造方式，经过它的数据可以使用 XMLHttpRequest.send 方法送出
   ```js
   var formData = new FormData();
-  formData.append('username', 'Groucho');
-  formData.append('accountnum', 123456);
+  formData.append("username", "Groucho");
+  formData.append("accountnum", 123456);
   var request = new XMLHttpRequest();
-  request.open('POST', 'http://foo.com/submitform.php');
+  request.open("POST", "http://foo.com/submitform.php");
   request.send(formData);
   ```
 
@@ -1654,10 +1675,10 @@ IP 模块收到委托，添加 MAC 头部和 IP 头部，这样一个包就封�
 
 ```js
 //发送一个udp请求
-sock = dgram.createSocket('udp4'); //创建udp套接字
+sock = dgram.createSocket("udp4"); //创建udp套接字
 sock.bind(55555); //绑定一个特定端口
-sock.addMembership('224.3.3.3'); //加入频道，添加主播地址(224~239)
-sock.on('message', () => console.log(1));
+sock.addMembership("224.3.3.3"); //加入频道，添加主播地址(224~239)
+sock.on("message", () => console.log(1));
 0;
 ```
 
@@ -1679,29 +1700,29 @@ sock.on('message', () => console.log(1));
 
   ```js
   //TCP 链接 -node运行
-  var net = require('net'); //加载tcp模块
+  var net = require("net"); //加载tcp模块
   var server = net.createServer(); //创建tcp服务对象
   var port = 5555;
   server.listen(port, () => {
-  	//服务套接字监听port
-  	console.log('listening on port', port); //监听成功后运行
+    //服务套接字监听port
+    console.log("listening on port", port); //监听成功后运行
   });
-  server.on('connection', (conn) => {
-  	//有客户端连接成功时运行，conn表示该连接的对象
-  	//server触发多次connection事件，conn触发多次data事件
-  	console.log(conn.address(), 'comes in');
-  	conn.write('hello'); //向客户端发送数据
-  	conn.on('data', (data) => {
-  		//该连接发送上来数据时触发的事件
-  		console.log(conn.address(), 'says', data.toString());
-  	});
+  server.on("connection", (conn) => {
+    //有客户端连接成功时运行，conn表示该连接的对象
+    //server触发多次connection事件，conn触发多次data事件
+    console.log(conn.address(), "comes in");
+    conn.write("hello"); //向客户端发送数据
+    conn.on("data", (data) => {
+      //该连接发送上来数据时触发的事件
+      console.log(conn.address(), "says", data.toString());
+    });
   });
 
-  conn = net.connect(5555, '10.3.3.3'); //客户端尝试建立tcp连接,连接特定IP的特定端口
-  connect.write('foo');
-  conn.on('data', (data) => {
-  	//该连接发送上来数据时触发的事件
-  	console.log(data.toString());
+  conn = net.connect(5555, "10.3.3.3"); //客户端尝试建立tcp连接,连接特定IP的特定端口
+  connect.write("foo");
+  conn.on("data", (data) => {
+    //该连接发送上来数据时触发的事件
+    console.log(data.toString());
   });
   conn.end(); //单边结束连接，可以收，不可以发。
   ```
@@ -1937,7 +1958,7 @@ cross origin resource sharing 跨域资源共享
   - 一些简单的方法不会有预检请求（get/head/post）, 因为不能破坏 Web 的兼容性。
 - 常用的 CORS 头
   响应头:
-  Access-Control-Allow-Origin:url/* 服务器允许的域
+  Access-Control-Allow-Origin:url/\* 服务器允许的域
   Access-Control-Allow-Methods: POST, GET, OPTIONS 服务器允许使用这些方法
   Access-Control-Allow-Headers: X-PINGOTHER, Content-Type 服务器允许使用这些请求头
   Access-Control-Allow-Credientials:允许带上的凭据(cookie 头)
@@ -1960,21 +1981,21 @@ cross origin resource sharing 跨域资源共享
 ```js
 //jsonp的简单实现
 function jsonp(url, callback) {
-	var functionName = 'JSONP_CALLBACK_' + Math.random().toString(16).slice(2);
-	url = url + '&callback=' + functionName;
-	var script = document.createElement('script');
-	script.src = url;
-	document.body.append(script);
-	window[functionName] = callback;
-	script.onload = function () {
-		//执行完后把副作用删除
-		document.body.removeChild(script);
-		delete window[functionName];
-	};
+  var functionName = "JSONP_CALLBACK_" + Math.random().toString(16).slice(2);
+  url = url + "&callback=" + functionName;
+  var script = document.createElement("script");
+  script.src = url;
+  document.body.append(script);
+  window[functionName] = callback;
+  script.onload = function () {
+    //执行完后把副作用删除
+    document.body.removeChild(script);
+    delete window[functionName];
+  };
 }
 
-jsonp('http://wthrcdn.etouch.cn/weather_mini?city=杭州', function (info) {
-	console.log(info);
+jsonp("http://wthrcdn.etouch.cn/weather_mini?city=杭州", function (info) {
+  console.log(info);
 });
 ```
 
@@ -2020,39 +2041,39 @@ xhr.getAllResponseHeaders(); //拿到请求头
 
 ```js
 function post(url, data, success) {
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', url);
-	xhr.addEventListener('load', (e) => {
-		success(JSON.parse(xhr.responseText));
-	});
-	xhr.send(data);
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url);
+  xhr.addEventListener("load", (e) => {
+    success(JSON.parse(xhr.responseText));
+  });
+  xhr.send(data);
 }
 
 function get(url, callback) {
-	var xhr = new XMLHttpRequest();
-	xhr.open('get', url);
-	xhr.onload = function () {
-		if (xhr.status < 400) {
-			//请求，响应正常结束
-			callback(JSON.parse(xhr.responseText));
-		} else {
-			// 网络 ok，响应为 4xx 或 5xx
-			callback(null, xhr);
-		}
-	};
-	xhr.onerror = function () {
-		// 请求没有发出去，连接都没有建立
-		callback(null, new Error('Network break'));
-	};
+  var xhr = new XMLHttpRequest();
+  xhr.open("get", url);
+  xhr.onload = function () {
+    if (xhr.status < 400) {
+      //请求，响应正常结束
+      callback(JSON.parse(xhr.responseText));
+    } else {
+      // 网络 ok，响应为 4xx 或 5xx
+      callback(null, xhr);
+    }
+  };
+  xhr.onerror = function () {
+    // 请求没有发出去，连接都没有建立
+    callback(null, new Error("Network break"));
+  };
 }
 xhr.send();
 
-get('http://www.xxx.com/a/b', function (data, error) {
-	if ((data = null)) {
-		//出错
-	} else {
-		//成功
-	}
+get("http://www.xxx.com/a/b", function (data, error) {
+  if ((data = null)) {
+    //出错
+  } else {
+    //成功
+  }
 });
 ```
 
@@ -2060,139 +2081,139 @@ get('http://www.xxx.com/a/b', function (data, error) {
 
 ```js
 function parallel(tasks, cb) {
-	//多个任务并行，全执行完调用callback
-	var count = 0;
-	for (let task of tasks) {
-		task(() => {
-			count++;
-			if (count == tasks.length) {
-				cb();
-			}
-		});
-	}
+  //多个任务并行，全执行完调用callback
+  var count = 0;
+  for (let task of tasks) {
+    task(() => {
+      count++;
+      if (count == tasks.length) {
+        cb();
+      }
+    });
+  }
 }
 
 function series(tasks, cb) {
-	//一个任务执行完才能执行下一个,全执行完执行callback
-	var i = 0;
-	startOneTask();
-	function startOneTask() {
-		if (i < tasks.length) {
-			tasks[i++](() => {
-				startOneTask();
-			});
-		} else {
-			cb();
-		}
-	}
+  //一个任务执行完才能执行下一个,全执行完执行callback
+  var i = 0;
+  startOneTask();
+  function startOneTask() {
+    if (i < tasks.length) {
+      tasks[i++](() => {
+        startOneTask();
+      });
+    } else {
+      cb();
+    }
+  }
 }
 
 function parallel(tasks, cb) {
-	parallelLimit(tasks, tasks.length, cb);
+  parallelLimit(tasks, tasks.length, cb);
 }
 function series(tasks, cb) {
-	parallelLimit(tasks, 1, cb);
+  parallelLimit(tasks, 1, cb);
 }
 function parallelLimit(tasks, limit, cb) {
-	//最多limit个任务同时运行
-	var i = 0;
-	var completedCount = 0;
-	for (var j = 0; j < limit; j++) {
-		one();
-	}
-	function one() {
-		if (i < tasks.length) {
-			//只能判断所有任务都启动了，不能判断都结束了，还得计数
-			tasks[i++](() => {
-				completedCount++;
-				if (completedCount == tasks.length) {
-					cb();
-				} else {
-					one();
-				}
-			});
-		}
-	}
+  //最多limit个任务同时运行
+  var i = 0;
+  var completedCount = 0;
+  for (var j = 0; j < limit; j++) {
+    one();
+  }
+  function one() {
+    if (i < tasks.length) {
+      //只能判断所有任务都启动了，不能判断都结束了，还得计数
+      tasks[i++](() => {
+        completedCount++;
+        if (completedCount == tasks.length) {
+          cb();
+        } else {
+          one();
+        }
+      });
+    }
+  }
 }
 
 asyncMap(
-	[1, 2, 3, 4],
-	function mapper(it, cb) {
-		setTimeout(() => cb(null, it * it));
-	}, //异步具有传染性
-	function (err, mapped) {
-		console.log(mapped);
-	}
+  [1, 2, 3, 4],
+  function mapper(it, cb) {
+    setTimeout(() => cb(null, it * it));
+  }, //异步具有传染性
+  function (err, mapped) {
+    console.log(mapped);
+  }
 );
 function asyncMap(ary, mapper, cb) {
-	//任务队列，但是必须提前准备好任务，不能临时加任务
-	var result = [];
-	var count = 0;
-	for (let i = 0; i < ary.length; i++) {
-		mapper(ary[i], function (err, value) {
-			result[i] = value;
-			count++;
-			if (count == ary.length) {
-				cb(null, result);
-			}
-		});
-	}
+  //任务队列，但是必须提前准备好任务，不能临时加任务
+  var result = [];
+  var count = 0;
+  for (let i = 0; i < ary.length; i++) {
+    mapper(ary[i], function (err, value) {
+      result[i] = value;
+      count++;
+      if (count == ary.length) {
+        cb(null, result);
+      }
+    });
+  }
 }
 
 asyncFilter(
-	[1, 2, 3, 4],
-	function test(it, cb) {
-		setTimeout(() => {
-			cb(null, it % 2 == 1);
-		}, 200);
-	},
-	function (err, filtered) {
-		console.log(filtered);
-	}
+  [1, 2, 3, 4],
+  function test(it, cb) {
+    setTimeout(() => {
+      cb(null, it % 2 == 1);
+    }, 200);
+  },
+  function (err, filtered) {
+    console.log(filtered);
+  }
 );
 
 function asyncFilter(ary, test, cb) {
-	var result = new Array(ary.length).fill(false);
-	var count = 0;
-	for (let i = 0; i < ary.length; i++) {
-		test(ary[i], function (err, pass) {
-			if (pass) {
-				result[i] = true; //通过测试的
-			}
-			count++;
-			if (count == ary.length) {
-				//调用完了
-				var filtered = ary.filter((_, idx) => result[idx]); //用result来过滤数组，相同坐标为true，是通过测试的
-				cb(null, filtered);
-			}
-		});
-	}
+  var result = new Array(ary.length).fill(false);
+  var count = 0;
+  for (let i = 0; i < ary.length; i++) {
+    test(ary[i], function (err, pass) {
+      if (pass) {
+        result[i] = true; //通过测试的
+      }
+      count++;
+      if (count == ary.length) {
+        //调用完了
+        var filtered = ary.filter((_, idx) => result[idx]); //用result来过滤数组，相同坐标为true，是通过测试的
+        cb(null, filtered);
+      }
+    });
+  }
 }
 
 class TaskQueue {
-	//jQuery任务队列实现，可以临时加任务
-	constructor() {
-		this.tasks = [];
-		this.hasTaskRunning = false;
-	}
-	next = () => {
-		//用箭头函数,这个this永远指向实例
-		if (this.tasks.length) {
-			let task = this.tasks.shift();
-			task(this.next);
-		} else {
-			this.hasTaskRunning = false;
-		}
-	};
-	addTask(task) {
-		if (this.hasTaskRunning) {
-			this.tasks.push(task);
-		} else {
-			this.hasTaskRunning = true;
-			task(this.next);
-		}
-		return this;
-	}
+  //jQuery任务队列实现，可以临时加任务
+  constructor() {
+    this.tasks = [];
+    this.hasTaskRunning = false;
+  }
+  next = () => {
+    //用箭头函数,这个this永远指向实例
+    if (this.tasks.length) {
+      let task = this.tasks.shift();
+      task(this.next);
+    } else {
+      this.hasTaskRunning = false;
+    }
+  };
+  addTask(task) {
+    if (this.hasTaskRunning) {
+      this.tasks.push(task);
+    } else {
+      this.hasTaskRunning = true;
+      task(this.next);
+    }
+    return this;
+  }
 }
 
 //jQuery的promise实现
@@ -2202,12 +2223,12 @@ dfd.resolve;
 dfd.reject;
 
 function dererred() {
-	var dfd = {};
-	dfd.promise = new Promise((resolve, reject) => {
-		dfd.resolve = resolve;
-		dfd.reject = reject;
-	});
-	return dfd;
+  var dfd = {};
+  dfd.promise = new Promise((resolve, reject) => {
+    dfd.resolve = resolve;
+    dfd.reject = reject;
+  });
+  return dfd;
 }
 ```
 
@@ -2254,126 +2275,126 @@ function dererred() {
 ```js
 //相关方法的实现及例子
 function getJSON(url) {
-	return new Promise((resolve, reject) => {
-		var xhr = new XMLHttpRequest();
-		xhr.open('get', url);
-		xhr.onload = () => {
-			if (xhr.status < 400) {
-				resolve(JSON.parse(xhr.responseText));
-			} else {
-				reject(JSON.parse(xhr.responseText));
-			}
-		};
-		xhr.onerror = (e) => reject(e);
-		xhr.send();
-	});
+  return new Promise((resolve, reject) => {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url);
+    xhr.onload = () => {
+      if (xhr.status < 400) {
+        resolve(JSON.parse(xhr.responseText));
+      } else {
+        reject(JSON.parse(xhr.responseText));
+      }
+    };
+    xhr.onerror = (e) => reject(e);
+    xhr.send();
+  });
 }
 
 Promise.resolve = function (value) {
-	return new Promise((resolve) => {
-		resolve(value);
-	});
+  return new Promise((resolve) => {
+    resolve(value);
+  });
 };
 
 function sleep(time) {
-	return new Promise((resolve) => {
-		setTimeout(resolve, time);
-	});
+  return new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
 }
 
 Promise.resolve()
-	.then(() => {
-		console.log(1);
-		return sleep(1000);
-	})
-	.then(() => {
-		console.log(1);
-		return sleep(1000);
-	})
-	.then(() => {
-		console.log(1);
-		return sleep(1000);
-	})
-	.then(() => {
-		console.log(1);
-		return sleep(1000);
-	})
-	.then(() => {
-		console.log(1);
-		return sleep(1000);
-	});
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  })
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  })
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  })
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  })
+  .then(() => {
+    console.log(1);
+    return sleep(1000);
+  });
 
 Promise.all = function (promises) {
-	return new Promise((resolve, reject) => {
-		let result = new Array(promises.length);
-		if (promises.length) {
-			let count = 0;
-			for (let i = 0; i < promises.length; i++) {
-				let promise = promises[i];
-				Promise.resolve(promise).then(
-					//确保promise一定是promise，如果不是，把它转换成promise
-					(value) => {
-						result[i] = value;
-						count++;
-						if (count == promises.length) {
-							resolve(result);
-						}
-					},
-					(reason) => {
-						reject(reason);
-					}
-				);
-			}
-		} else {
-			resolve(result);
-		}
-	});
+  return new Promise((resolve, reject) => {
+    let result = new Array(promises.length);
+    if (promises.length) {
+      let count = 0;
+      for (let i = 0; i < promises.length; i++) {
+        let promise = promises[i];
+        Promise.resolve(promise).then(
+          //确保promise一定是promise，如果不是，把它转换成promise
+          (value) => {
+            result[i] = value;
+            count++;
+            if (count == promises.length) {
+              resolve(result);
+            }
+          },
+          (reason) => {
+            reject(reason);
+          }
+        );
+      }
+    } else {
+      resolve(result);
+    }
+  });
 };
 
 Promise.race = function (promises) {
-	return new Promise((resolve, reject) => {
-		for (let i = 0; i < promises.length; i++) {
-			Promise.resolve(promises[i]).then(resolve, reject);
-		}
-	});
+  return new Promise((resolve, reject) => {
+    for (let i = 0; i < promises.length; i++) {
+      Promise.resolve(promises[i]).then(resolve, reject);
+    }
+  });
 };
 
 Promise.allSettled = function (promises) {
-	return new Promise((resolve) => {
-		let result = [];
-		let count = 0;
-		if (promises.length) {
-			for (let i = 0; i < promises.length; i++) {
-				let promise = Promise.resolve(promises[i]);
-				promise.then(
-					(value) => {
-						result[i] = {
-							status: 'fulfilled',
-							value,
-						};
-						count++;
-						if (count == promises.length) {
-							//确定resolve执行完毕
-							resolve(result);
-						}
-					},
-					(reason) => {
-						result[i] = {
-							status: 'rejected',
-							reason,
-						};
-						count++;
-						if (count == promises.length) {
-							//确定rejected执行完毕
-							resolve(result);
-						}
-					}
-				);
-			}
-		} else {
-			resolve(result);
-		}
-	});
+  return new Promise((resolve) => {
+    let result = [];
+    let count = 0;
+    if (promises.length) {
+      for (let i = 0; i < promises.length; i++) {
+        let promise = Promise.resolve(promises[i]);
+        promise.then(
+          (value) => {
+            result[i] = {
+              status: "fulfilled",
+              value,
+            };
+            count++;
+            if (count == promises.length) {
+              //确定resolve执行完毕
+              resolve(result);
+            }
+          },
+          (reason) => {
+            result[i] = {
+              status: "rejected",
+              reason,
+            };
+            count++;
+            if (count == promises.length) {
+              //确定rejected执行完毕
+              resolve(result);
+            }
+          }
+        );
+      }
+    } else {
+      resolve(result);
+    }
+  });
 };
 ```
 
@@ -2383,18 +2404,18 @@ Promise.allSettled = function (promises) {
 ```js
 //并行加载，串行显示
 story.chapterUrls
-	.map((url) => getJson(url)) //先创建所有的promise,同时开始加载
-	.reduce((seq, chapterPromise) => {
-		return seq
-			.then(() => chapterPromise)
-			.then((chapter) => {
-				//确保显示顺序，前面的加载完才能显示后面的
-				addHtmlToPage(chapter.html);
-			});
-	}, Promise.resolve())
-	.then(() => {
-		removeLoading();
-	});
+  .map((url) => getJson(url)) //先创建所有的promise,同时开始加载
+  .reduce((seq, chapterPromise) => {
+    return seq
+      .then(() => chapterPromise)
+      .then((chapter) => {
+        //确保显示顺序，前面的加载完才能显示后面的
+        addHtmlToPage(chapter.html);
+      });
+  }, Promise.resolve())
+  .then(() => {
+    removeLoading();
+  });
 ```
 
 ## ES6
@@ -2406,10 +2427,10 @@ story.chapterUrls
 - 必要构成，1 个'\*'号和 yield 运算符
   ```js
   function* gen() {
-  	a = yield 1;
-  	b = yield 2;
-  	c = yield 3;
-  	d = yield 4;
+    a = yield 1;
+    b = yield 2;
+    c = yield 3;
+    d = yield 4;
   }
   var g1 = gen(); //gen 是生成器，g1 是迭代器
   g1.next(); //=>{value: 1, done: false} 此时函数暂停在第一个 = 号右边
@@ -2427,10 +2448,10 @@ story.chapterUrls
   还是按照顺序执行，遇到嵌套的生成器会进入生成器执行其代码，一步一步执行完该生成器后接着执行外面的代码，直到整个代码执行完毕
   ```js
   function* gen() {
-  	a = yield 1;
-  	b = yield* g2;
-  	c = yield* g3;
-  	d = yield 4;
+    a = yield 1;
+    b = yield* g2;
+    c = yield* g3;
+    d = yield 4;
   }
   ```
 - ... 展开预算符可以展开生成器得到一个迭代器 value 属性值的数组集合
@@ -2442,15 +2463,15 @@ story.chapterUrls
 
   ```js
   function forOf(generator, action) {
-  	var iterator = generator.next();
-  	while (!iterator.done) {
-  		action(iterator.value);
-  		if (!action(iterator.value)) {
-  			generator.return;
-  			break;
-  		}
-  		iterator = generator.next();
-  	}
+    var iterator = generator.next();
+    while (!iterator.done) {
+      action(iterator.value);
+      if (!action(iterator.value)) {
+        generator.return;
+        break;
+      }
+      iterator = generator.next();
+    }
   }
   ```
 
@@ -2459,32 +2480,32 @@ story.chapterUrls
 ```js
 //将基于callback的函数转换为返回promise的函数
 function promisify(cbFunc) {
-	return function (...args) {
-		return new Promise((resolve, reject) => {
-			cbFunction(...args, (err, data) => {
-				// data异步调用args后得到的结果
-				if (err) {
-					reject(err);
-				} else {
-					resolve(data);
-				}
-			});
-		});
-	};
+  return function (...args) {
+    return new Promise((resolve, reject) => {
+      cbFunction(...args, (err, data) => {
+        // data异步调用args后得到的结果
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  };
 }
 //将基于promise的函数转换为一个基于回调的函数
 function callbackify(promiseFunc) {
-	return function (...args) {
-		var cb = args.pop(); //取出回调函数
-		promiseFunc(...args).then(
-			(val) => {
-				cb(null, val);
-			},
-			(reason) => {
-				cb(reason);
-			}
-		);
-	};
+  return function (...args) {
+    var cb = args.pop(); //取出回调函数
+    promiseFunc(...args).then(
+      (val) => {
+        cb(null, val);
+      },
+      (reason) => {
+        cb(reason);
+      }
+    );
+  };
 }
 ```
 
@@ -2590,9 +2611,9 @@ function loadStory() {
   ```js
   var myIterable = {};
   myIterable[Symbol.iterator] = function* () {
-  	yield 1;
-  	yield 2;
-  	yield 3;
+    yield 1;
+    yield 2;
+    yield 3;
   };
   [...myIterable]; // [1, 2, 3]
   ```
@@ -2624,7 +2645,7 @@ function loadStory() {
   这种方式比 eval 好的地方是<u>可以传递参数</u>
 
   ```js
-  var sum = new Function('a', 'b', 'return a + b');
+  var sum = new Function("a", "b", "return a + b");
   console.log(sum(2, 6));
   ```
 
@@ -2632,10 +2653,10 @@ function loadStory() {
 
   ```js
   var add = (function (a, b) {
-  	return a + b;
+    return a + b;
   })(1, 2);
   (function add(a, b) {
-  	return a + b;
+    return a + b;
   })(1, 2); //加（）将函数声明语句变成表达式，然后再调用
   ```
 
@@ -2714,9 +2735,9 @@ A:CommonJS 标准是同步加载的。另一方面作为公共依赖的模块，
 
 ```js
 //模块化
-var xx = require('chosen-js');
-import xxx, { funcName, funcName } from 'url'; //前面是默认导出的，后面是有名字的
-import * as xx from 'url';
+var xx = require("chosen-js");
+import xxx, { funcName, funcName } from "url"; //前面是默认导出的，后面是有名字的
+import * as xx from "url";
 //默认导入import name(随便起),以及非默认func from "xxx"
 //默认导出export default func;
 //具名导出 export func abc(){} /let/var/const
@@ -2725,103 +2746,98 @@ import * as xx from 'url';
 //导入的script 的 type:module
 
 (function () {
-	function readFile(filename) {
-		var xhr = new XMLHttpRequest();
-		xhr.open('get', filename, false); //同步，不行，要卡
-		xhr.send();
-		return xhr.responseText;
-	}
-	require.cache = {};
-	function require(filename) {
-		//路径问题？base自己
-		if (require.cache.hasOwnProperty(filename)) {
-			return require.cache[filename].exports;
-		}
-		var modFunc = new Function(
-			'require',
-			'module',
-			'exports',
-			readFile(filename)
-		);
-		var module = { exports: {} };
-		require.cache[filename] = module; //最终导出的是module.exports;引用类型，先放在缓存上，解决循环依赖的问题，可以防止爆栈；但是后续只能异步访问
-		modFunc(require, module, module.exports, readFile(filename));
-		return module.exports;
-	}
+  function readFile(filename) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", filename, false); //同步，不行，要卡
+    xhr.send();
+    return xhr.responseText;
+  }
+  require.cache = {};
+  function require(filename) {
+    //路径问题？base自己
+    if (require.cache.hasOwnProperty(filename)) {
+      return require.cache[filename].exports;
+    }
+    var modFunc = new Function("require", "module", "exports", readFile(filename));
+    var module = { exports: {} };
+    require.cache[filename] = module; //最终导出的是module.exports;引用类型，先放在缓存上，解决循环依赖的问题，可以防止爆栈；但是后续只能异步访问
+    modFunc(require, module, module.exports, readFile(filename));
+    return module.exports;
+  }
 })();
 //异步
 (function () {
-	function readFile(filename) {
-		var xhr = new XMLHttpRequest();
-		xhr.open('get', filename);
-		xhr.send();
-		return xhr.responseText;
-	}
-	require.cache = {};
-	window.require = require;
-	function require(filename) {
-		//路径问题？base自己
-		if (require.cache.hasOwnProperty(filename)) {
-			return require.cache[filename].exports;
-		}
-		var fileContent = readFile(filename);
-		var modFunc = new Function('require', 'module', 'exports', fileContent);
-		var module = { exports: {} };
-		require.cache[filename] = module; //最终导出的是module.exports;引用类型，先放在缓存上，解决循环依赖的问题，可以防止爆栈；但是后续只能异步访问
-		modFunc(require, module, module.exports, readFile(filename));
-		return module.exports;
-	}
+  function readFile(filename) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", filename);
+    xhr.send();
+    return xhr.responseText;
+  }
+  require.cache = {};
+  window.require = require;
+  function require(filename) {
+    //路径问题？base自己
+    if (require.cache.hasOwnProperty(filename)) {
+      return require.cache[filename].exports;
+    }
+    var fileContent = readFile(filename);
+    var modFunc = new Function("require", "module", "exports", fileContent);
+    var module = { exports: {} };
+    require.cache[filename] = module; //最终导出的是module.exports;引用类型，先放在缓存上，解决循环依赖的问题，可以防止爆栈；但是后续只能异步访问
+    modFunc(require, module, module.exports, readFile(filename));
+    return module.exports;
+  }
 })();
 function readFile(filename) {
-	return new Promise((resolve) => {
-		var xhr = new XMLHttpRequest();
-		xhr.open('get', filename);
-		xhr.onload = () => {
-			fileCache[filename] = xhr.responseText;
-			resolve(xhr.responseText);
-		};
-		xhr.send();
-	});
+  return new Promise((resolve) => {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", filename);
+    xhr.onload = () => {
+      fileCache[filename] = xhr.responseText;
+      resolve(xhr.responseText);
+    };
+    xhr.send();
+  });
 }
 //三个异步版本，async+promise+callback
 async function loadAllDeps(entryFile) {
-	var entryCode = await readFile(entryFile);
-	var deps = getAllDeps(entryCode);
-	await Promise.all(deps.map(loadAllDeps));
-	return;
+  var entryCode = await readFile(entryFile);
+  var deps = getAllDeps(entryCode);
+  await Promise.all(deps.map(loadAllDeps));
+  return;
 }
 
 function loadAllDeps(entryFile) {
-	readFile(entryFile).then((entryCode) => {
-		var deps = getAllDeps(entryCode);
-		return Promise.all(deps.map(loadAllDeps));
-	});
+  readFile(entryFile).then((entryCode) => {
+    var deps = getAllDeps(entryCode);
+    return Promise.all(deps.map(loadAllDeps));
+  });
 }
 
 function loadAllDeps(entryFile, cb) {
-	readFile(entryFile, (entryCode) => {
-		var deps = getAllDeps(entryCode);
-		if (deps.length) {
-			var count = 0;
-			for (var dep of deps) {
-				loadAllDeps(dep, () => {
-					count++;
-					if (count == deps.length) {
-						cb();
-					}
-				});
-			}
-		} else {
-			cb();
-		}
-	});
+  readFile(entryFile, (entryCode) => {
+    var deps = getAllDeps(entryCode);
+    if (deps.length) {
+      var count = 0;
+      for (var dep of deps) {
+        loadAllDeps(dep, () => {
+          count++;
+          if (count == deps.length) {
+            cb();
+          }
+        });
+      }
+    } else {
+      cb();
+    }
+  });
 }
 
 function loadAllDeps(entryFile) {
-	//同步版本
-	var entryCode = readFile(entryFile);
-	var deps = getAllDeps(entryCode);
-	deps.map(loadAllDeps);
+  //同步版本
+  var entryCode = readFile(entryFile);
+  var deps = getAllDeps(entryCode);
+  deps.map(loadAllDeps);
 }
 ```
 
@@ -3133,9 +3149,9 @@ function loadAllDeps(entryFile) {
 
   ```js
   var e = new EventEmitter();
-  e.on('eventName', hander); //绑定事件
-  e.off('eventName', hander); //解绑事件
-  e.emit('eventName'); //触发事件
+  e.on("eventName", hander); //绑定事件
+  e.off("eventName", hander); //解绑事件
+  e.emit("eventName"); //触发事件
   console.log(e.eventNames()); //输出包含全部事件名称的数组
   ```
 

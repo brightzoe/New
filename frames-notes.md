@@ -964,7 +964,7 @@ React 里面基本不用继承，只继承 React.Component, 更多是在一个�
 
   ```js
   function Repeat(props) {
-  	//组件内部拿到组建的属性，通过props
+  	//组件内部拿到组件的属性，通过props
   	let items = [];
   	for (let i = 0; i < props.time; i++) {
   		items.push(props.render(i));
@@ -1429,6 +1429,9 @@ yarn add node-sass/antd/react-router-dom -S
     `MiniCssExtractPlugin`：将所有 css 文件从依赖树中提取出来，放入单独的 css 文件而不打包在 js 里
     `GenerateSW`：生成 service worker
     `HotModuleReplacementPlugin`：模块热重载：页面不重新加载的情况下，模块的新代码就能在浏览器生效。但并不是对所有的模块都能这么用，一般来说组件的代码，css 的代码可以实现热重载。
+- `require.context`
+	作用：自动化导入模块。如果遇到从一个文件夹引入很多模块的情况,可以使用这个api,它会遍历文件夹中的指定文件,然后自动导入,使得不需要每次显式的调用import导入模块。
+	用法：`require.context(directory, useSubdirectories, regExp)`
 
 ## 其它框架知识
 
