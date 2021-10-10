@@ -851,22 +851,6 @@ NOTE:refs 使用方法，优劣对比，区别
   ```
 - **不能在函数组件上使用 ref 属性**，因为它们没有实例 (函数式组件在使用时是直接调用，class 式组件是创建一个实例)，但是可以在函数组件内部的元素上使用
 
-#### 转发 Refs
-
-- 使用 `React.forwardRef()` 创建组件，该组件的 ref 属性不指向自己，而是转发到组件内部的元素，`React.forwardRef()` 只是让组件继续可以使用 ref 属性。
-
-  ```js
-  //被forwardRef返回的ref不是特殊属性部分
-  //接受一个渲染函数作为参数，其接收 props 和 ref 参数并返回一个 React 节点
-  const FancyButton = React.forwardRef((props, ref) => (
-  	<button ref={ref} className="FancyButton">
-  		{props.children}
-  	</button>
-  ));
-  const ref = React.createRef();
-
-  <FancyButton ref={ref}>Click me!</FancyButton>; //这个ref会传到里面去！
-  ```
 
 ### 协调 reconciliation
 

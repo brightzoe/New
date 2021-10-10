@@ -491,53 +491,8 @@ num1;
 
 ### 高阶函数
 
-操作其他函数，将其他函数作为参数或返回值。
-特点:
-可以对某种特定的动作进行抽象。
-可以提高代码可读性/可维护性，容易避免错误。
 
-- 函数就是一个普通的值
-- 纯函数:一个函数的返回结果只依赖于它的参数，并且在执行过程里面没有副作用，我们就把这个函数叫做纯函数。 i.e. 靠谱的函数
 
-```js
-function transparentWrapping(f) {
-  return function () {
-    return f.apply(null, arguments); //模拟调用，访问f()的所有参数
-  };
-}
-```
-
-- `ary.filter(test)` //过滤，test 是条件函数
-- `ary.forEach(action)`
-  对数组的每个元素执行一次给定的函数。除了抛出异常以外，没有办法中止或跳出 forEach() 循环。
-
-```js
-//自己实现一个foreach,可以模拟 break&&continue:
-function forEach(ary, action) {
-  for (var i = 0; i < ary.length; i++) {
-    var x = action(ary[i], i);
-    if (x === false) {
-      break;
-    }
-  }
-  return ary;
-}
-
-var target = 3;
-var targetIndex = -1;
-debugger;
-forEach([1, 2, 3, 4], function (aryItem, idx) {
-  if (xx) {
-    return; //相当于continue
-  }
-  if (aryItem == target) {
-    targetIndex = idx;
-    return false; //相当于break
-  }
-});
-```
-
-- `ary.map(mapper)` //mapper
 - `ary.reduce(reducer,[initialValue])` //归纳函数，折叠数组，根据整个数组计算一个值(提供初始值比较安全)
   用 reduce 计算数组中去掉一个最大值和最小值后的平均值。
 
@@ -609,8 +564,6 @@ throw:中断函数执行,抛出 exception 对象,exception 被传递到 try 语�
   ary.join()/ary.contact()
   ary.indexOf(x)/ary.lastIndexOf(x)//寻找值为 x 的索引
   ary.endWith()/ary.sort()/ary.toString()
-  ary.every()/ary.some()
-  ary.filter()/ary.map()/ary.reduce()/ary.forEach()
   Array.of() Array.from()
 ```
 
@@ -646,26 +599,6 @@ var obj = {
 };
 ```
 
-### 内置对象
-
-**Set**
-不重复的集合,可以包含数字,字符,对象等.
-内置方法:
-var set = new Set
-
-- set.has(val)
-- set.delete(val)
-- set.clear()
-
-**Map**
-键值对的数组类型,键和值都可以是任意的数据类型.
-内置方法:
-var map = new Map
-
-- map.set(key,val)
-- map.get(key)
-- map.has(key)
-- map.delete(key)
 
 ### this 的指向
 
