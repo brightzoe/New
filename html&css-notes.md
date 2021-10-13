@@ -1006,11 +1006,7 @@ html5 中元素并不只区分为块级与内联，而是分为如下几个大�
 
 ## **盒模型**
 
-margin 可以为负值，padding 不能为负值。
-background-color 会充满 content,padding,border.
 
-从外到内：margin-box,border-box,padding-box,content-box
-默认情况：width,height 设置为 content-box, 可以用 box-sizing 可改变为 border-box
 
 包含块：一个元素的布局上下文。由最近的块级祖先框/表单元格/行内块元素框的内容边界 content-box 构成。
 
