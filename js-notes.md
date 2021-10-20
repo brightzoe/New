@@ -248,7 +248,6 @@ IEEE754 标准:二进制浮点顺运算标准
 - [运算符优先级](https://www.ecma-international.org/ecma-262/5.1/)
 - void 运算符的作用是执行一个表达式，然后不返回任何值，或者说返回 undefined。
 - void(xxx) 优先级超级高.
-- typeof: 一元运算符，返回类型
 - delete 删除属性
 - 逗号运算符用于对两个表达式求值，并返回后一个表达式的值。
 
@@ -579,48 +578,6 @@ throw:中断函数执行,抛出 exception 对象,exception 被传递到 try 语�
 - `delete obj.attr`
 - 包含函数的属性称为某个值的方法 method
 
-### 方法
-
-方法调用:`obj.func` this 是调用它的函数
-
-**this**可以看作是以不同方式传递的 arguments 参数,每个函数都有它的 this,值依赖它的调用方式
-call 方法:`func.call(this,...arguments)`//传入一个特定的 this,然后再传正常的参数
-apply 方法:`func.apply(this,[arguments])`//传入一个特定的 this,然后再传正常的参数的数组
-
-对象里写函数,f 属性指向这个函数,函数并不属于这个对象,相对独立.
-这个函数是全局的,对象不是语句块,不会产生作用域.
-
-```js
-var obj = {
-  val: 3,
-  f: function () {
-    return this.val;
-  },
-};
-```
-
-
-### this 的指向
-
-调用函数时，解析器向函数内部传递的一个参数，指向函数执行的上下文对象。<u>**this 取决于函数的调用形式,**</u>与在哪调用,在哪定义没有关系
-
-> 注意:与作用域不同,函数内部访问到的非形参变量,作用域取决于函数在哪定义,作用域在哪
-
-- 以方法的形式调用时，函数的 `this` 就是调用它的对象。如 `array.length`
-- 以纯函数形式调用时，`this` 是 `window f()`
-- 用 `new` 来调用 `this` 时，`this` 就是那个新建的对象。如构造函数；
-  修改 `this` 的指向:
-- 用 `call` 和 `apply` 调用时，`this` 是指定的那个对象。
-  => `fn.call(obj,xx,xx,xx)` 后面是参数
-  => `fn.apply(obj,[xx,xx,xx])` 参数以数组传入
-- 函数可以用 `bind()` 绑定 `this` 的指向
-- `this` 永远不能被赋值，即 `this` 不能写在等号左边
-- `this` 永远指向一个对象，如果指向了一个原始数据类型会将原始数据类型包装成对象
-- 箭头函数不会创建自己的 `this`, 它只会继承自己的作用域链的上一层作用域的 `this` 对象
-
-- this 的丢失问题
-  `this` 指向调用的对象与函数声明的位置无关，只与调用位置有关，如果在调用位置还使用声明位置的 `this`，`this` 会丢失；
-  解决方法通过 `bind` 绑定 `this` 或者通过箭头函数。箭头函数的 `this` ，总是继承外层函数的对象，在定义时就确定，与调用无关。
 
 ### 对象
 
@@ -637,18 +594,7 @@ var obj = {
 - `slice` 出来的数组是浅拷贝（shadow copy), 对应的有深拷贝
 - `isEqual` 是深对比，对比的是具体的内容是否一致；浅对比对比的是否是同一对象
 
-### 原型 prototype
 
-- 在访问对象不包含的属性时,会从对象原型中搜索属性.
-  每个对象除了拥有自己的属性外,都包含一个原型.原型是另一个对象,是对象的属性来源.
-  获取一个对象的原型:`Object.getPrototypeOf(obj)` or `obj.__proto__`
-  所有对象中原型的父原型,是 Object.prototype
-  可以设置一个对象的原型为 null:`obj.__proto__ = null`
-  创建一个具有特定原型的对象: `let obj = Object.create(obj,{xxxx})`
-
-JavaScript 对象原型的关系是一种树形结构，整个树形结构的根部就是`Object.prototype`。`Object.prototype`提供了一些可以在所有对象中使用的方法。
-
-许多对象并不直接将`Object.prototype`作为其原型，而会使用另一个原型对象，用于提供一系列不同的默认属性。函数继承自`Function.prototype`，而数组继承自`Array.prototype`。
 
 ### 构造函数
 
@@ -746,10 +692,6 @@ NOTE:面向对象
 一个类型复用已有类型已经实现的逻辑。
 当一个类型拥有另一个类型的所有或大部分特性时,可以让这一个类型通过某种方式直接获得该类型的所有属性和方法,即称为继承.被继承者被称为父类,继承者被称为子类.
 
-### instanceof
-
-二元运算符,某个对象是否继承自某个特定的构造函数
-`[1] instanceof Array` //true
 
 ## lodash `_`下划线
 

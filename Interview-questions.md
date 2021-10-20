@@ -158,10 +158,7 @@ bootstrap 再熟悉一下
   `ary.splice(start_index,length,...newValues)` 截取数组,相当于在原数组删除元素
   splice() 方法通过删除或替换现有元素或者原地添加新的元素来修改数组,并以数组形式返回被修改的内容。此方法会改变原数组。
   `arr.slice([begin[, end]])` 创建一份浅拷贝，不改变原数组
-- 判断是不是数组？
-  Array.isArray()
-  Object.prototype.toString.call(array)==='[object Array]'
-  array.instanceof Array
+
 - 数组去重？
   set 时间复杂度 O(n), 原理 hash
 
@@ -174,7 +171,7 @@ bootstrap 再熟悉一下
 
 ### 如何判断一个函数当前是否被当做构造函数调用？
 
-1. instance of //检查是否通过 new 调用，this 是否是构造函数的实例。
+1. instanceof //检查是否通过 new 调用，this 是否是构造函数的实例。
    //但不完全可靠，用 Person.call()/apply()也可以得到 Person 的实例。
 2. 当调用函数的 Construct 方法时，new.target 被赋值给构造函数名(===Person).不是通过构造函数调用，new.target===undefined。
    //很可靠。在函数外使用 new.target 是语法错误。
@@ -1000,8 +997,7 @@ c.fun(3);
 - 你会用哪种数据结构实现 Map 类？key 和 value 分别存在哪
   - 数组,链表,哈希表
   - 对象也可以，但对象本身就是映射，但不把他当映射使用
-- **节流防抖使用场景和原理。**
-- 描述一下防抖和节流，实现一下防抖函数，节流函数。
+
 
 - es5 实现继承
 - 实现 JSON.stringify，有缩进
@@ -1163,7 +1159,6 @@ boss 面
   地址：url
   请求头:req head
 
-- typeof,
 
 - 数组去重，
 - 数组中最大值，
@@ -1256,8 +1251,7 @@ NOTE:
   let:es6 提出，没有变量提升。在声明前使用，出现 TDZ。不能重复声明。
   const:es5,声明常量。const 的指向不能变，但指向的东西可以变，可以增删属性。
 
-- lodash 防抖节流
-  leetcode
+
 
 - 原型链的理解
 - 哪几种继承方式
