@@ -169,13 +169,6 @@ bootstrap 再熟悉一下
 - for in 遍历所有的可枚举属性.除了会遍历对象自己拥有的属性,还会读取到它原型链上的属性。遍历顺序:先 0 以上的数字,然后字符串,字符串按声明的顺序
 - in 原型上的属性也会被判定为真。不区分是否可枚举。
 
-### 如何判断一个函数当前是否被当做构造函数调用？
-
-1. instanceof //检查是否通过 new 调用，this 是否是构造函数的实例。
-   //但不完全可靠，用 Person.call()/apply()也可以得到 Person 的实例。
-2. 当调用函数的 Construct 方法时，new.target 被赋值给构造函数名(===Person).不是通过构造函数调用，new.target===undefined。
-   //很可靠。在函数外使用 new.target 是语法错误。
-3. 用 class 声明的函数必须被 new 调用，不然会报错，就规定了这一种方法。
 
 ### 逻辑操作符 || &&
 
@@ -211,37 +204,6 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
 - 什么情况主动用闭包？
   非常多情况，到处都在用。比如深克隆，promise,throttle
 
-### 原型与原型链
-
-- 对原型与原型链的概念以及理解。
-  原型链，对对象属性的访问。
-  构造函数构造出来的实例以构造函数的原型属性为原型。
-  函数才有 prototype,任何对象都有**proto**
-
-  ```js
-  //原型链
-  fixme: Function.prototype.a = () => alert('a');
-  Object.prototype.b = () => alert('b');
-  function A() {}
-  const a = new A();
-
-  a.a(); //a.a is undefined
-  //a.a();a.__proto__.a();a.__proto__.__proto__.a()
-  a.b(); //b
-  ```
-
-  ```js
-  //原型链
-  var foo = {};
-  var F = function () {};
-  Object.prototype.a = 'value a';
-  Function.prototype.b = 'value b';
-
-  console.log(foo.a); //value a
-  console.log(foo.b); //undefined
-  console.log(F.a); //value a
-  console.log(F.b); //value b
-  ```
 
 ### 作用域与作用域链的理解
 
@@ -1320,8 +1282,6 @@ NOTE:
 
   - weakmap 和 map 的区别
     弱引用，前者对 gc 更友好
-
-- new 的原理
 
 - deepclone
 - 数组去重、如何优化

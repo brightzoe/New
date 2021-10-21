@@ -597,18 +597,6 @@ throw:中断函数执行,抛出 exception 对象,exception 被传递到 try 语�
 
 
 ### 构造函数
-
-- 调用一个函数的构造函数,用来创建新对象:`new Func(xx)`
-
-  - 大写开头,创建的对象的原型指向构造函数的 prototype 属性;
-  - 包含指向新对象的变量 this,返回新创建的对象(构造函数的实例).除非构造函数显式返回另一个对象的值.
-  - 函数都有`prototype`属性;构造函数的 prototype 属性 默认指向一个空对象
-
-- `"foo".__proto__ === String.prototype` 一个字符串的原型,是 String 的 prototype 属性;一个函数的原型,是 Function 的 prototype 属性.(只有`Function.__proto__ === Function.prototype`)
-- 构造一个函数:`g = new Function("a,b,c,d","return a+b+c+d")`
-- 可以用来进行类型判断
-  - Object.prototype.toString.call([1,2,3]) ==='[object Array]'
-  - Object.prototype.toString.call("foo") ==='[object String]'
 - Object.prototype 的标准属性都不可枚举
 - 定义一个属性:Object.defineProperty(obj,{val:xx,writable:true,enumerable:false,configurable:false})//属性描述符,控制属性类型:可以设置属性是否可枚举,是否可更改
   - `prop in obj`
