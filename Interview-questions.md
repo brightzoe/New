@@ -117,31 +117,7 @@ bootstrap 再熟悉一下
   严格模式下会引起静默失败，非严格模式静默不抛错，严格模式会抛错。
   禁止 with
   eval 不一样。
-- **传递参数**
-  js 中的变量分为原始类型和引用类型。调用变量，复制，原始类型按值调用，引用类型按引用调用。
-  在函数中传递参数，所有参数都是按值传递的。
-  ```js
-  //原始类型按值传递
-  function addTen(num) {
-  	num += 10;
-  	return num;
-  }
-  let count = 20;
-  let result = addTen(count);
-  console.log(count); // 20，没有变化
-  console.log(result); // 30
-  ```
-  ```js
-  //对象也是按值传递的
-  function setName(obj) {
-  	obj.name = 'Nicholas';
-  	obj = new Object(); //obj指向了新对象，已经不指向person了
-  	obj.name = 'Greg';
-  }
-  let person = new Object();
-  setName(person);
-  console.log(person.name); // "Nicholas"
-  ```
+
 
 ### 数组和字符串的常用操作
 
@@ -1205,9 +1181,6 @@ NOTE:
 
 ## COMMUNICATION
 
-- 函数参数传递
-  js 中所有的参数传递都是值传递。
-  无论是原始数据类型还是引用数据类型。
 - **var,let,const 的区别**
   var:es5 之前提出，用来做变量声明。有变量提升，作用域。
   let:es6 提出，没有变量提升。在声明前使用，出现 TDZ。不能重复声明。
