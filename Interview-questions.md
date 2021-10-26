@@ -1284,11 +1284,6 @@ NOTE:
 - 服务器渲染 ssr
 - 浏览器渲染
 
-- 模块化
-  commonjs，ESModule
-
-  - amd 和 ESModule 的区别？
-    ESModule 对于 tree-shaking 有什么优势？
 
 - react
 

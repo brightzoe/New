@@ -126,19 +126,8 @@ A: git pull = git fetch +git merge
   删除:rm
   删除非空目录:rm -rf file 目录
   移动:mv
-  复制:cp (复制目录:cp -r )
-  显示当前目录下的文件 ls
   查看文件内容 cat, con cate nate
-- cd change directory
-  - cd 相对路径（相对于当前工作目录）
-    - ../ 表示当前文件夹的父文件夹 （中合路径中的上一个文件夹）anv/.. =0
-    - ./ 表示当前文件夹，可忽略
-  - cd 绝对路径，, 以 / 开头； （cd - 上一个文件夹）
-  - 补充：
-    - 路径
-    - 相对路径 以 / 开头
-    - 绝对路径 以 // 开头
-- sudo /super user do 超级管理员
+
 - touch a.txt 创建（空）文件
 - time command 计算某命令的运行时间
 - date 显示时间和日期
@@ -2503,38 +2492,7 @@ function loadStory() {
   ```
 
 ## 模块
-
-- Function 构造器生成的 Function 对象是在函数创建时解析的，所有被传递到构造函数中的参数，都将被视为将被创建的函数的参数，并且是相同的标示符名称和传递顺序；
-  这种方式比 eval 好的地方是<u>可以传递参数</u>
-
-  ```js
-  var sum = new Function("a", "b", "return a + b");
-  console.log(sum(2, 6));
-  ```
-
-- 直接调用函数表达式
-
-  ```js
-  var add = (function (a, b) {
-    return a + b;
-  })(1, 2);
-  (function add(a, b) {
-    return a + b;
-  })(1, 2); //加（）将函数声明语句变成表达式，然后再调用
-  ```
-
-  IIFE: immediately invoked function expression 立即执行函数表达式
-
-- 常用的模块方案
-
-  - CommonJS 模块的加载是同步的
-
-    将每个文件都看作一个模块，模块内部定义的变量都是私有的，无法被其他模块使用，除非使用预定义的方法将内部的变量暴露出来（通过**exports 和 require**关键字来实现），CommonJS 最为出名的实现就是 Node.js。
-
-  - AMD define 函数 异步方式加载模块
-
-  - CMD Common Module Definition sea.js
-
+commonjs
 - require 函数
 
 ```js
@@ -2581,20 +2539,7 @@ function loadStory() {
 - 接口设计
 <hr>
 
-Q: 模块化的好处？
-A: 解决命名冲突,变量污染；提高代码复用性；提高代码可维护性。
 
-Q: 实现模块化的方式？
-A: 立即执行函数;IIFE
-AMD 和 CMD;
-CommonJS;
-ES Module
-
-Q:在 Node.js 中，require()加载模块是同步而非异步？
-
-A:CommonJS 标准是同步加载的。另一方面作为公共依赖的模块，自然要一步加载到位。
-
-由于模块的个数往往有限，且 Node 会自动缓存已经加载的模块，再加上访问的都是本地文件，产生的 IO 开销几乎可以忽略。另外，Node 程序运行在服务器端，很少遇到需要频繁重启服务的情况，那么就算在服务启动时在加载上花点时间（几秒）也没有什么影响。
 
 ```js
 //模块化
