@@ -1074,19 +1074,13 @@ inline-block 元素触发 BFC
 
 ## BFC
 
-Block Format Context 块级格式化上下文
-自身形成一个布局单元：布局此元素内部时不用考虑其外部，可以理解为完全隔离的独立容器，容器里面的元素不会在布局上影响到外面的元素
 
 - 在常规流和 float 里面有效，不能包着脱离常规流的定位元素
 - 常规流块元素没有边框和内边距时，包裹着子元素的 border-box，父子元素的 margin 会合并。而触发了 BFC 的元素，父元素无论如何都会包裹着其子元素的 margin-box，父子元素的 margin 也不会合并
 - 下列方式会触发 BFC：
-  浮动元素（元素的 float 不是 none）
-  绝对定位元素（元素的 position 为 absolute 或 fixed）
   行内块元素（元素的 display 为 inline-block）
   弹性元素（display 为 flex 或 inline-flex 元素的直接子元素）
   表格单元格（元素的 display 为 table-cell，HTML 表格单元格默认为该值）
-  display 值为 flow-root 的元素
-  overflow 值不为 visible 的块元素
   表格标题（元素的 display 为 table-caption，HTML 表格标题默认为该值）
   匿名表格单元格元素（元素的 display 为 table、table-row、 table-row-group、table-header-group、table-footer-group（分别是 HTML table、row、tbody、thead、tfoot 的默认属性）或 inline-table）
   contain 值为 layout、content 或 strict 的元素

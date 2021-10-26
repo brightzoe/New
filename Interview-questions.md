@@ -117,31 +117,7 @@ bootstrap 再熟悉一下
   严格模式下会引起静默失败，非严格模式静默不抛错，严格模式会抛错。
   禁止 with
   eval 不一样。
-- **传递参数**
-  js 中的变量分为原始类型和引用类型。调用变量，复制，原始类型按值调用，引用类型按引用调用。
-  在函数中传递参数，所有参数都是按值传递的。
-  ```js
-  //原始类型按值传递
-  function addTen(num) {
-  	num += 10;
-  	return num;
-  }
-  let count = 20;
-  let result = addTen(count);
-  console.log(count); // 20，没有变化
-  console.log(result); // 30
-  ```
-  ```js
-  //对象也是按值传递的
-  function setName(obj) {
-  	obj.name = 'Nicholas';
-  	obj = new Object(); //obj指向了新对象，已经不指向person了
-  	obj.name = 'Greg';
-  }
-  let person = new Object();
-  setName(person);
-  console.log(person.name); // "Nicholas"
-  ```
+
 
 ### 数组和字符串的常用操作
 
@@ -158,10 +134,7 @@ bootstrap 再熟悉一下
   `ary.splice(start_index,length,...newValues)` 截取数组,相当于在原数组删除元素
   splice() 方法通过删除或替换现有元素或者原地添加新的元素来修改数组,并以数组形式返回被修改的内容。此方法会改变原数组。
   `arr.slice([begin[, end]])` 创建一份浅拷贝，不改变原数组
-- 判断是不是数组？
-  Array.isArray()
-  Object.prototype.toString.call(array)==='[object Array]'
-  array.instanceof Array
+
 - 数组去重？
   set 时间复杂度 O(n), 原理 hash
 
@@ -172,13 +145,6 @@ bootstrap 再熟悉一下
 - for in 遍历所有的可枚举属性.除了会遍历对象自己拥有的属性,还会读取到它原型链上的属性。遍历顺序:先 0 以上的数字,然后字符串,字符串按声明的顺序
 - in 原型上的属性也会被判定为真。不区分是否可枚举。
 
-### 如何判断一个函数当前是否被当做构造函数调用？
-
-1. instance of //检查是否通过 new 调用，this 是否是构造函数的实例。
-   //但不完全可靠，用 Person.call()/apply()也可以得到 Person 的实例。
-2. 当调用函数的 Construct 方法时，new.target 被赋值给构造函数名(===Person).不是通过构造函数调用，new.target===undefined。
-   //很可靠。在函数外使用 new.target 是语法错误。
-3. 用 class 声明的函数必须被 new 调用，不然会报错，就规定了这一种方法。
 
 ### 逻辑操作符 || &&
 
@@ -214,37 +180,6 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
 - 什么情况主动用闭包？
   非常多情况，到处都在用。比如深克隆，promise,throttle
 
-### 原型与原型链
-
-- 对原型与原型链的概念以及理解。
-  原型链，对对象属性的访问。
-  构造函数构造出来的实例以构造函数的原型属性为原型。
-  函数才有 prototype,任何对象都有**proto**
-
-  ```js
-  //原型链
-  fixme: Function.prototype.a = () => alert('a');
-  Object.prototype.b = () => alert('b');
-  function A() {}
-  const a = new A();
-
-  a.a(); //a.a is undefined
-  //a.a();a.__proto__.a();a.__proto__.__proto__.a()
-  a.b(); //b
-  ```
-
-  ```js
-  //原型链
-  var foo = {};
-  var F = function () {};
-  Object.prototype.a = 'value a';
-  Function.prototype.b = 'value b';
-
-  console.log(foo.a); //value a
-  console.log(foo.b); //undefined
-  console.log(F.a); //value a
-  console.log(F.b); //value b
-  ```
 
 ### 作用域与作用域链的理解
 
@@ -1000,8 +935,7 @@ c.fun(3);
 - 你会用哪种数据结构实现 Map 类？key 和 value 分别存在哪
   - 数组,链表,哈希表
   - 对象也可以，但对象本身就是映射，但不把他当映射使用
-- **节流防抖使用场景和原理。**
-- 描述一下防抖和节流，实现一下防抖函数，节流函数。
+
 
 - es5 实现继承
 - 实现 JSON.stringify，有缩进
@@ -1163,7 +1097,6 @@ boss 面
   地址：url
   请求头:req head
 
-- typeof,
 
 - 数组去重，
 - 数组中最大值，
@@ -1248,16 +1181,12 @@ NOTE:
 
 ## COMMUNICATION
 
-- 函数参数传递
-  js 中所有的参数传递都是值传递。
-  无论是原始数据类型还是引用数据类型。
 - **var,let,const 的区别**
   var:es5 之前提出，用来做变量声明。有变量提升，作用域。
   let:es6 提出，没有变量提升。在声明前使用，出现 TDZ。不能重复声明。
   const:es5,声明常量。const 的指向不能变，但指向的东西可以变，可以增删属性。
 
-- lodash 防抖节流
-  leetcode
+
 
 - 原型链的理解
 - 哪几种继承方式
@@ -1327,8 +1256,6 @@ NOTE:
   - weakmap 和 map 的区别
     弱引用，前者对 gc 更友好
 
-- new 的原理
-
 - deepclone
 - 数组去重、如何优化
   改变数组，不改变数组：splice,substring
@@ -1357,11 +1284,6 @@ NOTE:
 - 服务器渲染 ssr
 - 浏览器渲染
 
-- 模块化
-  commonjs，ESModule
-
-  - amd 和 ESModule 的区别？
-    ESModule 对于 tree-shaking 有什么优势？
 
 - react
 

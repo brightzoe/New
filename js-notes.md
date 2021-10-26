@@ -126,19 +126,8 @@ A: git pull = git fetch +git merge
   删除:rm
   删除非空目录:rm -rf file 目录
   移动:mv
-  复制:cp (复制目录:cp -r )
-  显示当前目录下的文件 ls
   查看文件内容 cat, con cate nate
-- cd change directory
-  - cd 相对路径（相对于当前工作目录）
-    - ../ 表示当前文件夹的父文件夹 （中合路径中的上一个文件夹）anv/.. =0
-    - ./ 表示当前文件夹，可忽略
-  - cd 绝对路径，, 以 / 开头； （cd - 上一个文件夹）
-  - 补充：
-    - 路径
-    - 相对路径 以 / 开头
-    - 绝对路径 以 // 开头
-- sudo /super user do 超级管理员
+
 - touch a.txt 创建（空）文件
 - time command 计算某命令的运行时间
 - date 显示时间和日期
@@ -248,7 +237,6 @@ IEEE754 标准:二进制浮点顺运算标准
 - [运算符优先级](https://www.ecma-international.org/ecma-262/5.1/)
 - void 运算符的作用是执行一个表达式，然后不返回任何值，或者说返回 undefined。
 - void(xxx) 优先级超级高.
-- typeof: 一元运算符，返回类型
 - delete 删除属性
 - 逗号运算符用于对两个表达式求值，并返回后一个表达式的值。
 
@@ -579,48 +567,6 @@ throw:中断函数执行,抛出 exception 对象,exception 被传递到 try 语�
 - `delete obj.attr`
 - 包含函数的属性称为某个值的方法 method
 
-### 方法
-
-方法调用:`obj.func` this 是调用它的函数
-
-**this**可以看作是以不同方式传递的 arguments 参数,每个函数都有它的 this,值依赖它的调用方式
-call 方法:`func.call(this,...arguments)`//传入一个特定的 this,然后再传正常的参数
-apply 方法:`func.apply(this,[arguments])`//传入一个特定的 this,然后再传正常的参数的数组
-
-对象里写函数,f 属性指向这个函数,函数并不属于这个对象,相对独立.
-这个函数是全局的,对象不是语句块,不会产生作用域.
-
-```js
-var obj = {
-  val: 3,
-  f: function () {
-    return this.val;
-  },
-};
-```
-
-
-### this 的指向
-
-调用函数时，解析器向函数内部传递的一个参数，指向函数执行的上下文对象。<u>**this 取决于函数的调用形式,**</u>与在哪调用,在哪定义没有关系
-
-> 注意:与作用域不同,函数内部访问到的非形参变量,作用域取决于函数在哪定义,作用域在哪
-
-- 以方法的形式调用时，函数的 `this` 就是调用它的对象。如 `array.length`
-- 以纯函数形式调用时，`this` 是 `window f()`
-- 用 `new` 来调用 `this` 时，`this` 就是那个新建的对象。如构造函数；
-  修改 `this` 的指向:
-- 用 `call` 和 `apply` 调用时，`this` 是指定的那个对象。
-  => `fn.call(obj,xx,xx,xx)` 后面是参数
-  => `fn.apply(obj,[xx,xx,xx])` 参数以数组传入
-- 函数可以用 `bind()` 绑定 `this` 的指向
-- `this` 永远不能被赋值，即 `this` 不能写在等号左边
-- `this` 永远指向一个对象，如果指向了一个原始数据类型会将原始数据类型包装成对象
-- 箭头函数不会创建自己的 `this`, 它只会继承自己的作用域链的上一层作用域的 `this` 对象
-
-- this 的丢失问题
-  `this` 指向调用的对象与函数声明的位置无关，只与调用位置有关，如果在调用位置还使用声明位置的 `this`，`this` 会丢失；
-  解决方法通过 `bind` 绑定 `this` 或者通过箭头函数。箭头函数的 `this` ，总是继承外层函数的对象，在定义时就确定，与调用无关。
 
 ### 对象
 
@@ -637,32 +583,9 @@ var obj = {
 - `slice` 出来的数组是浅拷贝（shadow copy), 对应的有深拷贝
 - `isEqual` 是深对比，对比的是具体的内容是否一致；浅对比对比的是否是同一对象
 
-### 原型 prototype
 
-- 在访问对象不包含的属性时,会从对象原型中搜索属性.
-  每个对象除了拥有自己的属性外,都包含一个原型.原型是另一个对象,是对象的属性来源.
-  获取一个对象的原型:`Object.getPrototypeOf(obj)` or `obj.__proto__`
-  所有对象中原型的父原型,是 Object.prototype
-  可以设置一个对象的原型为 null:`obj.__proto__ = null`
-  创建一个具有特定原型的对象: `let obj = Object.create(obj,{xxxx})`
-
-JavaScript 对象原型的关系是一种树形结构，整个树形结构的根部就是`Object.prototype`。`Object.prototype`提供了一些可以在所有对象中使用的方法。
-
-许多对象并不直接将`Object.prototype`作为其原型，而会使用另一个原型对象，用于提供一系列不同的默认属性。函数继承自`Function.prototype`，而数组继承自`Array.prototype`。
 
 ### 构造函数
-
-- 调用一个函数的构造函数,用来创建新对象:`new Func(xx)`
-
-  - 大写开头,创建的对象的原型指向构造函数的 prototype 属性;
-  - 包含指向新对象的变量 this,返回新创建的对象(构造函数的实例).除非构造函数显式返回另一个对象的值.
-  - 函数都有`prototype`属性;构造函数的 prototype 属性 默认指向一个空对象
-
-- `"foo".__proto__ === String.prototype` 一个字符串的原型,是 String 的 prototype 属性;一个函数的原型,是 Function 的 prototype 属性.(只有`Function.__proto__ === Function.prototype`)
-- 构造一个函数:`g = new Function("a,b,c,d","return a+b+c+d")`
-- 可以用来进行类型判断
-  - Object.prototype.toString.call([1,2,3]) ==='[object Array]'
-  - Object.prototype.toString.call("foo") ==='[object String]'
 - Object.prototype 的标准属性都不可枚举
 - 定义一个属性:Object.defineProperty(obj,{val:xx,writable:true,enumerable:false,configurable:false})//属性描述符,控制属性类型:可以设置属性是否可枚举,是否可更改
   - `prop in obj`
@@ -746,10 +669,6 @@ NOTE:面向对象
 一个类型复用已有类型已经实现的逻辑。
 当一个类型拥有另一个类型的所有或大部分特性时,可以让这一个类型通过某种方式直接获得该类型的所有属性和方法,即称为继承.被继承者被称为父类,继承者被称为子类.
 
-### instanceof
-
-二元运算符,某个对象是否继承自某个特定的构造函数
-`[1] instanceof Array` //true
 
 ## lodash `_`下划线
 
@@ -2573,38 +2492,7 @@ function loadStory() {
   ```
 
 ## 模块
-
-- Function 构造器生成的 Function 对象是在函数创建时解析的，所有被传递到构造函数中的参数，都将被视为将被创建的函数的参数，并且是相同的标示符名称和传递顺序；
-  这种方式比 eval 好的地方是<u>可以传递参数</u>
-
-  ```js
-  var sum = new Function("a", "b", "return a + b");
-  console.log(sum(2, 6));
-  ```
-
-- 直接调用函数表达式
-
-  ```js
-  var add = (function (a, b) {
-    return a + b;
-  })(1, 2);
-  (function add(a, b) {
-    return a + b;
-  })(1, 2); //加（）将函数声明语句变成表达式，然后再调用
-  ```
-
-  IIFE: immediately invoked function expression 立即执行函数表达式
-
-- 常用的模块方案
-
-  - CommonJS 模块的加载是同步的
-
-    将每个文件都看作一个模块，模块内部定义的变量都是私有的，无法被其他模块使用，除非使用预定义的方法将内部的变量暴露出来（通过**exports 和 require**关键字来实现），CommonJS 最为出名的实现就是 Node.js。
-
-  - AMD define 函数 异步方式加载模块
-
-  - CMD Common Module Definition sea.js
-
+commonjs
 - require 函数
 
 ```js
@@ -2651,20 +2539,7 @@ function loadStory() {
 - 接口设计
 <hr>
 
-Q: 模块化的好处？
-A: 解决命名冲突,变量污染；提高代码复用性；提高代码可维护性。
 
-Q: 实现模块化的方式？
-A: 立即执行函数;IIFE
-AMD 和 CMD;
-CommonJS;
-ES Module
-
-Q:在 Node.js 中，require()加载模块是同步而非异步？
-
-A:CommonJS 标准是同步加载的。另一方面作为公共依赖的模块，自然要一步加载到位。
-
-由于模块的个数往往有限，且 Node 会自动缓存已经加载的模块，再加上访问的都是本地文件，产生的 IO 开销几乎可以忽略。另外，Node 程序运行在服务器端，很少遇到需要频繁重启服务的情况，那么就算在服务启动时在加载上花点时间（几秒）也没有什么影响。
 
 ```js
 //模块化
