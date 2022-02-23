@@ -1,5 +1,3 @@
-
-
 ## CSS
 
 - 选择器，选择器优先级
@@ -40,10 +38,10 @@
 - 实现一个自适应布局，一个页面始终展示一个圆形（直径是页面的 50%），圆形根据屏幕变化而变化，当屏幕变宽时，圆也变大
   ```css
   div {
-  	width: 50 vmin;
-  	height: 50 vmin;
-  	border: 8px solid;
-  	border-radius: 99999px;
+    width: 50 vmin;
+    height: 50 vmin;
+    border: 8px solid;
+    border-radius: 99999px;
   }
   ```
 - 响应式布局实现原理
@@ -118,7 +116,6 @@ bootstrap 再熟悉一下
   禁止 with
   eval 不一样。
 
-
 ### 数组和字符串的常用操作
 
 **哪些操作会改变原数组，哪些不改变？是值调用还是引用调用？**
@@ -144,7 +141,6 @@ bootstrap 再熟悉一下
 - for of 用来遍历数组中的元素。实际上 for of 可以以任何形式遍历任何的值。
 - for in 遍历所有的可枚举属性.除了会遍历对象自己拥有的属性,还会读取到它原型链上的属性。遍历顺序:先 0 以上的数字,然后字符串,字符串按声明的顺序
 - in 原型上的属性也会被判定为真。不区分是否可枚举。
-
 
 ### 逻辑操作符 || &&
 
@@ -179,7 +175,6 @@ false || null || "" || 0 || NaN || "Hello" || undefined // "Hello"
 
 - 什么情况主动用闭包？
   非常多情况，到处都在用。比如深克隆，promise,throttle
-
 
 ### 作用域与作用域链的理解
 
@@ -370,8 +365,8 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
   jsonp:创建了一个 script 标签，有 src
 
   ```js
-  let script = document.createElement('script');
-  script.src = 'xxx';
+  let script = document.createElement("script");
+  script.src = "xxx";
   document.body.appendChild(script);
   ```
 
@@ -380,13 +375,13 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
   ```js
   let _createElement = document.createElement; //存起来换个名
   document.createElement = function (name) {
-  	if (name === 'script') {
-  		let script = _createElement(name);
-  		script.addEventListener(); //探测到的script，绑事件
-  		return script;
-  	} else {
-  		return _createElement(name); //其他情况按原来的
-  	}
+    if (name === "script") {
+      let script = _createElement(name);
+      script.addEventListener(); //探测到的script，绑事件
+      return script;
+    } else {
+      return _createElement(name); //其他情况按原来的
+    }
   };
   ```
 
@@ -478,24 +473,24 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
 - normalize 将连续的文本节点合并成一个
   ```js
   function normalize(node) {
-  	if (node.nodeType === document.ELEMENT_NODE) {
-  		var children = Array.from(node.childNodes);
-  		let text = '';
-  		for (let i = 0; i < children.length; i++) {
-  			if (children[i].nodeType === document.TEXT_NODE) {
-  				text += children[i].nodeValue;
-  				node.removeChild(children[i]);
-  			} else if (text) {
-  				var textNode = document.createTextNode(text);
-  				node.insertbefore(textNode, children[i]);
-  				text = '';
-  			}
-  		}
-  		if (text) {
-  			var textNode = document.createTextNode(text);
-  			node.append(textNode);
-  		}
-  	}
+    if (node.nodeType === document.ELEMENT_NODE) {
+      var children = Array.from(node.childNodes);
+      let text = "";
+      for (let i = 0; i < children.length; i++) {
+        if (children[i].nodeType === document.TEXT_NODE) {
+          text += children[i].nodeValue;
+          node.removeChild(children[i]);
+        } else if (text) {
+          var textNode = document.createTextNode(text);
+          node.insertbefore(textNode, children[i]);
+          text = "";
+        }
+      }
+      if (text) {
+        var textNode = document.createTextNode(text);
+        node.append(textNode);
+      }
+    }
   }
   ```
 
@@ -547,20 +542,20 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
 
   ```js
   p.then((val) => {
-  	doSth().then((val) => {
-  		doSth().then((val) => {
-  			doSth();
-  		});
-  	});
+    doSth().then((val) => {
+      doSth().then((val) => {
+        doSth();
+      });
+    });
   });
   //改写成
   p.then((val) => {
-  	doSth();
+    doSth();
   })
-  	.then((val) => {
-  		doSth();
-  	})
-  	.then((val) => {});
+    .then((val) => {
+      doSth();
+    })
+    .then((val) => {});
   ```
 
 - promise 在 es6 里有 finally 方法吗？
@@ -568,18 +563,18 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
 
   ```js
   Promise.prototype.finally = function (f) {
-  	return this.then(
-  		(val) => {
-  			return Promise.resolve(f()).then(() => {
-  				return val;
-  			});
-  		},
-  		(reason) => {
-  			return Promise.resolve(f()).then(() => {
-  				throw reason;
-  			});
-  		}
-  	);
+    return this.then(
+      (val) => {
+        return Promise.resolve(f()).then(() => {
+          return val;
+        });
+      },
+      (reason) => {
+        return Promise.resolve(f()).then(() => {
+          throw reason;
+        });
+      }
+    );
   };
   ```
 
@@ -587,9 +582,9 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
 
   ```js
   function sleep(time) {
-  	return new Promise((resolve) => {
-  		setTimeout(resolve, time);
-  	});
+    return new Promise((resolve) => {
+      setTimeout(resolve, time);
+    });
   }
 
   f1();
@@ -664,9 +659,9 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
   可以。不写等于默认以下：
   ```js
   class Foo extends React.Component {
-  	constructor(props) {
-  		super(props);
-  	}
+    constructor(props) {
+      super(props);
+    }
   }
   ```
 - diff 算法
@@ -800,53 +795,53 @@ TODO: 0714 实现猫图片的按序加载，即一张 onload 以后才开始加�
 //作用域
 //①
 function foo() {
-	a = 5;
-	console.log(window.a); //undefined,外面读不到
-	console.log(a); //5
-	var a = 10; //声明提前
-	console.log(a); //10
+  a = 5;
+  console.log(window.a); //undefined,外面读不到
+  console.log(a); //5
+  var a = 10; //声明提前
+  console.log(a); //10
 }
 foo();
 
 //②
 function foo() {
-	a = 5;
-	console.log(window.a); //can't access
-	console.log(a); //can't access
-	let a = 10; //TDZ,声明前不能访问
-	console.log(a);
+  a = 5;
+  console.log(window.a); //can't access
+  console.log(a); //can't access
+  let a = 10; //TDZ,声明前不能访问
+  console.log(a);
 }
 foo();
 
 //③
 function foo() {
-	let a = 5;
-	console.log(window.a);
-	console.log(a);
-	var a = 10; //不能重复声明
-	console.log(a);
+  let a = 5;
+  console.log(window.a);
+  console.log(a);
+  var a = 10; //不能重复声明
+  console.log(a);
 }
 foo();
 //④
-var name = 'a';
+var name = "a";
 function outter() {
-	var name = 'b';
-	function inner() {
-		console.log(name);
-		console.log(this.name);
-	}
-	inner();
+  var name = "b";
+  function inner() {
+    console.log(name);
+    console.log(this.name);
+  }
+  inner();
 }
 outter();
 ```
 
 ```js
-console.log(['1', '2', '3'].map(parseInt)); //[1, NaN, NaN]
+console.log(["1", "2", "3"].map(parseInt)); //[1, NaN, NaN]
 ```
 
 ```js
 function func(a = {}) {
-	console.log(a);
+  console.log(a);
 }
 func(null); //null
 func(undefined); //{}
@@ -856,21 +851,21 @@ func(false); //false
 
 ```js
 //promise
-document.body.addEventListener('click', () => {
-	Promise.resolve().then(() => console.log(1));
-	console.log(2);
+document.body.addEventListener("click", () => {
+  Promise.resolve().then(() => console.log(1));
+  console.log(2);
 });
-document.body.addEventListener('click', () => {
-	Promise.resolve().then(() => console.log(3));
-	console.log(4);
+document.body.addEventListener("click", () => {
+  Promise.resolve().then(() => console.log(3));
+  console.log(4);
 });
 ```
 
 ```js
 function test() {
-	console.count('Promise Resolve');
-	ret = Promise.resolve().then(test);
-	return ret;
+  console.count("Promise Resolve");
+  ret = Promise.resolve().then(test);
+  return ret;
 }
 console.log(1);
 test();
@@ -879,12 +874,12 @@ test();
 ```js
 //作用域问题
 function fun(n, o) {
-	console.log(o);
-	return {
-		fun: function (m) {
-			return fun(m, n);
-		},
-	};
+  console.log(o);
+  return {
+    fun: function (m) {
+      return fun(m, n);
+    },
+  };
 }
 
 let a = fun(0);
@@ -904,18 +899,18 @@ c.fun(3);
 
   ```html
   <ul id="”test”">
-  	<li>这是第一条</li>
-  	<li>这是第二条</li>
-  	<li>这是第三条</li>
+    <li>这是第一条</li>
+    <li>这是第二条</li>
+    <li>这是第三条</li>
   </ul>
   <script>
-  	var ul = document.querySelector('#test');
-  	ul.onclick = function (e) {
-  		for (let i = 0; i < ul.children.length; i++)
-  			if (e.target === ul.children[i]) {
-  				alert(i + 1);
-  			}
-  	};
+    var ul = document.querySelector("#test");
+    ul.onclick = function (e) {
+      for (let i = 0; i < ul.children.length; i++)
+        if (e.target === ul.children[i]) {
+          alert(i + 1);
+        }
+    };
   </script>
   ```
 
@@ -933,9 +928,9 @@ c.fun(3);
 
 - call、apply、bind 区别
 - 你会用哪种数据结构实现 Map 类？key 和 value 分别存在哪
+
   - 数组,链表,哈希表
   - 对象也可以，但对象本身就是映射，但不把他当映射使用
-
 
 - es5 实现继承
 - 实现 JSON.stringify，有缩进
@@ -949,20 +944,20 @@ c.fun(3);
   //函数柯里化
   //add(1)(2)(3)无限都可以得到结果
   function argsSum(args) {
-  	return args.reduce((pre, cur) => {
-  		return pre + cur;
-  	});
+    return args.reduce((pre, cur) => {
+      return pre + cur;
+    });
   }
   function add(...args1) {
-  	let sum1 = argsSum(args1);
-  	let fn = function (...args2) {
-  		let sum2 = argsSum(args2);
-  		return add(sum1 + sum2);
-  	};
-  	fn.toString = function () {
-  		return sum1;
-  	};
-  	return fn;
+    let sum1 = argsSum(args1);
+    let fn = function (...args2) {
+      let sum2 = argsSum(args2);
+      return add(sum1 + sum2);
+    };
+    fn.toString = function () {
+      return sum1;
+    };
+    return fn;
   }
   ```
 
@@ -977,11 +972,11 @@ c.fun(3);
 
   ```js
   function sum(...args) {
-  	let s = sum.bind(null, ...args);
-  	s.valueOf = function () {
-  		return args.reduce((a, b) => a + b);
-  	};
-  	return s;
+    let s = sum.bind(null, ...args);
+    s.valueOf = function () {
+      return args.reduce((a, b) => a + b);
+    };
+    return s;
   }
   ```
 
@@ -996,23 +991,23 @@ c.fun(3);
   //如果带环，需要缓存，确认当前对象是否复制过，如果复制过，就直接指向它。用map防止循环引用
 
   function cloneDeep(obj) {
-  	let cache = new Map(); //由原对象映射到其复制品
-  	return clone(obj);
-  	function clone(obj) {
-  		if (cache.has(obj)) {
-  			return cache.get(obj);
-  		}
-  		if (obj && typeof obj === 'object') {
-  			let res = {};
-  			cache.set(obj, res);
-  			for (let key in obj) {
-  				res[key] = clone(obj);
-  			}
-  			return res;
-  		} else {
-  			return obj;
-  		}
-  	}
+    let cache = new Map(); //由原对象映射到其复制品
+    return clone(obj);
+    function clone(obj) {
+      if (cache.has(obj)) {
+        return cache.get(obj);
+      }
+      if (obj && typeof obj === "object") {
+        let res = {};
+        cache.set(obj, res);
+        for (let key in obj) {
+          res[key] = clone(obj);
+        }
+        return res;
+      } else {
+        return obj;
+      }
+    }
   }
   ```
 
@@ -1029,7 +1024,7 @@ c.fun(3);
   ```js
   //leecode112
   function hasPathSum(root, sum) {
-  	// 请输入答案
+    // 请输入答案
   }
   ```
 
@@ -1096,7 +1091,6 @@ boss 面
   身份：cookie
   地址：url
   请求头:req head
-
 
 - 数组去重，
 - 数组中最大值，
@@ -1173,9 +1167,9 @@ NOTE:
 - 相等性判断，还是判断 true/false
   ```js
   [] == 0; //true
-  '' == 0; //true
+  "" == 0; //true
   if (0) {
-  	console.log('yes');
+    console.log("yes");
   } //yes
   ```
 
@@ -1185,8 +1179,6 @@ NOTE:
   var:es5 之前提出，用来做变量声明。有变量提升，作用域。
   let:es6 提出，没有变量提升。在声明前使用，出现 TDZ。不能重复声明。
   const:es5,声明常量。const 的指向不能变，但指向的东西可以变，可以增删属性。
-
-
 
 - 原型链的理解
 - 哪几种继承方式
@@ -1283,7 +1275,6 @@ NOTE:
 
 - 服务器渲染 ssr
 - 浏览器渲染
-
 
 - react
 

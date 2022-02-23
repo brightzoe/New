@@ -1137,18 +1137,9 @@ display:flow/flow-root;
 
 **一些属性：**
 
-- justify-content: space-between; 主轴方向额外空间的分配，不能跟 flex-grow 一起用。
-  - flex-start | flex-end | center | space-between | space-around | space-evenly
-- align-content: space-around; 侧轴方向的空间如何分给每一个 flex 行，只适用于多行的 flex-box。
-  - flex-start | flex-end | center | space-between | space-around | space-evenly | stretch
-- align-items: 侧轴方向元素在行中的摆放，stretch 仅子元素高度为 auto 时生效。
-  - flex-start | flex-end | center | baseline（每一行文本基线对齐） | stretch
-- align-self: flex 子元素自身在行的垂直方向的摆放；用于覆盖 align-items
-  - auto | flex-start | flex-end | center | baseline | stretch
+
 - flex-basis: 指定主轴方向上初始大小。相当于宽度或者高度：主轴水平，相当于宽度，主轴垂直，相当于高度。只要它不为 auto，就是它生效而不是宽高属性生效。
-- flex-wrap: 是否折行。nowarp/warp/warp-reverse（控制折行的方向，或者说交叉轴的方向）
-- flex-flow:column wrap; 按什么方向；是否折行，是 flex-direction 和 flex-wrap 的简写
-- margin 比较强势。
+
 
 ---
 
